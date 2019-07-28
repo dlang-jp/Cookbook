@@ -5,10 +5,7 @@ jobs:
       - image: circleci/buildpack-deps:18.04
     steps:
       - checkout
-      - run: curl -fsS https://dlang.org/install.sh | bash -s dmd
-      - run: source $(~/dlang/install.sh dmd -a)
-      - run: dub test
-      - run: dub build --build=docs
+      - run: .circleci/test.sh
       - persist_to_workspace:
           root: generated-docs
           paths: .
@@ -18,10 +15,7 @@ jobs:
     steps:
       - attach_workspace:
           at: generated-docs
-      - run: git config user.name CircleCI
-      - run: git config user.email <>
-      - run: git add -A docs
-      - run: git commit -m '[skip ci] Update docs'
+      - run: .circleci/deploy.sh
 workflows:
   version: 2
   generate-docs:
