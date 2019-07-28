@@ -24,7 +24,7 @@ jobs:
       - run: git commit -m '[skip ci] Update docs'
 workflows:
   version: 2
-  test:
+  generate-docs:
     jobs:
       - test-dmd
       - deploy-docs:
