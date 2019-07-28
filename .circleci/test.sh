@@ -3,7 +3,7 @@
 set -e
 set -u
 
-curl -fsS https://dlang.org/install.sh | bash -s dmd
+curl https://dlang.org/install.sh | bash -s
 source $(~/dlang/install.sh dmd -a)
 
 dub test
