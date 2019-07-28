@@ -28,9 +28,9 @@ workflows:
     jobs:
       - test-dmd
       - deploy-docs:
-        requires:
-          - test-dmd
-        filters:
-          branches:
-            only:
-              - master
+          requires:
+            - test-dmd
+          filters:
+            branches:
+              only:
+                - master
