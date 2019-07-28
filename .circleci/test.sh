@@ -2,13 +2,8 @@
 
 set -e
 set -u
+set -o pipefail
 
-curl https://dlang.org/install.sh | bash -s
-
-type source
-echo TEST
-
-source $(~/dlang/install.sh dmd -a)
-
+source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s $1 --activate)"
 dub test
-dub build --build=docs
+cat dub.selections.json
