@@ -3,8 +3,7 @@
 set -e
 set -u
 
-curl https://dlang.org/install.sh | bash -s
-source ~/dlang/dmd-2.087.0/activate
+source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s dmd --activate)"
 
 dub test
 dub build --build=docs
