@@ -1,15 +1,4 @@
 version: 2
-workflows:
-  version: 2
-  test:
-    jobs:
-      - test-dmd
-      - deploy-docs:
-        requires:
-          - test-dmd
-        filters:
-          branches:
-            only: master
 jobs:
   test-dmd:
     docker:
@@ -33,3 +22,14 @@ jobs:
       - run: git config user.email <>
       - run: git add -A docs
       - run: git commit -m '[skip ci] Update docs'
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-dmd
+      - deploy-docs:
+        requires:
+          - test-dmd
+        filters:
+          branches:
+            only: master
