@@ -3,7 +3,7 @@
 
 要素の初期化、要素の追加(WIP)、要素の削除、ソート(WIP)、ループ操作(WIP)
 +/
-module app;
+module array_example;
 
 /++
 初期化の例です

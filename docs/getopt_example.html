@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>app</title>
+    <title>getopt_example</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,32 +508,39 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">app</h1>
+        <h1 class="module_name">getopt_example</h1>
         <section id="module_content"><section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    文字列操作についてまとめます。
-
-  </p>
-</div>
-<div class="ddoc_section">
-  <p class="para">
-    <span class="ddoc_section_h">TODO:</span>
-置換(replace), 削除(remove), 分割(split)
-  </p>
-</div>
-<div class="ddoc_examples">
+  <div class="ddoc_examples">
   <h4>Examples</h4>
   <p class="para">
-    完全一致、辞書順での比較
+    基本的な引数解析の例です
 
 <section class="code_listing">
   <div class="code_sample">
     <div class="dlang">
       <ol class="code_lines">
-        <li><code class="code"><span class="keyword">auto</span> text = <span class="string_literal">"ABC"</span>;
-<span class="keyword">assert</span>(text == <span class="string_literal">"ABC"</span>);
-<span class="keyword">assert</span>(text &lt; <span class="string_literal">"abc"</span>);
+        <li><code class="code"><span class="comment">// 以下のようにプログラムを実行した場合の例です
+</span><span class="comment">// app --format=json
+</span>string[] args = [<span class="string_literal">"app.exe"</span>, <span class="string_literal">"--format=json"</span>];
+
+<span class="keyword">import</span> std.getopt;
+
+<span class="comment">// 
+</span>string format;
+
+<span class="comment">// 引数の名前、引数を受け付ける変数、説明、で1セットの指定になります
+</span><span class="comment">// 説明は省略可能です
+</span><span class="keyword">auto</span> result = getopt(args, <span class="string_literal">"format"</span>, <span class="string_literal">"format引数の説明になります"</span>, &amp;format);
+
+<span class="comment">// --helpなどの引数が指定されたかどうかで分岐することができます
+</span><span class="keyword">if</span> (result.helpWanted)
+{
+    <span class="comment">// 自動的に引数の説明などを表示します
+</span>    std.getopt.defaultGetoptPrinter(<span class="string_literal">"プログラム説明"</span>, result.options);
+    <span class="keyword">return</span>;
+}
+
+<span class="keyword">assert</span>(format == <span class="string_literal">"json"</span>);
 </code></li>
       </ol>
     </div>
@@ -544,157 +551,33 @@
 </div><div class="ddoc_examples">
   <h4>Examples</h4>
   <p class="para">
-    大文字小文字を無視して比較
-<br><br>
-<code class="code">std.uni</code> の <code class="code">icmp</code> を使います
-<br><br>
-<code class="code">icmp</code> : <a href="https://dlang.org/phobos/std_uni.html#icmp">https://dlang.org/phobos/std_uni.html#icmp</a>
+    適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。
 
 <section class="code_listing">
   <div class="code_sample">
     <div class="dlang">
       <ol class="code_lines">
-        <li><code class="code"><span class="keyword">import</span> std.uni;
+        <li><code class="code">string[] args = [<span class="string_literal">"app.exe"</span>, <span class="string_literal">"--format=json"</span>];
 
-<span class="keyword">auto</span> text = <span class="string_literal">"ABC"</span>;
-<span class="keyword">assert</span>(icmp(text, <span class="string_literal">"abc"</span>) == 0);
-<span class="keyword">assert</span>(icmp(text, <span class="string_literal">"ab"</span>) == 1);
-<span class="keyword">assert</span>(icmp(text, <span class="string_literal">"abcd"</span>) == -1);
+<span class="keyword">import</span> std.getopt;
 
-<span class="comment">// 使い方、戻り値のイメージ
-</span><span class="comment">// "ABC" &gt; "ab"
-</span><span class="comment">// "ABC" - "ab" &gt; 0
-</span><span class="keyword">assert</span>(icmp(text, <span class="string_literal">"abc"</span>) == 0);
-<span class="keyword">assert</span>(icmp(text, <span class="string_literal">"ab"</span>) &gt; 0);
-<span class="keyword">assert</span>(icmp(text, <span class="string_literal">"abcd"</span>) &lt; 0);
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
+string format;
 
-  </p>
-</div><div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    「で始まる」「で終わる」の例
-<br><br>
-<code class="code">std.algorithm</code> の <code class="code">startsWith</code>, <code class="code">endsWith</code> を使います。
-<br><br>
-<code class="code">startsWith</code> : <a href="https://dlang.org/phobos/std_algorithm_searching.html#.startsWith">https://dlang.org/phobos/std_algorithm_searching.html#.startsWith</a><br>
-<code class="code">endsWith</code> : <a href="https://dlang.org/phobos/std_algorithm_searching.html#.endsWith">https://dlang.org/phobos/std_algorithm_searching.html#.endsWith</a>
-
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">import</span> std.algorithm : startsWith, endsWith;
-
-<span class="keyword">auto</span> text = <span class="string_literal">"std.algorithm"</span>;
-
-<span class="comment">// ～で始まる
-</span><span class="keyword">assert</span>(startsWith(text, <span class="string_literal">"std."</span>));
-<span class="keyword">assert</span>(text.startsWith(<span class="string_literal">"std."</span>));
-
-<span class="comment">// ～で終わる
-</span><span class="keyword">assert</span>(endsWith(text, <span class="string_literal">".algorithm"</span>));
-<span class="keyword">assert</span>(text.endsWith(<span class="string_literal">".algorithm"</span>));
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-  </p>
-</div><div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    文字列が出現する位置を検索します。
-<br><br>
-<code class="code">std.string</code> の <code class="code">indexOf</code> を使用します。
-<br><br>
-<code class="code">indexOf</code> : <a href="https://dlang.org/phobos/std_string.html#.indexOf">https://dlang.org/phobos/std_string.html#.indexOf</a>
-
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">import</span> std.string : indexOf;
-
-<span class="keyword">auto</span> text = <span class="string_literal">"std.algorithm.searching"</span>;
-
-<span class="keyword">assert</span>(indexOf(text, <span class="string_literal">"search"</span>) == 14);
-<span class="keyword">assert</span>(text.indexOf(<span class="string_literal">"search"</span>) == 14);
-
-<span class="comment">// 大文字小文字を無視することもできます
-</span><span class="comment">// std.typeconsからYesやNoをimportして使います
-</span><span class="keyword">import</span> std.typecons : Yes, No;
-<span class="keyword">import</span> std.string : CaseSensitive;
-
-<span class="keyword">auto</span> url = <span class="string_literal">"https://github.com/dlang/dmd"</span>;
-<span class="keyword">assert</span>(url.indexOf(<span class="string_literal">"GITHUB"</span>, No.CaseSensitive));
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-  </p>
-</div><div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    文字列の連結
-<br><br>
-事前に長さの分からない文字列を構築する場合、<code class="code">std.array</code> の <code class="code">appender</code> を使います。
-<br><br>
-<code class="code">appender</code> : <a href="https://dlang.org/phobos/std_array.html#appender">https://dlang.org/phobos/std_array.html#appender</a>
-
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">assert</span>(<span class="string_literal">"ABC"</span> ~ <span class="string_literal">"DEF"</span> == <span class="string_literal">"ABCDEF"</span>);
-
-<span class="comment">// 多くの文字を連結するときはappenderを使います
+<span class="comment">// 以下の記述によってdfmtの有効無効を切り替えることができます
+</span><span class="comment">// dfmt off
+</span><span class="keyword">auto</span> result = getopt(
+    args,
+    <span class="string_literal">"format"</span>, <span class="string_literal">"format引数の説明になります"</span>, &amp;format,
+);
+<span class="comment">// dfmt on
 </span>
-<span class="keyword">import</span> std.array : appender;
+<span class="keyword">if</span> (result.helpWanted)
+{
+    std.getopt.defaultGetoptPrinter(<span class="string_literal">"プログラム説明"</span>, result.options);
+    <span class="keyword">return</span>;
+}
 
-<span class="keyword">auto</span> buffer = appender!string;
-
-buffer.put(<span class="string_literal">"https://"</span>);
-buffer.put(<span class="string_literal">"github.com"</span>);
-buffer.put(<span class="string_literal">"/dlang"</span>);
-
-<span class="keyword">assert</span>(buffer.data == <span class="string_literal">"https://github.com/dlang"</span>);
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-  </p>
-</div><div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    書式化文字列
-<br><br>
-<code class="code">std.format</code> の <code class="code">format</code> を使います。
-<br><br>
-<a href="https://dlang.org/phobos/std_format.html#.format">https://dlang.org/phobos/std_format.html#.format</a>
-
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">import</span> std.format : format;
-
-<span class="keyword">int</span> n = 10;
-<span class="keyword">float</span> f = 1.5;
-string url = <span class="string_literal">"https://github.com"</span>;
-
-<span class="keyword">auto</span> text = format!<span class="string_literal">"%d, %f, %s"</span>(n, f, url);
-
-<span class="keyword">assert</span>(text == <span class="string_literal">"10, 1.500000, https://github.com"</span>, text);
+<span class="keyword">assert</span>(format == <span class="string_literal">"json"</span>);
 </code></li>
       </ol>
     </div>

@@ -1,0 +1,35 @@
+version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-dmd:
+      - deploy-docs:
+        requires:
+          - test-dmd
+        filters:
+          branches:
+            only: master
+jobs:
+  test-dmd:
+    docker:
+      - image: circleci/buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: curl -fsS https://dlang.org/install.sh | bash -s dmd
+      - run: source $(~/dlang/install.sh dmd -a)
+      - run: dmd test
+      - run: dub build --build=docs
+      - persist_to_workspace:
+          root: generated-docs
+          paths: .
+  deploy-docs:
+    docker:
+      - image: circleci/node
+    steps:
+      - attach_workspace:
+          at: generated-docs
+      - run: git config user.name CircleCI
+      - run: git config user.email <>
+      - run: git add -A docs
+      - run: git commit -m '[skip ci] Update docs'
