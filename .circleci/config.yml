@@ -5,7 +5,8 @@ jobs:
       - image: circleci/buildpack-deps:18.04
     steps:
       - checkout
-      - run: .circleci/test.sh
+      - run:
+          command: .circleci/test.sh
       - persist_to_workspace:
           root: generated-docs
           paths: .
@@ -15,7 +16,8 @@ jobs:
     steps:
       - attach_workspace:
           at: generated-docs
-      - run: .circleci/deploy.sh
+      - run:
+          command: .circleci/deploy.sh
 workflows:
   version: 2
   generate-docs:
