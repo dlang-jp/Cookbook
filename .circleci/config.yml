@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: .circleci/test.sh
+          command: sh .circleci/test.sh
       - persist_to_workspace:
           root: generated-docs
           paths: .
@@ -17,7 +17,7 @@ jobs:
       - attach_workspace:
           at: generated-docs
       - run:
-          command: .circleci/deploy.sh
+          command: sh .circleci/deploy.sh
 workflows:
   version: 2
   generate-docs:
