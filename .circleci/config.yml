@@ -3,7 +3,7 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-dmd:
+      - test-dmd
       - deploy-docs:
         requires:
           - test-dmd
