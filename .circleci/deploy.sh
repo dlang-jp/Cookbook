@@ -2,7 +2,6 @@
 
 set -e
 set -u
-set -o pipefail
 
 git config user.name CircleCI
 git config user.email <>
