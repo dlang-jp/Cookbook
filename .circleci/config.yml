@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: curl -fsS https://dlang.org/install.sh | bash -s dmd
       - run: source $(~/dlang/install.sh dmd -a)
-      - run: dmd test
+      - run: dub test
       - run: dub build --build=docs
       - persist_to_workspace:
           root: generated-docs
