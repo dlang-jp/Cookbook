@@ -9,14 +9,14 @@ jobs:
           name: test
           command: bash .circleci/test.sh dmd
       - persist_to_workspace:
-          root: generated-docs
+          root: docs
           paths: .
   deploy-docs:
     docker:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: generated-docs
+          at: docs
       - run:
           name: deploy
           command: bash .circleci/deploy.sh dmd
