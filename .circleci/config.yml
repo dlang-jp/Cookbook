@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  test-dmd:
+    docker:
+      - image: circleci/buildpack-deps:18.04
+    steps:
+      - checkout
+      - run:
+          name: test
+          command: bash .circleci/test.sh dmd
+      - persist_to_workspace:
+          root: docs
+          paths: .
+  deploy-docs:
+    docker:
+      - image: circleci/buildpack-deps:18.04
+    steps:
+      - attach_workspace:
+          at: docs
+      - run:
+          name: deploy
+          command: bash .circleci/deploy.sh dmd
+workflows:
+  version: 2
+  generate-docs:
+    jobs:
+      - test-dmd
+      - deploy-docs:
+          requires:
+            - test-dmd
+          filters:
+            branches:
+              only:
+                - master
