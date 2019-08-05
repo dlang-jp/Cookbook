@@ -5,31 +5,31 @@
 実際に動くプログラム、そこから生成されるHTMLをまとめます。
 
 # 目次
-1. (作業中) [文字列操作](/docs/string/app.d)
+1. [文字列操作](/source/string_example.d)
+2. [配列操作](/source/array_example.d)
+3. [引数解析](/source/getopt_example.d)
 
 # 使い方
 ## リポジトリ構成
 - docs
-    - 目的別フォルダ
-        - `app.d` 
-        - `app.html` 生成したHTML
+    - `*.html` 生成ドキュメント 
+- source
+    - `*.d` 目的別のサンプルソース
 
 ### 補足
-- 目的別フォルダは1つのプロジェクトとして構成しています。
 - 誤字などなく常に実行できることを保証するため、HTMLはコードから生成する構造としています。
+- dubを使って単体テストが通るようにしてあります。
 
 ## 実行方法
 
 ```bash
-cd ./docs/string
-dmd -unittest -main -run app.d
+dub test
 ```
 
 ## ドキュメントとして出力する方法
 
 ```bash
-cd ./docs/string
-dmd -D -o- app.d
+dmd build --build=docs
 ```
 
 # 予定
