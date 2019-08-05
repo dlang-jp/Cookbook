@@ -8,15 +8,17 @@ jobs:
       - run:
           name: test
           command: bash .circleci/test.sh dmd
-      - persist_to_workspace:
-          root: docs
-          paths: .
   deploy-docs:
     docker:
       - image: circleci/buildpack-deps:18.04
     steps:
-      - attach_workspace:
-          at: docs
+      - run:
+          name: Update enviroment
+          command: sudo apt update && sudo apt install -y rsync
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+              - "d7:fe:8e:3a:f7:4b:8c:a0:f2:ca:cb:d1:0a:f0:b9:60"
       - run:
           name: deploy
           command: bash .circleci/deploy.sh dmd
