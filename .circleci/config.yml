@@ -17,7 +17,6 @@ jobs:
     steps:
       - attach_workspace:
           at: docs
-      - run: ls
       - run:
           name: deploy
           command: bash .circleci/deploy.sh dmd
