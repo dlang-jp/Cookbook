@@ -10,10 +10,11 @@ echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s $1 --activate)"
 
 dub build --build=ddox
-rsync -ar docs ../
+mv docs ../
 
 git checkout gh-pages
-rsync -ar ../docs ./
+rm -r *
+mv ../docs/* ./
 git add -A --force .
 git commit -m "[skip ci] Update docs"
 git push origin gh-pages
