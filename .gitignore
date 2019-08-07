@@ -21,3 +21,6 @@ __dummy.html
 
 # Code coverage
 *.lst
+
+# Generated Files
+docs
