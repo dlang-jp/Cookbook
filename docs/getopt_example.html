@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module getopt_example</title>
+		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
+		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="./scripts/jquery.js">/**/</script><script type="text/javascript" src="./scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="./symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "./";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="./array_example.html">array_example</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="./getopt_example.html">getopt_example</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./string_example.html">string_example</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module getopt_example</h1><p><code class="lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span></code> の使い方についてまとめます。
+</p><section><p>実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。
+</p>
+</section>
+
+			<section><section><h2>Example</h2>
+<p>基本的な引数解析の例です
+</p>
+<pre class="code"><code class="lang-d"><span class="com">// 以下のようにプログラムを実行した場合の例です
+// app --format=json
+</span><span class="typ">string</span><span class="pun">[] </span><span class="pln">args </span><span class="pun">= [</span><span class="str">"app.exe"</span><span class="pun">, </span><span class="str">"--format=json"</span><span class="pun">];
+
+</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span><span class="pun">;
+
+</span><span class="com">// 
+</span><span class="typ">string </span><span class="pln">format</span><span class="pun">;
+
+</span><span class="com">// 引数の名前、引数を受け付ける変数、説明、で1セットの指定になります
+// 説明は省略可能です
+</span><span class="kwd">auto </span><span class="pln">result </span><span class="pun">= </span><span class="pln">getopt</span><span class="pun">(</span><span class="pln">args</span><span class="pun">, </span><span class="str">"format"</span><span class="pun">, </span><span class="str">"format引数の説明になります"</span><span class="pun">, &amp;</span><span class="pln">format</span><span class="pun">);
+
+</span><span class="com">// --helpなどの引数が指定されたかどうかで分岐することができます
+</span><span class="kwd">if </span><span class="pun">(</span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">helpWanted</span><span class="pun">)
+{
+    </span><span class="com">// 自動的に引数の説明などを表示します
+    </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt<wbr/></span><span class="pun">.</span><span class="pln">defaultGetoptPrinter</span><span class="pun">(</span><span class="str">"プログラム説明"</span><span class="pun">, </span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">options</span><span class="pun">);
+    </span><span class="kwd">return</span><span class="pun">;
+}
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">format </span><span class="pun">== </span><span class="str">"json"</span><span class="pun">);
+</span></code></pre>
+</section>
+<section><h2>Example</h2>
+<p>適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。
+</p>
+<pre class="code"><code class="lang-d"><span class="typ">string</span><span class="pun">[] </span><span class="pln">args </span><span class="pun">= [</span><span class="str">"app.exe"</span><span class="pun">, </span><span class="str">"--format=json"</span><span class="pun">];
+
+</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span><span class="pun">;
+
+</span><span class="typ">string </span><span class="pln">format</span><span class="pun">;
+
+</span><span class="com">// 以下の記述によってdfmtの有効無効を切り替えることができます
+// dfmt off
+</span><span class="kwd">auto </span><span class="pln">result </span><span class="pun">= </span><span class="pln">getopt</span><span class="pun">(
+    </span><span class="pln">args</span><span class="pun">,
+    </span><span class="str">"format"</span><span class="pun">, </span><span class="str">"format引数の説明になります"</span><span class="pun">, &amp;</span><span class="pln">format</span><span class="pun">,
+);
+</span><span class="com">// dfmt on
+
+</span><span class="kwd">if </span><span class="pun">(</span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">helpWanted</span><span class="pun">)
+{
+    </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt<wbr/></span><span class="pun">.</span><span class="pln">defaultGetoptPrinter</span><span class="pun">(</span><span class="str">"プログラム説明"</span><span class="pun">, </span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">options</span><span class="pun">);
+    </span><span class="kwd">return</span><span class="pun">;
+}
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">format </span><span class="pun">== </span><span class="str">"json"</span><span class="pun">);
+</span></code></pre>
+</section>
+</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

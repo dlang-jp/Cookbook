@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module array_example</title>
+		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
+		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="./scripts/jquery.js">/**/</script><script type="text/javascript" src="./scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="./symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "./";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="./array_example.html">array_example</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./getopt_example.html">getopt_example</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./string_example.html">string_example</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module array_example</h1><p>動的配列と静的配列の操作についてまとめます。
+</p><section><p>要素の初期化、要素の追加(WIP)、要素の削除、ソート(WIP)、ループ操作(WIP)
+</p>
+</section>
+
+			<section><section><h2>Example</h2>
+<p>初期化の例です
+</p>
+<pre class="code"><code class="lang-d"><span class="com">// 簡単な配列は new T[N] という形式で初期化できます
+</span><span class="typ">int</span><span class="pun">[] </span><span class="pln">data </span><span class="pun">= </span><span class="kwd">new </span><span class="typ">int</span><span class="pun">[</span><span class="lit">100</span><span class="pun">];
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data<wbr/></span><span class="pun">.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">100</span><span class="pun">);
+
+</span><span class="com">// 型に対しコンストラクタを呼ぶような記法でも初期化できます
+</span><span class="pln">data </span><span class="pun">= </span><span class="kwd">new </span><span class="typ">int</span><span class="pun">[](</span><span class="lit">100</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data<wbr/></span><span class="pun">.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">100</span><span class="pun">);
+</span></code></pre>
+</section>
+<section><h2>Example</h2>
+<p>二次元以上の多次元配列を一括で確保する例です
+</p>
+<pre class="code"><code class="lang-d"><span class="com">// 4要素の配列を要素に持つ2要素の配列を初期化します
+// 型に対してコンストラクタのように初期化でき、引数の順序は外側から（使うときにアクセスする順）指定するイメージになります
+</span><span class="typ">int</span><span class="pun">[][] </span><span class="pln">data </span><span class="pun">= </span><span class="kwd">new </span><span class="typ">int</span><span class="pun">[][](</span><span class="lit">2</span><span class="pun">, </span><span class="lit">4</span><span class="pun">);
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data<wbr/></span><span class="pun">.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">2</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]<wbr/>.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">4</span><span class="pun">);
+
+</span><span class="typ">int</span><span class="pun">[][][] </span><span class="pln">data2 </span><span class="pun">= </span><span class="kwd">new </span><span class="typ">int</span><span class="pun">[][][](</span><span class="lit">2</span><span class="pun">, </span><span class="lit">3</span><span class="pun">, </span><span class="lit">4</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data2<wbr/></span><span class="pun">.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">2</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data2</span><span class="pun">[</span><span class="lit">1</span><span class="pun">]<wbr/>.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">3</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data2</span><span class="pun">[</span><span class="lit">1</span><span class="pun">][</span><span class="lit">2</span><span class="pun">]<wbr/>.</span><span class="pln">length </span><span class="pun">== </span><span class="lit">4</span><span class="pun">);
+</span></code></pre>
+</section>
+<section><h2>Example</h2>
+<p>要素のインデックス、または条件式を指定した値の削除
+</p>
+
+<p><code class="lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">algorithm</span></code> の <code class="lang-d"><span class="pln">remove</span></code> を使います
+</p>
+
+<p>- <code class="lang-d"><span class="pln">remove</span></code> : <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.remove">https://dlang.org/phobos/std_algorithm_mutation.html#.remove</a>
+</p>
+<pre class="code"><code class="lang-d"><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">algorithm </span><span class="pun">: </span><span class="pln">remove</span><span class="pun">;
+
+</span><span class="typ">int</span><span class="pun">[] </span><span class="pln">data </span><span class="pun">= [</span><span class="lit">10</span><span class="pun">, </span><span class="lit">20</span><span class="pun">, </span><span class="lit">30</span><span class="pun">, </span><span class="lit">40</span><span class="pun">, </span><span class="lit">50</span><span class="pun">, </span><span class="lit">60</span><span class="pun">, </span><span class="lit">70</span><span class="pun">, </span><span class="lit">80</span><span class="pun">, </span><span class="lit">90</span><span class="pun">, </span><span class="lit">100</span><span class="pun">];
+
+</span><span class="com">// removeは配列を破壊的に編集して結果を返すため、再度使うときは結果を元の変数に代入しなおします
+</span><span class="pln">data </span><span class="pun">= </span><span class="pln">data<wbr/></span><span class="pun">.</span><span class="pln">remove</span><span class="pun">(</span><span class="lit">1</span><span class="pun">); </span><span class="com">// インデックス指定（20を削除）
+</span><span class="pln">data </span><span class="pun">= </span><span class="pln">data<wbr/></span><span class="pun">.</span><span class="pln">remove</span><span class="pun">!(</span><span class="pln">a </span><span class="pun">=&gt; </span><span class="pln">a </span><span class="pun">&gt; </span><span class="lit">50</span><span class="pun">); </span><span class="com">// 条件式指定（50より大きいものを削除）
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">data </span><span class="pun">== [</span><span class="lit">10</span><span class="pun">, </span><span class="lit">30</span><span class="pun">, </span><span class="lit">40</span><span class="pun">, </span><span class="lit">50</span><span class="pun">]);
+</span></code></pre>
+</section>
+</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>
