@@ -17,6 +17,7 @@
 # DUB
 .dub
 docs.json
+dub.selections.json
 __dummy.html
 
 # Code coverage
@@ -24,3 +25,6 @@ __dummy.html
 
 # Generated Files
 docs
+
+# Hidden files
+.*
