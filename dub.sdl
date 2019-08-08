@@ -2,3 +2,5 @@ name "cookbook"
 description "D言語の逆引きコード集です"
 authors "lempiji"
 license "public domain"
+
+subPackage "subpkg"
