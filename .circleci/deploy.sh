@@ -9,7 +9,8 @@ git config --global user.email "<>"
 echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s $1 --activate)"
 
-dub build --build=ddox
+#dub build --build=ddox
+rdmd gendoc.d
 mv docs ../
 
 git checkout gh-pages
