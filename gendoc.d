@@ -53,12 +53,11 @@ import std.path : baseName, buildPath, dirName, extension, setExtension, stripEx
 import std.range.primitives;
 
 enum string[] g_sourceDirPatterns = ["(?:(?<=[^/]+/)|^)source$", "(?:(?<=[^/]+/)|^)+/src$"];
-enum string[] g_excludePatterns = ["(?:(?<=/)|^)\\.[^/]+$", "(?:(?<=[^/]+/)|^)_[^/]+$", "(?:(?<=[^/]+/)|^)internal(?:\\.d)?$"];
-enum string   g_docsDir = "docs";
-enum string   g_ddocDir = "ddoc";
-enum string   g_sourceDocsDir = "source_docs";
-enum string[] g_includePaths = [];
-enum string[] g_excludePaths = [g_docsDir, g_ddocDir, g_sourceDocsDir, g_sourceDocsDir];
+enum string[] g_excludePatterns   = ["(?:(?<=/)|^)\\.[^/]+$", "(?:(?<=[^/]+/)|^)_[^/]+$", "(?:(?<=[^/]+/)|^)internal(?:\\.d)?$"];
+enum string   g_docsDir           = "docs";
+enum string   g_ddocDir           = "ddoc";
+enum string   g_sourceDocsDir     = "source_docs";
+enum string[] g_sourceRootPaths   = ["."];
 
 int main(string[] args)
 {
@@ -67,30 +66,36 @@ int main(string[] args)
     import std.getopt: getopt, config, defaultGetoptPrinter;
     import std.regex: regex, match, Regex;
     import std.algorithm: any, startsWith;
-    
-    auto excludePaths        = g_excludePaths;
+
+    string[] excludePaths;
+    auto sourceRootPaths     = g_sourceRootPaths;
     auto sourceDirPatterns   = g_sourceDirPatterns;
     auto excludePathPatterns = g_excludePatterns;
     auto docsDir             = g_docsDir;
     auto ddocDir             = g_ddocDir;
     auto sourceDocsDir       = g_sourceDocsDir;
+    auto flgMarkdown         = true;
+    auto compiler            = "dmd";
 
     try
     {
         auto helpInformation = args.getopt(
             config.caseSensitive,
             config.bundling,
-            "x|exclude",      "exclude path",                          &excludePaths,
-            "includePattern", "regex pattern of source directory",     &sourceDirPatterns,
-            "excludePattern", "regex pattern of exclude path",         &excludePathPatterns,
-            "target",         "target direcory of generated document", &docsDir,
-            "ddoc",           "ddoc (*.ddoc) directory",               &ddocDir,
-            "sourceDocs",     "source_docs (*.dd|*.js|css) directory", &sourceDocsDir
+            "i|input|sourceRoot|root", "source root paths",                       &sourceRootPaths,
+            "o|output|target|docs",    "target direcories of generated document", &docsDir,
+            "x|exclude",               "exclude paths",                           &excludePaths,
+            "includePattern",          "regex pattern of sources",                &sourceDirPatterns,
+            "excludePattern",          "regex pattern of exclude paths",          &excludePathPatterns,
+            "ddoc",                    "ddoc (*.ddoc) directory",                 &ddocDir,
+            "sourceDocs",              "source_docs (*.dd|*.js|css) directory",   &sourceDocsDir,
+            "markdown",                "enable markdown (default:true)",          &flgMarkdown,
+            "compiler",                "compiler path",                           &compiler
         );
-
+writeln(sourceRootPaths);
         if (helpInformation.helpWanted)
         {
-            defaultGetoptPrinter("gendoc",
+            defaultGetoptPrinter("gendoc [-d]",
                 helpInformation.options);
             return 0;
         }
@@ -100,13 +105,14 @@ int main(string[] args)
         Regex!char[] rExcludePatterns;
         foreach (ptn; excludePathPatterns)
             rExcludePatterns ~= regex(ptn);
+        excludePaths ~= [docsDir, ddocDir, sourceDocsDir, sourceDocsDir];
         bool isExclude(string path)
         {
             return rExcludePatterns.any!(r => path.match(r))
                 || excludePaths.any!(p => path == p);
         }
-        auto sourceDirs = getSourceDirs(sourceDirPatterns, &isExclude);
-        
+        auto sourceDirs = sourceRootPaths.getSourceDirs(sourceDirPatterns, &isExclude);
+
         if(!docsDir.exists)
             mkdir(docsDir);
         foreach (de; docsDir.dirEntries(SpanMode.shallow))
@@ -126,12 +132,12 @@ int main(string[] args)
         auto moduleListDdoc = genModuleListDdoc(ddocDir, sourceDirs, &isExclude);
         scope(exit) remove(moduleListDdoc);
 
-        
+
         auto ddocFiles = getDdocFiles(ddocDir);
-        processSourceDocsDir(sourceDocsDir, docsDir, ddocFiles);
+        processSourceDocsDir(compiler, sourceDocsDir, docsDir, ddocFiles, flgMarkdown);
         foreach (sourceDir; sourceDirs)
-            processSourceDir(sourceDir, docsDir, &isExclude, ddocFiles);
-        
+            processSourceDir(compiler, sourceDir, docsDir, &isExclude, ddocFiles, flgMarkdown);
+
     }
     catch(Exception e)
     {
@@ -143,7 +149,7 @@ int main(string[] args)
     return 0;
 }
 
-void processSourceDocsDir(string sourceDir, string targetDir, string[] ddocFiles)
+void processSourceDocsDir(string compiler, string sourceDir, string targetDir, string[] ddocFiles, bool flgMarkdown)
 {
     import std.file : copy;
 
@@ -153,19 +159,19 @@ void processSourceDocsDir(string sourceDir, string targetDir, string[] ddocFiles
         if(de.isDir)
         {
             mkdir(target);
-            processSourceDocsDir(de.name, target, ddocFiles);
+            processSourceDocsDir(compiler, de.name, target, ddocFiles, flgMarkdown);
         }
         else if(de.isFile)
         {
             if(de.name.extension == ".dd")
-                genDdoc(sourceDir, de.name, target.setExtension(".html"), ddocFiles);
+                genDdoc(compiler, sourceDir, de.name, target.setExtension(".html"), ddocFiles, flgMarkdown);
             else
                 copy(de.name, target);
         }
     }
 }
 
-void processSourceDir(string sourceDir, string target, bool delegate(string) isExclude, string[] ddocFiles, int depth = 0)
+void processSourceDir(string compiler, string sourceDir, string target, bool delegate(string) isExclude, string[] ddocFiles, bool flgMarkdown, int depth = 0)
 {
     import std.algorithm : endsWith;
 
@@ -179,50 +185,59 @@ void processSourceDir(string sourceDir, string target, bool delegate(string) isE
             continue;
         auto nextTarget = name == "package.d" ? target : format("%s%s%s", target, depth == 0 ? "" : "_", name);
         if(de.isDir)
-            processSourceDir(de.name, nextTarget, isExclude, ddocFiles, depth + 1);
+            processSourceDir(compiler, de.name, nextTarget, isExclude, ddocFiles, flgMarkdown, depth + 1);
         else if(de.isFile)
-            genDdoc(sourceDir, de.name, nextTarget.setExtension(".html"), ddocFiles);
+            genDdoc(compiler, sourceDir, de.name, nextTarget.setExtension(".html"), ddocFiles, flgMarkdown);
     }
 }
 
-void genDdoc(string sourceDir, string sourceFile, string htmlFile, string[] ddocFiles)
+void genDdoc(string compiler, string sourceDir, string sourceFile, string htmlFile, string[] ddocFiles, bool flgMarkdown)
 {
     import std.process : execute;
     import std.stdio: writeln;
-    auto args = ["dmd", "-o-", "-I" ~ sourceDir, "-Df" ~ htmlFile, sourceFile] ~ ddocFiles;
-    writeln(args);
+    import std.string: join;
+    auto args = [compiler, "-o-", "-I" ~ sourceDir, "-Df" ~ htmlFile, sourceFile] ~ ddocFiles;
+    if (flgMarkdown)
+        args ~= "-preview=markdown";
+    stdout.write("generate ", htmlFile, " ... ");
     auto result = execute(args);
     if(result.status != 0)
-        throw new Exception("dmd failed:\n" ~ result.output);
+        throw new Exception("compile failed:\n" ~ result.output);
+    stdout.writeln("OK");
 }
 
-string[] getSourceDirs(string[] sourceDirPatterns, bool delegate(string) isExclude)
+string[] getSourceDirs(string[] sourceRootPaths, string[] sourceDirPatterns, bool delegate(string) isExclude)
 {
     import std.regex: regex, match, Regex;
-    import std.algorithm: any;
+    import std.algorithm: any, canFind;
     import std.array: array;
+    import std.path: filenameCmp;
     string[] ret;
     Regex!char[] rSourceDirPatterns;
     foreach (ptn; sourceDirPatterns)
         rSourceDirPatterns ~= regex(ptn);
-    void addPath(string p)
+    void addPath(string p, string r)
     {
         foreach (de; dirEntries(p, SpanMode.shallow))
         {
             if (!de.isDir)
                 continue;
-            string dirname;
-            dirname = de.name.stripSourceDir(".");
+            auto dirname = de.name.stripSourceDir(r);
+            if (ret.canFind(dirname))
+                continue;
             auto inCond = rSourceDirPatterns.any!(r => dirname.match(r));
             auto exCond = isExclude(dirname);
-            if ( inCond && !exCond )
+            if ( inCond && !exCond)
                 ret ~= dirname;
             if (inCond || exCond)
                 continue;
-            addPath(de.name);
+            addPath(de.name, r);
         }
     }
-    addPath(".");
+    
+    foreach (p; sourceRootPaths)
+        addPath(p, p);
+    
     return ret;
 }
 
@@ -297,7 +312,7 @@ void genModuleIndex(OR)(ref OR lines, Package* pkg, int depth = 0)
     {
         auto modName   = modPath.replace("/", ".").stripExtension();
         auto modPieces = modPath.replace("/", "_").stripExtension();
-        
+
         return format("$(A %s.html, $(SPANC module_index, %s))$(DDOC_BLANKLINE)", modPieces, modName);
     }
 
