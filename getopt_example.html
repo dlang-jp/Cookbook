@@ -1,125 +1,96 @@
+
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<title>Module getopt_example</title>
-		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
-		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
-		<script type="text/javascript" src="./scripts/jquery.js">/**/</script><script type="text/javascript" src="./scripts/ddox.js">/**/</script>
-	</head>
-	<body onload="setupDdox();">
-		<nav id="main-nav">
-			<noscript>
-				<p style="color: red">The search functionality needs JavaScript enabled</p>
-			</noscript>
-			<div id="symbolSearchPane" style="display: none">
-				<form action="#" method="GET">
-					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
-				</form>
-				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="./symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "./";
-$('#symbolSearchPane').show();</script>
-			</div>
-			<ul class="tree-view">
-				<li>
-					<div class="module ">
-						<a href="./array_example.html">array_example</a>
-					</div>
-				</li>
-				<li>
-					<div class="module selected">
-						<a href="./getopt_example.html">getopt_example</a>
-					</div>
-				</li>
-				<li>
-					<div class="module ">
-						<a href="./string_example.html">string_example</a>
-					</div>
-				</li>
-			</ul>
-		</nav>
-		<div id="main-contents">
-			<h1>Module getopt_example</h1><p><code class="lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span></code> の使い方についてまとめます。
-</p><section><p>実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。
-</p>
-</section>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>getopt_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>Cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> 0.0.0 <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul><li>    <a href="subpkg_test.html"><span >test</span></a>
+</li></ul></li>
+<a href="array_example.html"><span >array_example</span></a>
+<a href="getopt_example.html"><span >getopt_example</span></a>
+<a href="string_example.html"><span >string_example</span></a></ul>
+</div>
+            <div class="content">                <h1>getopt_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary"><span class="d_inlinecode donthyphenate notranslate">std.getopt</span> の使い方についてまとめます。
+</div><div class="ddoc_description">実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 基本的な引数解析の例です
+<pre class="d_code notranslate"><span class="d_comment">// 以下のようにプログラムを実行した場合の例です
+</span><span class="d_comment">// app --format=json
+</span>string[] args = [<span class="d_string">"app.exe"</span>, <span class="d_string">"--format=json"</span>];
 
-			<section><section><h2>Example</h2>
-<p>基本的な引数解析の例です
-</p>
-<pre class="code"><code class="lang-d"><span class="com">// 以下のようにプログラムを実行した場合の例です
-// app --format=json
-</span><span class="typ">string</span><span class="pun">[] </span><span class="pln">args </span><span class="pun">= [</span><span class="str">"app.exe"</span><span class="pun">, </span><span class="str">"--format=json"</span><span class="pun">];
+<span class="d_keyword">import</span> std.getopt;
 
-</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span><span class="pun">;
+<span class="d_comment">// 
+</span>string format;
 
-</span><span class="com">// 
-</span><span class="typ">string </span><span class="pln">format</span><span class="pun">;
+<span class="d_comment">// 引数の名前、引数を受け付ける変数、説明、で1セットの指定になります
+</span><span class="d_comment">// 説明は省略可能です
+</span><span class="d_keyword">auto</span> result = getopt(args, <span class="d_string">"format"</span>, <span class="d_string">"format引数の説明になります"</span>, &amp;format);
 
-</span><span class="com">// 引数の名前、引数を受け付ける変数、説明、で1セットの指定になります
-// 説明は省略可能です
-</span><span class="kwd">auto </span><span class="pln">result </span><span class="pun">= </span><span class="pln">getopt</span><span class="pun">(</span><span class="pln">args</span><span class="pun">, </span><span class="str">"format"</span><span class="pun">, </span><span class="str">"format引数の説明になります"</span><span class="pun">, &amp;</span><span class="pln">format</span><span class="pun">);
-
-</span><span class="com">// --helpなどの引数が指定されたかどうかで分岐することができます
-</span><span class="kwd">if </span><span class="pun">(</span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">helpWanted</span><span class="pun">)
+<span class="d_comment">// --helpなどの引数が指定されたかどうかで分岐することができます
+</span><span class="d_keyword">if</span> (result.helpWanted)
 {
-    </span><span class="com">// 自動的に引数の説明などを表示します
-    </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt<wbr/></span><span class="pun">.</span><span class="pln">defaultGetoptPrinter</span><span class="pun">(</span><span class="str">"プログラム説明"</span><span class="pun">, </span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">options</span><span class="pun">);
-    </span><span class="kwd">return</span><span class="pun">;
+    <span class="d_comment">// 自動的に引数の説明などを表示します
+</span>    std.getopt.defaultGetoptPrinter(<span class="d_string">"プログラム説明"</span>, result.options);
+    <span class="d_keyword">return</span>;
 }
 
-</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">format </span><span class="pun">== </span><span class="str">"json"</span><span class="pun">);
-</span></code></pre>
-</section>
-<section><h2>Example</h2>
-<p>適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。
-</p>
-<pre class="code"><code class="lang-d"><span class="typ">string</span><span class="pun">[] </span><span class="pln">args </span><span class="pun">= [</span><span class="str">"app.exe"</span><span class="pun">, </span><span class="str">"--format=json"</span><span class="pun">];
+<span class="d_keyword">assert</span>(format == <span class="d_string">"json"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。
+<pre class="d_code notranslate">string[] args = [<span class="d_string">"app.exe"</span>, <span class="d_string">"--format=json"</span>];
 
-</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt</span><span class="pun">;
+<span class="d_keyword">import</span> std.getopt;
 
-</span><span class="typ">string </span><span class="pln">format</span><span class="pun">;
+string format;
 
-</span><span class="com">// 以下の記述によってdfmtの有効無効を切り替えることができます
-// dfmt off
-</span><span class="kwd">auto </span><span class="pln">result </span><span class="pun">= </span><span class="pln">getopt</span><span class="pun">(
-    </span><span class="pln">args</span><span class="pun">,
-    </span><span class="str">"format"</span><span class="pun">, </span><span class="str">"format引数の説明になります"</span><span class="pun">, &amp;</span><span class="pln">format</span><span class="pun">,
+<span class="d_comment">// 以下の記述によってdfmtの有効無効を切り替えることができます
+</span><span class="d_comment">// dfmt off
+</span><span class="d_keyword">auto</span> result = getopt(
+    args,
+    <span class="d_string">"format"</span>, <span class="d_string">"format引数の説明になります"</span>, &amp;format,
 );
-</span><span class="com">// dfmt on
-
-</span><span class="kwd">if </span><span class="pun">(</span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">helpWanted</span><span class="pun">)
+<span class="d_comment">// dfmt on
+</span>
+<span class="d_keyword">if</span> (result.helpWanted)
 {
-    </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">getopt<wbr/></span><span class="pun">.</span><span class="pln">defaultGetoptPrinter</span><span class="pun">(</span><span class="str">"プログラム説明"</span><span class="pun">, </span><span class="pln">result<wbr/></span><span class="pun">.</span><span class="pln">options</span><span class="pun">);
-    </span><span class="kwd">return</span><span class="pun">;
+    std.getopt.defaultGetoptPrinter(<span class="d_string">"プログラム説明"</span>, result.options);
+    <span class="d_keyword">return</span>;
 }
 
-</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">format </span><span class="pun">== </span><span class="str">"json"</span><span class="pun">);
-</span></code></pre>
-</section>
-</section>
-			<footer>
-				<table class="license-info">
-					<tr>
-						<th>Authors</th>
-						<td>
-							
-						</td>
-					</tr>
-					<tr>
-						<th>Copyright</th>
-						<td>
-							
-						</td>
-					</tr>
-					<tr>
-						<th>License</th>
-						<td>
-							
-						</td>
-					</tr>
-				</table>
-				<p class="faint">Generated using the DDOX documentation generator</p>
-			</footer>
-		</div>
-	</body>
+<span class="d_keyword">assert</span>(format == <span class="d_string">"json"</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
 </html>
