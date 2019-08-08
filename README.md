@@ -5,6 +5,8 @@
 実際に動くプログラム、そこから生成されるHTMLをまとめます。
 
 # 目次
+ドキュメント : [https://dlang-jp.github.io/Cookbook](https://dlang-jp.github.io/Cookbook)
+
 1. [文字列操作](/source/string_example.d)
 2. [配列操作](/source/array_example.d)
 3. [引数解析](/source/getopt_example.d)
@@ -26,12 +28,6 @@
 dub test
 ```
 
-## ドキュメントとして出力する方法
-
-```bash
-dmd build --build=docs
-```
-
 # 予定
 - 配列操作
 - ファイル操作, パス操作
@@ -49,3 +45,10 @@ dmd build --build=docs
 - DUBコマンド、設定
 - サードパーティ製ライブラリの使用
 - 高度なアルゴリズム類
+
+# その他
+## ローカルで出力結果を確認する方法
+
+```bash
+rdmd gendoc.d
+```
