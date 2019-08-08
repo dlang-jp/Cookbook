@@ -92,7 +92,7 @@ int main(string[] args)
             "markdown",                "enable markdown (default:true)",          &flgMarkdown,
             "compiler",                "compiler path",                           &compiler
         );
-writeln(sourceRootPaths);
+
         if (helpInformation.helpWanted)
         {
             defaultGetoptPrinter("gendoc [-d]",
