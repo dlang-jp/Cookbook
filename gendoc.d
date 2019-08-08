@@ -51,12 +51,18 @@ import std.file : dirEntries, mkdir, SpanMode;
 import std.format : format;
 import std.path : baseName, buildPath, dirName, extension, setExtension, stripExtension;
 import std.range.primitives;
-
+/// default parameter
 enum string[] g_sourceDirPatterns = ["(?:(?<=[^/]+/)|^)source$", "(?:(?<=[^/]+/)|^)+/src$"];
-enum string[] g_excludePatterns   = ["(?:(?<=/)|^)\\.[^/]+$", "(?:(?<=[^/]+/)|^)_[^/]+$", "(?:(?<=[^/]+/)|^)internal(?:\\.d)?$"];
+/// ditto
+enum string[] g_excludePatterns   = [
+    "(?:(?<=/)|^)\\.[^/]+$", "(?:(?<=[^/]+/)|^)_[^/]+$", "(?:(?<=[^/]+/)|^)internal(?:\\.d)?$"];
+/// ditto
 enum string   g_docsDir           = "docs";
+/// ditto
 enum string   g_ddocDir           = "ddoc";
+/// ditto
 enum string   g_sourceDocsDir     = "source_docs";
+/// ditto
 enum string[] g_sourceRootPaths   = ["."];
 
 int main(string[] args)
@@ -83,19 +89,22 @@ int main(string[] args)
             config.caseSensitive,
             config.bundling,
             "i|input|sourceRoot|root", "source root paths",                       &sourceRootPaths,
-            "o|output|target|docs",    "target direcories of generated document", &docsDir,
+            "o|output|target|docs",    "target direcory of generated document",   &docsDir,
             "x|exclude",               "exclude paths",                           &excludePaths,
             "includePattern",          "regex pattern of sources",                &sourceDirPatterns,
             "excludePattern",          "regex pattern of exclude paths",          &excludePathPatterns,
             "ddoc",                    "ddoc (*.ddoc) directory",                 &ddocDir,
-            "sourceDocs",              "source_docs (*.dd|*.js|css) directory",   &sourceDocsDir,
+            "sourceDocs",              "source_docs (*.dd|*.js|*.css) directory", &sourceDocsDir,
             "markdown",                "enable markdown (default:true)",          &flgMarkdown,
             "compiler",                "compiler path",                           &compiler
         );
 
         if (helpInformation.helpWanted)
         {
-            defaultGetoptPrinter("gendoc [-d]",
+            import std.string: outdent, stripLeft;
+            defaultGetoptPrinter(`
+                Usage: gendoc [options]
+                Options:`.stripLeft("\n").outdent,
                 helpInformation.options);
             return 0;
         }
@@ -149,7 +158,9 @@ int main(string[] args)
     return 0;
 }
 
-void processSourceDocsDir(string compiler, string sourceDir, string targetDir, string[] ddocFiles, bool flgMarkdown)
+///
+void processSourceDocsDir(string compiler, string sourceDir, string targetDir, string[] ddocFiles,
+                          bool flgMarkdown)
 {
     import std.file : copy;
 
@@ -171,7 +182,9 @@ void processSourceDocsDir(string compiler, string sourceDir, string targetDir, s
     }
 }
 
-void processSourceDir(string compiler, string sourceDir, string target, bool delegate(string) isExclude, string[] ddocFiles, bool flgMarkdown, int depth = 0)
+///
+void processSourceDir(string compiler, string sourceDir, string target, bool delegate(string) isExclude,
+                      string[] ddocFiles, bool flgMarkdown, int depth = 0)
 {
     import std.algorithm : endsWith;
 
@@ -191,7 +204,9 @@ void processSourceDir(string compiler, string sourceDir, string target, bool del
     }
 }
 
-void genDdoc(string compiler, string sourceDir, string sourceFile, string htmlFile, string[] ddocFiles, bool flgMarkdown)
+///
+void genDdoc(string compiler, string sourceDir, string sourceFile, string htmlFile, string[] ddocFiles,
+             bool flgMarkdown)
 {
     import std.process : execute;
     import std.stdio: writeln;
@@ -206,6 +221,7 @@ void genDdoc(string compiler, string sourceDir, string sourceFile, string htmlFi
     stdout.writeln("OK");
 }
 
+///
 string[] getSourceDirs(string[] sourceRootPaths, string[] sourceDirPatterns, bool delegate(string) isExclude)
 {
     import std.regex: regex, match, Regex;
@@ -225,8 +241,8 @@ string[] getSourceDirs(string[] sourceRootPaths, string[] sourceDirPatterns, boo
             auto dirname = de.name.stripSourceDir(r);
             if (ret.canFind(dirname))
                 continue;
-            auto inCond = rSourceDirPatterns.any!(r => dirname.match(r));
-            auto exCond = isExclude(dirname);
+            immutable inCond = rSourceDirPatterns.any!(r => dirname.match(r));
+            immutable exCond = isExclude(dirname);
             if ( inCond && !exCond)
                 ret ~= dirname;
             if (inCond || exCond)
@@ -241,13 +257,14 @@ string[] getSourceDirs(string[] sourceRootPaths, string[] sourceDirPatterns, boo
     return ret;
 }
 
-
+///
 string[] getDdocFiles(string ddocDir)
 {
     import std.algorithm : map;
     return dirEntries(ddocDir, SpanMode.shallow).map!(a => a.name)().array();
 }
 
+///
 string genModuleListDdoc(string ddocDir, string[] sourceDirs, bool delegate(string) isExclude)
 {
     import std.array : join, array;
@@ -276,7 +293,7 @@ string genModuleListDdoc(string ddocDir, string[] sourceDirs, bool delegate(stri
     return moduleListDDoc;
 }
 
-
+///
 void genModuleMenu(OR)(ref OR lines, Package* pkg, int depth = 0)
 {
     import std.array : replicate;
@@ -303,6 +320,7 @@ void genModuleMenu(OR)(ref OR lines, Package* pkg, int depth = 0)
         put(lines, format("%s)", outerIndent));
 }
 
+///
 void genModuleIndex(OR)(ref OR lines, Package* pkg, int depth = 0)
 {
     import std.algorithm : filter;
@@ -327,14 +345,20 @@ void genModuleIndex(OR)(ref OR lines, Package* pkg, int depth = 0)
 }
 
 
+///
 struct Package
 {
+    ///
     string path;
+    ///
     bool hasPackageD;
+    ///
     string[] modules;
+    ///
     Package*[] packages;
 }
 
+///
 Package* getModules(string dir, string sourceDir, bool delegate(string) isExclude, int depth = 0)
 {
     import std.algorithm : sort;
@@ -375,6 +399,7 @@ Package* getModules(string dir, string sourceDir, bool delegate(string) isExclud
     return pkg;
 }
 
+///
 string stripSourceDir(string path, string sourceDir)
 {
     import std.algorithm : startsWith;
