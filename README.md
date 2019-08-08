@@ -5,6 +5,8 @@
 実際に動くプログラム、そこから生成されるHTMLをまとめます。
 
 # 目次
+ドキュメント : [https://dlang-jp.github.io/Cookbook](https://dlang-jp.github.io/Cookbook)
+
 1. [文字列操作](/source/string_example.d)
 2. [配列操作](/source/array_example.d)
 3. [引数解析](/source/getopt_example.d)
