@@ -1,7 +1,7 @@
 /++
 動的配列と静的配列の操作についてまとめます。
 
-要素の初期化、要素の追加(WIP)、要素の削除、ソート(WIP)、ループ操作(WIP)
+要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)
 +/
 module array_example;
 
@@ -42,7 +42,7 @@ unittest
 
 `std.algorithm` の `remove` を使います
 
-- `remove` : $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.remove)
+`remove` : $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.remove)
 +/
 unittest
 {
@@ -55,4 +55,40 @@ unittest
     data = data.remove!(a => a > 50); // 条件式指定（50より大きいものを削除）
 
     assert(data == [10, 30, 40, 50]);
+}
+
+/++
+要素の追加の例です。
+
+動的配列に対しては `~=` 演算子で要素を追加することができます。
++/
+unittest
+{
+    int[] data;
+
+    data ~= 10;
+    data ~= 20;
+
+    assert(data == [10, 20]);
+}
+
+/++
+事前にサイズがわからない配列を構築する場合は `std.array` の `appender` を使用すると効率的です。
+
+要素の追加は `~=` または `put` で行います。
+
+`appender` : $(LINK https://dlang.org/phobos/std_array.html#appender)
++/
+unittest
+{
+    import std.array : appender;
+
+    auto buffer = appender!(int[]);
+
+    buffer ~= 10;
+    buffer.put(20);
+
+    int[] data = buffer.data;
+
+    assert(data == [10, 20]);
 }
