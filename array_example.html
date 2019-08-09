@@ -20,18 +20,18 @@
     </div>
     
     <ul>
+<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul><li>    <a href="subpkg_test.html"><span >test</span></a>
+</li></ul></li>
 <a href="array_example.html"><span >array_example</span></a>
 <a href="getopt_example.html"><span >getopt_example</span></a>
-<a href="string_example.html"><span >string_example</span></a>
-<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul><li>    <a href="subpkg_test.html"><span >test</span></a>
-</li></ul></li></ul>
+<a href="string_example.html"><span >string_example</span></a></ul>
 </div>
             <div class="content">                <h1>array_example</h1>
                 
                 <div class="quickindex" id="quickindex"></div>
                 
                 <div class="ddoc_summary">動的配列と静的配列の操作についてまとめます。
-</div><div class="ddoc_description">要素の初期化、要素の追加(WIP)、要素の削除、ソート(WIP)、ループ操作(WIP)</div>
+</div><div class="ddoc_description">要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)</div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  初期化の例です
 <pre class="d_code notranslate"><span class="d_comment">// 簡単な配列は new T[N] という形式で初期化できます
@@ -63,8 +63,9 @@
 <div class="ddoc_blankline"></div>
 
 <span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> の <span class="d_inlinecode donthyphenate notranslate">remove</span> を使います
+<div class="ddoc_blankline"></div>
 
-<ul><li><span class="d_inlinecode donthyphenate notranslate">remove</span> : <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.remove">https://dlang.org/phobos/std_algorithm_mutation.html#.remove</a>
+<span class="d_inlinecode donthyphenate notranslate">remove</span> : <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.remove">https://dlang.org/phobos/std_algorithm_mutation.html#.remove</a>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : remove;
 
 <span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
@@ -74,8 +75,40 @@
 </span>data = data.remove!(a =&gt; a &gt; 50); <span class="d_comment">// 条件式指定（50より大きいものを削除）
 </span>
 <span class="d_keyword">assert</span>(data == [10, 30, 40, 50]);
-</pre></li>
-</ul>
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 要素の追加の例です。
+<div class="ddoc_blankline"></div>
+
+動的配列に対しては <span class="d_inlinecode donthyphenate notranslate">~=</span> 演算子で要素を追加することができます。
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] data;
+
+data ~= 10;
+data ~= 20;
+
+<span class="d_keyword">assert</span>(data == [10, 20]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 事前にサイズがわからない配列を構築する場合は <span class="d_inlinecode donthyphenate notranslate">std.array</span> の <span class="d_inlinecode donthyphenate notranslate">appender</span> を使用すると効率的です。
+<div class="ddoc_blankline"></div>
+
+要素の追加は <span class="d_inlinecode donthyphenate notranslate">~=</span> または <span class="d_inlinecode donthyphenate notranslate">put</span> で行います。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">appender</span> : <a href="https://dlang.org/phobos/std_array.html#appender">https://dlang.org/phobos/std_array.html#appender</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.array : appender;
+
+<span class="d_keyword">auto</span> buffer = appender!(<span class="d_keyword">int</span>[]);
+
+buffer ~= 10;
+buffer.put(20);
+
+<span class="d_keyword">int</span>[] data = buffer.data;
+
+<span class="d_keyword">assert</span>(data == [10, 20]);
+</pre>
 </div>
 
                 
