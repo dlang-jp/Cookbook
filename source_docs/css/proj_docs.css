@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Migu 1M";
+    src: local("Migu 1M");
+}
+@font-face {
+    font-family: "IPAGothic";
+    src: local("IPAGothic")
+}
 body
 {
     background: white;
@@ -20,7 +28,8 @@ body > .container
 /* TC: Formats D_CODE */
 .d_code
 {
-    font-family: Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
+    font-family: "Migu 1M", SFMono-Regular, "IPAGothic", Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
+    font-weight: normal;
     background: #fcfcfc;
     border-radius: 4px;
     padding: 1ex;
