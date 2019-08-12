@@ -567,19 +567,19 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* These add the lines to the sidebar */
 .sidebar ul ul ul
 {
-    border-left: 1px solid #000099;
+    border-left: 1px solid #993333;
 }
 
 .sidebar li li > a > span,
 .sidebar li li > h7 > span
 {
-    border-left: 1px solid #000099;
+    border-left: 1px solid #993333;
 }
 
 .sidebar ul ul li > a > span::before,
 .sidebar ul ul li > h7 > span::before
 {
-    border-bottom: 1px solid #000099;
+    border-bottom: 1px solid #993333;
     content: "";
     display: inline-block;
     width: 0.5ex;
@@ -604,7 +604,7 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 .sidebar ul ul li:last-child > a > span::before,
 .sidebar ul ul li:last-child > h7 > span::before
 {
-    border-left: 1px solid #000099;
+    border-left: 1px solid #993333;
 }
 
 /* The modules listed on the index page */
