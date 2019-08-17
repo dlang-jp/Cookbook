@@ -617,6 +617,11 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 }
 
 /* The modules listed on the index page */
+.module_index_dubpkgname
+{
+    font-size: 1.5em;
+    font-weight: bold;
+}
 .module_index
 {
     font-size: 1.2em;
