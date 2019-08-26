@@ -32,7 +32,7 @@ DDOC_DESCRIPTION=$(DIVC ddoc_description, $0)$(LF)
 DDOC_DITTO=$(LF)$0
 DDOC_ENUM_BASETYPE=$(SPANC ddoc_enum_basetype, $0)
 DDOC_ENUM_MEMBERS=$(DDOC_MEMBERS $(DIVC ddoc_enum_members, $0))$(LF)
-DDOC_EXAMPLES=<span class="dlang_runnable"></span>$(SECTION ddoc_examples, Examples, $0)
+DDOC_EXAMPLES=$(SECTION ddoc_examples, Examples, $0)
 DDOC_HISTORY=$(SECTION ddoc_history, History, $0)
 DDOC_KEYWORD=$(TC code, ddoc_keyword, $0)
 DDOC_LICENSE=$(SECTION ddoc_license, License, $0)
