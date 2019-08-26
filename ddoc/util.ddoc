@@ -13,10 +13,16 @@ UNDERSCORE_PREFIXED_SKIP=$(UNDERSCORE_PREFIXED $+)
 UNDERSCORE_PREFIXED_SKIP2=$(UNDERSCORE_PREFIXED_SKIP $+)
 _=
 
-MENU_DUBPKG=$+
-MENU_PKG=$(LIC expand-container open, $(AC expand-toggle, #, $(SPAN, $1))$(ITEMIZE $+))
-MENU_MODULE=$(A $1, $(SPAN, $+))
-INDEX_DUBPKG=$(SPANC module_index_dubpkgname, $1)$(UL $+)
-INDEX_PKG=$+
-INDEX_MODULE=$(LI $(A $1, $(SPANC module_index, $+)))
+MENU_DUBPKG =$3
+MENU_PKG    =$(LIC expand-container open, $(AC expand-toggle, #, $(SPAN, $1))$(UL $2))
+MENU_MOD    =$(LI $(A $2, $(SPAN, $1)))
+
+INDEX_DUBPKG =$(SPANC module_index_dubpkgname, $1)$(UL $3)
+INDEX_PKG    =$2
+INDEX_MOD    =$(LI $(A $2, $(SPANC module_index, $6)))
+_=
+
+INFO_DUBPKG =
+INFO_PKG    =
+INFO_MOD    =
 _=

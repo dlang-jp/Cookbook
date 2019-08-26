@@ -1,10 +1,11 @@
 @font-face {
     font-family: "Migu 1M";
-    src: local("Migu 1M");
+    src: local("Migu 1M"),
+         local("Migu 1M Regular");
 }
 @font-face {
     font-family: "IPAGothic";
-    src: local("IPAGothic")
+    src: local("IPAGothic");
 }
 body
 {
@@ -12,6 +13,17 @@ body
     color: #333;
     margin: 0;
     padding: 0;
+}
+
+a
+{
+    color: #B03931;
+    cursor: pointer;
+}
+
+code, pre
+{
+    font-family: "Migu 1M", SFMono-Regular, "IPAGothic", Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
 }
 
 /* This is needed so that sidebar-underbar stretches to the bottom of the page */
@@ -28,7 +40,6 @@ body > .container
 /* TC: Formats D_CODE */
 .d_code
 {
-    font-family: "Migu 1M", SFMono-Regular, "IPAGothic", Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
     font-weight: normal;
     background: #fcfcfc;
     border-radius: 4px;
@@ -66,7 +77,7 @@ body > .container
 .d_psymbol
 {
     font-style: italic;
-    color: #006F14;
+    color: #622;
 }
 
 /* SPAN: Formats D_STRING */
@@ -126,9 +137,7 @@ body > .container
 
 .ddoc_constraint:hover
 {
-    background: #BBBBBB;
-    color: #0000FF;
-    font-weight: bold;
+    background: #ddd;
     opacity: 1;
 }
 
@@ -161,9 +170,9 @@ body > .container
 .ddoc_decl
 {
     background: #EEEEEE;
-    border-top: 1px solid #9999CC;
-    border-right: 1px solid #9999CC;
-    border-left: 5px solid #130AAD;
+    border-top: 1px solid #CC9999;
+    border-right: 1px solid #CC9999;
+    border-left: 5px solid #AD0A13;
     text-align: left;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -177,7 +186,7 @@ body > .container
 
 .ddoc_decl + dd
 {
-    border: 1px solid #9999CC;
+    border: 1px solid #CC9999;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     margin: 0;
@@ -261,9 +270,8 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* SPAN: Formats DDOC_KEYWORD */
 .ddoc_keyword
 {
-    font-size: 120%;
     font-weight: bold;
-    color: blue;
+    color: #226;
 }
 
 /* SPAN: Formats the DDOC_LICENSE section's title */
@@ -293,7 +301,7 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* SPAN: Formats DDOC_PARAM */
 .ddoc_param
 {
-    color: green;
+    color: #622;
 }
 
 /* SPAN: Formats the DDOC_PARAMS section's title */
@@ -337,7 +345,7 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* SPAN: Formats DDOC_PSYMBOL */
 .ddoc_psymbol
 {
-    color: #006F14;
+    color: #622;
     font-size: 120%;
     font-weight: bold;
 }
@@ -454,7 +462,7 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* These are for the jump links */
 .quickindex
 {
-    background: #BBBBBB;
+    background: #ddd;
     font-weight: normal;
 }
 
@@ -630,7 +638,7 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 /* Customize how TABLEs look */
 table
 {
-    border: solid #046000;
+    border: solid #640000;
     border-width: 2px 2px 2px 2px;
     border-collapse: collapse;
 }
@@ -658,19 +666,19 @@ table td
 table th
 {
     border: none;
-    border-bottom: 2px solid #046000;
+    border-bottom: 2px solid #640000;
 }
 
 table th:not(:last-child)
 {
     padding-right: 1em;
-    border-right: 1px solid #046000;
+    border-right: 1px solid #640000;
 }
 
 table td:not(:last-child)
 {
     padding-right: 1em;
-    border-right: 1px dotted #046000;
+    border-right: 1px dotted #640000;
 }
 
 table a

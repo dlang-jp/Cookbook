@@ -1,0 +1,17 @@
+{{# is_package }}
+	$({{ tag_pkg }} {{ name }},
+		{{# has_package_d }}
+			$({{ tag_mod }} package, {{ page_url }}, {{ dub_package_name }}, {{ package_name }}, {{ module_name }}, {{ full_module_name }}, {{ source_path }})
+		{{/ has_package_d }}
+		{{# children }}{
+			"file": "_module_info",
+			"map": {
+				"tag_pkg":"{{tag_pkg}}",
+				"tag_mod":"{{tag_mod}}"
+			}
+		}{{/ children }}
+	)
+{{/ is_package }}
+{{# is_module }}
+	$({{ tag_mod }} {{ name }}, {{ page_url }}, {{ dub_package_name }}, {{ package_name }}, {{ module_name }}, {{ full_module_name }}, {{ source_path }})
+{{/ is_module }}

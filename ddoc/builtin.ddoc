@@ -32,7 +32,7 @@ DDOC_DESCRIPTION=$(DIVC ddoc_description, $0)$(LF)
 DDOC_DITTO=$(LF)$0
 DDOC_ENUM_BASETYPE=$(SPANC ddoc_enum_basetype, $0)
 DDOC_ENUM_MEMBERS=$(DDOC_MEMBERS $(DIVC ddoc_enum_members, $0))$(LF)
-DDOC_EXAMPLES=$(SECTION ddoc_examples, Examples, $0)
+DDOC_EXAMPLES=<span class="dlang_runnable"></span>$(SECTION ddoc_examples, Examples, $0)
 DDOC_HISTORY=$(SECTION ddoc_history, History, $0)
 DDOC_KEYWORD=$(TC code, ddoc_keyword, $0)
 DDOC_LICENSE=$(SECTION ddoc_license, License, $0)
@@ -41,7 +41,7 @@ DDOC_MEMBER_HEADER=
 DDOC_MEMBER_HEADER_ANCHOR=
 DDOC_MEMBERS=$(DLC ddoc_members, $0)
 DDOC_MODULE_MEMBERS=$(DDOC_MEMBERS $(DIVC ddoc_module_members, $0))$(LF)
-DDOC_OVERLOAD_SEPARATOR=$(DDOC_BLANKLINE)
+DDOC_OVERLOAD_SEPARATOR=$(BR)
 DDOC_PARAM=$(SPANC ddoc_param, $0)
 DDOC_PARAMS=$(SECTION ddoc_params, Parameters, $(TC table, ddoc_params_table, $0))$(LF)
 DDOC_PARAM_DESC=$(TDC ddoc_param_desc, $0)

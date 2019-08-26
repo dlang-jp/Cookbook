@@ -1,0 +1,11 @@
+MODULE_INFORMATION={{# dub_pkg_info }}
+$(INFO_DUBPKG {{ name }}, {{ version }},
+	{{# children }}{
+		"file": "_module_info",
+		"map": {
+			"tag_pkg":"INFO_PKG",
+			"tag_mod":"INFO_MOD"
+		}
+	}{{/ children }}
+)
+{{/ dub_pkg_info }}
