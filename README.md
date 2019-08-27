@@ -50,5 +50,5 @@ dub test
 ## ローカルで出力結果を確認する方法
 
 ```bash
-rdmd gendoc.d
+dub run gendoc
 ```

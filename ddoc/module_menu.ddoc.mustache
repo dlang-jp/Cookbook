@@ -1,0 +1,11 @@
+MODULE_MENU={{# dub_pkg_info }}
+$(MENU_DUBPKG {{ name }}, {{ version }},
+	{{# children }}{
+		"file": "_module_info",
+		"map": {
+			"tag_pkg":"MENU_PKG",
+			"tag_mod":"MENU_MOD"
+		}
+	}{{/ children }}
+)
+{{/ dub_pkg_info }}
