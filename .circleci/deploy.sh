@@ -16,5 +16,5 @@ git checkout gh-pages
 rm -r *
 mv ../docs/* ./
 git add -A --force .
-git commit -m "[skip ci] Update docs"
+git diff-index --quiet HEAD || git commit -m "[skip ci] Update docs"
 git push origin gh-pages
