@@ -95,7 +95,7 @@ unittest
     }
 
     A a = {
-        x:3,
+        x : 3,
         y : 4.5,
         z : [1, 2],
         nonPrintableMember : 34
