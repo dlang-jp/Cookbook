@@ -4,3 +4,4 @@ authors "lempiji"
 license "public domain"
 
 subPackage "subpkg"
+subPackage "windows"
