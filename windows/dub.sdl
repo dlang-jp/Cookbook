@@ -1,4 +1,4 @@
-name "sub_windows"
+name "windows"
 description "A minimal D application."
 authors "lempiji"
 copyright "Copyright © 2019, lempiji"
