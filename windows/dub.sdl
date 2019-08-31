@@ -3,5 +3,6 @@ description "A minimal D application."
 authors "lempiji"
 copyright "Copyright © 2019, lempiji"
 license "public domain"
-libs-windows "users32"
-libs-windows "kernel32"
+// ソース内に pragma(lib, "user32"); とすることもできます
+libs "users32" platform="windows"
+libs "kernel32" platform="windows"
