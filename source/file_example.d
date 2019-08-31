@@ -68,18 +68,32 @@ unittest
     write("test/foo/bar/d.txt", "Please call me File D.");
 
     // ディレクトリ内のファイルを列挙します。
-    auto paths = dirEntries("test", SpanMode.breadth).map!(d => d.name).array.sort.array;
+    string[] paths;
+    foreach (path; dirEntries("test", SpanMode.breadth)) {
+        paths ~= path.name;
+    }
+    sort(paths);
     assert(paths == ["test/a.txt", "test/b.txt", "test/foo", "test/foo/bar", "test/foo/bar/d.txt", "test/foo/c.txt"]);
+}
 
-    // ファイルのみを抽出します。
-    auto filePaths = paths.filter!(isFile).array;
-    assert(filePaths == ["test/a.txt", "test/b.txt", "test/foo/bar/d.txt", "test/foo/c.txt"]);
+/++
+パスに関する操作の例です。
++/
+unittest
+{
+    import std.path;
+
+    string filePath = "test/foo/bar.txt";
 
     // ファイル名のみを抽出します。
-    auto fileNames = filePaths.map!(baseName).array;
-    assert(fileNames == ["a.txt", "b.txt", "d.txt", "c.txt"]);
+    string fileName = filePath.baseName;
+    assert(fileName == "bar.txt");
 
-    //拡張子のみを抽出します。
-    auto extensions = filePaths.map!(extension).array;
-    assert(extensions == [".txt", ".txt", ".txt", ".txt"]);
+    // ディレクトリ名を抽出します。
+    string fileDir = filePath.dirName;
+    assert(fileDir == "test/foo");
+
+    // 拡張子のみを抽出します。
+    string fileExtension = filePath.extension;
+    assert(fileExtension == ".txt");
 }
