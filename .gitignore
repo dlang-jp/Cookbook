@@ -28,3 +28,6 @@ docs
 
 # Hidden files
 .*
+
+# Test Library
+cookbook-test-library
