@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>windows.basic</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>windows.basic</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">Windowsにおける標準API(Win32API)の呼び出しについてまとめます。
+</div><div class="ddoc_description">概要
+<ol><li>C言語では多くの場合 <span class="d_inlinecode donthyphenate notranslate">#include &lt;windows.h&gt;</span> と記述しますが、Dでは <span class="d_inlinecode donthyphenate notranslate">import core.sys.windows.windows;</span> と記述します。</li>
+<li>あとは利用する関数が含まれるlibファイルをリンクすればシステム関数が利用できます。
+<ul><li>dubでは設定ファイルの <span class="d_inlinecode donthyphenate notranslate">libs</span> セクションにファイル名を拡張子を除いて書きます。</li>
+<li><span class="d_inlinecode donthyphenate notranslate">pragma(lib, "ファイル名");</span> とする書き方もあります
+</li>
+</ul></li>
+</ol>
+なおライブラリ等でWindows以外のプラットフォームと共用するためには <span class="d_inlinecode donthyphenate notranslate">version (Windows) { } else { }</span> で別々に書きます。<br>
+以下の例ではLinux等の環境でもビルドできるようにするためversionで囲って表記しています。
+
+</div>
+<div class="ddoc_see_also"><span class="ddoc_see_also_header">See Also:</span>
+ 関数に対応するヘッダーとlibファイルはMicrosoft Docsのサイトから検索して見つけることができます。<br>
+    <a href="https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/">https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/</a></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <span class="d_inlinecode donthyphenate notranslate">GetSystemMetrics</span>関数を使ってシステム情報（マウスのボタン数）を取得する例です。
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_keyword">import</span> core.sys.windows.windows;
+
+    <span class="d_keyword">auto</span> n = GetSystemMetrics(SM_CMOUSEBUTTONS);
+    <span class="d_keyword">assert</span>(n &gt;= 0);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ GetComputerNameEx関数を使ってコンピューター名を取得する例です。
+<div class="ddoc_blankline"></div>
+
+Windowsのシステム関数には末尾にAかWが付くものがあり、それぞれchar向けかwchar向けを表します。
+<div class="ddoc_blankline"></div>
+
+Aが付く関数はシステムロケールに従って結果を返すため、多くはASCII文字列ですが日本語環境ではShift_JISになることがあります。<br>
+Wが付く関数はUnicodeで結果を返すため、そのままwcharの文字列として扱うことができます。
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_keyword">import</span> core.sys.windows.windows;
+
+    <span class="d_comment">// 適当な長さのバッファを確保しておきます。
+</span>    DWORD length = 256;
+    <span class="d_keyword">wchar</span>[256] buf;
+
+    BOOL ret = GetComputerNameExW(COMPUTER_NAME_FORMAT.ComputerNamePhysicalNetBIOS,
+            buf.ptr, &amp;length);
+
+    <span class="d_keyword">assert</span>(ret != 0);
+    <span class="d_keyword">assert</span>(0 &lt; length &amp;&amp; length &lt;= 256);
+
+    <span class="d_comment">// 結果をスライスで取り出すことでwchar[]の文字列として利用できます。
+</span>    <span class="d_keyword">wchar</span>[] computerName = buf[0 .. length];
+
+    <span class="d_comment">// wchar[]で確保したものはstd.convのtoでstringに変換することができます。
+</span>    <span class="d_keyword">import</span> std.conv : to;
+
+    string strComputerName = computerName.to!string();
+    <span class="d_keyword">assert</span>(0 &lt; strComputerName.length &amp;&amp; strComputerName.length &lt;= 256);
+}
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
