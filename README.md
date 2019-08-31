@@ -5,6 +5,11 @@
 
 実際に動くプログラム、そこから生成されるHTMLをまとめます。
 
+言語機能や文法などの疑問があれば、日本語で実行しながら学べる入門資料の「D言語ツアー」もあわせて参照してみてください。
+
+- D言語ツアー
+[https://tour.dlang.org/tour/ja/welcome/welcome-to-d](https://tour.dlang.org/tour/ja/welcome/welcome-to-d)
+
 # 目次
 ドキュメント : [https://dlang-jp.github.io/Cookbook](https://dlang-jp.github.io/Cookbook)
 
