@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>file_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>file_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">ファイル・パス操作についてまとめます。
+</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ テキストファイル操作の例です。
+<pre class="d_code notranslate"><span class="d_comment">// 注: 以下の関数は他のmoduleの関数名と被っているためrename importしています。
+</span><span class="d_keyword">import</span> std.file : fwrite = write, fremove = remove, fappend = append;
+<span class="d_keyword">import</span> std.file;
+
+<span class="d_comment">// 指定した文字列でテキストファイルを作成します。
+</span>string textFile = <span class="d_string">"test.txt"</span>;
+string content = <span class="d_string">"Hello, world!"</span>;
+fwrite(textFile, content);
+
+<span class="d_comment">// ファイルの存在を確認します。
+</span><span class="d_keyword">assert</span>(textFile.exists);
+
+<span class="d_comment">// ファイルの中身を読み込みます。
+</span>string loadedContent = readText(textFile);
+<span class="d_keyword">assert</span>(content == loadedContent);
+
+<span class="d_comment">// ファイル名を変更します。
+</span>string newTextFile = <span class="d_string">"test2.txt"</span>;
+rename(textFile, newTextFile);
+<span class="d_keyword">assert</span>(!textFile.exists);
+<span class="d_keyword">assert</span>(newTextFile.exists);
+
+<span class="d_comment">// ファイルに追記します。
+</span>string additionalContent = <span class="d_string">"This is D world!!!!"</span>;
+fappend(newTextFile, additionalContent);
+
+<span class="d_comment">// ファイルの中身を再度確認します。
+</span>string loadedContent2 = readText(newTextFile);
+<span class="d_keyword">assert</span>(loadedContent2 == content ~ additionalContent);
+
+<span class="d_comment">// ファイルを削除します。
+</span>fremove(newTextFile);
+<span class="d_keyword">assert</span>(!newTextFile.exists);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ディレクトリ操作の例です。
+<pre class="d_code notranslate"><span class="d_comment">// 注: 以下の関数は他のmoduleの関数名と被っているためstatic importしています。
+</span><span class="d_keyword">import</span> std.file : fwrite = write;
+
+<span class="d_keyword">import</span> std.algorithm : map, filter, sort;
+<span class="d_keyword">import</span> std.array : array;
+<span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.path;
+
+<span class="d_comment">// ディレクトリを作成します。
+</span>mkdir(<span class="d_string">"test"</span>);
+
+<span class="d_comment">// ディレクトリを再帰的に作成します。
+</span>mkdirRecurse(<span class="d_string">"test/foo/bar"</span>);
+
+<span class="d_comment">// 処理の最後にディレクトリを再帰的に削除します。
+</span><span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"test"</span>);
+
+<span class="d_comment">// ファイルをディレクトリ内に作成します。
+</span>fwrite(<span class="d_string">"test/a.txt"</span>, <span class="d_string">"This is File A."</span>);
+fwrite(<span class="d_string">"test/b.txt"</span>, <span class="d_string">"I am File B."</span>);
+fwrite(<span class="d_string">"test/foo/c.txt"</span>, <span class="d_string">"My name is File C."</span>);
+fwrite(<span class="d_string">"test/foo/bar/d.txt"</span>, <span class="d_string">"Please call me File D."</span>);
+
+<span class="d_comment">// ディレクトリ内のファイルを列挙します。
+</span>string[] paths;
+<span class="d_keyword">foreach</span> (path; dirEntries(<span class="d_string">"test"</span>, SpanMode.breadth)) {
+    paths ~= path.name;
+}
+sort(paths);
+<span class="d_keyword">assert</span>(paths == [<span class="d_string">"test/a.txt"</span>, <span class="d_string">"test/b.txt"</span>, <span class="d_string">"test/foo"</span>, <span class="d_string">"test/foo/bar"</span>, <span class="d_string">"test/foo/bar/d.txt"</span>, <span class="d_string">"test/foo/c.txt"</span>]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ パスに関する操作の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.path;
+
+string filePath = <span class="d_string">"test/foo/bar.txt"</span>;
+
+<span class="d_comment">// ファイル名のみを抽出します。
+</span>string fileName = filePath.baseName;
+<span class="d_keyword">assert</span>(fileName == <span class="d_string">"bar.txt"</span>);
+
+<span class="d_comment">// ディレクトリ名を抽出します。
+</span>string fileDir = filePath.dirName;
+<span class="d_keyword">assert</span>(fileDir == <span class="d_string">"test/foo"</span>);
+
+<span class="d_comment">// 拡張子のみを抽出します。
+</span>string fileExtension = filePath.extension;
+<span class="d_keyword">assert</span>(fileExtension == <span class="d_string">".txt"</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
