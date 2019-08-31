@@ -1,4 +1,5 @@
 # D言語クックブック
+[![CircleCI](https://circleci.com/gh/dlang-jp/Cookbook.svg?style=svg)](https://circleci.com/gh/dlang-jp/Cookbook)
 
 処理内容から書き方を逆引きするための資料です。
 
