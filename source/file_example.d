@@ -58,6 +58,9 @@ unittest
     // ディレクトリを再帰的に作成します。
     mkdirRecurse("test/foo/bar");
 
+    // 処理の最後にディレクトリを再帰的に削除します。
+    scope (exit) rmdirRecurse("test");
+
     // ファイルをディレクトリ内に作成します。
     write("test/a.txt", "This is File A.");
     write("test/b.txt", "I am File B.");
@@ -79,7 +82,4 @@ unittest
     //拡張子のみを抽出します。
     auto extensions = filePaths.map!(extension).array;
     assert(extensions == [".txt", ".txt", ".txt", ".txt"]);
-
-    // ディレクトリを再帰的に削除します。
-    rmdirRecurse("test");
 }
