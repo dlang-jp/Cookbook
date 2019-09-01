@@ -28,7 +28,7 @@ module range_example;
 /++
 最小のレンジ(InputRange)を作る
 +/
-@nogc nothrow pure @safe unittest
+unittest
 {
     // ここでは、簡単なレンジの構造体を作りながら、レンジの定義を説明します。
 
@@ -110,13 +110,11 @@ module range_example;
     import std.algorithm : equal, filter;
 
     // std.algorithmのequal関数でIntRangeと配列を比較します。
-    immutable(int)[5] expected = [0, 1, 2, 3, 4];
-    assert(equal(IntRange(5), expected[]));
+    assert(equal(IntRange(5), [0, 1, 2, 3, 4]));
 
     // std.algorithmのfilter関数で、0から10までの間の奇数のみ取り出します。
     auto odds = filter!"a % 2 != 0"(IntRange(10));
-    immutable(int)[5] expectedOdds = [1, 3, 5, 7, 9];
-    assert(equal(odds, expectedOdds[]));
+    assert(equal(odds, [1, 3, 5, 7, 9]));
 
     // レンジはforeachステートメントで巡回することも可能です。
     int i = 0;
@@ -129,7 +127,7 @@ module range_example;
     // なお、IntRangeはより高機能なものがstd.rangeのiota関数として用意されています。
     // 自作せずにこちらを使用しましょう。
     import std.range : iota;
-    assert(equal(iota(0, 5), expected[]));
-    assert(equal(filter!"a % 2 != 0"(iota(0, 10)), expectedOdds[]));
+    assert(equal(iota(0, 5), IntRange(5)));
+    assert(equal(filter!"a % 2 != 0"(iota(0, 10)), [1, 3, 5, 7, 9]));
 }
 
