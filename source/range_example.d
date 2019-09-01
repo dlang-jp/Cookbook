@@ -63,13 +63,13 @@ unittest
         }
 
         /// nに達していたら終了
-        bool empty() const 
+        @property bool empty() const
         {
             return i == n;
         }
 
         /// 現在の値を返す
-        int front() const
+        @property int front() const
         in (!empty)
         {
             return i;
