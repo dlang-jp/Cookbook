@@ -26,7 +26,7 @@ TODO:
 module range_example;
 
 /++
-レンジを作る
+最小のレンジ(InputRange)を作る
 +/
 @nogc nothrow pure @safe unittest
 {
@@ -35,13 +35,19 @@ module range_example;
     /++
     0からn未満の整数を取り出せるレンジを作ります。
 
-    レンジは以下の4つが必ず必要です。
+    値を取り出すためのレンジは、最低でも以下の3つが必ず必要です。
 
         * 要素がもう無いかどうかを示す`range.empty`
         * 現在の先頭要素を取得する`range.front`
         * 次の要素へ移動する`range.popFront()`
 
-    それぞれを、メンバ関数や通常の関数(UFCSを利用)として用意します。
+    この3つのみを持つレンジをInputRangeと呼びます。
+    ほかのより高機能なレンジは、InputRangeを拡張した仕様を備えています。
+    (より高機能なレンジとして、位置の保存が行えるForwardRangeや、
+     前後の両方に移動が行えるBidirectionalRangeがあります)
+
+    レンジを実装する場合、それぞれの操作を
+    メンバ関数や通常の関数(UFCSを利用)として用意する必要があります。
     今回は、メンバ関数として実装します。
     +/
     static struct IntRange
@@ -77,8 +83,7 @@ module range_example;
         }
     }
 
-    // IntRangeは、レンジの一種であるInputRangeとして使えるようになります。
-    // 型がレンジであるかは、std.rangeのisInputRangeで確認できます。
+    // 型がInputRangeであるかは、std.rangeのisInputRangeで確認できます。
     import std.range : isInputRange;
     static assert(isInputRange!IntRange);
 
