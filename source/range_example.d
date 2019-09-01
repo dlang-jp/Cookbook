@@ -46,6 +46,10 @@ unittest
     (より高機能なレンジとして、位置の保存が行えるForwardRangeや、
      前後の両方に移動が行えるBidirectionalRangeがあります)
 
+    より詳細なInputRangeの仕様・規則については、
+    std.rangeのisInputRangeのドキュメントに記載があります。
+    https://dlang.org/phobos/std_range_primitives.html#isInputRange
+
     レンジを実装する場合、それぞれの操作を
     メンバ関数や通常の関数(UFCSを利用)として用意する必要があります。
     今回は、メンバ関数として実装します。
