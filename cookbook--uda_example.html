@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>uda_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>uda_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">UDA(User Defined Attribute)の使用例についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ UDA取得の例です
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std : hasUDA, AliasSeq;
+
+<span class="d_comment">// 変数宣言の前にUDAを書くことができます。
+</span>@(1) <span class="d_keyword">int</span> x;
+<span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(getAttributes, x) == AliasSeq!(1));
+
+@(<span class="d_string">"test"</span>) string y;
+<span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(getAttributes, y) == AliasSeq!(<span class="d_string">"test"</span>));
+
+<span class="d_comment">// 無名のenumを作成することでUDAを作成できます。
+</span><span class="d_keyword">enum</span> MyUDA;
+@MyUDA <span class="d_keyword">double</span> z;
+<span class="d_keyword">assert</span>(hasUDA!(z, MyUDA));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 特定のUDAを持ったメンバー抽出の例です
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std : getSymbolsByUDA;
+
+<span class="d_comment">// 構造体のメンバーにUDAを持たせることも可能です。
+</span><span class="d_keyword">enum</span> MyUDA;
+<span class="d_keyword">struct</span> S {
+    @MyUDA <span class="d_keyword">int</span> x = 3;
+    <span class="d_keyword">float</span> y = 4;
+    @MyUDA <span class="d_keyword">ubyte</span> z = 5;
+}
+
+<span class="d_comment">// 構造体SのメンバのうちMyUDAを持つメンバーはxとzです。
+</span><span class="d_keyword">assert</span>(getSymbolsByUDA!(S, MyUDA)[0].stringof == <span class="d_string">"x"</span>);
+<span class="d_keyword">assert</span>(getSymbolsByUDA!(S, MyUDA)[1].stringof == <span class="d_string">"z"</span>);
+
+<span class="d_comment">// 構造体の各メンバーは通常通りの初期値を持ちます。
+</span>S s;
+<span class="d_keyword">assert</span>(s.x == 3);
+<span class="d_keyword">assert</span>(s.y == 4);
+<span class="d_keyword">assert</span>(s.z == 5);
+
+<span class="d_comment">// UDAを用いて特定のメンバーにのみ0を代入します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">foreach</span> (mem; getSymbolsByUDA!(S, MyUDA))
+    <span class="d_keyword">__traits</span>(getMember, s, mem.stringof) = 0;
+<span class="d_keyword">assert</span>(s.x == 0);
+<span class="d_keyword">assert</span>(s.y == 4);
+<span class="d_keyword">assert</span>(s.z == 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ toStringの自動生成の例です
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std : hasUDA, to, join, format;
+
+<span class="d_keyword">template</span> ImplToString()
+{
+    string toString()
+    {
+        string[] strs;
+        <span class="d_keyword">static</span> <span class="d_keyword">foreach</span> (mem; <span class="d_keyword">__traits</span>(allMembers, <span class="d_keyword">typeof</span>(<span class="d_keyword">this</span>)))
+        {
+            <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">__traits</span>(hasMember, <span class="d_keyword">typeof</span>(<span class="d_keyword">this</span>), mem)
+                    &amp;&amp; hasUDA!(<span class="d_keyword">__traits</span>(getMember, <span class="d_keyword">typeof</span>(<span class="d_keyword">this</span>), mem), printable))
+            {
+                strs ~= mem ~ <span class="d_string">":"</span> ~ <span class="d_keyword">__traits</span>(getMember, <span class="d_keyword">typeof</span>(<span class="d_keyword">this</span>), mem).to!string;
+            }
+        }
+        <span class="d_keyword">return</span> strs.join(<span class="d_string">","</span>).format!<span class="d_string">"{%s}"</span>;
+    }
+}
+
+<span class="d_keyword">enum</span> printable;
+
+<span class="d_keyword">struct</span> A
+{
+    @printable
+    {
+        <span class="d_keyword">int</span> x;
+        <span class="d_keyword">float</span> y;
+        <span class="d_keyword">int</span>[2] z;
+    }
+    <span class="d_keyword">short</span> nonPrintableMember;
+    <span class="d_keyword">mixin</span> ImplToString;
+}
+
+A a = {
+    x : 3,
+    y : 4.5,
+    z : [1, 2],
+    nonPrintableMember : 34
+};
+<span class="d_keyword">assert</span>(a.to!string == <span class="d_string">`{x:3,y:4.5,z:[1, 2]}`</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
