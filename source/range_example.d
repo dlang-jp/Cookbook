@@ -65,7 +65,7 @@ module range_example;
         /// nに達していたら終了
         bool empty() const 
         {
-            return i >= n;
+            return i == n;
         }
 
         /// 現在の値を返す
