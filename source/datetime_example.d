@@ -127,7 +127,7 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     import core.time: Duration;
     import std.datetime.stopwatch: StopWatch, AutoStart;
     // ストップウォッチの定義と同時に計測開始
-    StopWatch sw = AutoStart.yes;
+    auto sw = StopWatch(AutoStart.yes);
     // peekで計測開始からの時間を得ます
     auto monotime = sw.peek();
 
