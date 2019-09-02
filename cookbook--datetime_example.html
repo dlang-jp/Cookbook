@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>datetime_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>datetime_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">時刻・日付の操作についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>時間を表す7つの型</h1>
+
+以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。
+<pre class="d_code notranslate"><span class="d_comment">// それぞれの型は以下のモジュールでimportできます
+</span><span class="d_keyword">import</span> core.time: Duration, MonoTime;
+<span class="d_keyword">import</span> std.datetime: SysTime, Date, TimeOfDay, DateTime, Interval;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>1. 「時間」 <span class="d_inlinecode donthyphenate notranslate">Duration</span></h2>
+Durationは「時間」を表す型です。
+ここでの「時間」とは、10秒間とか、3時間、のような、時間的な長さを表す表現です。
+各種単位の「時間」を得るには、hours関数や、seconds関数のようなものを core.time からimportして使います。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.time: Duration, hours, minutes, seconds, msecs, usecs, nsecs;
+
+<span class="d_comment">// 3600秒間なら以下のように得ます。
+</span><span class="d_keyword">auto</span> dur = 3600.seconds;
+
+<span class="d_comment">// 3600秒間は、1時間と同等です。
+</span><span class="d_keyword">assert</span>(dur == 1.hours);
+
+<span class="d_comment">// 得た「時間」の型は Duration です。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(60.minutes) == Duration));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>2. 「時刻」 <span class="d_inlinecode donthyphenate notranslate">SysTime</span></h2>
+
+SysTimeは「時刻」を表す型です。
+現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: Clock, SysTime;
+<span class="d_keyword">auto</span> tim = Clock.currTime();
+
+<span class="d_comment">// 時計から得た「時刻」の型は SysTime です
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(tim) == SysTime));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>3. 「時刻」 <span class="d_inlinecode donthyphenate notranslate">DateTime</span></h2>
+
+DateTimeは「時刻」を表す型です。
+ただし、SysTimeとは内部表現が違います。
+SysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ
+何年何月何日の何時何分何秒という情報だけを持っています。
+ミリ秒以下の情報も持ちません。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: DateTime, SysTime;
+
+<span class="d_keyword">auto</span> xmasEve = DateTime(2019, 12, 24, 21, 0, 0);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(xmasEve) == DateTime));
+
+<span class="d_comment">// DateTimeからSysTimeを作ることもできます
+</span><span class="d_keyword">auto</span> xmasEve2 = SysTime(xmasEve);
+
+<span class="d_comment">// 逆に、SysTimeからDateTimeは、castで変換できます
+</span><span class="d_keyword">auto</span> xmasEve3 = <span class="d_keyword">cast</span>(DateTime)xmasEve2;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>4. 「日付」 <span class="d_inlinecode donthyphenate notranslate">Date</span></h2>
+
+Dateは、DateTimeのうち、何年何月何日(つまり日付)の部分です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: Date;
+<span class="d_keyword">auto</span> newyear = Date(2020, 1, 1);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>5. <span class="d_inlinecode donthyphenate notranslate">TimeOfDay</span></h2>
+
+TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: TimeOfDay, Date, DateTime;
+<span class="d_keyword">auto</span> noon = TimeOfDay(12, 0, 0);
+<span class="d_comment">// DateとTimeOfDayを組み合わせて、DateTimeが作れます
+</span><span class="d_keyword">auto</span> newyearNoon = DateTime(Date(2020, 1, 1), noon);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>6. 「期間」 <span class="d_inlinecode donthyphenate notranslate">Interval</span></h2>
+
+2つの「時刻」の間の時間を「期間」とすることができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: Interval, DateTime;
+<span class="d_keyword">auto</span> interval = Interval!DateTime(
+    DateTime(2019, 12, 25,  0, 0, 0),
+    DateTime(2020, 1,  1,  12, 0, 0));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>7. 「時間」 <span class="d_inlinecode donthyphenate notranslate">MonoTime</span></h2>
+
+2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、
+高精度な時間単位を扱います。
+また、NTPによる巻き戻しがおこらず、単調増加(monotonic)であることが特徴です。
+「時間」を測定するストップウォッチで得られます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.time: Duration;
+<span class="d_keyword">import</span> std.datetime.stopwatch: StopWatch, AutoStart;
+<span class="d_comment">// ストップウォッチの定義と同時に計測開始
+</span><span class="d_keyword">auto</span> sw = StopWatch(AutoStart.yes);
+<span class="d_comment">// peekで計測開始からの時間を得ます
+</span><span class="d_keyword">auto</span> monotime = sw.peek();
+
+<span class="d_comment">// totalメソッドで各単位の整数が得られます
+</span><span class="d_keyword">assert</span>(monotime.total!<span class="d_string">"msecs"</span> == 0);
+
+<span class="d_comment">// Durationにキャストすることもできます
+</span><span class="d_keyword">auto</span> peekDur = <span class="d_keyword">cast</span>(Duration)monotime;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>SysTimeと文字列の変換</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime;
+<span class="d_keyword">import</span> std.format;
+
+<span class="d_keyword">auto</span> tim = SysTime(DateTime(2019, 5, 1, 10, 0, 0));
+
+<span class="d_comment">// 日本でよく見る時刻の文字列表現 YYYY/MM/DD hh:mm:ss.SSS
+</span><span class="d_comment">// にするには以下のようにします
+</span><span class="d_keyword">auto</span> timstr = format!<span class="d_string">"%04d/%02d/%02d %02d:%02d:%02d.%03d"</span>(
+    tim.year, tim.month,  tim.day,
+    tim.hour, tim.minute, tim.second,
+    tim.fracSecs.total!<span class="d_string">"msecs"</span>);
+<span class="d_keyword">assert</span>(timstr == <span class="d_string">"2019/05/01 10:00:00.000"</span>);
+
+<span class="d_comment">// 特にフォーマットを気にしないで、わかればいい程度なら toString
+</span><span class="d_keyword">auto</span> timstrDefault = tim.toString();
+
+<span class="d_comment">// YYYY-Mon-DD HH:MM:SS.FFFFFFFTZ 形式
+</span><span class="d_keyword">auto</span> timstrSimple = tim.toSimpleString();
+<span class="d_keyword">assert</span>(timstrSimple == <span class="d_string">"2019-May-01 10:00:00"</span>);
+<span class="d_comment">// 逆変換
+</span><span class="d_keyword">auto</span> timSimple    = SysTime.fromSimpleString(timstrSimple);
+<span class="d_keyword">assert</span>(timSimple == tim);
+
+<span class="d_comment">// ISOで定められているやつ YYYYMMDDTHHMMSS.FFFFFFFTZ
+</span><span class="d_keyword">auto</span> timstrISO = tim.toISOString();
+<span class="d_keyword">assert</span>(timstrISO == <span class="d_string">"20190501T100000"</span>);
+<span class="d_comment">// 逆変換
+</span><span class="d_keyword">auto</span> timISO    = SysTime.fromISOString(timstrISO);
+<span class="d_keyword">assert</span>(timISO == tim);
+
+<span class="d_comment">// ISOで定められているやつ(別版) YYYY-MM-DDThh:MM:SS.FFFFFFFTZ
+</span><span class="d_keyword">auto</span> timstrISOExt = tim.toISOExtString();
+<span class="d_keyword">assert</span>(timstrISOExt == <span class="d_string">"2019-05-01T10:00:00"</span>);
+<span class="d_comment">// 逆変換
+</span><span class="d_keyword">auto</span> timISOExt    = SysTime.fromISOExtString(timstrISOExt);
+<span class="d_keyword">assert</span>(timISOExt == tim);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>Durationの使い方</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.time;
+<span class="d_keyword">import</span> std.datetime;
+<span class="d_keyword">import</span> std.format;
+
+<span class="d_comment">// 平成元年 1/8 10時
+</span><span class="d_keyword">auto</span> timA = SysTime(DateTime(1989, 1, 8, 10, 0, 0));
+<span class="d_comment">// 令和元年 5/1 10時
+</span><span class="d_keyword">auto</span> timB = SysTime(DateTime(2020, 5, 1, 10, 0, 0));
+<span class="d_comment">// 2つの「時刻」から「時間」を得る
+</span><span class="d_keyword">auto</span> dur = timB - timA;
+
+<span class="d_comment">// 平成の秒数
+</span><span class="d_keyword">assert</span>(dur.total!<span class="d_string">"seconds"</span> == 988_070_400);
+
+<span class="d_comment">// 平成の時間を日数とミリ秒に分解
+</span><span class="d_comment">// 注) Durationは時刻情報ではないので、うるう年や1か月に何日あるかなどの
+</span><span class="d_comment">//     計算ができないため、days, hours, minutes, seconds...といった
+</span><span class="d_comment">//     長さが変化しない"日"以下の単位にしか分解できません。
+</span><span class="d_keyword">auto</span> heiseiTimes = dur.split!(<span class="d_string">"days"</span>, <span class="d_string">"msecs"</span>);
+<span class="d_keyword">assert</span>(heiseiTimes.days == 365*31 + 121); <span class="d_comment">// 約31年とちょっと
+</span><span class="d_keyword">assert</span>(heiseiTimes.msecs == 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>StopWatchの使い方</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread;
+<span class="d_keyword">import</span> std.datetime.stopwatch;
+
+<span class="d_keyword">void</span> wait() @trusted
+{
+    Thread.sleep(1.msecs);
+}
+
+<span class="d_comment">// ストップウォッチを作成
+</span>StopWatch sw;
+
+<span class="d_comment">// running プロパティで計測中かどうかが確認できる
+</span><span class="d_keyword">assert</span>(!sw.running);
+
+<span class="d_comment">// ストップウォッチで時間計測を開始
+</span>sw.start();
+<span class="d_keyword">assert</span>(sw.running);
+
+<span class="d_comment">// 計測中のストップウォッチで計測結果を確認
+</span><span class="d_keyword">auto</span> t1 = sw.peek();
+wait();
+
+<span class="d_comment">// ストップウォッチを一時停止
+</span>sw.stop();
+<span class="d_keyword">assert</span>(!sw.running);
+
+<span class="d_comment">// (停止中は計測値が進みません)
+</span><span class="d_keyword">auto</span> t2 = sw.peek();
+<span class="d_keyword">assert</span>(t2 &gt; t1);
+wait();
+
+<span class="d_comment">// 停止中のストップウォッチの計測結果を確認
+</span><span class="d_comment">// 計測値が進んでいないので、1ナノ秒も変わらず完全に一致する。
+</span><span class="d_keyword">auto</span> t3 = sw.peek();
+<span class="d_keyword">assert</span>(t2 == t3);
+
+<span class="d_comment">// ストップウォッチを再開
+</span>sw.start();
+<span class="d_keyword">assert</span>(sw.running);
+wait();
+
+<span class="d_comment">// ストップウォッチを確認
+</span><span class="d_keyword">auto</span> t4 = sw.peek();
+<span class="d_keyword">assert</span>(t4 &gt; t3);
+
+<span class="d_comment">// 計測中にストップウォッチをリセット
+</span>sw.reset();
+
+<span class="d_keyword">assert</span>(sw.peek() &lt;= t4);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
