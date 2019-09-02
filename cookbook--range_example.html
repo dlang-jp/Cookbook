@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>range_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>range_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">レンジの操作についてまとめます。
+</div><div class="ddoc_description"><h2>レンジ(Range)とは</h2>
+
+レンジ(Range)とは、配列やリストといった要素を順次アクセスできるものを一般化した概念です。
+<div class="ddoc_blankline"></div>
+
+D言語では、データ構造やアルゴリズムをレンジの仕様に合わせて実装することで、さまざまなメリットが得られます。
+
+<ul><li>レンジの仕様に合ったデータ構造であれば、<span class="d_inlinecode donthyphenate notranslate">std.algorithm</span>などの既存ライブラリのアルゴリズムをそのまま適用できます。</li>
+<li>レンジを扱えるようアルゴリズムや関数を実装することで、配列や<span class="d_inlinecode donthyphenate notranslate">std.container</span>などの既存のデータ構造に対してそのまま使用できます。</li>
+<li>レンジの概念はD言語プログラマーの間に広く浸透しています。
+  そのため、自作のデータ構造や関数をレンジの仕様に合わせてあれば、他のD言語プログラマーにも使い方がすぐに伝わります。
+</li>
+</ul>
+<h2>参考</h2>
+
+<ul><li><span class="d_inlinecode donthyphenate notranslate">std.range</span> : <a href="https://dlang.org/phobos/std_range.html">https://dlang.org/phobos/std_range.html</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> : <a href="https://dlang.org/phobos/std_algorithm.html">https://dlang.org/phobos/std_algorithm.html</a>
+</li>
+</ul>
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">TODO:</span>
+
+<ul><li>配列・文字列をレンジとして利用する。</li>
+<li>レンジの種類の紹介</li>
+<li>std.rangeの各関数の紹介</li>
+</ul></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 最小のレンジ(InputRange)を作る
+<pre class="d_code notranslate"><span class="d_comment">// ここでは、簡単なレンジの構造体を作りながら、レンジの定義を説明します。
+</span>
+<span class="d_comment">/++
+0からn未満の整数を取り出せるレンジを作ります。
+
+値を取り出すためのレンジは、最低でも以下の3つが必ず必要です。
+
+    * 要素がもう無いかどうかを示す`range.empty`
+    * 現在の先頭要素を取得する`range.front`
+    * 次の要素へ移動する`range.popFront()`
+
+この3つのみを持つレンジをInputRangeと呼びます。
+ほかのより高機能なレンジは、InputRangeを拡張した仕様を備えています。
+(より高機能なレンジとして、位置の保存が行えるForwardRangeや、
+ 前後の両方に移動が行えるBidirectionalRangeがあります)
+
+より詳細なInputRangeの仕様・規則については、
+std.rangeのisInputRangeのドキュメントに記載があります。
+https://dlang.org/phobos/std_range_primitives.html#isInputRange
+
+レンジを実装する場合、それぞれの操作を
+メンバ関数や通常の関数(UFCSを利用)として用意する必要があります。
+今回は、メンバ関数として実装します。
++/</span>
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> IntRange
+{
+    <span class="d_keyword">int</span> i = 0;
+    <span class="d_keyword">int</span> n;
+    <span class="d_keyword">invariant</span>(i &lt;= n);
+
+    <span class="d_comment">/// nを指定するコンストラクタ
+</span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> n) 
+    {
+        <span class="d_keyword">this</span>.n = n;
+    }
+
+    <span class="d_comment">/// nに達していたら終了
+</span>    @property <span class="d_keyword">bool</span> empty() <span class="d_keyword">const</span>
+    {
+        <span class="d_keyword">return</span> i == n;
+    }
+
+    <span class="d_comment">/// 現在の値を返す
+</span>    @property <span class="d_keyword">int</span> front() <span class="d_keyword">const</span>
+    <span class="d_keyword">in</span> (!empty)
+    {
+        <span class="d_keyword">return</span> i;
+    }
+
+    <span class="d_comment">/// 次の値に移動する
+</span>    <span class="d_keyword">void</span> popFront()
+    <span class="d_keyword">in</span> (!empty)
+    {
+        ++i;
+    }
+}
+
+<span class="d_comment">// 型がInputRangeであるかは、std.rangeのisInputRangeで確認できます。
+</span><span class="d_keyword">import</span> std.range : isInputRange;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInputRange!IntRange);
+
+<span class="d_comment">// InputRangeで行える操作は下記の通りです。
+</span><span class="d_keyword">auto</span> r = IntRange(3);
+
+<span class="d_comment">// 空かどうか確かめられます。
+</span><span class="d_keyword">assert</span>(!r.empty);
+
+<span class="d_comment">// 現在の先頭要素を取り出せます。
+</span><span class="d_keyword">assert</span>(r.front == 0);
+
+<span class="d_comment">// 次の要素に移動できます。
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 1);
+
+<span class="d_comment">// 最後の値まで取り出すと、emptyがtrueになります。
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 2);
+r.popFront();
+<span class="d_keyword">assert</span>(r.empty); 
+
+<span class="d_comment">// 自作のレンジに対して、std.algorithmの関数を適用することができます。
+</span><span class="d_keyword">import</span> std.algorithm : equal, filter;
+
+<span class="d_comment">// std.algorithmのequal関数でIntRangeと配列を比較します。
+</span><span class="d_keyword">assert</span>(equal(IntRange(5), [0, 1, 2, 3, 4]));
+
+<span class="d_comment">// std.algorithmのfilter関数で、0から10までの間の奇数のみ取り出します。
+</span><span class="d_keyword">auto</span> odds = filter!<span class="d_string">"a % 2 != 0"</span>(IntRange(10));
+<span class="d_keyword">assert</span>(equal(odds, [1, 3, 5, 7, 9]));
+
+<span class="d_comment">// レンジはforeachステートメントで巡回することも可能です。
+</span><span class="d_keyword">int</span> i = 0;
+<span class="d_keyword">foreach</span> (v; IntRange(5))
+{
+    <span class="d_keyword">assert</span>(v == i);
+    ++i;
+}
+
+<span class="d_comment">// なお、IntRangeはより高機能なものがstd.rangeのiota関数として用意されています。
+</span><span class="d_comment">// 自作せずにこちらを使用しましょう。
+</span><span class="d_keyword">import</span> std.range : iota;
+<span class="d_keyword">assert</span>(equal(iota(0, 5), IntRange(5)));
+<span class="d_keyword">assert</span>(equal(filter!<span class="d_string">"a % 2 != 0"</span>(iota(0, 10)), [1, 3, 5, 7, 9]));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
