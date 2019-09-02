@@ -147,7 +147,12 @@ fwrite(<span class="d_string">"test/foo/bar/d.txt"</span>, <span class="d_string
     paths ~= path.name;
 }
 sort(paths);
-<span class="d_keyword">assert</span>(paths == [<span class="d_string">"test/a.txt"</span>, <span class="d_string">"test/b.txt"</span>, <span class="d_string">"test/foo"</span>, <span class="d_string">"test/foo/bar"</span>, <span class="d_string">"test/foo/bar/d.txt"</span>, <span class="d_string">"test/foo/c.txt"</span>]);
+<span class="d_keyword">assert</span>(paths == [buildPath(<span class="d_string">"test"</span>, <span class="d_string">"a.txt"</span>),
+                 buildPath(<span class="d_string">"test"</span>, <span class="d_string">"b.txt"</span>),
+                 buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>),
+                 buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar"</span>),
+                 buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar"</span>, <span class="d_string">"d.txt"</span>),
+                 buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"c.txt"</span>)]);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
