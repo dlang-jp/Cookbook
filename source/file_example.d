@@ -78,7 +78,12 @@ unittest
         paths ~= path.name;
     }
     sort(paths);
-    assert(paths == ["test/a.txt", "test/b.txt", "test/foo", "test/foo/bar", "test/foo/bar/d.txt", "test/foo/c.txt"]);
+    assert(paths == [buildPath("test", "a.txt"),
+                     buildPath("test", "b.txt"),
+                     buildPath("test", "foo"),
+                     buildPath("test", "foo", "bar"),
+                     buildPath("test", "foo", "bar", "d.txt"),
+                     buildPath("test", "foo", "c.txt")]);
 }
 
 /++
