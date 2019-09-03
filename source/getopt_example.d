@@ -49,6 +49,9 @@ unittest
     // dfmt off
     auto result = getopt(
         args,
+        // getoptは歴史的経緯によってデフォルトの挙動がcaseInsensitiveですが
+        // 多くの場合ではcaseSensitiveなほうが好ましいでしょう
+        std.getopt.config.caseSensitive,
         "format", "format引数の説明になります", &format,
     );
     // dfmt on
