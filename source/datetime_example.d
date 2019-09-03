@@ -277,18 +277,18 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     import std.datetime.systime: Clock, SysTime;
     import std.datetime.timezone : LocalTime, SimpleTimeZone, UTC;
 
-    // LocalTimeはシステムのローカルタイムを返す。
+    // LocalTimeクラスはプログラムが実行されているのシステムのローカルタイムゾーンを表す。
+    // Clockで取得できる現在時刻にはこのタイムゾーン情報が含まれる。
     auto tim1 = Clock.currTime();
     assert(tim1.timezone is LocalTime());
 
-    // SysTimeにUTCを指定する。
+    // UTCクラスはUTCのタイムゾーンを表す。
+    // タイムゾーンを指定して作成されたSysTimeは時差情報を含む。
     auto tim2 = SysTime(DateTime(2019, 5, 1, 10, 0, 0), UTC());
-    assert(tim2.timezone is UTC());
-    assert(tim2.timezone.name == "UTC");
     assert(tim2.toSimpleString() == "2019-May-01 10:00:00Z");
 
-    // 他のタイムゾーンに変換する。
-    auto JST = new immutable SimpleTimeZone(9.hours, "Asia/Tokyo");
-    auto tim3 = tim2.toOtherTZ(JST).toSimpleString();
-    assert(tim3 == "2019-May-01 19:00:00+09:00");
+    // UTCから任意のタイムゾーンに変換する。
+    auto JST = new immutable SimpleTimeZone(9.hours);
+    auto tim3 = tim2.toOtherTZ(JST);
+    assert(tim3.toSimpleString() == "2019-May-01 19:00:00+09:00");
 }
