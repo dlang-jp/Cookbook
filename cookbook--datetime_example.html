@@ -311,6 +311,29 @@ wait();
 <span class="d_keyword">assert</span>(sw.peek() &lt;= t4);
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>タイムゾーンの扱い</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.time : hours;
+<span class="d_keyword">import</span> std.datetime.date : DateTime;
+<span class="d_keyword">import</span> std.datetime.systime: Clock, SysTime;
+<span class="d_keyword">import</span> std.datetime.timezone : LocalTime, SimpleTimeZone, UTC;
+
+<span class="d_comment">// LocalTimeクラスはプログラムが実行されているのシステムのローカルタイムゾーンを表す。
+</span><span class="d_comment">// Clockで取得できる現在時刻にはこのタイムゾーン情報が含まれる。
+</span><span class="d_keyword">auto</span> tim1 = Clock.currTime();
+<span class="d_keyword">assert</span>(tim1.timezone <span class="d_keyword">is</span> LocalTime());
+
+<span class="d_comment">// UTCクラスはUTCのタイムゾーンを表す。
+</span><span class="d_comment">// タイムゾーンを指定して作成されたSysTimeは時差情報を含む。
+</span><span class="d_keyword">auto</span> tim2 = SysTime(DateTime(2019, 5, 1, 10, 0, 0), UTC());
+<span class="d_keyword">assert</span>(tim2.toSimpleString() == <span class="d_string">"2019-May-01 10:00:00Z"</span>);
+
+<span class="d_comment">// UTCから任意のタイムゾーンに変換する。
+</span><span class="d_keyword">auto</span> JST = <span class="d_keyword">new</span> <span class="d_keyword">immutable</span> SimpleTimeZone(9.hours);
+<span class="d_keyword">auto</span> tim3 = tim2.toOtherTZ(JST);
+<span class="d_keyword">assert</span>(tim3.toSimpleString() == <span class="d_string">"2019-May-01 19:00:00+09:00"</span>);
+</pre>
+</div>
 
                 
             </div>
