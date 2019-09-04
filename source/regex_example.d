@@ -64,7 +64,7 @@ module regex_example;
     import std.regex : regex, matchFirst;
 
     // 最初にマッチした場所を検索するには`matchFirst`を用います。
-    auto matchFirstResult = matchFirst("My IP is 192.168.1.255 !!!", regex(`(\d+)\.(\d+)\.(\d+)\.(\d+)`));
+    auto matchFirstResult = matchFirst("My IP is 192.168.1.255 !!!", regex(`(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`));
 
     // `.pre`でマッチ箇所より前の部分文字列を取得できます。
     assert(matchFirstResult.pre == "My IP is ");
