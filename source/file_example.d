@@ -49,28 +49,31 @@ unittest
 +/
 unittest
 {
-    // 注: 以下の関数は他のmoduleの関数名と被っているためstatic importしています。
+    // 注: 以下の関数は他のmoduleの関数名と被っているためrenamed importしています。
     import std.file : fwrite = write;
 
     import std.algorithm : map, filter, sort;
     import std.array : array;
     import std.file;
-    import std.path;
+    import std.path : buildPath;
 
     // ディレクトリを作成します。
     mkdir("test");
 
     // ディレクトリを再帰的に作成します。
-    mkdirRecurse("test/foo/bar");
+    //
+    // パス操作を行うときはOS間の移植をあらかじめ想定するようにしましょう。
+    // std.path.buildPathはOSに依存したパスセパレータを使用してくれます。
+    mkdirRecurse(buildPath("test", "foo", "bar"));
 
     // 処理の最後にディレクトリを再帰的に削除します。
     scope (exit) rmdirRecurse("test");
 
     // ファイルをディレクトリ内に作成します。
-    fwrite("test/a.txt", "This is File A.");
-    fwrite("test/b.txt", "I am File B.");
-    fwrite("test/foo/c.txt", "My name is File C.");
-    fwrite("test/foo/bar/d.txt", "Please call me File D.");
+    fwrite(buildPath("test", "a.txt"), "This is File A.");
+    fwrite(buildPath("test", "b.txt"), "I am File B.");
+    fwrite(buildPath("test", "foo", "c.txt"), "My name is File C.");
+    fwrite(buildPath("test", "foo", "bar", "d.txt"), "Please call me File D.");
 
     // ディレクトリ内のファイルを列挙します。
     string[] paths;
@@ -93,7 +96,7 @@ unittest
 {
     import std.path;
 
-    string filePath = "test/foo/bar.txt";
+    string filePath = buildPath("test", "foo", "bar.txt");
 
     // ファイル名のみを抽出します。
     string fileName = filePath.baseName;
@@ -101,7 +104,7 @@ unittest
 
     // ディレクトリ名を抽出します。
     string fileDir = filePath.dirName;
-    assert(fileDir == "test/foo");
+    assert(fileDir == buildPath("test", "foo"));
 
     // 拡張子のみを抽出します。
     string fileExtension = filePath.extension;
