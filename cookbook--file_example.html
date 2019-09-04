@@ -126,28 +126,31 @@ fappend(newTextFile, additionalContent);
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  ディレクトリ操作の例です。
-<pre class="d_code notranslate"><span class="d_comment">// 注: 以下の関数は他のmoduleの関数名と被っているためstatic importしています。
+<pre class="d_code notranslate"><span class="d_comment">// 注: 以下の関数は他のmoduleの関数名と被っているためrenamed importしています。
 </span><span class="d_keyword">import</span> std.file : fwrite = write;
 
 <span class="d_keyword">import</span> std.algorithm : map, filter, sort;
 <span class="d_keyword">import</span> std.array : array;
 <span class="d_keyword">import</span> std.file;
-<span class="d_keyword">import</span> std.path;
+<span class="d_keyword">import</span> std.path : buildPath;
 
 <span class="d_comment">// ディレクトリを作成します。
 </span>mkdir(<span class="d_string">"test"</span>);
 
 <span class="d_comment">// ディレクトリを再帰的に作成します。
-</span>mkdirRecurse(<span class="d_string">"test/foo/bar"</span>);
+</span><span class="d_comment">//
+</span><span class="d_comment">// パス操作を行うときはOS間の移植をあらかじめ想定するようにしましょう。
+</span><span class="d_comment">// std.path.buildPathはOSに依存したパスセパレータを使用してくれます。
+</span>mkdirRecurse(buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar"</span>));
 
 <span class="d_comment">// 処理の最後にディレクトリを再帰的に削除します。
 </span><span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"test"</span>);
 
 <span class="d_comment">// ファイルをディレクトリ内に作成します。
-</span>fwrite(<span class="d_string">"test/a.txt"</span>, <span class="d_string">"This is File A."</span>);
-fwrite(<span class="d_string">"test/b.txt"</span>, <span class="d_string">"I am File B."</span>);
-fwrite(<span class="d_string">"test/foo/c.txt"</span>, <span class="d_string">"My name is File C."</span>);
-fwrite(<span class="d_string">"test/foo/bar/d.txt"</span>, <span class="d_string">"Please call me File D."</span>);
+</span>fwrite(buildPath(<span class="d_string">"test"</span>, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+fwrite(buildPath(<span class="d_string">"test"</span>, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
+fwrite(buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"c.txt"</span>), <span class="d_string">"My name is File C."</span>);
+fwrite(buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar"</span>, <span class="d_string">"d.txt"</span>), <span class="d_string">"Please call me File D."</span>);
 
 <span class="d_comment">// ディレクトリ内のファイルを列挙します。
 </span>string[] paths;
@@ -167,7 +170,7 @@ sort(paths);
  パスに関する操作の例です。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.path;
 
-string filePath = <span class="d_string">"test/foo/bar.txt"</span>;
+string filePath = buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar.txt"</span>);
 
 <span class="d_comment">// ファイル名のみを抽出します。
 </span>string fileName = filePath.baseName;
@@ -175,7 +178,7 @@ string filePath = <span class="d_string">"test/foo/bar.txt"</span>;
 
 <span class="d_comment">// ディレクトリ名を抽出します。
 </span>string fileDir = filePath.dirName;
-<span class="d_keyword">assert</span>(fileDir == <span class="d_string">"test/foo"</span>);
+<span class="d_keyword">assert</span>(fileDir == buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>));
 
 <span class="d_comment">// 拡張子のみを抽出します。
 </span>string fileExtension = filePath.extension;
