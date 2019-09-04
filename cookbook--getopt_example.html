@@ -126,6 +126,9 @@ string format;
 </span><span class="d_comment">// dfmt off
 </span><span class="d_keyword">auto</span> result = getopt(
     args,
+    <span class="d_comment">// getoptは歴史的経緯によってデフォルトの挙動がcaseInsensitiveですが
+</span>    <span class="d_comment">// 多くの場合ではcaseSensitiveなほうが好ましいでしょう
+</span>    std.getopt.config.caseSensitive,
     <span class="d_string">"format"</span>, <span class="d_string">"format引数の説明になります"</span>, &amp;format,
 );
 <span class="d_comment">// dfmt on
