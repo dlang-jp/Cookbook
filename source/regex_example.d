@@ -83,6 +83,12 @@ module regex_example;
     assert(matchFirstResult[2] == "168");
     assert(matchFirstResult[3] == "1");
     assert(matchFirstResult[4] == "255");
+
+    // `?P<name>`でマッチに対して名前を付けられます。
+    auto namedMatchResult = matchFirst("My IP is 192.168.1.255 !!!",
+            regex(`(?P<first>\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(?P<last>\d{1,3})`));
+    assert(namedMatchResult["first"] == "192");
+    assert(namedMatchResult["last"] == "255");
 }
 
 /++
