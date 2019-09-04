@@ -32,7 +32,7 @@ module regex_example;
 
     // `\\`を二重にすれば問題ありませんが、冗長になってしまいます。
     auto s0 = "\\.";
-    
+
     // このような場合、Wysiwyg(what you see is what you get)文字列が有効です。
     // Wysiwyg文字列は`\``で囲うことで表記できます。
     auto s1 = `\.`;
@@ -78,17 +78,46 @@ module regex_example;
     // `.hit`は`[0]`の糖衣構文です。
     assert(matchFirstResult.hit == matchFirstResult[0]);
 
-    // `[1]`以降に部分マッチ結果が格納されています。
+    // `[1]`以降にキャプチャ(カッコでくくったパターンの部分マッチ)結果が格納されています。
     assert(matchFirstResult[1] == "192");
     assert(matchFirstResult[2] == "168");
     assert(matchFirstResult[3] == "1");
     assert(matchFirstResult[4] == "255");
 
-    // `?P<name>`でマッチに対して名前を付けられます。
+    // `?P<name>`でキャプチャに対して名前を付けられます。
+    // また、キャプチャ不要の場合は (?:xxx)としてグルーピングが可能です。
     auto namedMatchResult = matchFirst("My IP is 192.168.1.255 !!!",
-            regex(`(?P<first>\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(?P<last>\d{1,3})`));
+            regex(`(?P<first>\d{1,3})\.(?:\d{1,3})\.(\d{1,3})\.(?P<last>\d{1,3})`));
     assert(namedMatchResult["first"] == "192");
     assert(namedMatchResult["last"] == "255");
+    // 数字でもキャプチャした部分にアクセスできます。
+    assert(namedMatchResult[1] == "192");
+    // 168の部分はキャプチャしていないので、[2]は"1"になります。
+    assert(namedMatchResult[2] == "1");
+
+    // if文と組み合わせると便利です。
+    if (auto capt = matchFirst("My IP is 192.168.1.255 !!!", regex(`(\d\d\d)\.(\d\d\d)\.(\d\d\d)\.(\d\d\d)`)))
+    {
+        // マッチしなかった場合にこの添え字アクセスはよくありませんね。
+        assert(capt[1] == "192");
+        assert(capt[2] == "168");
+        assert(capt[3] == "1");
+        assert(capt[4] == "255");
+        // 安心してください。
+        // ifで囲うことでマッチした場合にのみここが実行されます。
+        // ですので安心して添え字を使えます。
+        assert(0);
+    }
+
+    // matchFirstにはregexオブジェクトか、もしくは、ただの文字列でパターンを指定しても大丈夫です。
+    // 2回以上同じパターンを使う場合ではregexオブジェクトにすると効率がよさそうです。
+    if (auto capt = matchFirst("My IP is 192.168.1.255 !!!", `(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`))
+    {
+        assert(capt[1] == "192");
+        assert(capt[2] == "168");
+        assert(capt[3] == "1");
+        assert(capt[4] == "255");
+    }
 }
 
 /++
@@ -123,6 +152,19 @@ module regex_example;
     // 空になったら`.empty`がtrueになります。
     matchAllResult.popFront();
     assert(matchAllResult.empty);
+
+    // foreach文と組み合わせると便利です。
+    // また、matchAllも２つ目の引数にはregexオブジェクトのほかに、文字列でパターンを渡せます。
+    size_t count;
+    foreach (capt; matchAll("import core.thread, std.regex, std.stdio, core.stdio", `std\.(\w+)`))
+    {
+        // マッチしなかった場合にはここは実行されないので、
+        // emptyのチェックや添え字の範囲チェックを省くことができて便利です。
+        if (capt[1] == "stdio")
+            break;
+        count++;
+    }
+    assert(count == 1);
 }
 
 /++
@@ -163,4 +205,85 @@ module regex_example;
     // Separatorも残したい場合は、`splitter`関数を用います。
     assert(splitter!(Yes.keepSeparators)("C/C++, Python or D", regex(`, | or `))
             .equal(["C/C++", ", ", "Python", " or ", "D"]));
+}
+
+
+/++
+# 先読み・後読み
++/
+@safe unittest
+{
+    import std.algorithm : map;
+    import std.array : join;
+    import std.regex : regex, matchAll, matchFirst;
+
+    // 肯定的先読みで、'H'から始まる連続した大文字を抽出します
+    auto matchResults = matchAll("HAraHIrehaRAhoRE", regex(`(?=H)[A-Z]+`));
+    auto joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "HAHI");
+
+    // 肯定的先読みで、次の文字が'A'になる大文字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`[A-Z](?=A)`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "HR");
+
+    // 否定的先読みで、"HI"から始まらない大文字2字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`(?!HI)[A-Z]{2}`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "HARARE");
+
+    // 否定的先読みで、次が"HI"にならない小文字2字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`[a-z]{2}(?!HI)`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "rehaho");
+
+    // 肯定的後読みで、前が'H'の3字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`(?<=H)...`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "AraIre");
+
+    // 肯定的後読みで、末尾が'a'の2字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`..(?<=a)`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "raha");
+
+    // 否定的後読みで、前が'H'じゃない大文字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`(?<!H)[A-Z]`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "HHRARE");
+
+    // 否定的後読みで、末尾が'a'じゃない小文字2字を抽出します
+    matchResults = matchAll("HAraHIrehaRAhoRE", regex(`[a-z]{2}(?<!a)`));
+    joined = matchResults.map!(a => a.hit).join();
+    assert(joined == "reho");
+
+    // 肯定的後ろ読みと、肯定的先読みの組み合わせ
+    // "否定"または"肯定"、次に"的"があってもなくてもよい語句から始まって、
+    // 後ろには"読み"が続く、"先"または"後"の文字
+    auto reLookAheadAndBhind = regex("(?<=(?:否定|肯定)的?)(?:先|後)(?=読み)");
+    string[] matchFirstResults;
+    foreach (str; [
+        "肯定的先読み", "否定的先読み", "肯定的後読み", "否定的後読み",
+        "肯定先読み",   "否定先読み",   "肯定後読み",   "否定後読み",
+        "肯定的裏読み", "忌避的先読み", "肯定後ろ読み", "否定読み"
+    ])
+    {
+        // マッチしなければ "x"、マッチしたらヒットした部分の文字
+        if (auto capt = matchFirst(str, reLookAheadAndBhind))
+        {
+            matchFirstResults ~= capt.hit;
+            // ちなみに、カッコは使ってるけどキャプチャはしていない
+            // capt.lengthはヒットした文字列だけ、という意味の 1 になる
+            assert(capt.length == 1);
+        }
+        else
+        {
+            matchFirstResults ~= "x";
+        }
+    }
+    assert(matchFirstResults == [
+        "先", "先", "後", "後",
+        "先", "先", "後", "後",
+        "x",  "x",  "x",  "x"
+    ]);
 }
