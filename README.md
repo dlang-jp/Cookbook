@@ -30,7 +30,7 @@
 
 ## 実行方法
 
-```bash
+```console
 dub test
 ```
 
@@ -43,6 +43,6 @@ dub test
 # その他
 ## ローカルで出力結果を確認する方法
 
-```bash
+```console
 dub run gendoc
 ```
