@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>assoc_array_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >assoc_array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >regex_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>assoc_array_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">連想配列の操作についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>データ操作</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std : assertThrown;
+<span class="d_keyword">import</span> core.exception : RangeError;
+
+<span class="d_comment">// Keyの型が`K`, Valueの型が`V`の連想配列の型は`V[K]`と表されます。
+</span><span class="d_keyword">int</span>[string] data;
+
+<span class="d_comment">// `[key]`で対応するValueにアクセスできます。
+</span>data[<span class="d_string">"x"</span>] = -3;
+data[<span class="d_string">"y"</span>] = +2;
+<span class="d_keyword">assert</span>(data[<span class="d_string">"x"</span>] == -3);
+<span class="d_keyword">assert</span>(data[<span class="d_string">"y"</span>] == +2);
+
+<span class="d_comment">// 既に存在するKeyに対して代入した場合、Valueが更新されます。
+</span>data[<span class="d_string">"x"</span>] = -4;
+<span class="d_keyword">assert</span>(data[<span class="d_string">"x"</span>] == -4);
+
+<span class="d_comment">// 存在しないKeyに対応するValueを得ようとすると`RangeError`が発生します。
+</span>assertThrown!RangeError(data[<span class="d_string">"z"</span>]);
+
+<span class="d_comment">// `.length`で挿入されているデータの数を取得できます。
+</span><span class="d_keyword">assert</span>(data.length == 2);
+
+<span class="d_comment">// `in`であるKeyが挿入されているかどうかが判定できます。
+</span><span class="d_keyword">assert</span>(<span class="d_string">"x"</span> <span class="d_keyword">in</span> data);
+<span class="d_keyword">assert</span>(<span class="d_string">"y"</span> <span class="d_keyword">in</span> data);
+<span class="d_keyword">assert</span>(<span class="d_string">"z"</span> !<span class="d_keyword">in</span> data);
+
+<span class="d_comment">// `.remove`で指定したKeyに対応したデータを削除できます。
+</span>data.remove(<span class="d_string">"x"</span>);
+<span class="d_keyword">assert</span>(<span class="d_string">"x"</span> !<span class="d_keyword">in</span> data);
+<span class="d_keyword">assert</span>(<span class="d_string">"y"</span> <span class="d_keyword">in</span> data);
+<span class="d_keyword">assert</span>(<span class="d_string">"z"</span> !<span class="d_keyword">in</span> data);
+
+<span class="d_comment">// `[key : value, ...]`でリテラルとしての連想配列を扱うことができます。
+</span>data = [<span class="d_string">"a"</span>: 100, <span class="d_string">"b"</span>: 200];
+<span class="d_keyword">assert</span>(data[<span class="d_string">"a"</span>] == 100);
+<span class="d_keyword">assert</span>(data[<span class="d_string">"b"</span>] == 200);
+<span class="d_keyword">assert</span>(<span class="d_string">"x"</span> !<span class="d_keyword">in</span> data);
+
+<span class="d_comment">// `in`は参照した値のポインタを返しているので、`if`と組み合わせるのが有効です。
+</span><span class="d_keyword">if</span> (<span class="d_keyword">auto</span> p = <span class="d_string">"a"</span> <span class="d_keyword">in</span> data)
+{
+    <span class="d_keyword">assert</span>(*p == 100);
+}
+<span class="d_keyword">if</span> (<span class="d_keyword">auto</span> p = <span class="d_string">"c"</span> <span class="d_keyword">in</span> data)
+{
+    <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>プロパティ</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std : sort, equal, map, array;
+
+string[string] data = [<span class="d_string">"key0"</span> : <span class="d_string">"value0"</span>, <span class="d_string">"key1"</span> : <span class="d_string">"value1"</span>,];
+
+<span class="d_comment">// `.keys`でKey一覧を配列として取得できます。
+</span><span class="d_comment">// ただし順序は実装依存であり、挿入/宣言順とは限りません。
+</span><span class="d_keyword">assert</span>(data.keys.sort.equal([<span class="d_string">"key0"</span>, <span class="d_string">"key1"</span>]));
+
+<span class="d_comment">// `.values`でValue一覧を配列として取得できます。
+</span><span class="d_keyword">assert</span>(data.values.sort.equal([<span class="d_string">"value0"</span>, <span class="d_string">"value1"</span>]));
+
+<span class="d_comment">// `.byKeyValue()`でKeyとValueのペア一覧をForward Rangeとして取得できます。
+</span><span class="d_keyword">assert</span>(data.byKeyValue().map!(pair =&gt; pair.key ~ <span class="d_string">" : "</span> ~ pair.value)
+        .array.sort.equal([<span class="d_string">"key0 : value0"</span>, <span class="d_string">"key1 : value1"</span>]));
+
+<span class="d_comment">// `null`でない連想配列を代入するとshallow copyが発生しますが、`dup`を使うことでdeep copyができます。
+</span>string[string] data2 = data.dup;
+data[<span class="d_string">"key2"</span>] = <span class="d_string">"value2"</span>;
+<span class="d_keyword">assert</span>(<span class="d_string">"key2"</span> !<span class="d_keyword">in</span> data2);
+
+<span class="d_comment">// `.get(key, defval)`で、もし`key`が存在したら対応するValueを、なければ`defval`を取得できます。
+</span><span class="d_keyword">assert</span>(data.get(<span class="d_string">"key0"</span>, <span class="d_string">""</span>) == <span class="d_string">"value0"</span>);
+<span class="d_keyword">assert</span>(data.get(<span class="d_string">"key"</span>, <span class="d_string">""</span>) == <span class="d_string">""</span>);
+
+<span class="d_comment">// `.require(key,value)`で、もし`key`が存在したら対応するValueを、なければ`key`と`value`のペアを追加した上で`value`を返します。
+</span><span class="d_keyword">assert</span>(data.require(<span class="d_string">"key0"</span>, <span class="d_string">"newValue"</span>) == <span class="d_string">"value0"</span>);
+<span class="d_keyword">assert</span>(data.require(<span class="d_string">"newKey"</span>, <span class="d_string">"newValue"</span>) == <span class="d_string">"newValue"</span>);
+<span class="d_keyword">assert</span>(data[<span class="d_string">"newKey"</span>] == <span class="d_string">"newValue"</span>);
+
+<span class="d_comment">// `.update(key,create,update)`で、もし`key`が存在したら`update`で上書きを、なければ`create`でValueを代入します。
+</span>data.update(<span class="d_string">"key0"</span>,   () =&gt; <span class="d_string">"value100"</span>, (<span class="d_keyword">ref</span> string oldValue) =&gt; <span class="d_string">"new "</span> ~ oldValue);
+<span class="d_keyword">assert</span>(data[<span class="d_string">"key0"</span>] == <span class="d_string">"new value0"</span>);
+
+data.update(<span class="d_string">"key100"</span>, () =&gt; <span class="d_string">"value100"</span>, (<span class="d_keyword">ref</span> string oldValue) =&gt; <span class="d_string">"new "</span> ~ oldValue);
+<span class="d_keyword">assert</span>(data[<span class="d_string">"key100"</span>] == <span class="d_string">"value100"</span>);
+
+<span class="d_comment">// `.clear()`で全要素を削除できます。
+</span>data.clear();
+<span class="d_keyword">assert</span>(data.length == 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>空連想配列とnull</h2>
+<pre class="d_code notranslate">string[<span class="d_keyword">int</span>] data, data2;
+
+<span class="d_comment">// 宣言時、連想配列は`null`になっています。
+</span><span class="d_keyword">assert</span>(data <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+
+<span class="d_comment">// 連想配列間での代入操作は基本的にshallow copyとなりますが、代入元が`null`の時に限り参照値は同期されません。
+</span>data2 = data; <span class="d_comment">// `data`は`null`なので、shallow copyは発生しない。
+</span>data[0] = <span class="d_string">"value"</span>;
+<span class="d_keyword">assert</span>(data2.length == 0); <span class="d_comment">// `data2`は`data`と同期していない。
+</span>
+<span class="d_comment">// 代入元が`null`でない場合はshallow copyとなります。
+</span>data2 = data; <span class="d_comment">// `data`は`null`ではないので、shallow copyが発生。
+</span>data[0] = <span class="d_string">"newValue"</span>;
+<span class="d_keyword">assert</span>(data2[0] == <span class="d_string">"newValue"</span>); <span class="d_comment">// `data2`は`data`と同期している。
+</span>
+<span class="d_comment">// 要素なしの連想配列と`null`は厳密には異なります。要素なしの配列の場合にはshallow copyが発生します。
+</span>data.clear(); <span class="d_comment">// `.clear()`を用いて要素なしの連想配列を作成
+</span><span class="d_keyword">assert</span>(data.length == 0);
+data2 = data; <span class="d_comment">// `data`は要素はないが`null`ではないため、shallow copyが発生。
+</span>data[0] = <span class="d_string">"newNewValue"</span>;
+<span class="d_keyword">assert</span>(data2[0] == <span class="d_string">"newNewValue"</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
