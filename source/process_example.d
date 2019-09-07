@@ -6,7 +6,7 @@ module process_example;
 version (unittest) import std.process;
 
 /++
-プロセス起動を行う操作の例です。
+基本的なプロセス起動を行う操作の例です。
 +/
 unittest
 {
@@ -18,9 +18,17 @@ unittest
     auto result = executeShell("echo hello");
     assert(result.status == 0);
     assert(result.output == "hello\n");
+}
 
+/++
+パイプでコマンドをつなげる例です。
++/
+unittest
+{
     version (Posix)
     {
+        // pipeProcessを使うとパイプでコマンドをつなげることができます
+        //
         import std.array : array;
         static import std.file;
         import std.path : buildPath;
@@ -39,8 +47,6 @@ unittest
         std.file.write(buildPath(dirName, "a.txt"), "This is File A.");
         std.file.write(buildPath(dirName, "b.txt"), "I am File B.");
 
-        // pipeProcessを使うとパイプでコマンドをつなげることができます
-        //
         // `ls -1 | sort -r` 相当の処理を行います
         //
         auto ls = pipeProcess(["ls", "-1", dirName]);
@@ -62,29 +68,31 @@ unittest
         assert(arr[0] == "b.txt");
         assert(arr[1] == "a.txt");
     }
+}
 
-    version (Posix)
+/++
+標準出力をファイルにリダイレクトする例です
++/
+unittest
+{
+    static import std.file;
+    import std.stdio;
+
+    auto deleteme = "dub_list.txt";
+    assert(!std.file.exists(deleteme));
+    auto dubList = File(deleteme, "w");
+    scope (exit)
     {
-        static import std.file;
-        import std.stdio;
-
-        // 標準出力をファイルにリダイレクトする例です
-        auto deleteme = "dub_list.txt";
-        assert(!std.file.exists(deleteme));
-        auto dubList = File(deleteme, "w");
-        scope (exit)
-        {
-            dubList.close();
-            assert(std.file.exists(deleteme));
-            std.file.remove(deleteme);
-        }
-        // ジェネリックなプリミティブであるspawnProcess関数を使っています
-        auto pid = spawnProcess(["dub", "list"],
-                                std.stdio.stdin,
-                                dubList);
-        // コマンドの終了待ちをしないので明示的に待つ必要があります
-        scope (exit) wait(pid);
+        dubList.close();
+        assert(std.file.exists(deleteme));
+        std.file.remove(deleteme);
     }
+    // ジェネリックなプリミティブであるspawnProcess関数を使っています
+    auto pid = spawnProcess(["dub", "list"],
+                            std.stdio.stdin,
+                            dubList);
+    // コマンドの終了待ちをしないので明示的に待つ必要があります
+    scope (exit) wait(pid);
 }
 
 
