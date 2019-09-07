@@ -102,3 +102,25 @@ unittest
     };
     assert(a.to!string == `{x:3,y:4.5,z:[1, 2]}`);
 }
+
+
+/++
+関数の引数に付与されたUDAを取得する例です
++/
+unittest
+{
+    import std.traits : Parameters;
+
+    int square(@("Some description") int x)
+    {
+        return x * x;
+    }
+
+    alias PT = Parameters!square;
+
+    // PT[0] を取得すると引数の型である int が取得されるため、スライスを取るのがポイントです
+    enum desc = __traits(getAttributes, PT[0 .. 1]);
+
+    // 結果は複数ある可能性があるため、タプルから配列のように取り出します
+    assert(desc[0] == "Some description");
+}
