@@ -207,6 +207,17 @@ module regex_example;
             .equal(["C/C++", ", ", "Python", " or ", "D"]));
 }
 
+/++
+# Unicodeプロパティ
++/
+@safe unittest
+{
+    import std.regex : matchFirst, regex;
+
+    // ひらがなのみにマッチする例です。
+    auto matchFirstResult = matchFirst("abcあいう", regex(`[\pN\p{Hiragana}]+`));
+    assert(matchFirstResult.hit == "あいう");
+}
 
 /++
 # 先読み・後読み
