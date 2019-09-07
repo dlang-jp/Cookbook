@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>is_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >assoc_array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >regex_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>is_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">is式についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>正当性の検証</h1>
+<pre class="d_code notranslate"><span class="d_comment">// `is( Type )`でTypeが正当な型であるかを検査します。
+</span>
+<span class="d_comment">// 通常の型に対しては`true`を返します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">void</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(string[]));
+
+<span class="d_comment">// 存在しない型に対しては`false`を返します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(Int));
+
+<span class="d_comment">// まだ定義されていない型にも`false`を返します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(Foo));
+<span class="d_keyword">struct</span> Foo {}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(Foo));
+
+<span class="d_comment">// 関数は型として正当ですが、関数の配列は不正な型です。
+</span><span class="d_keyword">alias</span> func = <span class="d_keyword">int</span>(<span class="d_keyword">int</span>);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(func));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(func[]));
+
+<span class="d_comment">// is式は構文的に正しいものしか検査できません。
+</span><span class="d_comment">// static assert(!is(*int));
+</span><span class="d_comment">// static assert(!is([][])); 
+</span>
+<span class="d_comment">// `is(typeof({ statement; }))`でstatementの正当性を検査できます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>({ <span class="d_keyword">int</span> x = 3; })));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>({ <span class="d_keyword">int</span> x = <span class="d_keyword">null</span>; })));
+
+<span class="d_comment">// これは`__traits(compiles, { statement })`に近い動作となります。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, { <span class="d_keyword">int</span> x = 3; }));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, { <span class="d_keyword">int</span> x = <span class="d_keyword">null</span>; }));
+
+<span class="d_comment">// `is (Type identifier)`で`Type`の正当性を検証した後、正当であった場合には`identifier`が`Type`のaliasとして機能します。
+</span><span class="d_comment">// これは`static if`と組み合わせるのが有効です。
+</span><span class="d_keyword">alias</span> T = <span class="d_keyword">ulong</span>;
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(T[] TArray)) {
+    <span class="d_keyword">alias</span> A = TArray;
+} <span class="d_keyword">else</span> {
+    <span class="d_keyword">alias</span> A = <span class="d_keyword">void</span>[];
+}
+<span class="d_comment">// `A`は、`T[]`が正当な型であった場合には`T[]`を、そうでなければ`void[]`を表します。
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>暗黙の型変換可能かどうかの検証</h1>
+<pre class="d_code notranslate"><span class="d_comment">// `is(Src : Dst)`で`Src`が`Dst`に暗黙の型変換可能であるかどうかを検査します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(<span class="d_keyword">int</span> : <span class="d_keyword">double</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">double</span> : <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(<span class="d_keyword">char</span> : <span class="d_keyword">char</span>));
+
+<span class="d_comment">// `alias`に対しても有効です。
+</span><span class="d_keyword">alias</span> Foo = <span class="d_keyword">float</span>;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">byte</span> : Foo));
+
+<span class="d_comment">// `alias this`に対しても有効です。
+</span><span class="d_keyword">struct</span> Bar {
+    <span class="d_keyword">int</span> x;
+    <span class="d_keyword">alias</span> x <span class="d_keyword">this</span>;
+}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Bar : <span class="d_keyword">int</span>));
+
+<span class="d_comment">// `is(Src identifier : Dst)`で検査結果が`true`だった場合に`identifier`が`Dst`を示すようになります。
+</span><span class="d_keyword">alias</span> T = <span class="d_keyword">ulong</span>*;
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(T L : L*)) {
+    <span class="d_comment">// `T`がポインタ型であったとき、`L`はポインタを外した型として宣言されます。
+</span>}
+
+<span class="d_comment">// `is(Src : Dst, parameters)`で`Src`や`Dst`のためのtemplateパラメータをつけられます。
+</span><span class="d_keyword">struct</span> MyStruct(Type) {
+    Type[] mem;
+    <span class="d_keyword">alias</span> mem <span class="d_keyword">this</span>;
+}
+<span class="d_keyword">alias</span> IntStruct = MyStruct!<span class="d_keyword">int</span>;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span> (<span class="d_keyword">is</span>(IntStruct : T[], T));
+
+<span class="d_comment">// static if と組み合わせることであるtemplateパラメータを含む型からパラメータを抽出することができます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(IntStruct : S[], S)) {
+    <span class="d_comment">// `IntStruct`がなんらかの配列型に暗黙の型変換可能である場合、その要素型として`S`が宣言されます。
+</span>}
+
+<span class="d_comment">// `is(Src identifier : Dst, parameters)`でそれらを組み合わせることができます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(IntStruct UArray : U[], U)) {
+    <span class="d_comment">// ここで`UArray`は`int[]`を表します。
+</span>}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>型の分類</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons;
+<span class="d_keyword">import</span> std.traits;
+
+<span class="d_comment">// `is(Type == Type2)`で`Type`が`Type2`と等しいかどうかを検証します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(<span class="d_keyword">int</span> == <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">int</span> == <span class="d_keyword">const</span> <span class="d_keyword">int</span>));
+
+<span class="d_comment">// `is(Type != Type2)`は使えないので注意が必要です。
+</span><span class="d_comment">// static assert( is(int != double));
+</span>
+<span class="d_comment">// `alias`に対しても有効です。
+</span><span class="d_keyword">alias</span> Foo = string;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Foo == string));
+
+<span class="d_comment">// `is(Type == Keyword)`で`Type`が特定の条件を満たすかどうかを検証できます。
+</span>
+<span class="d_comment">// 構造体であるかどうかの検証には`struct`を用います。
+</span><span class="d_keyword">struct</span> MyStruct {}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyStruct == <span class="d_keyword">struct</span>));
+
+<span class="d_comment">// 共用体であるかどうかの検証には`union`を用います。
+</span><span class="d_keyword">union</span> MyUnion {}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyUnion == <span class="d_keyword">union</span>));
+
+<span class="d_comment">// その他にも`class`, `interface`, `enum`, `function`, `delegate`が使えます。
+</span><span class="d_keyword">class</span> MyClass {}
+<span class="d_keyword">interface</span> MyInterface {}
+<span class="d_keyword">enum</span> MyEnum { Member }
+<span class="d_keyword">alias</span> MyDelegate = <span class="d_keyword">void</span> <span class="d_keyword">delegate</span>();
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyClass == <span class="d_keyword">class</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyInterface == <span class="d_keyword">interface</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyEnum == <span class="d_keyword">enum</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MyDelegate == <span class="d_keyword">delegate</span>));
+
+<span class="d_comment">// `function`は関数そのものを表しており、関数ポインタに対しては`false`を返します。
+</span><span class="d_keyword">alias</span> MyFunction = <span class="d_keyword">void</span>();
+<span class="d_keyword">alias</span> MyFunctionPtr = <span class="d_keyword">void</span> <span class="d_keyword">function</span>();
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(MyFunction == <span class="d_keyword">function</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(MyFunctionPtr == <span class="d_keyword">function</span>));
+
+<span class="d_comment">// `const`, `immutable` `shared`によって型の修飾子も判定できます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">const</span> <span class="d_keyword">int</span> == <span class="d_keyword">const</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">immutable</span> <span class="d_keyword">int</span> == <span class="d_keyword">immutable</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">shared</span> <span class="d_keyword">int</span> == <span class="d_keyword">shared</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">const</span> <span class="d_keyword">shared</span> <span class="d_keyword">int</span> == <span class="d_keyword">shared</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">const</span> <span class="d_keyword">shared</span> <span class="d_keyword">int</span> == <span class="d_keyword">const</span>));
+
+<span class="d_comment">// `is(Type identifier == Keyword)`で検査後に`identifier`をaliasとして扱えます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">const</span> <span class="d_keyword">int</span> T == <span class="d_keyword">const</span>))
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(T == <span class="d_keyword">const</span> <span class="d_keyword">int</span>));
+<span class="d_keyword">else</span>
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+
+<span class="d_comment">// このとき、`Keyword`として新たに`super`, `return`, `__parameters`が使えるようになります。
+</span>
+<span class="d_comment">// `is(Type identifier == super)`は`Type`が親クラス(インターフェース)を持つ場合`true`を返し、その際`identifier`として親クラス(インターフェース)のリストを宣言します。
+</span><span class="d_keyword">interface</span> ParentInterface {}
+<span class="d_keyword">class</span> ParentClass {}
+<span class="d_keyword">class</span> ChildClass : ParentClass, ParentInterface {}
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(ChildClass S == <span class="d_keyword">super</span>))
+{
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(S[0] == ParentClass));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(S[1] == ParentInterface));
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+}
+
+<span class="d_comment">// `is(Type identifier == return)`は`Type`が関数、関数ポインタ、delegateだったときに`true`を返し、その際`identifier`として返り値の型を宣言します。
+</span><span class="d_keyword">alias</span> F1 = <span class="d_keyword">void</span>();
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(F1 R == <span class="d_keyword">return</span>))
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R == <span class="d_keyword">void</span>));
+<span class="d_keyword">else</span>
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+
+<span class="d_comment">// `is(Type identifier == __parameters)`は`Type`が関数だったときに`true`を返し、その際`identifier`としてパラメータ型のリストを宣言します。
+</span><span class="d_keyword">int</span> func(<span class="d_keyword">int</span> x, <span class="d_keyword">double</span> y, string z = <span class="d_string">"def"</span>) { <span class="d_keyword">return</span> 100; }
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(func) Ps == <span class="d_keyword">__parameters</span>))
+{
+    <span class="d_comment">// パラメータの型一覧を取得できます。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Ps[0] == <span class="d_keyword">int</span>));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Ps[1] == <span class="d_keyword">double</span>));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Ps[2] == string));
+
+    <span class="d_comment">// パラメータ名一覧を取得できます。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(identifier, Ps[0..1]) == <span class="d_string">"x"</span>);
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(identifier, Ps[1..2]) == <span class="d_string">"y"</span>);
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(identifier, Ps[2..3]) == <span class="d_string">"z"</span>);
+
+    <span class="d_comment">// デフォルト値の情報も取得できますが、トリッキーな書き方をする必要があります。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(((Ps[2..3] p) =&gt; p[0])() == <span class="d_string">"def"</span>);
+
+    <span class="d_comment">// `ParameterDefaults`を使ったほうが楽でしょう。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(ParameterDefaults!(func)[2] == <span class="d_string">"def"</span>);
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+}
+
+<span class="d_comment">// `is(Type == TypeSpecifier, parameters)`や`is(Type identifier == TypeSpecifier, parameters)`で`Type`や`TypeSpecifier`に用いるtemplateパラメータをつけられます。
+</span><span class="d_keyword">enum</span> ColorFlags { Red = 0, Blue = 1, Green = 2}
+<span class="d_keyword">alias</span> Color = BitFlags!ColorFlags;
+<span class="d_keyword">static</span> <span class="d_keyword">if</span>(<span class="d_keyword">is</span>(Color == BitFlags!E, E))
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(E == ColorFlags));
+<span class="d_keyword">else</span>
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
