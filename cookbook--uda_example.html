@@ -185,6 +185,24 @@ A a = {
 <span class="d_keyword">assert</span>(a.to!string == <span class="d_string">`{x:3,y:4.5,z:[1, 2]}`</span>);
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 関数の引数に付与されたUDAを取得する例です
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.traits : Parameters;
+
+<span class="d_keyword">int</span> square(@(<span class="d_string">"Some description"</span>) <span class="d_keyword">int</span> x)
+{
+    <span class="d_keyword">return</span> x * x;
+}
+
+<span class="d_keyword">alias</span> PT = Parameters!square;
+
+<span class="d_comment">// PT[0] を取得すると引数の型である int が取得されるため、スライスを取るのがポイントです
+</span><span class="d_keyword">enum</span> desc = <span class="d_keyword">__traits</span>(getAttributes, PT[0 .. 1]);
+
+<span class="d_comment">// 結果は複数ある可能性があるため、タプルから配列のように取り出します
+</span><span class="d_keyword">assert</span>(desc[0] == <span class="d_string">"Some description"</span>);
+</pre>
+</div>
 
                 
             </div>
