@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>process_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >assoc_array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is_example</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >process_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >regex_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>process_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">プロセス操作についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 基本的なプロセス起動を行う操作の例です。
+<pre class="d_code notranslate"><span class="d_comment">// プロセス起動を行うもっとも簡潔な方法はexecute関数もしくは
+</span><span class="d_comment">// executeShell関数を用いることです。
+</span><span class="d_comment">//
+</span><span class="d_comment">// シェルを経由して文字列を出力するコマンドを実行します。
+</span><span class="d_comment">// シェルを経由したい場合はexecuteShell関数を使います。
+</span><span class="d_keyword">auto</span> result = executeShell(<span class="d_string">"echo hello"</span>);
+<span class="d_keyword">assert</span>(result.status == 0);
+<span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\n"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ パイプでコマンドをつなげる例です。
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (Posix)
+{
+    <span class="d_comment">// pipeProcessを使うとパイプでコマンドをつなげることができます
+</span>    <span class="d_comment">//
+</span>    <span class="d_keyword">import</span> std.array : array;
+    <span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+    <span class="d_keyword">import</span> std.path : buildPath;
+
+    <span class="d_comment">// テスト用のディレクトリを作成します
+</span>    string dirName = <span class="d_string">"std_process_testdir"</span>;
+    <span class="d_keyword">assert</span>(!std.file.exists(dirName));
+    std.file.mkdir(dirName);
+    <span class="d_keyword">scope</span> (exit)
+    {
+        <span class="d_keyword">assert</span>(std.file.exists(dirName));
+        std.file.rmdirRecurse(dirName);
+    }
+
+    <span class="d_comment">// ファイルをディレクトリ内に作成します。
+</span>    std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+    std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
+
+    <span class="d_comment">// `ls -1 | sort -r` 相当の処理を行います
+</span>    <span class="d_comment">//
+</span>    <span class="d_keyword">auto</span> ls = pipeProcess([<span class="d_string">"ls"</span>, <span class="d_string">"-1"</span>, dirName]);
+    <span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span>    <span class="d_keyword">scope</span> (exit)  wait(ls.pid);
+    <span class="d_keyword">auto</span> sort = pipeProcess([<span class="d_string">"sort"</span>, <span class="d_string">"-r"</span>]);
+    <span class="d_keyword">scope</span> (exit) wait(sort.pid);
+
+    <span class="d_comment">// lsコマンドの標準出力をsortコマンドの標準入力に渡しています
+</span>    <span class="d_keyword">foreach</span> (line; ls.stdout.byLine)
+        sort.stdin.writeln(line);
+    ls.stdout.close();
+    <span class="d_comment">// stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
+</span>    <span class="d_comment">// いるか自明ではないので明示的にflushする必要があります
+</span>    sort.stdin.flush();
+    sort.stdin.close();
+
+    <span class="d_keyword">auto</span> arr = sort.stdout.byLineCopy.array;
+    <span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"b.txt"</span>);
+    <span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"a.txt"</span>);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 標準出力をファイルにリダイレクトする例です
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.stdio;
+
+<span class="d_keyword">auto</span> deleteme = <span class="d_string">"dub_list.txt"</span>;
+<span class="d_keyword">assert</span>(!std.file.exists(deleteme));
+<span class="d_keyword">auto</span> dubList = File(deleteme, <span class="d_string">"w"</span>);
+<span class="d_keyword">scope</span> (exit)
+{
+    dubList.close();
+    <span class="d_keyword">assert</span>(std.file.exists(deleteme));
+    std.file.remove(deleteme);
+}
+<span class="d_comment">// ジェネリックなプリミティブであるspawnProcess関数を使っています
+</span><span class="d_keyword">auto</span> pid = spawnProcess([<span class="d_string">"dub"</span>, <span class="d_string">"list"</span>],
+                        std.stdio.stdin,
+                        dubList);
+<span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span><span class="d_keyword">scope</span> (exit) wait(pid);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 環境変数を扱う例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception;
+
+<span class="d_keyword">auto</span> name = <span class="d_string">"TEST_NEW_ENV"</span>;
+
+<span class="d_comment">// 環境変数と値の組を追加します。
+</span>environment[name] = <span class="d_string">"123"</span>;
+<span class="d_keyword">assert</span>(environment[name] == <span class="d_string">"123"</span>);
+<span class="d_keyword">assert</span>(name <span class="d_keyword">in</span> environment);
+<span class="d_comment">// 環境変数から `name` を削除します。
+</span>environment.remove(name);
+<span class="d_keyword">assert</span>(name !<span class="d_keyword">in</span> environment);
+<span class="d_comment">// 環境変数がみつからない場合は例外を吐きます。
+</span>assertThrown(environment[name]);
+
+<span class="d_comment">// `get()` を使った場合、指定した環境変数の値を返します。
+</span><span class="d_comment">// 空だった場合は第二引数で指定しているデフォルトの値を返します。
+</span><span class="d_keyword">auto</span> dmd = environment.get(<span class="d_string">"DMD"</span>, <span class="d_string">"dmd"</span>);
+<span class="d_keyword">assert</span>(dmd == <span class="d_string">"dmd"</span>);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
