@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>    <head>        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>random_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >assoc_array_example</span></a></li>
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is_example</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >process_example</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >random_example</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >regex_example</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+
+
+	</ul></li>
+
+
+
+
+
+
+	
+	<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+		
+		
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+
+
+	</ul></li>
+
+
+
+</ul>
+</div>
+            <div class="content">                <h1>random_example</h1>
+                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <div class="ddoc_summary">乱数操作についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 基本的な乱数を生成する例です。
+<pre class="d_code notranslate"><span class="d_comment">// 乱数を使うには std.random をimportして使います。
+</span><span class="d_comment">// 最も簡単な乱数を得る方法は、一様乱数を生成する uniform を使う方法です。
+</span><span class="d_keyword">import</span> std.random : uniform;
+
+<span class="d_comment">// 0.0以上、1.0未満の乱数を生成します。
+</span><span class="d_keyword">auto</span> p = uniform(0.0, 1.0);
+<span class="d_keyword">assert</span>(0.0 &lt;= p &amp;&amp; p &lt; 1.0);
+
+<span class="d_comment">// 結果の型は引数から推論されるため、floatが必要な場合は引数をfloat型にします。
+</span><span class="d_keyword">auto</span> fp = uniform(0.0f, 1.0f);
+<span class="d_keyword">assert</span>(0.0f &lt;= fp &amp;&amp; fp &lt; 1.0f);
+
+<span class="d_comment">// 半開区間ではなく閉区間（両端を含む）で乱数の値域を設定する場合、uniformのテンプレートパラメーターを使います。
+</span><span class="d_keyword">auto</span> q = uniform!<span class="d_string">"[]"</span>(-1.0, 1.0);
+<span class="d_keyword">assert</span>(-1.0 &lt;= q &amp;&amp; q &lt;= 1.0);
+
+<span class="d_comment">// 0以上1未満の乱数を生成する場合は uniform01 という関数が使えます。
+</span><span class="d_keyword">import</span> std.random : uniform01;
+
+<span class="d_keyword">auto</span> r = uniform01();
+<span class="d_keyword">auto</span> fr = uniform01!<span class="d_keyword">float</span>();
+
+<span class="d_keyword">assert</span>(0.0 &lt;= r &amp;&amp; r &lt; 1.0);
+<span class="d_keyword">assert</span>(0.0 &lt;= fr &amp;&amp; fr &lt; 1.0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列を乱数で初期化する例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random : uniform;
+<span class="d_keyword">import</span> std.algorithm.iteration : each;
+
+<span class="d_comment">// 任意の長さを持つ配列に対して、std.algorithmのeachを使うことで全要素を参照することができます。
+</span><span class="d_keyword">auto</span> data = <span class="d_keyword">new</span> <span class="d_keyword">double</span>[](1000);
+data.each!((<span class="d_keyword">ref</span> x) { x = uniform!<span class="d_string">"[]"</span>(-10.0, 10.0); });
+
+<span class="d_keyword">foreach</span> (x; data)
+{
+    <span class="d_keyword">assert</span>(-10.0 &lt;= x &amp;&amp; x &lt;= 10.0);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ シミュレーション用途など、再現可能な乱数を作るためにシードを指定する例です。
+<div class="ddoc_blankline"></div>
+
+実行時に毎回異なるシードを使う場合は、 unpredictableSeed を使用します。
+<pre class="d_code notranslate"><span class="d_comment">// メルセンヌツイスター法による Random のほかに Xorshift の乱数生成器も使うことができます。
+</span><span class="d_keyword">import</span> std.random : Random, Xorshift, uniform;
+
+Random rndGen1;
+Xorshift rndGen2;
+
+<span class="d_comment">// シードを設定することで何度やっても同じ値が取得可能になります。
+</span><span class="d_comment">// 実験などではこのrndGenをベースに乱数を作ることになります。
+</span>rndGen1.seed = 1000;
+rndGen2.seed = 1000;
+
+<span class="d_keyword">assert</span>(rndGen1.front == 2807145907u);
+<span class="d_keyword">assert</span>(rndGen2.front == 2096656543u);
+
+<span class="d_comment">// 乱数生成器は無限Rangeであるため、次の要素を取り出す前にpopFrontします。
+</span>rndGen2.popFront();
+
+<span class="d_comment">// uniformなどの乱数を取得するための関数は、最後の引数に乱数生成器を指定することができます。
+</span><span class="d_comment">// これらは呼び出すたびに内部的にpopFrontされるため、取得の度に新しい乱数が取得できます。
+</span><span class="d_keyword">auto</span> p = uniform(-1.0f, 1.0f, rndGen1);
+<span class="d_keyword">auto</span> q = uniform(-1.0f, 1.0f, rndGen1);
+
+<span class="d_keyword">import</span> std.math : approxEqual;
+
+<span class="d_keyword">assert</span>(p.approxEqual(0.307179));
+<span class="d_keyword">assert</span>(q.approxEqual(-0.588957));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 標準正規分布に基づく乱数を生成する例です。
+<div class="ddoc_blankline"></div>
+
+std.mathspecial にある normalDistributionInverse を使うことで確率変数から逆変換できます。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">normalDistributionInverse</span> : <a href="https://dlang.org/phobos/std_mathspecial.html#normalDistributionInverse">https://dlang.org/phobos/std_mathspecial.html#normalDistributionInverse</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random : uniform;
+<span class="d_keyword">import</span> std.mathspecial : normalDistributionInverse;
+
+<span class="d_comment">// 0と1は-infとinfに振り切れてしまうため、値域を指定することで除外できます。
+</span><span class="d_keyword">auto</span> p = normalDistributionInverse(uniform!<span class="d_string">"()"</span>(0.0, 1.0));
+<span class="d_keyword">assert</span>(-<span class="d_keyword">double</span>.infinity &lt; p &amp;&amp; p &lt; <span class="d_keyword">double</span>.infinity);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
