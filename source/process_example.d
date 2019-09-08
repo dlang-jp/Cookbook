@@ -14,7 +14,7 @@ unittest
     // executeShell関数を用いることです。
     //
     // シェルを経由して文字列を出力するコマンドを実行します。
-    // shellを経由したい場合はexecuteShell関数を使います。
+    // シェルを経由したい場合はexecuteShell関数を使います。
     auto result = executeShell("echo hello");
     assert(result.status == 0);
     assert(result.output == "hello\n");
