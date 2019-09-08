@@ -286,6 +286,15 @@ auto s0 = "\."; // undefined escape sequence \.
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>Unicodeプロパティ</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : matchFirst, regex;
+
+<span class="d_comment">// ひらがなのみにマッチする例です。
+</span><span class="d_keyword">auto</span> matchFirstResult = matchFirst(<span class="d_string">"abcあいう"</span>, regex(<span class="d_string">`[\pN\p{Hiragana}]+`</span>));
+<span class="d_keyword">assert</span>(matchFirstResult.hit == <span class="d_string">"あいう"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>先読み・後読み</h1>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : map;
 <span class="d_keyword">import</span> std.array : join;
