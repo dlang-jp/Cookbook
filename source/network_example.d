@@ -165,7 +165,7 @@ CurlOption.sslcertなどのオプションを使用します。
         // 暗号化された秘密鍵のPEM形式ファイルを指定します
         client.handle.set(CurlOption.sslkey,      "key.pem");
         // 秘密鍵の形式を指定(デフォルトはPEM)
-        client.handle.set(CurlOption.sslcerttype, "PEM");
+        client.handle.set(CurlOption.sslkeytype,  "PEM");
         // 暗号化した秘密鍵を指定した場合、パスワードを指定
         client.handle.set(CurlOption.keypasswd,   "password");
     }
@@ -180,7 +180,7 @@ CurlOption.sslcertなどのオプションを使用します。
         // 復号化された秘密鍵のPEM形式ファイルを指定します
         client.handle.set(CurlOption.sslkey,      "decrypted-key.pem");
         // 秘密鍵の形式を指定(デフォルトはPEM)
-        client.handle.set(CurlOption.sslcerttype, "PEM");
+        client.handle.set(CurlOption.sslkeytype,  "PEM");
         // 復号化された秘密鍵を指定した場合、パスワードは不要
         //client.handle.set(CurlOption.keypasswd,   "不要");
     }
