@@ -108,14 +108,23 @@
                 
                 <div class="ddoc_summary">プロセス操作についてまとめます。</div><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  基本的なプロセス起動を行う操作の例です。
-<pre class="d_code notranslate"><span class="d_comment">// プロセス起動を行うもっとも簡潔な方法はexecute関数もしくは
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.string: chomp, splitLines;
+<span class="d_comment">// プロセス起動を行うもっとも簡潔な方法はexecute関数もしくは
 </span><span class="d_comment">// executeShell関数を用いることです。
 </span><span class="d_comment">//
 </span><span class="d_comment">// シェルを経由して文字列を出力するコマンドを実行します。
 </span><span class="d_comment">// シェルを経由したい場合はexecuteShell関数を使います。
 </span><span class="d_keyword">auto</span> result = executeShell(<span class="d_string">"echo hello"</span>);
 <span class="d_keyword">assert</span>(result.status == 0);
-<span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\n"</span>);
+<span class="d_comment">// echoをはじめ、多くの実行結果の文字列(result.output)には改行が含まれます。
+</span><span class="d_comment">// Linux環境なら\nが、Windows環境なら\r\nが行末に入ります。
+</span><span class="d_keyword">version</span> (Posix)   <span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\n"</span>);
+<span class="d_keyword">version</span> (Windows) <span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\r\n"</span>);
+
+<span class="d_comment">// 単行ならchompで、複数行ならsplitLinesで改行文字を消してしまうと
+</span><span class="d_comment">// 取り扱いが楽になります。
+</span><span class="d_keyword">assert</span>(result.output.chomp == <span class="d_string">"hello"</span>);
+<span class="d_keyword">assert</span>(result.output.splitLines == [<span class="d_string">"hello"</span>]);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
