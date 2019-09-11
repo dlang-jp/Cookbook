@@ -50,7 +50,7 @@ HTTPでGET
     /* ※ 一致するかどうかが不明のため
           ここではコンパイルできるかどうかだけチェックします */
     static assert(__traits(compiles,
-        assert(contents1 == cast(const char[])contents3[])));
+        assert(contents1 == cast(const char[])contents3.data)));
 
 }
 
@@ -76,19 +76,21 @@ HTTPでGET
         return buf.length;
     };
     client.perform();
+    auto buf = contents.data;
     // 生データならEUC-JPでもちゃんと受信できます。
     // UTF-8ではないので、バイト列にEUC-JPが含まれるか検索してみます。
-    assert(countUntil(cast(const ubyte[])contents[],
-                      cast(const ubyte[])"charset=EUC-JP"c) < contents[].length);
+    assert(countUntil(cast(const ubyte[])buf,
+                      cast(const ubyte[])"charset=EUC-JP"c) < buf.length);
     version (Windows)
     {
         // Windowsだとこのようにして文字コードを変換できます。
         import std.windows.charset;
         // EUC-JPだと例外を投げるような文字列の検索も
-        contents[].countUntil("</body>").assertThrown;
+        buf.countUntil("</body>").assertThrown;
         contents ~= "\0";
+        buf = contents.data;
         // 文字コード変換(EUC-JP(20932)からUTF-8)することで
-        auto contents2 = fromMBSz(cast(immutable char*)contents[].ptr, 20_932);
+        auto contents2 = fromMBSz(cast(immutable char*)buf.ptr, 20_932);
         // 検索できるようになります
         assert(contents2.countUntil("</body>") < contents2.length);
     }
