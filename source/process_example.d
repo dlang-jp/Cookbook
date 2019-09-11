@@ -125,9 +125,15 @@ unittest
     // 環境変数がみつからない場合は例外を吐きます。
     assertThrown(environment[name]);
 
+
     // `get()` を使った場合、指定した環境変数の値を返します。
     // 空だった場合は第二引数で指定しているデフォルトの値を返します。
-    auto dmd = environment.get("DMD", "dmd");
-    assert(dmd == "dmd");
+    //
+    version (DigitalMars) auto dmd = "dmd";
+    else version (LDC) auto dmd = "ldmd2";
+    else version (GNU) auto dmd = "gdmd";
+    else auto dmd = "dmd";  // 他の環境では暫定的に値を埋めています。
+    auto command = environment.get("DMD", dmd);
+    assert(command == dmd);
 
 }
