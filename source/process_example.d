@@ -10,6 +10,7 @@ version (unittest) import std.process;
 +/
 unittest
 {
+    import std.string: chomp, splitLines;
     // プロセス起動を行うもっとも簡潔な方法はexecute関数もしくは
     // executeShell関数を用いることです。
     //
@@ -17,7 +18,16 @@ unittest
     // シェルを経由したい場合はexecuteShell関数を使います。
     auto result = executeShell("echo hello");
     assert(result.status == 0);
-    assert(result.output == "hello\n");
+    // echoをはじめ、多くの実行結果の文字列(result.output)には改行が含まれます。
+    // Linux環境なら\nが、Windows環境なら\r\nが行末に入ります。
+    version (Posix)   assert(result.output == "hello\n");
+    version (Windows) assert(result.output == "hello\r\n");
+
+    // 単行ならchompで、複数行ならsplitLinesで改行文字を消してしまうと
+    // 取り扱いが楽になります。
+    assert(result.output.chomp == "hello");
+    assert(result.output.splitLines == ["hello"]);
+
 }
 
 /++
