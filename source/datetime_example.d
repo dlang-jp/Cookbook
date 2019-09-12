@@ -84,6 +84,29 @@ Dateは、DateTimeのうち、何年何月何日(つまり日付)の部分です
 {
     import std.datetime: Date;
     auto newyear = Date(2020, 1, 1);
+
+    // Dateは差分を求めることもできます。
+    //
+    {
+        // 一ヶ月前の日付を求めます。
+        auto date = Date(2019, 8, 31);
+        assert(date.add!"months"(-1) == Date(2019, 7, 31));
+    }
+
+    {
+        // 一ヶ月前を表す方法は、可能であれば前月の同日同時刻を表し、
+        // 前日に同日が存在しない場合は差分を計算して付け足します。
+        // なので3月31日は以下のようになります。
+        auto date = Date(2019, 3, 31);
+        assert(date.add!"months"(-1) == Date(2019, 3, 3));
+
+        // うるう年のときの結果も異なります。
+        //
+        date = Date(2019, 3, 29);
+        assert(date.add!"months"(-1) == Date(2019, 3, 1));
+        date = Date(2016, 3, 29);
+        assert(date.add!"months"(-1) == Date(2016, 2, 29));
+    }
 }
 
 /++
