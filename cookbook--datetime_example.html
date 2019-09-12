@@ -170,6 +170,29 @@ SysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ
 Dateは、DateTimeのうち、何年何月何日(つまり日付)の部分です。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: Date;
 <span class="d_keyword">auto</span> newyear = Date(2020, 1, 1);
+
+<span class="d_comment">// Dateは差分を求めることもできます。
+</span><span class="d_comment">//
+</span>{
+    <span class="d_comment">// 一ヶ月前の日付を求めます。
+</span>    <span class="d_keyword">auto</span> date = Date(2019, 8, 31);
+    <span class="d_keyword">assert</span>(date.add!<span class="d_string">"months"</span>(-1) == Date(2019, 7, 31));
+}
+
+{
+    <span class="d_comment">// 一ヶ月前を表す方法は、可能であれば前月の同日同時刻を表し、
+</span>    <span class="d_comment">// 前日に同日が存在しない場合は差分を計算して付け足します。
+</span>    <span class="d_comment">// なので3月31日は以下のようになります。
+</span>    <span class="d_keyword">auto</span> date = Date(2019, 3, 31);
+    <span class="d_keyword">assert</span>(date.add!<span class="d_string">"months"</span>(-1) == Date(2019, 3, 3));
+
+    <span class="d_comment">// うるう年のときの結果も異なります。
+</span>    <span class="d_comment">//
+</span>    date = Date(2019, 3, 29);
+    <span class="d_keyword">assert</span>(date.add!<span class="d_string">"months"</span>(-1) == Date(2019, 3, 1));
+    date = Date(2016, 3, 29);
+    <span class="d_keyword">assert</span>(date.add!<span class="d_string">"months"</span>(-1) == Date(2016, 2, 29));
+}
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
