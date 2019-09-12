@@ -81,6 +81,100 @@ unittest
 }
 
 /++
+たくさんパイプしながら、データを小分けにして渡していく場合
++/
+@system unittest
+{
+    // opensslが使えるか確認します
+    bool isOpenSSLAvailable;
+    version (Posix)
+        isOpenSSLAvailable = executeShell(`which openssl`).status == 0;
+    else version (Windows)
+        isOpenSSLAvailable = executeShell(`where openssl`).status == 0;
+
+    if (isOpenSSLAvailable)
+    {
+        import std.range: chunks, repeat;
+        import std.algorithm: copy;
+        import std.parallelism: scopedTask;
+        import std.array: appender, join;
+
+        // このデータを…
+        string data = "qawsedrftgyhujikolp".repeat(512).join();
+        // 2回エンコードして2回デコードし…
+        auto key1 = "9F86D081884C7D659A2FEAA0C55AD015";
+        auto iv1  = "A3BF4F1B2B0B822CD15D6C15B0F00A08";
+        auto key2 = "9F86D081884C7D659A2FEAA0C55AD015"
+                  ~ "A3BF4F1B2B0B822CD15D6C15B0F00A08";
+        auto iv2  = "206DFC4E0335FA0AD986B9C1942DD653";
+        auto opt1 = ["-K", key1, "-iv", iv1, "-nosalt"];
+        auto opt2 = ["-K", key2, "-iv", iv2, "-nosalt", "-base64"];
+        // 結果をバッファに格納します。
+        auto resultBuf = appender!string;
+
+        // プロセスを起動してパイプを作る
+        auto pE1 = pipeProcess(["openssl", "aes-128-cbc", "-e"] ~ opt1);
+        auto pE2 = pipeProcess(["openssl", "aes-256-cbc", "-e"] ~ opt2);
+        auto pD2 = pipeProcess(["openssl", "aes-256-cbc", "-d"] ~ opt2);
+        auto pD1 = pipeProcess(["openssl", "aes-128-cbc", "-d"] ~ opt1);
+
+        // 1段目エンコード→2段目エンコード
+        auto tE1toE2 = scopedTask({
+            pE1.stdout.byChunk(4096).copy(pE2.stdin.lockingBinaryWriter);
+            pE2.stdin.flush();
+            pE2.stdin.close();
+        });
+        tE1toE2.executeInNewThread();
+
+        // 2段目エンコード→2段目デコード
+        auto tE2toD2 = scopedTask({
+            pE2.stdout.byChunk(4096).copy(pD2.stdin.lockingBinaryWriter);
+            pD2.stdin.flush();
+            pD2.stdin.close();
+        });
+        tE2toD2.executeInNewThread();
+
+        // 2段目デコード→1段目デコード
+        auto tD2toD1 = scopedTask({
+            pD2.stdout.byChunk(4096).copy(pD1.stdin.lockingBinaryWriter);
+            pD1.stdin.flush();
+            pD1.stdin.close();
+        });
+        tD2toD1.executeInNewThread();
+
+        // 1段目デコード→(結果は文字列)→結果の格納
+        auto tD1toRes = scopedTask({
+            pD1.stdout.byChunk(4096).copy(resultBuf);
+        });
+        tD1toRes.executeInNewThread();
+
+        // データ(文字列)→1段目エンコード
+        data.chunks(2048).copy(pE1.stdin.lockingTextWriter);
+        pE1.stdin.flush();
+        pE1.stdin.close();
+
+        // プロセスの終了を待ちます
+        auto sE1 = pE1.pid.wait();
+        auto sE2 = pE2.pid.wait();
+        auto sD2 = pD2.pid.wait();
+        auto sD1 = pD1.pid.wait();
+
+        // スレッドの終了を待ちます
+        tE1toE2.yieldForce;
+        tE2toD2.yieldForce;
+        tD2toD1.yieldForce;
+        tD1toRes.yieldForce;
+
+        // 結果確認
+        assert(sE1 == 0);
+        assert(sE2 == 0);
+        assert(sD2 == 0);
+        assert(sD1 == 0);
+        assert(data == resultBuf.data);
+    }
+}
+
+/++
 標準出力をファイルにリダイレクトする例です
 +/
 unittest
