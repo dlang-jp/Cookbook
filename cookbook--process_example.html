@@ -179,6 +179,97 @@
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ たくさんパイプしながら、データを小分けにして渡していく場合
+<pre class="d_code notranslate"><span class="d_comment">// opensslが使えるか確認します
+</span><span class="d_keyword">bool</span> isOpenSSLAvailable;
+<span class="d_keyword">version</span> (Posix)
+    isOpenSSLAvailable = executeShell(<span class="d_string">`which openssl`</span>).status == 0;
+<span class="d_keyword">else</span> <span class="d_keyword">version</span> (Windows)
+    isOpenSSLAvailable = executeShell(<span class="d_string">`where openssl`</span>).status == 0;
+
+<span class="d_keyword">if</span> (isOpenSSLAvailable)
+{
+    <span class="d_keyword">import</span> std.range: chunks, repeat;
+    <span class="d_keyword">import</span> std.algorithm: copy;
+    <span class="d_keyword">import</span> std.parallelism: scopedTask;
+    <span class="d_keyword">import</span> std.array: appender, join;
+
+    <span class="d_comment">// このデータを…
+</span>    string data = <span class="d_string">"qawsedrftgyhujikolp"</span>.repeat(512).join();
+    <span class="d_comment">// 2回エンコードして2回デコードし…
+</span>    <span class="d_keyword">auto</span> key1 = <span class="d_string">"9F86D081884C7D659A2FEAA0C55AD015"</span>;
+    <span class="d_keyword">auto</span> iv1  = <span class="d_string">"A3BF4F1B2B0B822CD15D6C15B0F00A08"</span>;
+    <span class="d_keyword">auto</span> key2 = <span class="d_string">"9F86D081884C7D659A2FEAA0C55AD015"</span>
+              ~ <span class="d_string">"A3BF4F1B2B0B822CD15D6C15B0F00A08"</span>;
+    <span class="d_keyword">auto</span> iv2  = <span class="d_string">"206DFC4E0335FA0AD986B9C1942DD653"</span>;
+    <span class="d_keyword">auto</span> opt1 = [<span class="d_string">"-K"</span>, key1, <span class="d_string">"-iv"</span>, iv1, <span class="d_string">"-nosalt"</span>];
+    <span class="d_keyword">auto</span> opt2 = [<span class="d_string">"-K"</span>, key2, <span class="d_string">"-iv"</span>, iv2, <span class="d_string">"-nosalt"</span>, <span class="d_string">"-base64"</span>];
+    <span class="d_comment">// 結果をバッファに格納します。
+</span>    <span class="d_keyword">auto</span> resultBuf = appender!string;
+
+    <span class="d_comment">// プロセスを起動してパイプを作る
+</span>    <span class="d_keyword">auto</span> pE1 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-128-cbc"</span>, <span class="d_string">"-e"</span>] ~ opt1);
+    <span class="d_keyword">auto</span> pE2 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-256-cbc"</span>, <span class="d_string">"-e"</span>] ~ opt2);
+    <span class="d_keyword">auto</span> pD2 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-256-cbc"</span>, <span class="d_string">"-d"</span>] ~ opt2);
+    <span class="d_keyword">auto</span> pD1 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-128-cbc"</span>, <span class="d_string">"-d"</span>] ~ opt1);
+
+    <span class="d_comment">// 1段目エンコード→2段目エンコード
+</span>    <span class="d_keyword">auto</span> tE1toE2 = scopedTask({
+        pE1.stdout.byChunk(4096).copy(pE2.stdin.lockingBinaryWriter);
+        pE2.stdin.flush();
+        pE2.stdin.close();
+    });
+    tE1toE2.executeInNewThread();
+
+    <span class="d_comment">// 2段目エンコード→2段目デコード
+</span>    <span class="d_keyword">auto</span> tE2toD2 = scopedTask({
+        pE2.stdout.byChunk(4096).copy(pD2.stdin.lockingBinaryWriter);
+        pD2.stdin.flush();
+        pD2.stdin.close();
+    });
+    tE2toD2.executeInNewThread();
+
+    <span class="d_comment">// 2段目デコード→1段目デコード
+</span>    <span class="d_keyword">auto</span> tD2toD1 = scopedTask({
+        pD2.stdout.byChunk(4096).copy(pD1.stdin.lockingBinaryWriter);
+        pD1.stdin.flush();
+        pD1.stdin.close();
+    });
+    tD2toD1.executeInNewThread();
+
+    <span class="d_comment">// 1段目デコード→(結果は文字列)→結果の格納
+</span>    <span class="d_keyword">auto</span> tD1toRes = scopedTask({
+        pD1.stdout.byChunk(4096).copy(resultBuf);
+    });
+    tD1toRes.executeInNewThread();
+
+    <span class="d_comment">// データ(文字列)→1段目エンコード
+</span>    data.chunks(2048).copy(pE1.stdin.lockingTextWriter);
+    pE1.stdin.flush();
+    pE1.stdin.close();
+
+    <span class="d_comment">// プロセスの終了を待ちます
+</span>    <span class="d_keyword">auto</span> sE1 = pE1.pid.wait();
+    <span class="d_keyword">auto</span> sE2 = pE2.pid.wait();
+    <span class="d_keyword">auto</span> sD2 = pD2.pid.wait();
+    <span class="d_keyword">auto</span> sD1 = pD1.pid.wait();
+
+    <span class="d_comment">// スレッドの終了を待ちます
+</span>    tE1toE2.yieldForce;
+    tE2toD2.yieldForce;
+    tD2toD1.yieldForce;
+    tD1toRes.yieldForce;
+
+    <span class="d_comment">// 結果確認
+</span>    <span class="d_keyword">assert</span>(sE1 == 0);
+    <span class="d_keyword">assert</span>(sE2 == 0);
+    <span class="d_keyword">assert</span>(sD2 == 0);
+    <span class="d_keyword">assert</span>(sD1 == 0);
+    <span class="d_keyword">assert</span>(data == resultBuf.data);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  標準出力をファイルにリダイレクトする例です
 <pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
 <span class="d_keyword">import</span> std.stdio;
