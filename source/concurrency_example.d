@@ -64,12 +64,12 @@ unittest
     });
 
     // 何か計算をしながら必要なデータを書き込み用スレッドに送ります。
-    foreach (i; 0 .. 1000)
+    foreach (i; 0 .. 360)
     {
-        import std.math : sin;
+        import std.math : sin, PI;
         import std.format : format;
 
-        send(writerTid, format!"data : %f"(sin(cast(real)i)));
+        send(writerTid, format!"data : %f"(sin(i / 180.0 * PI)));
     }
 
     // 書き込みたいデータは送り終わったため、シャットダウン用のメッセージを送ります。
@@ -127,12 +127,12 @@ unittest
     scope (exit)
         remove(logFilePath);
 
-    foreach (i; 0 .. 1000)
+    foreach (i; 0 .. 360)
     {
-        import std.math : sin;
+        import std.math : sin, PI;
         import std.format : format;
 
-        send(writerTid, format!"data : %f"(sin(cast(real)i)));
+        send(writerTid, format!"data : %f"(sin(i / 180.0 * PI)));
     }
 
     // 書き込みたいデータは送り終わったため、シャットダウン用のメッセージを送ります。
