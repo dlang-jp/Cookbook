@@ -23,10 +23,10 @@ unittest
     import std.concurrency : ownerTid, spawn, send, receive, receiveOnly;
     import std.file : remove;
 
-    enum LogFilePath = "./concurrencylog.txt";
+    enum logFilePath = "./concurrencylog.txt";
 
     scope (exit)
-        remove(LogFilePath);
+        remove(logFilePath);
 
     // 書き込みの処理を行うスレッドを起動します。
     // 処理の内容は同期的に記述でき、ファイルのopen/closeは最低限で済みます。
@@ -35,7 +35,7 @@ unittest
         {
             import std.stdio : File;
 
-            auto f = File(LogFilePath, "w");
+            auto f = File(logFilePath, "w");
 
             // 処理をループしながら、receive関数を使ってメッセージの到着を待ちます。
             // stringが渡されたら書き込み、boolが渡されたら処理を抜けます。
@@ -119,13 +119,13 @@ unittest
         send(reportTid, true);
     }
 
-    enum LogFilePath = "concurrencylog.txt";
+    enum logFilePath = "concurrencylog.txt";
 
     // spawnの際に引数を指定することができます。
     // 今回は、ファイルパスと報告先のスレッドとして単体テストを行う現在のスレッドIDを指定します。
-    auto writerTid = spawn(&writer, thisTid, LogFilePath);
+    auto writerTid = spawn(&writer, thisTid, logFilePath);
     scope (exit)
-        remove(LogFilePath);
+        remove(logFilePath);
 
     foreach (i; 0 .. 1000)
     {
