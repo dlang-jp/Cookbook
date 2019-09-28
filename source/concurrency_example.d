@@ -31,13 +31,11 @@ unittest
     // 書き込みの処理を行うスレッドを起動します。
     // 処理の内容は同期的に記述でき、ファイルのopen/closeは最低限で済みます。
     auto writerTid = spawn(() {
-        // ファイルの書き込みを行うスコープは、scope(exit)で閉じるために明示的に分けておきます。
+        // テストのため、ファイルを閉じるスコープは明示的に分けておきます。
         {
             import std.stdio : File;
 
             auto f = File(LogFilePath, "w");
-            scope (exit)
-                f.close();
 
             // 処理をループしながら、receive関数を使ってメッセージの到着を待ちます。
             // stringが渡されたら書き込み、boolが渡されたら処理を抜けます。
@@ -101,7 +99,6 @@ unittest
             import std.stdio : File;
 
             auto f = File(filepath, "w");
-            scope(exit) f.close();
 
             bool shutdown = false;
             while (!shutdown)
