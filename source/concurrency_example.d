@@ -13,9 +13,11 @@ unittest
     /+
     概要:
         std.concurrency は、spawn,send,receiveという関数を用いてスレッド間でメッセージのやり取りができます。
+        それぞれ以下のように使用します。
 
-        spawnは新しく処理するスレッドを起動し、Tidと呼ばれるスレッドのIDを表す構造体が得られます。
-        得られたTidに対してsendでメッセージを送ることができ、起動された処理はreceiveによってメッセージの到着を待機できます。
+        1. spawn で処理のためのスレッドを起動し、Tidと呼ばれるスレッドのIDを表す構造体を取得します。
+        2. send でTidに対応したスレッドへメッセージを送ります。
+        3. receive を使い、起動された処理の中でメッセージの到着を待機します。
     +/
 
     import std.concurrency : ownerTid, spawn, send, receive, receiveOnly;
@@ -39,6 +41,9 @@ unittest
 
             // 処理をループしながら、receive関数を使ってメッセージの到着を待ちます。
             // stringが渡されたら書き込み、boolが渡されたら処理を抜けます。
+            // なお、send/receiveで送受信可能な型はスレッド間で安全に共有できる型に限られます。
+            // 詳細は以下を参照してください
+            // - https://dlang.org/phobos/std_traits.html#hasUnsharedAliasing
             bool shutdown = false;
             while (!shutdown)
             {
