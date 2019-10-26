@@ -1,5 +1,6 @@
 Ddoc
 
+$(H1 $(TITLE))
 $(MODULE_INDEX)
 
 Macros:

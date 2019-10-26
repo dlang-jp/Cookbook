@@ -1,4 +1,6 @@
 /++
+is式
+
 is式についてまとめます。
 +/
 module is_example;
@@ -30,7 +32,7 @@ module is_example;
 
     // is式は構文的に正しいものしか検査できません。
     // static assert(!is(*int));
-    // static assert(!is([][])); 
+    // static assert(!is([][]));
 
     // `is(typeof({ statement; }))`でstatementの正当性を検査できます。
     static assert( is(typeof({ int x = 3; })));
@@ -115,7 +117,7 @@ module is_example;
     // `alias`に対しても有効です。
     alias Foo = string;
     static assert(is(Foo == string));
-    
+
     // `is(Type == Keyword)`で`Type`が特定の条件を満たすかどうかを検証できます。
 
     // 構造体であるかどうかの検証には`struct`を用います。

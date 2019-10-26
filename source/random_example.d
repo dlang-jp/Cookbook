@@ -1,4 +1,6 @@
 /++
+乱数
+
 乱数操作についてまとめます。
 +/
 module random_example;

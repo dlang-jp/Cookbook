@@ -1,4 +1,6 @@
-/** subPackage test */
+/++
+サブパッケージの作り方
++/
 module subpkg.test;
 
 /++ DubのsubPackageの確認

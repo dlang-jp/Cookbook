@@ -1,4 +1,6 @@
 /++
+時刻・日付
+
 時刻・日付の操作についてまとめます。
 +/
 module datetime_example;

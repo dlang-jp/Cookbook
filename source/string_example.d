@@ -1,4 +1,6 @@
 /++
+文字列
+
 文字列操作についてまとめます。
 
 TODO: 置換(replace), 削除(remove), 分割(split)

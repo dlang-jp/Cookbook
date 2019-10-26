@@ -1,4 +1,6 @@
 /++
+レンジ
+
 レンジの操作についてまとめます。
 
 ## レンジ(Range)とは
@@ -61,7 +63,7 @@ unittest
         invariant(i <= n);
 
         /// nを指定するコンストラクタ
-        this(int n) 
+        this(int n)
         {
             this.n = n;
         }
@@ -108,7 +110,7 @@ unittest
     r.popFront();
     assert(r.front == 2);
     r.popFront();
-    assert(r.empty); 
+    assert(r.empty);
 
     // 自作のレンジに対して、std.algorithmの関数を適用することができます。
     import std.algorithm : equal, filter;
