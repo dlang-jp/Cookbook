@@ -1,0 +1,19 @@
+[
+ {
+  "name" : "subpkg.test",
+  "kind" : "module",
+  "file" : "/home/circleci/project/subpkg/source/subpkg/test.d",
+  "comment" : "サブパッケージの作り方\n",
+  "members" : [
+   {
+    "name" : "__unittest_L12_C1",
+    "kind" : "function",
+    "comment" : " DubのsubPackageの確認\n\n\n\n unittestの例\n",
+    "line" : 12,
+    "char" : 1,
+    "endline" : 17,
+    "endchar" : 1
+   }
+  ]
+ }
+]

@@ -23,59 +23,59 @@
 
 	
 
-	<li><a href="cookbook--array_example.html"><span >array_example</span></a></li>
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
 
 
 
-	<li><a href="cookbook--assoc_array_example.html"><span >assoc_array_example</span></a></li>
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
 
 
 
-	<li><a href="cookbook--concurrency_example.html"><span >concurrency_example</span></a></li>
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
 
 
 
-	<li><a href="cookbook--datetime_example.html"><span >datetime_example</span></a></li>
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
 
 
 
-	<li><a href="cookbook--file_example.html"><span >file_example</span></a></li>
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
 
 
 
-	<li><a href="cookbook--getopt_example.html"><span >getopt_example</span></a></li>
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
 
 
 
-	<li><a href="cookbook--is_example.html"><span >is_example</span></a></li>
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
 
 
 
-	<li><a href="cookbook--network_example.html"><span >network_example</span></a></li>
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
 
 
 
-	<li><a href="cookbook--process_example.html"><span >process_example</span></a></li>
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
 
 
 
-	<li><a href="cookbook--random_example.html"><span >random_example</span></a></li>
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
 
 
 
-	<li><a href="cookbook--range_example.html"><span >range_example</span></a></li>
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
 
 
 
-	<li><a href="cookbook--regex_example.html"><span >regex_example</span></a></li>
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
 
 
 
-	<li><a href="cookbook--string_example.html"><span >string_example</span></a></li>
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
 
 
 
-	<li><a href="cookbook--uda_example.html"><span >uda_example</span></a></li>
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
 
 
 
@@ -86,7 +86,7 @@
 		
 		
 
-	<li><a href="cookbook-subpkg--subpkg.test.html"><span >test</span></a></li>
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
 
 
 	</ul></li>
@@ -101,7 +101,7 @@
 		
 		
 
-	<li><a href="cookbook-windows--windows.basic.html"><span >basic</span></a></li>
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
 
 
 	</ul></li>
@@ -110,12 +110,13 @@
 
 </ul>
 </div>
-            <div class="content">                <h1>range_example</h1>
-                
+            <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <div class="ddoc_summary">レンジの操作についてまとめます。
-</div><div class="ddoc_description"><h2>レンジ(Range)とは</h2>
+                <h1><div class="ddoc_summary">レンジ
+</div></h1><div class="ddoc_description">レンジの操作についてまとめます。
+
+<h2>レンジ(Range)とは</h2>
 
 レンジ(Range)とは、配列やリストといった要素を順次アクセスできるものを一般化した概念です。
 <div class="ddoc_blankline"></div>
@@ -174,7 +175,7 @@ https://dlang.org/phobos/std_range_primitives.html#isInputRange
     <span class="d_keyword">invariant</span>(i &lt;= n);
 
     <span class="d_comment">/// nを指定するコンストラクタ
-</span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> n) 
+</span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> n)
     {
         <span class="d_keyword">this</span>.n = n;
     }
@@ -221,7 +222,7 @@ https://dlang.org/phobos/std_range_primitives.html#isInputRange
 </span>r.popFront();
 <span class="d_keyword">assert</span>(r.front == 2);
 r.popFront();
-<span class="d_keyword">assert</span>(r.empty); 
+<span class="d_keyword">assert</span>(r.empty);
 
 <span class="d_comment">// 自作のレンジに対して、std.algorithmの関数を適用することができます。
 </span><span class="d_keyword">import</span> std.algorithm : equal, filter;

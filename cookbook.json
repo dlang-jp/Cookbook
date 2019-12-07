@@ -1,0 +1,790 @@
+[
+ {
+  "name" : "array_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/array_example.d",
+  "comment" : "配列\n\n動的配列と静的配列の操作についてまとめます。\n\n要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C1",
+    "kind" : "function",
+    "comment" : "初期化の例です\n",
+    "line" : 13,
+    "char" : 1,
+    "endline" : 27,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L27_C1",
+    "kind" : "function",
+    "comment" : "二次元以上の多次元配列を一括で確保する例です\n",
+    "line" : 27,
+    "char" : 1,
+    "endline" : 49,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L49_C1",
+    "kind" : "function",
+    "comment" : "要素のインデックス、または条件式を指定した値の削除\n\n`std.algorithm` の `remove` を使います\n\n`remove` : $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.remove)\n",
+    "line" : 49,
+    "char" : 1,
+    "endline" : 67,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L67_C1",
+    "kind" : "function",
+    "comment" : "要素の追加の例です。\n\n動的配列に対しては `~=` 演算子で要素を追加することができます。\n",
+    "line" : 67,
+    "char" : 1,
+    "endline" : 84,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L84_C1",
+    "kind" : "function",
+    "comment" : "事前にサイズがわからない配列を構築する場合は `std.array` の `appender` を使用すると効率的です。\n\n要素の追加は `~=` または `put` で行います。\n\n`appender` : $(LINK https://dlang.org/phobos/std_array.html#appender)\n",
+    "line" : 84,
+    "char" : 1,
+    "endline" : 96,
+    "endchar" : 2
+   }
+  ]
+ },
+ {
+  "name" : "assoc_array_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/assoc_array_example.d",
+  "comment" : "連想配列\n\n連想配列の操作についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L11_C1",
+    "kind" : "function",
+    "comment" : "# データ操作\n",
+    "line" : 11,
+    "char" : 1,
+    "endline" : 66,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L66_C1",
+    "kind" : "function",
+    "comment" : "# プロパティ\n",
+    "line" : 66,
+    "char" : 1,
+    "endline" : 112,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L112_C1",
+    "kind" : "function",
+    "comment" : "## 空連想配列とnull\n",
+    "line" : 112,
+    "char" : 1,
+    "endline" : 136,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "concurrency_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/concurrency_example.d",
+  "comment" : "並行処理\n\n`std.concurrency` を使った並行処理の例をまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C1",
+    "kind" : "function",
+    "comment" : "ファイルの書き込みを専用のスレッドで処理することで、大量の書き込みを効率良く行う例です。\n\nこれは主に大量の繰り返し計算に伴うログの記録や計算の途中経過を保存する場合のパターンとして役立ちます。\n",
+    "line" : 13,
+    "char" : 1,
+    "endline" : 90,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L90_C1",
+    "kind" : "function",
+    "comment" : "前述の大量書き込みの例に対し、起動する処理を使いまわしが可能な関数として定義する例です。\n\n実行に必要なパラメーターを引数として宣言しておくとspawnの際に渡すことができます。\n",
+    "line" : 90,
+    "char" : 1,
+    "endline" : 147,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "datetime_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/datetime_example.d",
+  "comment" : "時刻・日付\n\n時刻・日付の操作についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C7",
+    "kind" : "function",
+    "comment" : "# 時間を表す7つの型\n\n以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。\n",
+    "line" : 13,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 27,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L27_C7",
+    "kind" : "function",
+    "comment" : "\n## 1. 「時間」 $(D Duration)\nDurationは「時間」を表す型です。\nここでの「時間」とは、10秒間とか、3時間、のような、時間的な長さを表す表現です。\n各種単位の「時間」を得るには、hours関数や、seconds関数のようなものを core.time からimportして使います。\n",
+    "line" : 27,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 48,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L48_C7",
+    "kind" : "function",
+    "comment" : "## 2. 「時刻」 $(D SysTime)\n\nSysTimeは「時刻」を表す型です。\n現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。\n",
+    "line" : 48,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 66,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L66_C7",
+    "kind" : "function",
+    "comment" : "## 3. 「時刻」 $(D DateTime)\n\nDateTimeは「時刻」を表す型です。\nただし、SysTimeとは内部表現が違います。\nSysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ\n何年何月何日の何時何分何秒という情報だけを持っています。\nミリ秒以下の情報も持ちません。\n",
+    "line" : 66,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 85,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L85_C7",
+    "kind" : "function",
+    "comment" : "## 4. 「日付」 $(D Date)\n\nDateは、DateTimeのうち、何年何月何日(つまり日付)の部分です。\n",
+    "line" : 85,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 120,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L120_C7",
+    "kind" : "function",
+    "comment" : "## 5. $(D TimeOfDay)\n\nTimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。\n",
+    "line" : 120,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 134,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L134_C7",
+    "kind" : "function",
+    "comment" : "## 6. 「期間」 $(D Interval)\n\n2つの「時刻」の間の時間を「期間」とすることができます。\n",
+    "line" : 134,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 151,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L151_C7",
+    "kind" : "function",
+    "comment" : "## 7. 「時間」 $(D MonoTime)\n\n2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、\n高精度な時間単位を扱います。\nまた、NTPによる巻き戻しがおこらず、単調増加(monotonic)であることが特徴です。\n「時間」を測定するストップウォッチで得られます。\n",
+    "line" : 151,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 171,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L171_C7",
+    "kind" : "function",
+    "comment" : "# SysTimeと文字列の変換\n",
+    "line" : 171,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 214,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L214_C7",
+    "kind" : "function",
+    "comment" : "# Durationの使い方\n",
+    "line" : 214,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 242,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L242_C7",
+    "kind" : "function",
+    "comment" : "# StopWatchの使い方\n",
+    "line" : 242,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 298,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L298_C7",
+    "kind" : "function",
+    "comment" : "# タイムゾーンの扱い\n",
+    "line" : 298,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 320,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "file_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/file_example.d",
+  "comment" : "ファイルシステム\n\nファイル・パス操作についてまとめます。\n\n",
+  "members" : [
+   {
+    "name" : "__unittest_L12_C1",
+    "kind" : "function",
+    "comment" : "テキストファイル操作の例です。\n",
+    "line" : 12,
+    "char" : 1,
+    "endline" : 52,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L52_C1",
+    "kind" : "function",
+    "comment" : "ディレクトリ操作の例です。\n",
+    "line" : 52,
+    "char" : 1,
+    "endline" : 97,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L97_C1",
+    "kind" : "function",
+    "comment" : "パスに関する操作の例です。\n",
+    "line" : 97,
+    "char" : 1,
+    "endline" : 115,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "getopt_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/getopt_example.d",
+  "comment" : "コマンドライン解析\n\n`std.getopt` の使い方についてまとめます。\n\n実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C1",
+    "kind" : "function",
+    "comment" : "基本的な引数解析の例です\n",
+    "line" : 13,
+    "char" : 1,
+    "endline" : 42,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L42_C1",
+    "kind" : "function",
+    "comment" : "適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。\n",
+    "line" : 42,
+    "char" : 1,
+    "endline" : 69,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "is_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/is_example.d",
+  "comment" : "is式\n\nis式についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L11_C7",
+    "kind" : "function",
+    "comment" : "# 正当性の検証\n",
+    "line" : 11,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 59,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L59_C7",
+    "kind" : "function",
+    "comment" : "# 暗黙の型変換可能かどうかの検証\n",
+    "line" : 59,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 105,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L105_C7",
+    "kind" : "function",
+    "comment" : "# 型の分類\n",
+    "line" : 105,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 216,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "network_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/network_example.d",
+  "comment" : "ネットワーク(cURL)\n\nネットワークモジュール、特に `std.net.curl` の使い方についてまとめます。\n\nHTTP通信などができます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C9",
+    "kind" : "function",
+    "comment" : "HTTPでGET\n",
+    "line" : 13,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 62,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L62_C9",
+    "kind" : "function",
+    "comment" : "文字コードの話\n",
+    "line" : 62,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 106,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L106_C9",
+    "kind" : "function",
+    "comment" : "認証付きProxyを通す\n",
+    "line" : 106,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 143,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L143_C9",
+    "kind" : "function",
+    "comment" : "クライアント認証する\n\nCurlOption.sslcertなどのオプションを使用します。\n\n-  WindowsではDMDやLDCにOpenSSLがリンクされていないlibcurl.dllが使われているようですが\n   クライアント認証にはOpenSSLが必要となりますので、OpenSSLがリンクされたlibcurl.dllを使用する必要があります。$(BR)\n-  さらに、cURLの公式で配布している64bitのDLLは libcurl-x64.dll という名称ですが、`std.net.curl`が使用するDLLの名称は`libcurl.dll`または`curl.dll`固定です。\n   このため、ファイル名を変更する必要があります。\n-  また、OpenSSLのDLL`libcrypto-1_1-x64.dll`、`libssl-1_1-x64.dll`なども用意します。\n\nなお、CA証明書、クライアント証明書や秘密鍵の生成方法・変換方法はここでは解説いたしません。\n",
+    "line" : 143,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 198,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "process_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/process_example.d",
+  "comment" : "プロセス\n\nプロセス操作についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "std.process",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 27,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L13_C1",
+    "kind" : "function",
+    "comment" : "基本的なプロセス起動を行う操作の例です。\n",
+    "line" : 13,
+    "char" : 1,
+    "endline" : 38,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L38_C1",
+    "kind" : "function",
+    "comment" : "パイプでコマンドをつなげる例です。\n",
+    "line" : 38,
+    "char" : 1,
+    "endline" : 88,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L88_C9",
+    "kind" : "function",
+    "comment" : "たくさんパイプしながら、データを小分けにして渡していく場合\n",
+    "line" : 88,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 182,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L182_C1",
+    "kind" : "function",
+    "comment" : "標準出力をファイルにリダイレクトする例です\n",
+    "line" : 182,
+    "char" : 1,
+    "endline" : 208,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L208_C7",
+    "kind" : "function",
+    "comment" : "環境変数を扱う例です。\n",
+    "line" : 208,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 236,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "random_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/random_example.d",
+  "comment" : "乱数\n\n乱数操作についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L11_C7",
+    "kind" : "function",
+    "comment" : "基本的な乱数を生成する例です。\n",
+    "line" : 11,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 42,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L42_C7",
+    "kind" : "function",
+    "comment" : "配列を乱数で初期化する例です。\n",
+    "line" : 42,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 62,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L62_C7",
+    "kind" : "function",
+    "comment" : "シミュレーション用途など、再現可能な乱数を作るためにシードを指定する例です。\n\n実行時に毎回異なるシードを使う場合は、 unpredictableSeed を使用します。\n",
+    "line" : 62,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 99,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L99_C7",
+    "kind" : "function",
+    "comment" : "標準正規分布に基づく乱数を生成する例です。\n\nstd.mathspecial にある normalDistributionInverse を使うことで確率変数から逆変換できます。\n\n`normalDistributionInverse` : $(LINK https://dlang.org/phobos/std_mathspecial.html#normalDistributionInverse)\n",
+    "line" : 99,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 108,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "range_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/range_example.d",
+  "comment" : "レンジ\n\nレンジの操作についてまとめます。\n\n## レンジ(Range)とは\n\nレンジ(Range)とは、配列やリストといった要素を順次アクセスできるものを一般化した概念です。\n\nD言語では、データ構造やアルゴリズムをレンジの仕様に合わせて実装することで、さまざまなメリットが得られます。\n\n* レンジの仕様に合ったデータ構造であれば、`std.algorithm`などの既存ライブラリのアルゴリズムをそのまま適用できます。\n* レンジを扱えるようアルゴリズムや関数を実装することで、配列や`std.container`などの既存のデータ構造に対してそのまま使用できます。\n* レンジの概念はD言語プログラマーの間に広く浸透しています。\n  そのため、自作のデータ構造や関数をレンジの仕様に合わせてあれば、他のD言語プログラマーにも使い方がすぐに伝わります。\n\n## 参考\n\n* `std.range` : https://dlang.org/phobos/std_range.html\n* `std.algorithm` : https://dlang.org/phobos/std_algorithm.html\n\nTODO:\n* 配列・文字列をレンジとして利用する。\n* レンジの種類の紹介\n* std.rangeの各関数の紹介\n\n",
+  "members" : [
+   {
+    "name" : "__unittest_L33_C1",
+    "kind" : "function",
+    "comment" : "最小のレンジ(InputRange)を作る\n",
+    "line" : 33,
+    "char" : 1,
+    "endline" : 140,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "regex_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/regex_example.d",
+  "comment" : "正規表現\n\n正規表現の操作についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L11_C7",
+    "kind" : "function",
+    "comment" : "# 正規表現オブジェクトの生成\n",
+    "line" : 11,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 25,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L25_C7",
+    "kind" : "function",
+    "comment" : "# 正規表現用の文字列\n",
+    "line" : 25,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 55,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L55_C7",
+    "kind" : "function",
+    "comment" : "# 部分文字列の検索\n",
+    "line" : 55,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 64,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L64_C7",
+    "kind" : "function",
+    "comment" : "## 部分文字列の検索 (matchFirst)\n",
+    "line" : 64,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 128,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L128_C7",
+    "kind" : "function",
+    "comment" : "## 部分文字列の検索 (matchAll)\n",
+    "line" : 128,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 175,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L175_C7",
+    "kind" : "function",
+    "comment" : "# 文字列の置換\n",
+    "line" : 175,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 198,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L198_C7",
+    "kind" : "function",
+    "comment" : "# 文字列の分割\n",
+    "line" : 198,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 215,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L215_C7",
+    "kind" : "function",
+    "comment" : "# Unicodeプロパティ\n",
+    "line" : 215,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 227,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L227_C7",
+    "kind" : "function",
+    "comment" : "# 先読み・後読み\n",
+    "line" : 227,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 303,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "string_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/string_example.d",
+  "comment" : "文字列\n\n文字列操作についてまとめます。\n\nTODO: 置換(replace), 削除(remove), 分割(split)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L18_C1",
+    "kind" : "function",
+    "comment" : "文字列の連結\n\n事前に長さの分からない文字列を構築する場合、`std.array` の `appender` を使います。\n\n`appender` : https://dlang.org/phobos/std_array.html#appender\n",
+    "line" : 18,
+    "char" : 1,
+    "endline" : 42,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L42_C1",
+    "kind" : "function",
+    "comment" : "書式化文字列\n\n`std.format` の `format` を使います。\n\nhttps://dlang.org/phobos/std_format.html#.format\n",
+    "line" : 42,
+    "char" : 1,
+    "endline" : 58,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L58_C1",
+    "kind" : "function",
+    "comment" : "完全一致、辞書順での比較\n",
+    "line" : 58,
+    "char" : 1,
+    "endline" : 72,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L72_C1",
+    "kind" : "function",
+    "comment" : "大文字小文字を無視して比較\n\n`std.uni` の `icmp` を使います\n\n`icmp` : https://dlang.org/phobos/std_uni.html#icmp\n",
+    "line" : 72,
+    "char" : 1,
+    "endline" : 97,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L97_C1",
+    "kind" : "function",
+    "comment" : "「で始まる」「で終わる」の例\n\n`std.algorithm` の `startsWith`, `endsWith` を使います。\n\n`startsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.startsWith)$(BR)\n`endsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.endsWith)\n",
+    "line" : 97,
+    "char" : 1,
+    "endline" : 119,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L119_C1",
+    "kind" : "function",
+    "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
+    "line" : 119,
+    "char" : 1,
+    "endline" : 136,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "uda_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/uda_example.d",
+  "comment" : "UDA(User Defined Attribute)\n\nUDAの使用例についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L11_C1",
+    "kind" : "function",
+    "comment" : "UDA取得の例です\n",
+    "line" : 11,
+    "char" : 1,
+    "endline" : 31,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L31_C1",
+    "kind" : "function",
+    "comment" : "特定のUDAを持ったメンバー抽出の例です\n",
+    "line" : 31,
+    "char" : 1,
+    "endline" : 64,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L64_C1",
+    "kind" : "function",
+    "comment" : "toStringの自動生成の例です\n",
+    "line" : 64,
+    "char" : 1,
+    "endline" : 112,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L112_C1",
+    "kind" : "function",
+    "comment" : "関数の引数に付与されたUDAを取得する例です\n",
+    "line" : 112,
+    "char" : 1,
+    "endline" : 129,
+    "endchar" : 1
+   }
+  ]
+ }
+]

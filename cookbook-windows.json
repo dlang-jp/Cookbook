@@ -1,0 +1,28 @@
+[
+ {
+  "name" : "windows.basic",
+  "kind" : "module",
+  "file" : "/home/circleci/project/windows/source/windows/basic.d",
+  "comment" : "Win32API\n\nWindowsにおける標準API(Win32API)の呼び出しについてまとめます。\n\n概要\n1. C言語では多くの場合 `#include <windows.h>` と記述しますが、Dでは `import core.sys.windows.windows;` と記述します。\n2. あとは利用する関数が含まれるlibファイルをリンクすればシステム関数が利用できます。\n    - dubでは設定ファイルの `libs` セクションにファイル名を拡張子を除いて書きます。\n    - `pragma(lib, \"ファイル名\");` とする書き方もあります\n\nなおライブラリ等でWindows以外のプラットフォームと共用するためには `version (Windows) { } else { }` で別々に書きます。$(BR)\n以下の例ではLinux等の環境でもビルドできるようにするためversionで囲って表記しています。\n\nSee_Also:\n    関数に対応するヘッダーとlibファイルはMicrosoft Docsのサイトから検索して見つけることができます。$(BR)\n    $(LINK https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L24_C1",
+    "kind" : "function",
+    "comment" : "`GetSystemMetrics`関数を使ってシステム情報（マウスのボタン数）を取得する例です。\n",
+    "line" : 24,
+    "char" : 1,
+    "endline" : 43,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L43_C1",
+    "kind" : "function",
+    "comment" : "GetComputerNameEx関数を使ってコンピューター名を取得する例です。\n\nWindowsのシステム関数には末尾にAかWが付くものがあり、それぞれchar向けかwchar向けを表します。\n\nAが付く関数はシステムロケールに従って結果を返すため、多くはASCII文字列ですが日本語環境ではShift_JISになることがあります。$(BR)\nWが付く関数はUnicodeで結果を返すため、そのままwcharの文字列として扱うことができます。\n",
+    "line" : 43,
+    "char" : 1,
+    "endline" : 69,
+    "endchar" : 1
+   }
+  ]
+ }
+]
