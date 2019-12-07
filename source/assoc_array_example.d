@@ -1,4 +1,6 @@
 /++
+連想配列
+
 連想配列の操作についてまとめます。
 +/
 module assoc_array_example;

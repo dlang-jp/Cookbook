@@ -18,7 +18,6 @@ $(T html,
         $(DIVC container,
             $(SIDEBAR)
             $(DIVC content,
-                $(H1 $(TITLE))
                 $(COMMENT quickindex is for the jump links)
                 $(DIVCID quickindex, quickindex, )
                 $(BODY_PREFIX)

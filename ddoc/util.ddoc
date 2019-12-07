@@ -15,11 +15,11 @@ _=
 
 MENU_DUBPKG =$3
 MENU_PKG    =$(LIC expand-container open, $(AC expand-toggle, #, $(SPAN, $1))$(UL $2))
-MENU_MOD    =$(LI $(A $2, $(SPAN, $1)))
+MENU_MOD    =$(LI $(A $2, $(SPAN, $8)))
 
 INDEX_DUBPKG =$(SPANC module_index_dubpkgname, $1)$(UL $3)
 INDEX_PKG    =$2
-INDEX_MOD    =$(LI $(A $2, $(SPANC module_index, $6)))
+INDEX_MOD    =$(LI $(A $2, $(SPANC module_index, $8)))
 _=
 
 INFO_DUBPKG =

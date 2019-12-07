@@ -1,5 +1,7 @@
 /++
-UDA(User Defined Attribute)の使用例についてまとめます。
+UDA(User Defined Attribute)
+
+UDAの使用例についてまとめます。
 +/
 module uda_example;
 
