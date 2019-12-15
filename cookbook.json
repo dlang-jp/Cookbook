@@ -114,6 +114,100 @@
   ]
  },
  {
+  "name" : "data",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/data/package.d",
+  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n)\n\n",
+  "members" : [
+   {
+    "name" : "data.json_example",
+    "kind" : "import",
+    "line" : 17,
+    "char" : 15
+   }
+  ]
+ },
+ {
+  "name" : "data.json_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/data/json_example.d",
+  "comment" : "JSON操作\n\nJSONファイル/JSONデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.jsonモジュールと、その中のJSONValueについて説明します。\nこのモジュールは、あくまでもJSONが最低限取り扱える程度の機能があって、速度や利便性は二の次です。\nほかにもサードパーティのライブラリとして、asdfを代表として、より高度な取り扱いができるライブラリがあります。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C7",
+    "kind" : "function",
+    "comment" : "# 文字列⇔JSON\n",
+    "line" : 15,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 35,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L35_C7",
+    "kind" : "function",
+    "comment" : "# 数値⇔JSON\n",
+    "line" : 35,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 74,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L74_C7",
+    "kind" : "function",
+    "comment" : "# 真偽値・null⇔JSON\n\n真偽値(true / false)とnullの状態は、上記文字列や数値とは異なり、\nそれぞれ個別にJSONTypeが存在します。\n",
+    "line" : 74,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 111,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L111_C7",
+    "kind" : "function",
+    "comment" : "# 配列⇔JSON\n",
+    "line" : 111,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 153,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L153_C7",
+    "kind" : "function",
+    "comment" : "# 連想配列⇔JSON\n",
+    "line" : 153,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 214,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L214_C7",
+    "kind" : "function",
+    "comment" : "# JSONファイルの書き込み・読み込み\n",
+    "line" : 214,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 257,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "datetime_example",
   "kind" : "module",
   "file" : "/home/circleci/project/source/datetime_example.d",
