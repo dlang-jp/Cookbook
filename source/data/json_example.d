@@ -242,6 +242,8 @@ module data.json_example;
     // JSONファイルを読み込んで、JSONValueを得ます
     // というか、ファイルから読み込んだJSONの文字列表現を、`parseJSON()`関数
     // でJSONValueに変換します。
+    // curlなどを使って取得したHTTPレスポンスを解析するときも同様に`parseJSON()`
+    // 関数でJSONValueに変換できます。
     auto jv2 = std.file.readText(jsonTestFile).parseJSON();
 
     // ちゃんと読み込まれています
