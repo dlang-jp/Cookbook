@@ -4,7 +4,8 @@ DDOC =
 <!DOCTYPE html>
 $(T html,
     $(T head,
-        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
         $(SCRIPTLOAD https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js)
         $(SCRIPTLOAD js/sidebar.js)
