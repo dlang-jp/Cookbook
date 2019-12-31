@@ -15,3 +15,4 @@ $(DL
 module data;
 
 public import data.json_example;
+public import data.csv_example;
