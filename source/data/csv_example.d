@@ -28,13 +28,15 @@ module data.csv_example;
     // 以下はワンライナーで取れるようにしていますが、
     // csvReader(csv1)した各レコード(1行ごとに各列(Range)が格納されたRange)を、
     // mapとarrayで配列に変換しているだけです。
-    auto mat = csvReader(csv1).map!(a => a.array).array;
+    auto mat = csvReader(csv1).map!array.array;
     assert(mat[0][0] == "a");
     assert(mat[0][1] == "b");
     assert(mat[1][0] == "1");
 }
 
-/// ditto
+/++
+もう少し複雑な場合
++/
 @safe unittest
 {
     import std.csv;
@@ -49,7 +51,7 @@ module data.csv_example;
     `.outdent.strip;
 
     // 配列に直すのはこうしておくと楽
-    alias toMat = r => r.map!(a => a.array).array;
+    alias toMat = r => r.map!array.array;
 
     // 文字列からをCSVとしてパースして、文字列の2次元配列にします
     // 何もしないとヘッダも読み込まれてしまいます
@@ -79,7 +81,9 @@ module data.csv_example;
         toMat(csv1.csvReader(["Name", "BloodType", "Height"])));
 }
 
-/// ditto
+/++
+構造体でデータ構造をレイアウトする場合
++/
 @safe unittest
 {
     import std.csv;
@@ -117,3 +121,59 @@ module data.csv_example;
 
 
 
+/++
+# CSVの書き出し
+
+残念ながら、CSVを書き出す機能はありません。自分で作ります。
+以下の例では汎用性を高めるため、`",\n`を含むものを変換することを前提とします。
+これらが含まれると、各セルをエスケープする必要が出るためです。
+数値だけということがあらかじめわかっているときなど、
+エスケープする必要がない場合は`format!"%-(%-(%-s,%)\n%)"(mat)`とするだけでOK。
++/
+@safe unittest
+{
+    // CSVは、カンマ区切りで列を、改行で行を表すテキストですが、
+    // 細かく言うと、`"`で囲まれた範囲を文字列として処理します。
+    // 文字列の中では、改行やカンマが使用できます。ダブルクォーテーションを
+    // 文字列内で表現する場合は、2つ連続させます。`""`こんな感じに。
+    // つまり、`",\r\n`(ダブルクォーテーションとカンマと改行)が含まれるセルは
+    // `"`で囲んで出力し、さらにその中の`"`は`""`に置換してやります。
+    string escapeCSV(string txt)
+    {
+        import std.string, std.array;
+        if (txt.indexOfAny(",\"\r\n") != -1)
+            return `"` ~ txt.replace("\"", "\"\"") ~ `"`;
+        return txt;
+    }
+
+    // 文字列の2次元配列(行列)の各セルをエスケープし、
+    // 各列をカンマ区切り・各行を改行区切りの文字列にします。
+    // ここで、formatが利用できます。`%(%)`という書式で、
+    // Rangeをうまいこと展開できます。
+    string toCSV(string[][] mat)
+    {
+        import std.algorithm, std.format;
+        return format!"%-(%-(%-s,%)\n%)"(
+            mat.map!(row => row.map!escapeCSV));
+    }
+
+    // 準備
+    import std.algorithm, std.array, std.csv, std.string;
+    alias toMat = r => r.map!array.array;
+
+    // 文字列の行列を…
+    string[][] mat = [
+        ["aaa", "bb,b", "c\nc"],
+        ["123", "x\"y", "\"xxx\""]];
+    // CSVに変換！
+    auto csv = toCSV(mat);
+    // 中身はこう
+    assert(csv == `
+        aaa,"bb,b","c
+        c"
+        123,"x""y","""xxx"""
+    `.outdent.strip);
+
+    // もう一度文字列の行列に戻して比較しても一致！
+    assert(equal(toMat(csv.csvReader), mat));
+}
