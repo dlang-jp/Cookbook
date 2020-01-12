@@ -117,13 +117,75 @@
   "name" : "data",
   "kind" : "module",
   "file" : "/home/circleci/project/source/data/package.d",
-  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n)\n\n",
+  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.csv_example.html, CSV))\n    $(DD\n        `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)\n        また、`std.csv`ではサポートされていないCSVの書き出し方についても取り扱います。\n    )\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n)\n\n",
   "members" : [
+   {
+    "name" : "data.csv_example",
+    "kind" : "import",
+    "line" : 22,
+    "char" : 15
+   },
    {
     "name" : "data.json_example",
     "kind" : "import",
-    "line" : 17,
+    "line" : 23,
     "char" : 15
+   }
+  ]
+ },
+ {
+  "name" : "data.csv_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/data/csv_example.d",
+  "comment" : "CSV操作\n\nCSVファイル/CSVデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.csvモジュールを用いたCSVファイルの読み込みと、\nCSVファイルへの書き出しについて説明します。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L16_C7",
+    "kind" : "function",
+    "comment" : "# CSVのパース\n",
+    "line" : 16,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 40,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L40_C7",
+    "kind" : "function",
+    "comment" : "もう少し複雑な場合\n",
+    "line" : 40,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 87,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L87_C7",
+    "kind" : "function",
+    "comment" : "構造体でデータ構造をレイアウトする場合\n",
+    "line" : 87,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 133,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L133_C7",
+    "kind" : "function",
+    "comment" : "# CSVの書き出し\n\n残念ながら、CSVを書き出す機能はありません。自分で作ります。\n以下の例では汎用性を高めるため、`\",\\n`を含むものを変換することを前提とします。\nこれらが含まれると、各セルをエスケープする必要が出るためです。\n数値だけということがあらかじめわかっているときなど、\nエスケープする必要がない場合は`format!\"%-(%-(%-s,%)\\n%)\"(mat)`とするだけでOK。\n",
+    "line" : 133,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 180,
+    "endchar" : 1
    }
   ]
  },
