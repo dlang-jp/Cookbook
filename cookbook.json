@@ -465,6 +465,50 @@
   ]
  },
  {
+  "name" : "meta_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/meta_example.d",
+  "comment" : "メタプログラミング\n\nメタプログラミングに出てくるイディオム等についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C7",
+    "kind" : "function",
+    "comment" : "モジュールの定義一覧を取得する例です。\n\n`__traits(allMembers, モジュール名)`と書きます。\n",
+    "line" : 13,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 27,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L27_C7",
+    "kind" : "function",
+    "comment" : "任意のモジュール名から定義一覧を取得するイディオムです。\n\nモジュールの参照を`mixin`と`std.meta.Alias`を使って取得します。\n",
+    "line" : 27,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 56,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L56_C7",
+    "kind" : "function",
+    "comment" : "実際にコンパイルできるかどうか確認するイディオムです。\n\nD言語のコード片が実際にコンパイルできる場合にはtrueに、そうでない場合はfalseに評価されます。\nこの強力なイディオムのやり方は2種類あって、`is(typeof(...))`を使用する方法と、`__traits(compiles, ...)`を使用する方法があります。\nどちらでも効果はほぼ同じですが、やや`is(typeof(...))`のほうがチェックが緩いです。過去dmdへ多大な貢献をされた[9rnsrさんの記事](https://qiita.com/9rnsr/items/5e3e434ea8719fbeea82)で解説されています。\n\nなお、このイディオムはきわめて強力な一方、実際にコンパイルできるかどうか、コンパイラが実際にコンパイルを試行して確かめる必要があるため、コンパイル速度的にはやや不利です。\nそのためかどうなのか、std.rangeのisInputRangeなどは、[過去この方法で実装されていた](https://github.com/dlang/phobos/blob/c4f1c43366c79f4ff9ddfadbc0a8c943e0cb5c94/std/range.d#L528)こともありますが、[今は違います](https://github.com/dlang/phobos/blob/d29ebfe6ec0fd3879513e0f8a533b234f3d101e1/std/range/primitives.d#L171)。\n",
+    "line" : 56,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 103,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "network_example",
   "kind" : "module",
   "file" : "/home/circleci/project/source/network_example.d",

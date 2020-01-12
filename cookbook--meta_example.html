@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>meta_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">メタプログラミング
+</div></h1><div class="ddoc_description">メタプログラミングに出てくるイディオム等についてまとめます。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ モジュールの定義一覧を取得する例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">__traits(allMembers, モジュール名)</span>と書きます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
+
+<span class="d_keyword">alias</span> StdMembers = <span class="d_keyword">__traits</span>(allMembers, std.stdio);
+
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(StdMembers.length &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 任意のモジュール名から定義一覧を取得するイディオムです。
+<div class="ddoc_blankline"></div>
+
+モジュールの参照を<span class="d_inlinecode donthyphenate notranslate">mixin</span>と<span class="d_inlinecode donthyphenate notranslate">std.meta.Alias</span>を使って取得します。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> Module(string moduleName)
+{
+    <span class="d_keyword">mixin</span>(<span class="d_string">"private import "</span> ~ moduleName ~ <span class="d_string">";"</span>);
+    <span class="d_keyword">import</span> std.meta : Alias;
+
+    <span class="d_keyword">private</span> <span class="d_keyword">alias</span> mod = Alias!(<span class="d_keyword">mixin</span>(moduleName));
+
+    <span class="d_keyword">alias</span> ModuleMembers = <span class="d_keyword">__traits</span>(allMembers, mod);
+}
+
+<span class="d_keyword">alias</span> MetaMembers = Module!(<span class="d_keyword">__MODULE__</span>).ModuleMembers;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(MetaMembers.length &gt; 0);
+
+<span class="d_keyword">alias</span> ArrayMembers = Module!<span class="d_string">"array_example"</span>.ModuleMembers;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(ArrayMembers.length &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 実際にコンパイルできるかどうか確認するイディオムです。
+<div class="ddoc_blankline"></div>
+
+D言語のコード片が実際にコンパイルできる場合にはtrueに、そうでない場合はfalseに評価されます。
+この強力なイディオムのやり方は2種類あって、<span class="d_inlinecode donthyphenate notranslate">is(typeof(...))</span>を使用する方法と、<span class="d_inlinecode donthyphenate notranslate">__traits(compiles, ...)</span>を使用する方法があります。
+どちらでも効果はほぼ同じですが、やや<span class="d_inlinecode donthyphenate notranslate">is(typeof(...))</span>のほうがチェックが緩いです。過去dmdへ多大な貢献をされた<a href="https://qiita.com/9rnsr/items/5e3e434ea8719fbeea82">9rnsrさんの記事</a>で解説されています。
+<div class="ddoc_blankline"></div>
+
+なお、このイディオムはきわめて強力な一方、実際にコンパイルできるかどうか、コンパイラが実際にコンパイルを試行して確かめる必要があるため、コンパイル速度的にはやや不利です。
+そのためかどうなのか、std.rangeのisInputRangeなどは、<a href="https://github.com/dlang/phobos/blob/c4f1c43366c79f4ff9ddfadbc0a8c943e0cb5c94/std/range.d#L528">過去この方法で実装されていた</a>こともありますが、<a href="https://github.com/dlang/phobos/blob/d29ebfe6ec0fd3879513e0f8a533b234f3d101e1/std/range/primitives.d#L171">今は違います</a>。
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S1
+{
+    <span class="d_keyword">void</span> foo(){ }
+}
+<span class="d_keyword">struct</span> S2
+{
+    <span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> x){ }
+    <span class="d_keyword">void</span> bar(<span class="d_keyword">int</span> x){ }
+}
+
+<span class="d_comment">// 引数のないfooメソッドのある型Tを判定する
+</span><span class="d_comment">// こっちは is(typeof(...)) の方法で判定する
+</span><span class="d_keyword">enum</span> hasFoo(T) = <span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>({
+    <span class="d_comment">// 変数が定義可能
+</span>    T val;
+    <span class="d_comment">// fooメソッドの呼び出しができる
+</span>    val.foo();
+}));
+
+<span class="d_comment">// int型の引数を指定するbarメソッドのある型Tを判定する
+</span><span class="d_comment">// こっちは __traits(compiles, ...) の方法で判定する
+</span><span class="d_keyword">enum</span> hasBar(T) = <span class="d_keyword">__traits</span>(compiles, {
+    <span class="d_comment">// 変数が定義可能
+</span>    T val;
+    <span class="d_comment">// int型の引数でbarメソッドの呼び出しができる
+</span>    val.bar(1);
+});
+
+<span class="d_comment">// S1にはfooメソッドがある
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(hasFoo!S1);
+<span class="d_comment">// S1にはbarメソッドがない
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!hasBar!S1);
+<span class="d_comment">// S2にはfooメソッドはあるが、int型の引数が必要
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!hasFoo!S2);
+<span class="d_comment">// S2にはint型の引数が必要なbarメソッドがある
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(hasBar!S2);
+
+<span class="d_comment">// もちろん、直接 static if や、 static assert で使うこともできます
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, {
+    S1 s1;
+    S2 s2;
+    <span class="d_comment">// S1とS2の足し算はできるか？
+</span>    <span class="d_keyword">auto</span> s3 = s1 + s2; <span class="d_comment">// →できないのでfalse
+</span>}));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
