@@ -7,3 +7,4 @@ source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s $1 --activ
 
 dub test
 dub test :windows
+dub test :libdparse_usage

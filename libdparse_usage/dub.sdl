@@ -1,0 +1,7 @@
+name "libdparse_usage"
+description "A usage of libdparse"
+authors "sobaya"
+copyright "Copyright © 2020, sobaya"
+license "public domain"
+
+dependency "libdparse" version="~>0.13.2"
