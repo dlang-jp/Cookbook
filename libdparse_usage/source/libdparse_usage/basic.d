@@ -74,8 +74,8 @@ unittest
 ASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。
 
 See_Also: https://libdparse.dlang.io/dparse/parser.html
- +/
- unittest
++/
+unittest
 {
     import std : array;
     import dparse.lexer : getTokensForParser, LexerConfig, StringCache, tok;
