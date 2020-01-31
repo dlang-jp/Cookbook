@@ -57,8 +57,8 @@ unittest
 }
 
 /++
- `dparse.parser`モジュールを用いてトークン列をASTに変換する例です。
-  ASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。
+`dparse.parser`モジュールを用いてトークン列をASTに変換する例です。
+ASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。
  +/
  unittest
 {
@@ -96,7 +96,7 @@ unittest
 
 /++
 `dparser.ast`モジュールを用いてASTを処理する例です。
- ASTの一部を見たい場合は効果的です。
+ASTの一部を見たい場合は効果的です。
 +/
 unittest
 {
