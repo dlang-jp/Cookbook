@@ -3,11 +3,24 @@ libdparse
 
 libdparseの使い方についてまとめます。
 
+## 概要
+libdparseはD言語のソースコードを解析するのに用いられるライブラリです。
+
+## ドキュメント
+https://libdparse.dlang.io/
+
+## 利用例
+- [ddox](https://code.dlang.org/packages/ddox) : このライブラリでシンボルやコメントを抽出してドキュメントを生成します
+- [dcd](https://code.dlang.org/packages/dcd) : このライブラリでシンボル等を抽出してIDEでオートコンプリートを行うために使われます
+- [dfmt](https://code.dlang.org/packages/dfmt) : このライブラリで構文を分解・再構築することでコードスタイルの俗人性を排除します
+- [dscanner](https://code.dlang.org/packages/dscanner) : このライブラリで構文を読み取り、静的解析することで、バグを生みやすいコードを警告してくれます
 +/
 module libdparse_usage.basic;
 
 /++
 `dparse.lexer`モジュールを用いてソースコードをトークン分解する例です。
+
+See_Also: https://libdparse.dlang.io/dparse/lexer.html
 +/
 unittest
 {
@@ -59,6 +72,8 @@ unittest
 /++
 `dparse.parser`モジュールを用いてトークン列をASTに変換する例です。
 ASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。
+
+See_Also: https://libdparse.dlang.io/dparse/parser.html
  +/
  unittest
 {
@@ -97,6 +112,8 @@ ASTを全てtraverseする場合にはここで得られたASTを直接利用し
 /++
 `dparser.ast`モジュールを用いてASTを処理する例です。
 ASTの一部を見たい場合は効果的です。
+
+See_Also: https://libdparse.dlang.io/dparse/ast.html
 +/
 unittest
 {
