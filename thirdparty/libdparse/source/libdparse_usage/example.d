@@ -15,7 +15,7 @@ https://libdparse.dlang.io/
 - [dfmt](https://code.dlang.org/packages/dfmt) : このライブラリで構文を分解・再構築することでコードスタイルの俗人性を排除します
 - [dscanner](https://code.dlang.org/packages/dscanner) : このライブラリで構文を読み取り、静的解析することで、バグを生みやすいコードを警告してくれます
 +/
-module libdparse_usage.basic;
+module libdparse_usage.example;
 
 /++
 `dparse.lexer`モジュールを用いてソースコードをトークン分解する例です。
