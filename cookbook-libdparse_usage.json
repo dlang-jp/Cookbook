@@ -1,0 +1,37 @@
+[
+ {
+  "name" : "libdparse_usage.example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/thirdparty/libdparse/source/libdparse_usage/example.d",
+  "comment" : "libdparse\n\nlibdparseの使い方についてまとめます。\n\n## 概要\nlibdparseはD言語のソースコードを解析するのに用いられるライブラリです。\n\n## ドキュメント\nhttps://libdparse.dlang.io/\n\n## 利用例\n- [ddox](https://code.dlang.org/packages/ddox) : このライブラリでシンボルやコメントを抽出してドキュメントを生成します\n- [dcd](https://code.dlang.org/packages/dcd) : このライブラリでシンボル等を抽出してIDEでオートコンプリートを行うために使われます\n- [dfmt](https://code.dlang.org/packages/dfmt) : このライブラリで構文を分解・再構築することでコードスタイルの俗人性を排除します\n- [dscanner](https://code.dlang.org/packages/dscanner) : このライブラリで構文を読み取り、静的解析することで、バグを生みやすいコードを警告してくれます\n",
+  "members" : [
+   {
+    "name" : "__unittest_L25_C1",
+    "kind" : "function",
+    "comment" : "`dparse.lexer`モジュールを用いてソースコードをトークン分解する例です。\n\nSee_Also: https://libdparse.dlang.io/dparse/lexer.html\n",
+    "line" : 25,
+    "char" : 1,
+    "endline" : 78,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L78_C1",
+    "kind" : "function",
+    "comment" : "`dparse.parser`モジュールを用いてトークン列をASTに変換する例です。\nASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。\n\nSee_Also: https://libdparse.dlang.io/dparse/parser.html\n",
+    "line" : 78,
+    "char" : 1,
+    "endline" : 118,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L118_C1",
+    "kind" : "function",
+    "comment" : "`dparser.ast`モジュールを用いてASTを処理する例です。\nASTの一部を見たい場合は効果的です。\n\nSee_Also: https://libdparse.dlang.io/dparse/ast.html\n",
+    "line" : 118,
+    "char" : 1,
+    "endline" : 167,
+    "endchar" : 1
+   }
+  ]
+ }
+]
