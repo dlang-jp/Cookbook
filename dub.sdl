@@ -5,3 +5,4 @@ license "public domain"
 
 subPackage "subpkg"
 subPackage "windows"
+subPackage "thirdparty/libdparse"
