@@ -4,5 +4,5 @@ authors "lempiji"
 copyright "Copyright © 2019, lempiji"
 license "public domain"
 // ソース内に pragma(lib, "user32"); とすることもできます
-libs "users32" platform="windows"
+libs "user32" platform="windows"
 libs "kernel32" platform="windows"
