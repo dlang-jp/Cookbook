@@ -259,45 +259,27 @@ jobs:
   # 24. macOS   x86_64  ldc-master x   x   x
   # do-nothing
 
-  # Upload coverage to Codecov
+  # Upload coverage report to Codecov
   upload-codecov:
     name: upload-codecov
     needs: [test-windows-x86-dmd-latest, test-windows-x86_64-dmd-latest, test-windows-x86_64-ldc-latest, test-windows-x86_64-ldc-master, test-linux-x86-ldc-latest, test-linux-x86_64-dmd-latest, test-linux-x86_64-ldc-latest, test-linux-x86_64-dmd-master, test-osx-x86_64-dmd-latest, test-osx-x86_64-ldc-latest]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Download Windows coverage result
         uses: actions/download-artifact@v1
         with:
           name: coverage-windows
           path: .cov-windows
-      - name: Upload Windows coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} #required
-          file: ./.cov-windows/*.lst
-          flags: unittests
-          fail_ci_if_error: true
       - name: Download Linux coverage result
         uses: actions/download-artifact@v1
         with:
           name: coverage-linux
           path: .cov-linux
-      - name: Upload Linux coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} #required
-          file: ./.cov-linux/*.lst
-          flags: unittests
-          fail_ci_if_error: true
       - name: Download OSX coverage result
         uses: actions/download-artifact@v1
         with:
           name: coverage-osx
           path: .cov-osx
       - name: Upload OSX coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} #required
-          file: ./.cov-osx/*.lst
-          flags: unittests
-          fail_ci_if_error: true
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
