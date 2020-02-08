@@ -1,0 +1,8 @@
+name "asdf_usage"
+description "A usage of Asdf"
+authors "lempiji"
+copyright "Copyright © 2020, lempiji"
+license "public domain"
+dflags "-checkaction=context"
+dependency "sumtype" version="~>0.9.4"
+dependency "asdf" version="~>0.5.3"
