@@ -986,5 +986,82 @@
     "endchar" : 1
    }
   ]
+ },
+ {
+  "name" : "unittests_example",
+  "kind" : "module",
+  "file" : "/home/circleci/project/source/unittests_example.d",
+  "comment" : "単体テスト\n\n様々な単体テストの記法についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C1",
+    "kind" : "function",
+    "comment" : "unittestとassert\n\n実行時ロジックについては、`assert` を使ってテストを記述します。\n\nunittestとassertは両方共debugビルドのときにのみ使われ、releaseビルドのときには除去されます。\n",
+    "line" : 15,
+    "char" : 1,
+    "endline" : 37,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L37_C1",
+    "kind" : "function",
+    "comment" : "unittestとstatic assert\n\nコンパイル時に確定する内容については、`static assert`を使ってテストを記述します。\n\nこのテストに失敗するとコンパイルエラーになります。\n",
+    "line" : 37,
+    "char" : 1,
+    "endline" : 56,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L56_C1",
+    "kind" : "function",
+    "comment" : "例外が発生することをテストする方法\n\n`assertThrown` 関数を使い、対象の関数が例外を発生させることを確認します。\nここでは関数の事前条件チェックでAssertErrorが起きることを確認します。\n\ncore.exception : $(LINK https://dlang.org/phobos/core_exception.html)$(BR)\nstd.exception : $(LINK https://dlang.org/phobos/std_exception.html)$(BR)\n",
+    "line" : 56,
+    "char" : 1,
+    "endline" : 96,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L96_C9",
+    "kind" : "function",
+    "comment" : "@safe や @nogc 、nothrowであることを保証する方法\n\n属性をテストするには unittest自体を当該属性で修飾する方法が多く使われます。\nこのテストサンプルは `nothrow` 属性で修飾されています。\n\n`std.traits` の機能で関数属性を取り出すことも可能ですが、ブロック全体を修飾することで漏れがなくなります。\n",
+    "line" : 96,
+    "char" : 9,
+    "storageClass" : [
+     "nothrow"
+    ],
+    "endline" : 115,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L115_C1",
+    "kind" : "function",
+    "comment" : "浮動小数点数をテストする方法\n\n数値計算の結果は厳密なテストが難しいため、`approxEqual` を使い相対誤差などを利用した比較を行います。\n\nstd.math.approxEqual : $(LINK https://dlang.org/phobos/std_math.html#.approxEqual)$(BR)\n",
+    "line" : 115,
+    "char" : 1,
+    "endline" : 150,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L150_C1",
+    "kind" : "function",
+    "comment" : "一般的なRangeの内容をテストする方法\n\nstd.algorithm 内の equal 関数を使ってRange同士を比較します。\n\nstd.algorithm : $(LINK https://dlang.org/phobos/std_algorithm_comparison.html)\n",
+    "line" : 150,
+    "char" : 1,
+    "endline" : 175,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L175_C9",
+    "kind" : "function",
+    "comment" : "ファイルの生成などを確認する方法\n\n単体テストはそれぞれが独立し、順不同および繰り返し実行できることが重要です。\n\n最初と `scope(exit)` でファイルの破棄を行うとテストの再現性や独立性が高まります。\n",
+    "line" : 175,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 190,
+    "endchar" : 1
+   }
+  ]
  }
 ]
