@@ -306,3 +306,4 @@ jobs:
         with:
           emptyCommits: false
           user_name: GitHub Actions Bot
+          user_email: <>
