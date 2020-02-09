@@ -64,7 +64,7 @@ unittest
     // テスト対象の関数を用意します
     void test(int n)
     in(n > 0, "引数 n は正の数である必要があります")
-    body
+    do
     {
         // 実装は省略
     }
