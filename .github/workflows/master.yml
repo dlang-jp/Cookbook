@@ -1,0 +1,347 @@
+name: master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # 各テストのジョブは以下の表に従って作成しています。
+  # matrixを使って全て行うと大変なので、要所を搾って実施します。
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  1. Windows x86     dmd        o   x   x
+  #  2. Windows x86     ldc        x   x   x
+  #  3. Windows x86     dmd-master x   x   x
+  #  4. Windows x86     ldc-master x   x   x
+  #  5. Windows x86_64  dmd        o   o   o
+  #  6. Windows x86_64  ldc        o   x   x
+  #  7. Windows x86_64  dmd-master x   x   x
+  #  8. Windows x86_64  ldc-master o   x   x
+  #  9. Ubuntu  x86     dmd        x   x   x
+  # 10. Ubuntu  x86     ldc        o   x   x
+  # 11. Ubuntu  x86     dmd-master x   x   x
+  # 12. Ubuntu  x86     ldc-master x   x   x
+  # 13. Ubuntu  x86_64  dmd        o   x   x
+  # 14. Ubuntu  x86_64  ldc        o   O   o
+  # 15. Ubuntu  x86_64  dmd-master o   x   x
+  # 16. Ubuntu  x86_64  ldc-master x   x   x
+  # 17. macOS   x86     dmd        x   x   x
+  # 18. macOS   x86     ldc        x   x   x
+  # 19. macOS   x86     dmd-master x   x   x
+  # 20. macOS   x86     ldc-master x   x   x
+  # 21. macOS   x86_64  dmd        o   x   x
+  # 22. macOS   x86_64  ldc        o   o   o
+  # 23. macOS   x86_64  dmd-master x   x   x
+  # 24. macOS   x86_64  ldc-master x   x   x
+
+  # 各テストジョブは以下のテンプレを加工して作成します。
+  # 例は test-linux-x86_64-ldc-latest を参照してください。
+  # また upload-codecov はテストジョブが全てパスしてから
+  # 実行されるようにするため、テストジョブを追加する場合は
+  # upload-codecov の needs も忘れず追加してください。
+
+  # テンプレ：
+  #test-${OS}-${ARCH}-${COMPILER}:
+  #  name: test-${OS}-${ARCH}-${COMPILER}
+  #  runs-on: ${OS}
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Install D compiler
+  #      uses: mihails-strasuns/setup-dlang@v0.5.0
+  #      with:
+  #        compiler: ${COMPILER}
+  #    # テストをする場合は以下を実行
+  #    - name: Run unit tests
+  #      run: rdmd ./.github/runner.d -a=${ARCH} --mode=unit-test
+  #    # ドキュメント生成をする場合は以下を実行
+  #    - name: Generate document tests
+  #      run: rdmd ./.github/runner.d -a=${ARCH} --mode=generate-document
+  #    # ドキュメントを記録する場合は以下を実行(Artifactに6か月保管されます)
+  #    - name: Upload generated pages
+  #      uses: actions/upload-artifact@v1
+  #      with:
+  #        name: docs
+  #        path: docs
+  #    # カバレッジを記録する場合は以下を実行(Artifactに6か月保管されます)
+  #    - name: Upload coverage result
+  #      uses: actions/upload-artifact@v1
+  #      with:
+  #        name: coverage-${OS}
+  #        path: .cov
+
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  1. Windows x86     dmd        o   x   x
+  test-windows-x86-dmd-latest:
+    name: test-windows-x86-dmd-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: dmd-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  2. Windows x86     ldc        x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  3. Windows x86     dmd-master x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  4. Windows x86     ldc-master x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  5. Windows x86_64  dmd        o   o   o
+  test-windows-x86_64-dmd-latest:
+    name: test-windows-x86_64-dmd-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: dmd-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+      - name: Generate document tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage-windows
+          path: .cov
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  6. Windows x86_64  ldc        o   x   x
+  test-windows-x86_64-ldc-latest:
+    name: test-windows-x86_64-ldc-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: ldc-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  7. Windows x86_64  dmd-master x   x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  8. Windows x86_64  ldc-master o   x   x
+  test-windows-x86_64-ldc-master:
+    name: test-windows-x86_64-ldc-master
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: ldc-master
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  #  9. Ubuntu  x86     dmd        x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 10. Ubuntu  x86     ldc        o   x   x
+  test-linux-x86-ldc-latest:
+    name: test-linux-x86-ldc-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: ldc-latest
+      - name: Install dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install gcc-multilib
+          sudo apt install libcurl4-openssl-dev:i386
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 11. Ubuntu  x86     dmd-master x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 12. Ubuntu  x86     ldc-master x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 13. Ubuntu  x86_64  dmd        o   x   x
+  test-linux-x86_64-dmd-latest:
+    name: test-linux-x86_64-dmd-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: dmd-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 14. Ubuntu  x86_64  ldc        o   O   o
+  test-linux-x86_64-ldc-latest:
+    name: test-linux-x86_64-ldc-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: ldc-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+      - name: Generate document tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
+      - name: Upload generated pages
+        uses: actions/upload-artifact@v1
+        with:
+          name: docs
+          path: docs
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage-linux
+          path: .cov
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 15. Ubuntu  x86_64  dmd-master o   x   x
+  test-linux-x86_64-dmd-master:
+    name: test-linux-x86_64-dmd-master
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: dmd-master
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 16. Ubuntu  x86_64  ldc-master x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 17. macOS   x86     dmd        x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 18. macOS   x86     ldc        x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 19. macOS   x86     dmd-master x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 20. macOS   x86     ldc-master x   x   x
+  # do-nothing
+
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 21. macOS   x86_64  dmd        o   x   x
+  test-osx-x86_64-dmd-latest:
+    name: test-osx-x86_64-dmd-latest
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: dmd-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 22. macOS   x86_64  ldc        o   o   o
+  test-osx-x86_64-ldc-latest:
+    name: test-osx-x86_64-ldc-latest
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install D compiler
+        uses: mihails-strasuns/setup-dlang@v0.5.0
+        with:
+          compiler: ldc-latest
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+      - name: Generate document tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage-osx
+          path: .cov
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 23. macOS   x86_64  dmd-master x   x   x
+  # do-nothing
+
+  # No. OS      ARCH    COMPILER   UT  DOC COV
+  # 24. macOS   x86_64  ldc-master x   x   x
+  # do-nothing
+
+  # Upload coverage report to Codecov
+  upload-codecov:
+    name: upload-codecov
+    needs: [test-windows-x86-dmd-latest, test-windows-x86_64-dmd-latest, test-windows-x86_64-ldc-latest, test-windows-x86_64-ldc-master, test-linux-x86-ldc-latest, test-linux-x86_64-dmd-latest, test-linux-x86_64-ldc-latest, test-linux-x86_64-dmd-master, test-osx-x86_64-dmd-latest, test-osx-x86_64-ldc-latest]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Windows coverage result
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage-windows
+          path: .cov-windows
+      - name: Download Linux coverage result
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage-linux
+          path: .cov-linux
+      - name: Download OSX coverage result
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage-osx
+          path: .cov-osx
+      - name: Upload OSX coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
+
+  # Deploy Pages
+  deproy-pages:
+    name: deploy-pages
+    needs: upload-codecov
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download generated pages
+        uses: actions/download-artifact@v1
+        with:
+          name: docs
+      - name: Deploy pages
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: docs
+        with:
+          emptyCommits: false
+          user_name: GitHub Actions Bot
+          user_email: <>
