@@ -4,9 +4,11 @@ import std;
 struct Defines
 {
 static:
-    ///
+    /// ドキュメントジェネレータを指定します。
+    /// gendocのバージョンが更新されたら変更してください。
     immutable documentGenerator = "gendoc@0.0.4";
-    ///
+    /// テスト対象にするサブパッケージを指定します。
+    /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = ["windows", "libdparse_usage"];
 }
 
@@ -291,6 +293,7 @@ string searchPath(string name, string[] dirs = null)
     return name;
 }
 
+///
 string searchDCompiler()
 {
     auto compiler = config.compiler;
