@@ -2,7 +2,7 @@
  {
   "name" : "windows.basic",
   "kind" : "module",
-  "file" : "/home/circleci/project/windows/source/windows/basic.d",
+  "file" : "/home/runner/work/Cookbook/Cookbook/windows/source/windows/basic.d",
   "comment" : "Win32API\n\nWindowsにおける標準API(Win32API)の呼び出しについてまとめます。\n\n概要\n1. C言語では多くの場合 `#include <windows.h>` と記述しますが、Dでは `import core.sys.windows.windows;` と記述します。\n2. あとは利用する関数が含まれるlibファイルをリンクすればシステム関数が利用できます。\n    - dubでは設定ファイルの `libs` セクションにファイル名を拡張子を除いて書きます。\n    - `pragma(lib, \"ファイル名\");` とする書き方もあります\n\nなおライブラリ等でWindows以外のプラットフォームと共用するためには `version (Windows) { } else { }` で別々に書きます。$(BR)\n以下の例ではLinux等の環境でもビルドできるようにするためversionで囲って表記しています。\n\nSee_Also:\n    関数に対応するヘッダーとlibファイルはMicrosoft Docsのサイトから検索して見つけることができます。$(BR)\n    $(LINK https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/)\n",
   "members" : [
    {

@@ -2,7 +2,7 @@
  {
   "name" : "libdparse_usage.example",
   "kind" : "module",
-  "file" : "/home/circleci/project/thirdparty/libdparse/source/libdparse_usage/example.d",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/libdparse/source/libdparse_usage/example.d",
   "comment" : "libdparse\n\nlibdparseの使い方についてまとめます。\n\n## 概要\nlibdparseはD言語のソースコードを解析するのに用いられるライブラリです。\n\n## ドキュメント\nhttps://libdparse.dlang.io/\n\n## 利用例\n- [ddox](https://code.dlang.org/packages/ddox) : このライブラリでシンボルやコメントを抽出してドキュメントを生成します\n- [dcd](https://code.dlang.org/packages/dcd) : このライブラリでシンボル等を抽出してIDEでオートコンプリートを行うために使われます\n- [dfmt](https://code.dlang.org/packages/dfmt) : このライブラリで構文を分解・再構築することでコードスタイルの俗人性を排除します\n- [dscanner](https://code.dlang.org/packages/dscanner) : このライブラリで構文を読み取り、静的解析することで、バグを生みやすいコードを警告してくれます\n",
   "members" : [
    {
