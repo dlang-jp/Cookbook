@@ -133,3 +133,69 @@ unittest
     auto url = "https://github.com/dlang/dmd";
     assert(url.indexOf("GITHUB", No.CaseSensitive));
 }
+
+/++
+プログラムの整形文字列表現
+
+chompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。
+
+ポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。
+
+パーサーを扱うようなプログラムなどで活躍します。
+
+`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)
+`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)
+`strip`: https://dlang.org/phobos/std_string.html#.strip
++/
+unittest
+{{
+    import std.json;
+    import std.string: outdent, chompPrefix, strip;
+    auto jv = JSONValue(
+        [
+            "one": JSONValue(1),
+            "two": JSONValue(
+            [
+                JSONValue(2),
+                JSONValue("弐")
+            ])
+        ]);
+
+    // jvを文字列化したものが正しいことをassertすると
+    // 入れ子になっていると以下のようになってしまい、1行だと見づらいですね。
+    assert(jv.toString() == `{"one":1,"two":[2,"弐"]}`);
+
+    // まして、整形したものｎあぁああああああああああ！！！！！
+    assert(jv.toPrettyString() == "{\n    \"one\": 1,\n    \"two\": [\n        2,\n        \"弐\"\n    ]\n}");
+
+    // しかしながら、改行してしまうと以下のようにインデントが崩れてしまいます。
+    assert(jv.toPrettyString() == `{
+    "one": 1,
+    "two": [
+        2,
+        "弐"
+    ]
+}`);
+
+    // これを解決するためには、以下のようにchompPrefix, outdentを使います。
+    assert(jv.toPrettyString() == `
+    {
+        "one": 1,
+        "two": [
+            2,
+            "弐"
+        ]
+    }`.chompPrefix("\n").outdent);
+
+    // 最初にoutdent、次にstripでもOK。(この場合最後の改行もなくなる)
+    // ついでに以下の例は q{ ... } の文字列表現です。
+    assert(jv.toPrettyString() == q{
+        {
+            "one": 1,
+            "two": [
+                2,
+                "弐"
+            ]
+        }
+    }.outdent.strip);
+}}
