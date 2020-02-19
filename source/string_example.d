@@ -187,9 +187,21 @@ unittest
         ]
     }`.chompPrefix("\n").outdent);
 
+    string fixLines(string s)
+    {
+        version (Windows)
+        {
+            import std.array: replace;
+            return s.replace("\r\n", "\n");
+        }
+        else return s;
+    }
+
     // 最初にoutdent、次にstripでもOK。(この場合最後の改行もなくなる)
     // ついでに以下の例は q{ ... } の文字列表現です。
-    assert(jv.toPrettyString() == q{
+    // また、fixLinesを通すのは、q{ ... }が改行コードをそのまま拾ってしまうため
+    // gitの設定如何でCRLFだったりLFだったりする場合があるのを均すためです。
+    assert(jv.toPrettyString() == fixLines(q{
         {
             "one": 1,
             "two": [
@@ -197,5 +209,5 @@ unittest
                 "弐"
             ]
         }
-    }.outdent.strip);
+    }.outdent.strip));
 }}
