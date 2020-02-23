@@ -98,9 +98,9 @@ module exception_example;
     // ファイルには数字に続けてOKと記載。
     // 正しい結果が得られない場合は負の値を返す。
     // ファイルは関数の最後に削除する。
-    int bar(int a)
+    size_t bar(int a)
     {
-        int ret = 0;
+        size_t ret = 0;
         int foo_result = foo(a);
         if (foo_result < 0)
         {
@@ -134,7 +134,7 @@ module exception_example;
                 else
                 {
                     // 数値の書き込み成功ならファイルサイズを確認
-                    int fsize = ftell(f);
+                    size_t fsize = ftell(f);
                     // ファイルサイズが1以上ならその値を返し、さもなくば-4
                     if (fsize < 1)
                     {
@@ -182,7 +182,7 @@ module exception_example;
     // ファイルが開けない・閉じれない系のエラーは起こすのが難しい
 
     // 4. nullを参照してしまう問題
-    char* ptr = cast(char*)malloc(0xFFFFFFFFFUL);
+    char* ptr = cast(char*)malloc(cast(size_t)0xFFFFFFFFUL);
     // アウト！メモリ確保できてなくてnullが返ってるかも！
     // ptr[0] = 0;
 
@@ -252,7 +252,7 @@ module exception_example;
     //    →例外で異常時の処理をまとめる
     //    →スコープガード文で後処理も楽々
     //    →enforceでnull, 0チェック
-    int bar(int a)
+    size_t bar(int a)
     {
         // fooが勝手に例外を投げるからfooの結果を気にしなくてよい
         int foo_result = foo(a);
@@ -264,7 +264,7 @@ module exception_example;
         // ファイルに数値を書き込む。
         enforce(fprintf(f, "%d", foo_result));
         // ファイルサイズが0以上ならそれを返す
-        int fsize = ftell(f);
+        size_t fsize = ftell(f);
         enforce(fsize > 0);
         return fsize;
     }
@@ -277,12 +277,21 @@ module exception_example;
     assert(bar(100).collectExceptionMsg == "Invalid Output over10");
 
     // 4. nullを参照してしまう問題
-    char* ptr = cast(char*)malloc(0xFFFFFFFFFUL).enforce("Cannot allocate memory!");
-    // nullだったら例外発生しているはずだからノーチェックでOK
-    ptr[0] = 0;
+    char* ptr;
+    try
+    {
+        ptr = cast(char*)malloc(cast(size_t)0xFFFFFFFFUL).enforce("Cannot allocate memory!");
+        // nullだったら例外発生しているはずだからノーチェックでOK
+        ptr[0] = 0;
+    }
+    catch (Exception e)
+    {
+        // 何もしない
+    }
 
     // 後処理
-    free(ptr);
+    if (ptr)
+        free(ptr);
     // std.file.removeはダメだったら例外投げる。投げても無視する。
     std.file.remove("test.txt").collectException;
 }
@@ -402,7 +411,7 @@ Exceptionと記載しましたが、ここには例外の型を記載でき、�
         import std.conv;
         try
         {
-            auto y = to!ulong(x);
+            auto y = to!size_t(x);
             if (y == 0)
                 throw new Exception("Invalid number");
             buf = new ubyte[y];
