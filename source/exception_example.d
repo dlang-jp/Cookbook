@@ -408,12 +408,14 @@ Exceptionと記載しましたが、ここには例外の型を記載でき、�
     ubyte[] buf;
     string createBuf(string x) @trusted
     {
-        import std.conv;
+        import core.exception;
+        import std.conv, std.exception;
         try
         {
             auto y = to!ulong(x);
             if (y == 0)
                 throw new Exception("Invalid number");
+            enforce!InvalidMemoryOperationError(y <= 0xffffffffUL, "Cannot allocate memory");
             buf = new ubyte[cast(size_t)y];
             return "Converted!";
         }
