@@ -411,10 +411,10 @@ Exceptionと記載しましたが、ここには例外の型を記載でき、�
         import std.conv;
         try
         {
-            auto y = to!size_t(x);
+            auto y = to!ulong(x);
             if (y == 0)
                 throw new Exception("Invalid number");
-            buf = new ubyte[y];
+            buf = new ubyte[cast(size_t)y];
             return "Converted!";
         }
         catch (ConvException e)
@@ -439,7 +439,7 @@ Exceptionと記載しましたが、ここには例外の型を記載でき、�
     assert(createBuf("1") == "Converted!");
     assert(createBuf("0.1") == "Cannot convert");
     assert(createBuf("0") == "Unknown Exception[Invalid number]");
-    assert(createBuf("999999999999999") == "Fatal Error");
+    assert(createBuf("274877906943") == "Fatal Error");
 }
 
 /++
