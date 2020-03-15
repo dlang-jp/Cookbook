@@ -6,7 +6,7 @@ struct Defines
 static:
     /// ドキュメントジェネレータを指定します。
     /// gendocのバージョンが更新されたら変更してください。
-    immutable documentGenerator = "gendoc@0.0.4";
+    immutable documentGenerator = "gendoc@0.0.5";
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = ["windows", "libdparse_usage"];
@@ -128,12 +128,7 @@ void unitTest(string[] exDubOpts = null)
     auto opt = ["-a", config.arch, "--compiler", config.compiler, "--coverage", "--main-file", ".github/ut.d"]
         ~ exDubOpts;
     string[string] env;
-    if (config.os == "windows" && config.arch == "x86_64")
-    {
-        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
-        if (bin64dir.exists && bin64dir.isDir)
-            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
-    }
+    env.addCurlPath();
     exec(["dub", "test"] ~ opt, null, env);
     foreach (pkg; Defines.subPkgs)
         exec(["dub", "test", ":" ~ pkg] ~ opt, null, env);
@@ -144,12 +139,7 @@ void generateDocument()
 {
     import std.file;
     string[string] env;
-    if (config.os == "windows" && config.arch == "x86_64")
-    {
-        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
-        if (bin64dir.exists && bin64dir.isDir)
-            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
-    }
+    env.addCurlPath();
     exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch,
         "--", "-a", config.arch, "-b=release"], null, env);
 
@@ -171,12 +161,7 @@ void generateDocument()
 void createReleaseBuild(string[] exDubOpts = null)
 {
     string[string] env;
-    if (config.os == "windows" && config.arch == "x86_64")
-    {
-        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
-        if (bin64dir.exists && bin64dir.isDir)
-            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
-    }
+    env.addCurlPath();
     exec(["dub", "build", "-a", config.arch, "-b=unittest-cov", "--compiler", config.compiler]
         ~ exDubOpts, null, env);
 }
@@ -186,12 +171,7 @@ void createReleaseBuild(string[] exDubOpts = null)
 void integrationTest(string[] exDubOpts = null)
 {
     string[string] env;
-    if (config.os == "windows" && config.arch == "x86_64")
-    {
-        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
-        if (bin64dir.exists && bin64dir.isDir)
-            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
-    }
+    env.addCurlPath();
     auto covdir = config.scriptDir.buildNormalizedPath("../.cov").absolutePath();
     if (!covdir.exists)
         mkdirRecurse(covdir);
@@ -305,6 +285,22 @@ string searchPath(string name, string[] dirs = null)
             return bin;
     }
     return name;
+}
+///
+void addCurlPath(ref string[string] env)
+{
+    if (config.os == "windows" && config.arch == "x86_64")
+    {
+        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
+        if (bin64dir.exists && bin64dir.isDir)
+            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
+    }
+    else if (config.os == "windows" && config.arch == "x86")
+    {
+        auto bin32dir = searchDCompiler().dirName.buildPath("../bin");
+        if (bin32dir.exists && bin32dir.isDir)
+            env["Path"] = bin32dir ~ ";" ~ environment.get("Path");
+    }
 }
 
 ///
