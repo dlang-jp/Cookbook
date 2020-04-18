@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>exception_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">例外
+</div></h1><div class="ddoc_description">D言語は「例外機構」をもつ言語です。
+ここでいう例外は、発生したら関数が最後まで終わるのを待たずに強制終了して、
+例外を捕まえるまで関数呼び出し元をたどっていってスタックをロールバックして…
+といった、いわゆる大域ジャンプを伴う、プログラムの特殊なフローのことです。
+ここでは例外の使い方についてまとめます。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>従来の方法とその欠点</h1>
+
+従来の例外機構のない言語では、関数の戻り値をチェックするのが一般的でした。
+しかし、戻り値のチェックは、以下のような欠点を抱えていました。
+
+<ol><li>戻り値が無視されがち
+    戻り値でエラーが発生したことを伝えても、その戻り値が無視されてしまった場合、
+    失敗しても何事もなかったかのように処理が継続してしまいます。</li>
+<li>プログラムの流れが汚れがち
+    たとえif文でエラーチェックをしても、同じ関数内で2回3回とチェックをするうち、
+    ネストが深くなったり、gotoで関数末尾のエラー処理部へジャンプしたり、
+    エラー処理のための本来行うべき処理とは関係の浅いフラグ変数が生じたりと、
+    プログラムが汚くなる場合が多く存在しました。</li>
+<li>エラー処理分散しがち
+    同じエラーに対処しているはずなのに、呼び出した関数すべてにエラー処理を仕込む
+    必要があったり、様々なエラーをまとめて処理するのが難しい場合がありました。</li>
+<li>nullを参照してしまう問題
+    1の場合とかぶりますが、nullが返る可能性のあるものでチェックを省くと、所謂
+    ぬるぽ(Null Pointer Exception)や、AV(Access Violation)、
+    SEGV(セグフォ/Segmentation Fault/Segmentation Violation)が発生します。
+    ぬるぽが一昔前にネットスラングにまでなったように、プログラムのユーザーが目に
+    する深刻な問題になりやすい異常です。しっかりガッ(対処)する必要がありますが、
+    プログラムの本来の処理に手一杯になると対処を怠ってしまうことも。
+</li>
+</ol>
+以下に挙げる例は例外を使用しない場合の問題になりやすい記述方法です。
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.stdio;
+<span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> core.stdc.stdio, core.stdc.stdlib;
+<span class="d_comment">// 1. 戻り値が無視されがち
+</span><span class="d_keyword">char</span>[32] buf;
+sprintf(buf.ptr, <span class="d_string">"%3s %2.1f, %3d"</span>, <span class="d_string">"abcde\0"</span>.ptr, 123.4, 1234, 9876);
+<span class="d_comment">// アウト！変換されてないかも！(sprintfはエラーの場合負値を返す)
+</span><span class="d_comment">// printf(buf);
+</span>
+<span class="d_comment">// 2. プログラムの流れが汚れがち
+</span><span class="d_comment">//    以下のfooの例で、gotoや複数returnでプログラムの流れが
+</span><span class="d_comment">///   追いにくくなっている点に注目。
+</span><span class="d_comment">//    (とはいえ、以下は異常処理としては比較的まっとう。)
+</span><span class="d_comment">//    (gotoの唯一まともな使い方と言われています。)
+</span>
+<span class="d_comment">// 1以上の値を入力して、10より大きければ2乗+10する。
+</span><span class="d_comment">// ただし、入力の2乗が10を超えないこと。
+</span><span class="d_comment">// 入力が10以下なら+10して返す。
+</span><span class="d_comment">// 正しい結果が得られない場合は負の値を返す。
+</span><span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> a)
+{
+    <span class="d_keyword">int</span> ret = a;
+    <span class="d_comment">// 入力をチェックして、0なら-1, 負の値なら-2を返す
+</span>    <span class="d_keyword">if</span> (a == 0)
+    {
+        ret = -1;
+        <span class="d_keyword">goto</span> L_ERR;
+    }
+    <span class="d_keyword">else</span> <span class="d_keyword">if</span> (a &lt; 0)
+    {
+        ret = -2;
+        <span class="d_keyword">goto</span> L_ERR;
+    }
+    <span class="d_keyword">else</span> <span class="d_keyword">if</span> (a &gt; 10)
+    {
+        <span class="d_comment">// 入力が10以上なら aを二乗する
+</span>        ret *= a;
+        <span class="d_comment">// 結果をチェックして10より大きければ-3を返す
+</span>        <span class="d_keyword">if</span> (ret &gt; 10)
+        {
+            ret = -3;
+            <span class="d_keyword">goto</span> L_ERR;
+        }
+    }
+    <span class="d_comment">// 10加算する
+</span>    <span class="d_keyword">return</span> ret + 10;
+L_ERR:
+    <span class="d_keyword">return</span> ret;
+}
+
+
+<span class="d_comment">// 3. エラー処理分散しがち
+</span><span class="d_comment">//    以下のbarの例で、fcloseが複数出ている点に注目
+</span><span class="d_comment">//    (ひどい例の紹介なので、雰囲気だけみて適度に読み飛ばしてください)
+</span>
+<span class="d_comment">// fooの結果をファイルに書き込み、数値部分のファイルサイズを返す。
+</span><span class="d_comment">// 数値書き込み時点でファイルサイズが0なら異常。
+</span><span class="d_comment">// ファイルには数字に続けてOKと記載。
+</span><span class="d_comment">// 正しい結果が得られない場合は負の値を返す。
+</span><span class="d_comment">// ファイルは関数の最後に削除する。
+</span>size_t bar(<span class="d_keyword">int</span> a)
+{
+    size_t ret = 0;
+    <span class="d_keyword">int</span> foo_result = foo(a);
+    <span class="d_keyword">if</span> (foo_result &lt; 0)
+    {
+        <span class="d_comment">// fooの結果が不正なら-1を返す
+</span>        ret = -1;
+    }
+    <span class="d_keyword">else</span>
+    {
+        <span class="d_comment">// ファイルを開く
+</span>        FILE* f = fopen(<span class="d_string">"test.txt"</span>, <span class="d_string">"w"</span>);
+        <span class="d_comment">// ファイルが開けたら数値を書き込む
+</span>        <span class="d_keyword">if</span> (f == <span class="d_keyword">null</span>)
+        {
+            <span class="d_comment">// ファイルが開けなければ-2を返す
+</span>            ret = -2;
+        }
+        <span class="d_keyword">else</span>
+        {
+            <span class="d_comment">// ファイルに数値を書き込む
+</span>            <span class="d_keyword">if</span> (fprintf(f, <span class="d_string">"%d"</span>, foo_result) &lt; 0)
+            {
+                <span class="d_comment">// 数値の書き込み失敗なら-3を返す
+</span>                ret = -3;
+                <span class="d_keyword">if</span> (fclose(f) == EOF)
+                {
+                    <span class="d_comment">// 数値の書き込み失敗後、
+</span>                    <span class="d_comment">// さらにファイルが閉じられなければ-13を返す
+</span>                    ret = -13;
+                }
+            }
+            <span class="d_keyword">else</span>
+            {
+                <span class="d_comment">// 数値の書き込み成功ならファイルサイズを確認
+</span>                size_t fsize = ftell(f);
+                <span class="d_comment">// ファイルサイズが1以上ならその値を返し、さもなくば-4
+</span>                <span class="d_keyword">if</span> (fsize &lt; 1)
+                {
+                    ret = -4;
+                    <span class="d_keyword">if</span> (fclose(f) == EOF)
+                    {
+                        <span class="d_comment">// ファイルサイズが1未満で、
+</span>                        <span class="d_comment">// さらにファイルが閉じられなければ-14を返す
+</span>                        ret = -14;
+                    }
+                }
+                <span class="d_keyword">else</span>
+                {
+                    ret = fsize;
+                    <span class="d_keyword">if</span> (fprintf(f, <span class="d_string">"OK\n"</span>) &lt; 0)
+                    {
+                        <span class="d_comment">// OK書き込み失敗したら、-5を返してファイルを閉じる
+</span>                        ret = -5;
+                        <span class="d_keyword">if</span> (fclose(f) == EOF)
+                        {
+                            <span class="d_comment">// OK書き込み失敗後、
+</span>                            <span class="d_comment">// さらにファイルが閉じられなければ-15を返す
+</span>                            ret = -15;
+                        }
+                    }
+                    <span class="d_keyword">else</span>
+                    {
+                        <span class="d_comment">// OK書き込み成功したらファイルを閉じる
+</span>                        <span class="d_keyword">if</span> (fclose(f) == EOF)
+                        {
+                            <span class="d_comment">// ファイルが閉じられなければ-6を返す
+</span>                            ret = -6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    <span class="d_keyword">return</span> ret;
+}
+<span class="d_keyword">assert</span>(bar(1) == 2);
+<span class="d_keyword">assert</span>(bar(0) == -1);
+<span class="d_keyword">assert</span>(bar(-10) == -1);
+<span class="d_keyword">assert</span>(bar(100) == -1);
+<span class="d_comment">// ファイルが開けない・閉じれない系のエラーは起こすのが難しい
+</span>
+<span class="d_comment">// 4. nullを参照してしまう問題
+</span><span class="d_keyword">char</span>* ptr = <span class="d_keyword">cast</span>(<span class="d_keyword">char</span>*)malloc(<span class="d_keyword">cast</span>(size_t)0xFFFFFFFFUL);
+<span class="d_comment">// アウト！メモリ確保できてなくてnullが返ってるかも！
+</span><span class="d_comment">// ptr[0] = 0;
+</span>
+
+<span class="d_comment">// 後処理
+</span><span class="d_keyword">if</span> (ptr)
+    free(ptr);
+<span class="d_keyword">if</span> (std.file.exists(<span class="d_string">"test.txt"</span>))
+    std.file.remove(<span class="d_string">"test.txt"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>例外のメリット</h1>
+
+例外機構を用いるメリットは、明示しない限り例外が無視されず、例外処理に対応する
+箇所をまとめて記述することができるため、本来のプログラムに集中した記述ができる
+という点です。
+<div class="ddoc_blankline"></div>
+
+以下の例は、先述の戻り値のチェックで問題になりやすいものを、例外を使用して解決
+する場合を示したものです。
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.stdio;
+<span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.exception;
+<span class="d_keyword">import</span> std.format;
+<span class="d_keyword">import</span> core.stdc.stdio, core.stdc.stdlib;
+<span class="d_comment">// 1. 戻り値が無視されがち
+</span><span class="d_comment">//    →例外があるので戻り値があるケースが少ない
+</span><span class="d_comment">//    →戻り値があってもenforceが利用できてコードの汚れが少ない
+</span><span class="d_keyword">char</span>[32] buf;
+<span class="d_keyword">try</span>
+{
+    <span class="d_keyword">auto</span> buf2 = sformat(buf[], <span class="d_string">"%3s %2.1f %3d"</span>, <span class="d_string">"abcde"</span>, 123.4, 1234, 9876);
+    <span class="d_comment">// 例外が出るのでbuf2はノーチェックでも安心して使える
+</span>    std.stdio.writeln(buf2);
+}
+<span class="d_keyword">catch</span> (Exception e)
+{ <span class="d_comment">/* 無視 */</span> }
+<span class="d_comment">// 例外を生じない関数を使う場合、
+</span><span class="d_comment">// 条件が満たされなければ例外を投げるenforceが利用可能
+</span>enforce(sprintf(buf.ptr, <span class="d_string">"%3s %2.1f, %3d"</span>, <span class="d_string">"abcde\0"</span>.ptr, 123.4, 1234, 9876) &gt;= 0);
+
+<span class="d_comment">// 2. プログラムの流れが汚れがち
+</span><span class="d_comment">//    →例外で処理を本流から分離
+</span><span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> a)
+{
+    <span class="d_keyword">int</span> ret = a;
+    <span class="d_comment">// 入力をチェックして、0や負の値なら異常
+</span>    <span class="d_keyword">if</span> (a == 0)
+        <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Invalid Input zero"</span>);
+    <span class="d_comment">// enforceでさらに簡潔に。
+</span>    enforce(a &gt;= 0, <span class="d_string">"Invalid Input minus"</span>);
+    <span class="d_keyword">if</span> (a &gt; 10)
+    {
+        <span class="d_comment">// 入力が10以上なら aを二乗する
+</span>        ret *= a;
+        <span class="d_comment">// 結果をチェックして10より大きければ異常
+</span>        enforce(ret &lt;= 10, <span class="d_string">"Invalid Output over10"</span>);
+    }
+    <span class="d_keyword">return</span> a + 10;
+}
+
+
+<span class="d_comment">// 3. エラー処理分散しがち
+</span><span class="d_comment">//    →例外で異常時の処理をまとめる
+</span><span class="d_comment">//    →スコープガード文で後処理も楽々
+</span><span class="d_comment">//    →enforceでnull, 0チェック
+</span>size_t bar(<span class="d_keyword">int</span> a)
+{
+    <span class="d_comment">// fooが勝手に例外を投げるからfooの結果を気にしなくてよい
+</span>    <span class="d_keyword">int</span> foo_result = foo(a);
+    <span class="d_comment">// ファイルを開く。開けなければ例外。
+</span>    FILE* f = fopen(<span class="d_string">"test.txt"</span>, <span class="d_string">"w"</span>).enforce(<span class="d_string">"File cannot be opened."</span>);
+    <span class="d_comment">// 開いた後は必ず閉じられるように、その直後にスコープガード文を書く
+</span>    <span class="d_keyword">scope</span> (exit)
+        enforce(fclose(f) != EOF, <span class="d_string">"File cannot be closed."</span>);
+    <span class="d_comment">// ファイルに数値を書き込む。
+</span>    enforce(fprintf(f, <span class="d_string">"%d"</span>, foo_result));
+    <span class="d_comment">// ファイルサイズが0以上ならそれを返す
+</span>    size_t fsize = ftell(f);
+    enforce(fsize &gt; 0);
+    <span class="d_keyword">return</span> fsize;
+}
+<span class="d_keyword">assert</span>(bar(1));
+<span class="d_comment">// 例外が起こることをassertチェックするにはassertThrownが使える
+</span>assertThrown(bar(0));
+<span class="d_comment">// これでもOK
+</span><span class="d_keyword">assert</span>(bar(-10).collectException);
+<span class="d_comment">// これなら例外の内容もチェックできる
+</span><span class="d_keyword">assert</span>(bar(100).collectExceptionMsg == <span class="d_string">"Invalid Output over10"</span>);
+
+<span class="d_comment">// 4. nullを参照してしまう問題
+</span><span class="d_keyword">char</span>* ptr;
+<span class="d_keyword">try</span>
+{
+    ptr = <span class="d_keyword">cast</span>(<span class="d_keyword">char</span>*)malloc(<span class="d_keyword">cast</span>(size_t)0xFFFFFFFFUL).enforce(<span class="d_string">"Cannot allocate memory!"</span>);
+    <span class="d_comment">// nullだったら例外発生しているはずだからノーチェックでOK
+</span>    ptr[0] = 0;
+}
+<span class="d_keyword">catch</span> (Exception e)
+{
+    <span class="d_comment">// 何もしない
+</span>}
+
+<span class="d_comment">// 後処理
+</span><span class="d_keyword">if</span> (ptr)
+    free(ptr);
+<span class="d_comment">// std.file.removeはダメだったら例外投げる。投げても無視する。
+</span>std.file.remove(<span class="d_string">"test.txt"</span>).collectException;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>デメリットと使用を避けるべき時の判断基準</h1>
+
+デメリットとしては、例外が発生するとプログラムを途中で切り上げてスタックの
+巻戻し処理が行われるといったことが起こるため、処理速度は遅いことが挙げられます。
+このため、適切な箇所でのみ例外機構を利用しましょう。
+具体的には以下のようなケースでは、例外機構を用いるより、if文による事前チェックや
+戻り値のチェック、表明(assert)や契約プログラミング(in/out/invariant)が望ましい
+でしょう。
+
+<ol><li>秒間何千何万と繰り返し実行されるような処理の中で例外を発生させたり捕まえたり
+    をするのは止めておくのがよいでしょう。</li>
+<li>事前のチェックを行うことで容易かつ高速に異常発生を防ぐことができるものは、
+    チェックしましょう。
+    (例外発生の頻度が著しく低い場合や、チェックが重い場合はとりあえずトライした
+    方が速いかも)</li>
+<li>外的要因が絡まない場合はassertや、事前条件で代用できるかもしれません。
+    外的要因というのは、プログラムの利用者が作成したファイルや、ネットワーク越し
+    に渡されるパラメータ、GUIやCUIで入力した値、コマンドライン引数、ハードウェア
+    の状態に依存するようなものなどです。
+    例えばプログラム自身で作成したファイルを読み込む場合、文法チェック等は
+    assertによるチェックが望ましいかもしれません。</li>
+<li>ほかの言語の関数呼び出しを行う場合、他言語間での例外のやり取りはできません。
+    これは、OSのAPIやシステムコール、C言語の標準関数を使用する場合も同様です。
+</li>
+</ol>
+以下に挙げる例はあえて例外を使用しない方がよい場合の典型的な処理です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception;
+<span class="d_comment">// 1. 2重の繰り返し文の中など、繰り返し回数が多くなるケースでは避けるべき
+</span><span class="d_keyword">foreach</span> (i; 0..1000)
+{
+    <span class="d_keyword">foreach</span> (j; 0..1000)
+    {
+        <span class="d_comment">// 止めた方がいい
+</span>        <span class="d_keyword">version</span> (none)
+        <span class="d_keyword">try</span>
+        {
+            <span class="d_keyword">if</span> ((i * j) % 100 == 0)
+                <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"100"</span>);
+        }
+        <span class="d_keyword">catch</span> (Exception e)
+        {
+            <span class="d_comment">// 無視
+</span>        }
+    }
+}
+
+<span class="d_comment">// 2. 簡単に事前チェックできるならするべき
+</span><span class="d_comment">// 例えば、3文字以下の文字列を実数に変換する場合、であれば、
+</span><span class="d_comment">// 3文字以下はチェックが高速に行えますが、
+</span><span class="d_comment">// 変換処理が成功するかどうかはやってみるのが速そうです。
+</span><span class="d_keyword">real</span> str2real(string str)
+{
+    <span class="d_keyword">if</span> (str.length &gt; 3)
+        <span class="d_keyword">return</span> <span class="d_keyword">real</span>.nan;
+    <span class="d_keyword">import</span> std.conv;
+    <span class="d_keyword">return</span> str.to!<span class="d_keyword">real</span>().ifThrown(<span class="d_keyword">real</span>.nan);
+}
+<span class="d_keyword">import</span> std.math;
+<span class="d_keyword">assert</span>(str2real(<span class="d_string">"100"</span>).approxEqual(100));
+<span class="d_keyword">assert</span>(str2real(<span class="d_string">"1000"</span>).isNaN);
+<span class="d_keyword">assert</span>(str2real(<span class="d_string">"aiueo"</span>).isNaN);
+
+
+<span class="d_comment">// 3. 外的要因が絡む場合でチェックが面倒な場合は例外/絡まない場合はassert
+</span><span class="d_comment">// 外部サイトのファイルサイズは時間的要因などにより変化しますので、
+</span><span class="d_comment">// 調べてみるまで分かりません。
+</span><span class="d_comment">// このような場合は例外で良いでしょう。
+</span><span class="d_keyword">import</span> std.net.curl;
+enforce(get(<span class="d_string">"https://dlang.org"</span>).length &gt; 100, <span class="d_string">"Too small"</span>);
+
+<span class="d_comment">// 一方で、このD言語ソースファイルのファイルサイズは、間違いなく100バイト
+</span><span class="d_comment">// 以上あることがあらかじめわかっています。
+</span><span class="d_comment">// こういう場合はassertで判定するのがよいでしょう
+</span><span class="d_keyword">import</span> std.file;
+<span class="d_keyword">assert</span>(<span class="d_keyword">__FILE__</span>.getSize() &gt; 100, <span class="d_string">"Too small"</span>);
+
+
+<span class="d_comment">// 4. 他言語間で処理を受け渡す場合はnothrowにする
+</span><span class="d_comment">// 以下では、C言語のqsortに渡すcompareコールバックをnothrowにしています。
+</span><span class="d_comment">// といっても、例外発生する要因がないのでtry-catchでは囲んでいませんが。
+</span><span class="d_keyword">import</span> core.stdc.stdlib;
+<span class="d_keyword">import</span> std.algorithm, std.math;
+
+<span class="d_keyword">real</span>[] ary = [1.0L, 20.0L, 3.0L, 30.0L, 4.0L];
+
+<span class="d_keyword">static</span> <span class="d_keyword">extern</span> (C) <span class="d_keyword">int</span> compare(<span class="d_keyword">const</span>(<span class="d_keyword">void</span>)* a, <span class="d_keyword">const</span>(<span class="d_keyword">void</span>)* b) <span class="d_keyword">nothrow</span> <span class="d_keyword">pure</span> @trusted @nogc
+{
+    <span class="d_keyword">return</span> *<span class="d_keyword">cast</span>(<span class="d_keyword">const</span> <span class="d_keyword">real</span>*)a &lt; *<span class="d_keyword">cast</span>(<span class="d_keyword">const</span> <span class="d_keyword">real</span>*)b;
+}
+qsort(&amp;ary[0], ary.length, <span class="d_keyword">real</span>.sizeof, &amp;compare);
+
+<span class="d_keyword">assert</span>(equal!((a, b) =&gt; a.approxEqual(b))(
+    ary, [30.0L, 20.0L, 4.0L, 3.0L, 1.0L]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>try-catch</h1>
+
+基本的な文法は <span class="d_inlinecode donthyphenate notranslate">try {} catch(Exception e){}</span> です。
+tryの中(呼び出した関数を含め)で例外が発生した場合、catchで例外を捕捉できます。
+Exceptionと記載しましたが、ここには例外の型を記載でき、よりマッチする条件の型
+から順番に記載することで、適切な対処を行うことが可能です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm, std.range;
+<span class="d_keyword">ubyte</span>[] buf;
+string createBuf(string x) @trusted
+{
+    <span class="d_keyword">import</span> core.exception;
+    <span class="d_keyword">import</span> std.conv, std.exception;
+    <span class="d_keyword">try</span>
+    {
+        <span class="d_keyword">auto</span> y = to!<span class="d_keyword">ulong</span>(x);
+        <span class="d_keyword">if</span> (y == 0)
+            <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Invalid number"</span>);
+        enforce!InvalidMemoryOperationError(y &lt;= 0xffffffffUL, <span class="d_string">"Cannot allocate memory"</span>);
+        buf = <span class="d_keyword">new</span> <span class="d_keyword">ubyte</span>[<span class="d_keyword">cast</span>(size_t)y];
+        <span class="d_keyword">return</span> <span class="d_string">"Converted!"</span>;
+    }
+    <span class="d_keyword">catch</span> (ConvException e)
+    {
+        <span class="d_comment">// 型をピンポイントで指定することで、このエラーが起きた時の処理は
+</span>        <span class="d_comment">// これ、という個別の処置が可能です。
+</span>        <span class="d_comment">// この場合は変換の際にエラーが生じたら、という処置になります。
+</span>        <span class="d_keyword">return</span> <span class="d_string">"Cannot convert"</span>;
+    }
+    <span class="d_keyword">catch</span> (Exception e)
+    {
+        <span class="d_comment">// 例外の型のルートはExceptionです。例外であればこれで捕捉できます。
+</span>        <span class="d_keyword">return</span> <span class="d_string">"Unknown Exception["</span> ~ e.msg ~ <span class="d_string">"]"</span>;
+    }
+    <span class="d_keyword">catch</span> (Throwable e)
+    {
+        <span class="d_comment">// Exceptionではない、Errorでもこの条件には引っかかります。ただし、
+</span>        <span class="d_comment">// これを行うには、関数が@systemまたは@trustedでなければなりません。
+</span>        <span class="d_keyword">return</span> <span class="d_string">"Fatal Error"</span>;
+    }
+}
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"1"</span>) == <span class="d_string">"Converted!"</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0.1"</span>) == <span class="d_string">"Cannot convert"</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0"</span>) == <span class="d_string">"Unknown Exception[Invalid number]"</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"274877906943"</span>) == <span class="d_string">"Fatal Error"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>try-catch-finary</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>scope (success) / scope (failure) / scope (exit)</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>例外とエラー</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>nothrow</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>例外の自作</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>std.exception.enforce</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>std.exception.collectException</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>std.exception.ifThrown</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>std.exception.assertThrown / std.exception.assertNotThrown</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>std.exception.handle</h1>
+<pre class="d_code notranslate"><span class="d_comment">// todo
+</span></pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

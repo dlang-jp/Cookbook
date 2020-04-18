@@ -422,6 +422,182 @@
   ]
  },
  {
+  "name" : "exception_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/exception_example.d",
+  "comment" : "例外\n\nD言語は「例外機構」をもつ言語です。\nここでいう例外は、発生したら関数が最後まで終わるのを待たずに強制終了して、\n例外を捕まえるまで関数呼び出し元をたどっていってスタックをロールバックして…\nといった、いわゆる大域ジャンプを伴う、プログラムの特殊なフローのことです。\nここでは例外の使い方についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L39_C9",
+    "kind" : "function",
+    "comment" : "# 従来の方法とその欠点\n\n従来の例外機構のない言語では、関数の戻り値をチェックするのが一般的でした。\nしかし、戻り値のチェックは、以下のような欠点を抱えていました。\n\n1.  戻り値が無視されがち\n    戻り値でエラーが発生したことを伝えても、その戻り値が無視されてしまった場合、\n    失敗しても何事もなかったかのように処理が継続してしまいます。\n2.  プログラムの流れが汚れがち\n    たとえif文でエラーチェックをしても、同じ関数内で2回3回とチェックをするうち、\n    ネストが深くなったり、gotoで関数末尾のエラー処理部へジャンプしたり、\n    エラー処理のための本来行うべき処理とは関係の浅いフラグ変数が生じたりと、\n    プログラムが汚くなる場合が多く存在しました。\n3.  エラー処理分散しがち\n    同じエラーに対処しているはずなのに、呼び出した関数すべてにエラー処理を仕込む\n    必要があったり、様々なエラーをまとめて処理するのが難しい場合がありました。\n4.  nullを参照してしまう問題\n    1の場合とかぶりますが、nullが返る可能性のあるものでチェックを省くと、所謂\n    ぬるぽ(Null Pointer Exception)や、AV(Access Violation)、\n    SEGV(セグフォ/Segmentation Fault/Segmentation Violation)が発生します。\n    ぬるぽが一昔前にネットスラングにまでなったように、プログラムのユーザーが目に\n    する深刻な問題になりやすい異常です。しっかりガッ(対処)する必要がありますが、\n    プログラムの本来の処理に手一杯になると対処を怠ってしまうことも。\n\n以下に挙げる例は例外を使用しない場合の問題になりやすい記述方法です。\n",
+    "line" : 39,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 207,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L207_C9",
+    "kind" : "function",
+    "comment" : "# 例外のメリット\n\n例外機構を用いるメリットは、明示しない限り例外が無視されず、例外処理に対応する\n箇所をまとめて記述することができるため、本来のプログラムに集中した記述ができる\nという点です。\n\n以下の例は、先述の戻り値のチェックで問題になりやすいものを、例外を使用して解決\nする場合を示したものです。\n",
+    "line" : 207,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 326,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L326_C9",
+    "kind" : "function",
+    "comment" : "# デメリットと使用を避けるべき時の判断基準\n\nデメリットとしては、例外が発生するとプログラムを途中で切り上げてスタックの\n巻戻し処理が行われるといったことが起こるため、処理速度は遅いことが挙げられます。\nこのため、適切な箇所でのみ例外機構を利用しましょう。\n具体的には以下のようなケースでは、例外機構を用いるより、if文による事前チェックや\n戻り値のチェック、表明(assert)や契約プログラミング(in/out/invariant)が望ましい\nでしょう。\n\n1.  秒間何千何万と繰り返し実行されるような処理の中で例外を発生させたり捕まえたり\n    をするのは止めておくのがよいでしょう。\n2.  事前のチェックを行うことで容易かつ高速に異常発生を防ぐことができるものは、\n    チェックしましょう。\n    (例外発生の頻度が著しく低い場合や、チェックが重い場合はとりあえずトライした\n    方が速いかも)\n3.  外的要因が絡まない場合はassertや、事前条件で代用できるかもしれません。\n    外的要因というのは、プログラムの利用者が作成したファイルや、ネットワーク越し\n    に渡されるパラメータ、GUIやCUIで入力した値、コマンドライン引数、ハードウェア\n    の状態に依存するようなものなどです。\n    例えばプログラム自身で作成したファイルを読み込む場合、文法チェック等は\n    assertによるチェックが望ましいかもしれません。\n4.  ほかの言語の関数呼び出しを行う場合、他言語間での例外のやり取りはできません。\n    これは、OSのAPIやシステムコール、C言語の標準関数を使用する場合も同様です。\n\n以下に挙げる例はあえて例外を使用しない方がよい場合の典型的な処理です。\n",
+    "line" : 326,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 405,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L405_C7",
+    "kind" : "function",
+    "comment" : "# try-catch\n\n基本的な文法は `try {} catch(Exception e){}` です。\ntryの中(呼び出した関数を含め)で例外が発生した場合、catchで例外を捕捉できます。\nExceptionと記載しましたが、ここには例外の型を記載でき、よりマッチする条件の型\nから順番に記載することで、適切な対処を行うことが可能です。\n",
+    "line" : 405,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 450,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L450_C7",
+    "kind" : "function",
+    "comment" : "# try-catch-finary\n",
+    "line" : 450,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 458,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L458_C7",
+    "kind" : "function",
+    "comment" : "# scope (success) / scope (failure) / scope (exit)\n",
+    "line" : 458,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 466,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L466_C7",
+    "kind" : "function",
+    "comment" : "# 例外とエラー\n",
+    "line" : 466,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 474,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L474_C7",
+    "kind" : "function",
+    "comment" : "# nothrow\n",
+    "line" : 474,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 482,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L482_C7",
+    "kind" : "function",
+    "comment" : "# 例外の自作\n",
+    "line" : 482,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 490,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L490_C7",
+    "kind" : "function",
+    "comment" : "# std.exception.enforce\n",
+    "line" : 490,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 498,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L498_C7",
+    "kind" : "function",
+    "comment" : "# std.exception.collectException\n",
+    "line" : 498,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 506,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L506_C7",
+    "kind" : "function",
+    "comment" : "# std.exception.ifThrown\n",
+    "line" : 506,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 514,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L514_C7",
+    "kind" : "function",
+    "comment" : "# std.exception.assertThrown / std.exception.assertNotThrown\n",
+    "line" : 514,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 522,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L522_C7",
+    "kind" : "function",
+    "comment" : "# std.exception.handle\n",
+    "line" : 522,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 527,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "file_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/file_example.d",
