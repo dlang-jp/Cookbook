@@ -3,6 +3,11 @@ Asdfの使用例
 
 JSON形式のデータを取り扱う Asdf の使い方についてまとめます。
 
+Asdf の特徴として、PhobosのJSONではできない、構造体やクラスの直接シリアライズ/デシリアライズや、UDAによる細かな挙動の調整が可能な点があります。
+
+また、 `Asdf` オブジェクトがPhobosの `JSONValue` とおおむね同じ役割を持っているオブジェクトですが、`Asdf`はJSON以外のフォーマットにも対応できるような設計になっている(ような気がします)。$(BR)
+今は `parseJson` しかありませんが、 `parseYaml` とか `parseSdl` とかができる日が来るかもしれません。
+
 ## ドキュメント
 http://docs.asdf.dlang.io/index.html
 
@@ -22,8 +27,10 @@ unittest
     Asdf json = source.parseJson();
 
     // 文字と真偽値、nullは直接比較が可能です
+    // ただし、注意点としてnullはisでの比較はできません
+    // (演算子オーバーロードを用いてnullと比較を行っているため)
     assert(json["type"] == "VALUES");
-    assert(json["obj"] is null);
+    assert(json["obj"] == null);
     assert(json["flag"]);
 
     // 数値は既定値を指定して取得後に比較します
@@ -33,6 +40,16 @@ unittest
     string type = cast(string) json["type"];
     bool flag = cast(bool) json["flag"];
     size_t count = cast(size_t) json["count"];
+    // 数値から文字列への変換なんかもキャストで出来てしまいます。
+    string countStr = cast(string) json["count"];
+    assert(countStr == "3");
+
+    // どうしてもキャスト(変換)できい場合は例外を投げるので、
+    // 例外処理する必要があります。ifThrownなんかが便利です。
+    import std.exception : ifThrown;
+
+    auto typeVal = ifThrown(cast(int) json["type"], 255);
+    assert(typeVal == 255);
 }
 
 /++
@@ -43,6 +60,7 @@ JSON文字列を独自の構造体にデシリアライズする例です。
 unittest
 {
     import asdf;
+    import std.math : isClose;
 
     static struct Constant
     {
@@ -50,12 +68,10 @@ unittest
         double value;
     }
 
-    auto source = `{ "name": "PI", "value": 3.1415 }`;
-    Asdf json = source.parseJson();
+    static immutable source = `{ "name": "PI", "value": 3.1415 }`;
 
-    Constant c = json.deserialize!Constant();
+    Constant c = source.deserialize!Constant();
     assert(c.name == "PI");
-    import std.math;
     assert(isClose(c.value, 3.1415));
 }
 
@@ -65,6 +81,7 @@ unittest
 unittest
 {
     import asdf;
+    import std.string : outdent, chompPrefix;
 
     static struct Data
     {
@@ -80,7 +97,11 @@ unittest
     // インデントを含む人が読みやすい形式にするには `serializeToJsonPretty` を使います
     auto pretty = data.serializeToJsonPretty();
 
-    assert(pretty == "{\n\t\"name\": \"count\",\n\t\"value\": 10\n}");
+    assert(pretty == `
+    {
+    	"name": "count",
+    	"value": 10
+    }`.chompPrefix("\n").outdent());
 }
 
 /++
@@ -88,7 +109,7 @@ Unix timestampである数値をSysTimeとして扱う場合の変換方法で�
 
 データ型に合わせたProxyを定義して変換ロジックを書き、 `serializedAs` を対象フィールドに属性として付与します。
 
-参考 : http://docs.asdf.dlang.io/asdf_serialization.html
+See_Also: http://docs.asdf.dlang.io/asdf_serialization.html
 +/
 unittest
 {
@@ -194,20 +215,17 @@ sumtype : $(LINK http://code.dlang.org/packages/sumtype)
 +/
 unittest
 {
-
     import asdf;
     import sumtype;
 
     static struct MyNumber
     {
-        string type;
-        double number;
+        double foo;
     }
 
     static struct MyString
     {
-        string type;
-        string text;
+        string foo;
     }
 
     alias MyData = SumType!(MyNumber, MyString);
@@ -224,9 +242,9 @@ unittest
             {
                 auto type = cast(string) asdf["type"];
                 if (type == "number")
-                    return MyDataProxy(MyData(MyNumber("number", cast(double) asdf["value"])));
+                    return MyDataProxy(MyData(MyNumber(cast(double) asdf["value"])));
                 if (type == "string")
-                    return MyDataProxy(MyData(MyString("string", cast(string) asdf["text"])));
+                    return MyDataProxy(MyData(MyString(cast(string) asdf["value"])));
             }
             assert(false);
         }
@@ -234,10 +252,14 @@ unittest
         void serialize(S)(ref S serializer) pure
         {
             // dfmt off
+            alias s = serializer;
+            auto state = s.objectBegin();
+            s.putKey("type");
             value.match!(
-                (MyNumber value) { serializer.putValue(value.value); },
-                (MyString value) { serializer.putValue(value.text); },
+                (MyNumber value) { s.putValue("number"); s.putKey("value"); s.putValue(value.foo); },
+                (MyString value) { s.putValue("string"); s.putKey("value"); s.putValue(value.foo); },
             );
+            s.objectEnd(state);
             // dfmt on
         }
     }
@@ -247,9 +269,13 @@ unittest
         @serializedAs!MyDataProxy MyData data;
     }
 
-    auto s1 = `{ "data": { "type": "number", "value": 10.5 } }`;
-    assert(s1.parseJson().deserialize!Data().data == MyData(MyNumber("number", 10.5)));
+    auto s1 = `{"data":{"type":"number","value":10.5}}`;
+    auto dat1 = Data(MyData(MyNumber(10.5)));
+    assert(dat1.serializeToJson == s1);
+    assert(s1.parseJson().deserialize!Data().data == MyData(MyNumber(10.5)));
 
-    auto s2 = `{ "data": { "type": "string", "text": "TEST" } }`;
-    assert(s2.parseJson().deserialize!Data().data == MyData(MyString("string", "TEST")));
+    auto s2 = `{"data":{"type":"string","value":"TEST"}}`;
+    auto dat2 = Data(MyData(MyString("TEST")));
+    assert(dat2.serializeToJson == s2);
+    assert(s2.parseJson().deserialize!Data().data == MyData(MyString("TEST")));
 }
