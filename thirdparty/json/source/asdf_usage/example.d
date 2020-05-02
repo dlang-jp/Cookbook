@@ -23,8 +23,8 @@ unittest
 
     // 文字と真偽値、nullは直接比較が可能です
     assert(json["type"] == "VALUES");
-    assert(json["obj"] == null);
-    assert(json["flag"] == true);
+    assert(json["obj"] is null);
+    assert(json["flag"]);
 
     // 数値は既定値を指定して取得後に比較します
     assert(json["count"].get(0) == 3);
@@ -55,7 +55,8 @@ unittest
 
     Constant c = json.deserialize!Constant();
     assert(c.name == "PI");
-    assert(c.value == 3.1415);
+    import std.math;
+    assert(isClose(c.value, 3.1415));
 }
 
 /++
