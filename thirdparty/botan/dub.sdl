@@ -1,0 +1,6 @@
+name "botan_usage"
+description "A usage of Botan"
+authors "SHOO"
+copyright "Copyright © 2020, SHOO"
+license "public domain"
+dependency "botan" version="~>1.12.18"
