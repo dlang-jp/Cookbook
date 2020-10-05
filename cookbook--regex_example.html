@@ -225,6 +225,15 @@ auto s0 = "\."; // undefined escape sequence \.
 <span class="d_comment">// また、全体をエスケープする場合なら`escaper`も有効です。
 </span><span class="d_keyword">auto</span> s3 = escaper(<span class="d_string">"."</span>);
 <span class="d_keyword">assert</span>(s0.equal(s3));
+
+<span class="d_comment">// `escaper`の戻り値は、`Escaper`という遅延評価を行うレンジになります。
+</span><span class="d_comment">// 実行時にstringと連結して新たなパターン文字列を作るような場合、`std.conv.to`や`std.conv.text`を使うと効率的です。
+</span><span class="d_keyword">import</span> std.conv : to, text;
+
+string s4 = <span class="d_string">"^"</span> ~ escaper(<span class="d_string">"https://dlang.org"</span>).to!string() ~ <span class="d_string">"$"</span>;
+string s5 = text(<span class="d_string">"^"</span>, escaper(<span class="d_string">"https://dlang.org"</span>), <span class="d_string">"$"</span>);
+<span class="d_keyword">assert</span>(s4 == <span class="d_string">`^https\:\/\/dlang\.org$`</span>);
+<span class="d_keyword">assert</span>(s5 == <span class="d_string">`^https\:\/\/dlang\.org$`</span>);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>

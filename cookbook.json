@@ -809,13 +809,6 @@
   "comment" : "プロセス\n\nプロセス操作についてまとめます。\n",
   "members" : [
    {
-    "name" : "std.process",
-    "kind" : "import",
-    "line" : 8,
-    "char" : 27,
-    "protection" : "private"
-   },
-   {
     "name" : "__unittest_L13_C1",
     "kind" : "function",
     "comment" : "基本的なプロセス起動を行う操作の例です。\n",
@@ -968,91 +961,91 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 55,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L55_C7",
-    "kind" : "function",
-    "comment" : "# 部分文字列の検索\n",
-    "line" : 55,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
     "endline" : 64,
     "endchar" : 1
    },
    {
     "name" : "__unittest_L64_C7",
     "kind" : "function",
-    "comment" : "## 部分文字列の検索 (matchFirst)\n",
+    "comment" : "# 部分文字列の検索\n",
     "line" : 64,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 128,
+    "endline" : 73,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L128_C7",
+    "name" : "__unittest_L73_C7",
+    "kind" : "function",
+    "comment" : "## 部分文字列の検索 (matchFirst)\n",
+    "line" : 73,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 137,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L137_C7",
     "kind" : "function",
     "comment" : "## 部分文字列の検索 (matchAll)\n",
-    "line" : 128,
+    "line" : 137,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 175,
+    "endline" : 184,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L175_C7",
+    "name" : "__unittest_L184_C7",
     "kind" : "function",
     "comment" : "# 文字列の置換\n",
-    "line" : 175,
+    "line" : 184,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 198,
+    "endline" : 207,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L198_C7",
+    "name" : "__unittest_L207_C7",
     "kind" : "function",
     "comment" : "# 文字列の分割\n",
-    "line" : 198,
+    "line" : 207,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 215,
+    "endline" : 224,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L215_C7",
+    "name" : "__unittest_L224_C7",
     "kind" : "function",
     "comment" : "# Unicodeプロパティ\n",
-    "line" : 215,
+    "line" : 224,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 227,
+    "endline" : 236,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L227_C7",
+    "name" : "__unittest_L236_C7",
     "kind" : "function",
     "comment" : "# 先読み・後読み\n",
-    "line" : 227,
+    "line" : 236,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 303,
+    "endline" : 312,
     "endchar" : 1
    }
   ]
