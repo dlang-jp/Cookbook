@@ -148,7 +148,7 @@ chompPrefixやstrip、outdent、などを使うことで、プログラム言語
 `strip`: https://dlang.org/phobos/std_string.html#.strip
 +/
 unittest
-{{
+{
     import std.json;
     import std.string: outdent, chompPrefix, strip;
     auto jv = JSONValue(
@@ -210,4 +210,4 @@ unittest
             ]
         }
     }.outdent.strip));
-}}
+}
