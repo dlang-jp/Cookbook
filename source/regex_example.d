@@ -47,6 +47,15 @@ module regex_example;
     // また、全体をエスケープする場合なら`escaper`も有効です。
     auto s3 = escaper(".");
     assert(s0.equal(s3));
+
+    // `escaper`の戻り値は、`Escaper`という遅延評価を行うレンジになります。
+    // 実行時にstringと連結して新たなパターン文字列を作るような場合、`std.conv.to`や`std.conv.text`を使うと効率的です。
+    import std.conv : to, text;
+    
+    string s4 = "^" ~ escaper("https://dlang.org").to!string() ~ "$";
+    string s5 = text("^", escaper("https://dlang.org"), "$");
+    assert(s4 == `^https\:\/\/dlang\.org$`);
+    assert(s5 == `^https\:\/\/dlang\.org$`);
 }
 
 /++
