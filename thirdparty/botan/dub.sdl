@@ -3,4 +3,7 @@ description "A usage of Botan"
 authors "SHOO"
 copyright "Copyright © 2020, SHOO"
 license "public domain"
-dependency "botan" version="~>1.12.18"
+# ldcのためのバグ修正を行ったbotan-mathを使用するよう強制する
+# また、この修正を取り込んだバージョンが確認されるまでbotanのバージョンも固定する
+dependency "botan" version="1.12.18"
+dependency "botan-math" version="1b85c88260ed381124aa3b20418e46d0fba7a0f6" repository="git+https://github.com/etcimon/botan-math.git"
