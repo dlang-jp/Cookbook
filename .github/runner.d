@@ -6,7 +6,7 @@ struct Defines
 static:
     /// ドキュメントジェネレータを指定します。
     /// gendocのバージョンが更新されたら変更してください。
-    immutable documentGenerator = "gendoc@0.0.5";
+    immutable documentGenerator = "gendoc@0.0.6";
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = ["windows", "libdparse_usage"];
