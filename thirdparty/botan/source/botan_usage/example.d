@@ -136,3 +136,210 @@ unittest
     // 検証結果確認
     assert(result);
 }
+
+/++
+証明書の作成
+
+以下の例では、ルートCA証明書と、それにより署名された中間CA証明書、中間CA証明書で署名したサーバー証明書、
+中間CA証明書で署名したクライアント証明書をそれぞれ作成します。
+
+- botan.pubkey.algo.rsa.RSAPrivateKey;
+- botan.cert.x509.x509self.createCertReq
+
+1. ルートCA証明書の作成
+   1. 秘密鍵(root)の作成$(BR)
+      OpenSSLだと
+      ```
+      openssl genrsa -out private-root.key 2048
+      ```
+   2. 秘密鍵(root)を使用して証明書要求(CSR)(root)の作成$(BR)
+      OpenSSLだと
+      ```
+      openssl req -new -key private-root.key -out public-root.ca.pem.csr
+      ```
+   3. 秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成$(BR)
+      OpenSSLだと
+      ```
+      openssl x509 -req -days 3650 -signkey private-root.key -in public-root.ca.pem.csr -out public-root.ca.pem.crt
+      ```
+      なお、self-signedな証明書(=オレオレのルート証明書)であれば、2の工程をすっ飛ばし、以下のコマンドで秘密鍵(root)を使用してルートCA証明書(root)を直接生成可能。
+      ```
+      openssl req -x509 -new -key private-root.key -out public-root.ca.pem.crt
+      ```
+2. 中間CA証明書の作成
+   1. 秘密鍵(inter)の作成
+      OpenSSLだと
+      ```
+      openssl genrsa -out private-inter.key 2048
+      ```
+   2. 秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成$(BR)
+      OpenSSLだと
+      ```
+      openssl req -new -key private-inter.key -out public-inter.ca.pem.csr
+      ```
+   3. 秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成$(BR)
+      OpenSSLだと
+      ```
+      openssl ca -keyfile private-root.key -cert public-root.ca.pem.crt -in public-inter.ca.pem.csr -out public-inter.ca.pem.crt
+      ```
+3. サーバー証明書の作成
+   1. 秘密鍵(server)の作成$(BR)
+      OpenSSLだと
+      ```
+      openssl genrsa -out private-server.key 2048
+      ```
+   2. 秘密鍵(server)を使用して証明書要求(CSR)(server)の作成$(BR)
+      OpenSSLだと
+      ```
+      openssl req -new -key private-server.key -out public-server.ca.pem.csr
+      ```
+   3. 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成$(BR)
+      OpenSSLだと
+      ```
+      openssl ca -keyfile private-inter.key -cert public-inter.ca.pem.crt -in public-server.ca.pem.csr -out public-server.ca.pem.crt
+      ```
+4. クライアント証明書の作成
+   1. 秘密鍵(client)の作成
+   2. 秘密鍵(client)を使用して証明書要求(CSR)(client)の作成
+   3. 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(client)を使用してクライアント証明書(client)作成
+5. サーバー証明書(server)を検証
+   OpenSSLだと
+   ```
+   openssl verify -CApath cacert public.server.pem.crt
+   ```
+6. クライアント証明書(client)を検証
+   OpenSSLだと
+   ```
+   openssl verify -CApath cacert public.client.pem.crt
+   ```
+
+See_Also:
+    - https://github.com/etcimon/botan/wiki/X.509-Certificates-and-CRLs
+
++/
+unittest
+{
+import std;
+    import core.time;
+    import botan.all;
+    import botan.pubkey.algo.rsa: RSAPrivateKey, PEM_encode;
+    import botan.cert.x509.key_constraint: KeyConstraints;
+    import botan.cert.x509.x509self: X509CertOptions, createCertReq, createSelfSignedCert;
+    import botan.cert.x509.x509cert: X509Certificate;
+    import botan.cert.x509.x509_ca: X509CA;
+    import botan.cert.x509.x509path: x509PathValidate, PathValidationRestrictions, PathValidationResult;
+    import botan.cert.x509.certstor: CertificateStore, CertificateStoreInMemory;
+    
+    // 乱数機
+    auto rng = new AutoSeededRNG;
+    
+    // 1. ルートCA自己証明書作成
+    // 1-1 秘密鍵(root)の作成
+    auto rootPrivateKey = RSAPrivateKey(rng, 2048);
+    // 1-2 秘密鍵(root)を使用して証明書要求(CSR)(root)の作成
+    auto rootCertOpts = X509CertOptions("", 3650.days);
+    with (rootCertOpts)
+    {
+        common_name  = "dlang-jp-root CA";
+        dns          = "dlang-jp.github.io";
+        country      = "JP";
+        organization = "dlang-jp";
+        email        = "dlang-jp@example.com";
+        constraints  = KeyConstraints.CRL_SIGN | KeyConstraints.KEY_CERT_SIGN;
+        // 下位に中間CAとエンドエンティティ(サーバー/クライアント)が存在するため、2
+        CAKey(2);
+    }
+    auto rootCsr = createCertReq(rootCertOpts, rootPrivateKey, "SHA-256", rng);
+    auto rootCsrPEM = rootCsr.PEM_encode();
+    // 1-3 秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成
+    //     ルートCA証明書は絶対self-signed(オレオレ証明書)なので、要求とか実は不要
+    //     多分がんばれば証明書要求(CSR)からでも発行できるが、
+    //     createSelfSignedCert 相当の関数を自分で記載する必要がある。
+    auto rootCert = createSelfSignedCert(rootCertOpts, rootPrivateKey, "SHA-256", rng);
+    string rootCertPEM = rootCert.PEM_encode();
+    
+    // ルート認証局設立
+    auto rootCA = X509CA(rootCert, rootPrivateKey, "SHA-256");
+    
+    // 2. 中間CA証明書作成
+    // 2-1 秘密鍵(inter)の作成
+    auto interPrivateKey = RSAPrivateKey(rng, 2048);
+    // 2-2 秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成
+    auto interCertOpts = X509CertOptions("", 3650.days);
+    with (interCertOpts)
+    {
+        common_name  = "dlang-jp-inter CA";
+        dns          = "inter.dlang-jp.github.io";
+        country      = "JP";
+        organization = "dlang-jp";
+        email        = "dlang-jp@example.com";
+        constraints  = KeyConstraints.CRL_SIGN | KeyConstraints.KEY_CERT_SIGN;
+        CAKey(1); // 下位にエンドエンティティ(サーバー/クライアント)が存在するため、1
+    }
+    auto interCsr = createCertReq(interCertOpts, interPrivateKey, "SHA-256", rng);
+    auto interCsrPEM = interCsr.PEM_encode();
+    // 2-3 秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成
+    auto interCert = rootCA.signRequest(interCsr, rng, interCertOpts.start, interCertOpts.end);
+    string interCertPEM = interCert.PEM_encode();
+    
+    // 中間認証局設立
+    auto interCA = X509CA(interCert, interPrivateKey, "SHA-256");
+    
+    // 3. サーバー証明書作成
+    // 3-1 秘密鍵(server)の作成
+    auto serverPrivateKey = RSAPrivateKey(rng, 2048);
+    // 3-2 秘密鍵(server)を使用して証明書要求(CSR)(server)の作成
+    auto serverCertOpts = X509CertOptions("", 3650.days);
+    with (serverCertOpts)
+    {
+        common_name  = "dlang-jp server";
+        dns          = "server.dlang-jp.github.io";
+        country      = "JP";
+        organization = "dlang-jp";
+        email        = "dlang-jp@example.com";
+        constraints  = KeyConstraints.DIGITAL_SIGNATURE | KeyConstraints.KEY_ENCIPHERMENT;
+        addExConstraint("PKIX.ServerAuth");
+    }
+    auto serverCsr = createCertReq(serverCertOpts, serverPrivateKey, "SHA-256", rng);
+    auto serverCsrPEM = serverCsr.PEM_encode();
+    // 3-3 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成
+    auto serverCert = interCA.signRequest(serverCsr, rng, serverCertOpts.start, serverCertOpts.end);
+    string serverCertPEM = serverCert.PEM_encode();
+    
+    // 4. クライアント証明書作成
+    // 4-1 秘密鍵(client)の作成
+    auto clientPrivateKey = RSAPrivateKey(rng, 2048);
+    // 4-2 秘密鍵(client)を使用して証明書要求(CSR)(client)の作成
+    auto clientCertOpts = X509CertOptions("", 3650.days);
+    with (clientCertOpts)
+    {
+        common_name  = "dlang-jp userA";
+        country      = "JP";
+        organization = "dlang-jp";
+        email        = "userA@dlang-jp.example.com";
+        constraints  = KeyConstraints.DIGITAL_SIGNATURE | KeyConstraints.KEY_ENCIPHERMENT;
+        addExConstraint("PKIX.ClientAuth");
+        addExConstraint("PKIX.CodeSigning");
+        addExConstraint("PKIX.EmailProtection");
+        addExConstraint("PKIX.TimeStamping");
+    }
+    auto clientCsr = createCertReq(clientCertOpts, clientPrivateKey, "SHA-256", rng);
+    auto clientCsrPEM = clientCsr.PEM_encode();
+    // 4-3 秘密鍵(server)とサーバー証明書(server)と証明書要求(client)を使用してクライアント証明書(client)作成
+    auto clientCert = interCA.signRequest(clientCsr, rng, clientCertOpts.start, clientCertOpts.end);
+    string clientCertPEM = clientCert.PEM_encode();
+    
+    // 証明書ストアを作成
+    auto store = new CertificateStoreInMemory();
+    store.addCertificate(rootCert);
+    store.addCertificate(interCert);
+    
+    // 5. サーバー証明書(server)を検証
+    auto serverCertValidation = x509PathValidate(serverCert, PathValidationRestrictions(false), store);
+    assert(serverCertValidation.successfulValidation);
+    
+    // 6. クライアント証明書(client)を検証
+    auto store2 = new CertificateStoreInMemory();
+    auto clientCertValidation = x509PathValidate(clientCert, PathValidationRestrictions(false), store);
+    assert(clientCertValidation.successfulValidation);
+}
