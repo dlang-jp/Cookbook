@@ -219,7 +219,7 @@ See_Also:
 +/
 unittest
 {
-import std;
+    debug (BotanCertFileSave) static import std.file;
     import core.time;
     import botan.all;
     import botan.pubkey.algo.rsa: RSAPrivateKey, PEM_encode;
@@ -236,6 +236,8 @@ import std;
     // 1. ルートCA自己証明書作成
     // 1-1 秘密鍵(root)の作成
     auto rootPrivateKey = RSAPrivateKey(rng, 2048);
+    auto rootPrivateKeyPEM = rootPrivateKey.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("root-private.pem.key", rootPrivateKeyPEM);
     // 1-2 秘密鍵(root)を使用して証明書要求(CSR)(root)の作成
     auto rootCertOpts = X509CertOptions("", 3650.days);
     with (rootCertOpts)
@@ -245,25 +247,27 @@ import std;
         country      = "JP";
         organization = "dlang-jp";
         email        = "dlang-jp@example.com";
-        constraints  = KeyConstraints.CRL_SIGN | KeyConstraints.KEY_CERT_SIGN;
         // 下位に中間CAとエンドエンティティ(サーバー/クライアント)が存在するため、2
         CAKey(2);
     }
     auto rootCsr = createCertReq(rootCertOpts, rootPrivateKey, "SHA-256", rng);
     auto rootCsrPEM = rootCsr.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("root-ca-cert.pem.csr", rootCsrPEM);
     // 1-3 秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成
     //     ルートCA証明書は絶対self-signed(オレオレ証明書)なので、要求とか実は不要
     //     多分がんばれば証明書要求(CSR)からでも発行できるが、
     //     createSelfSignedCert 相当の関数を自分で記載する必要がある。
     auto rootCert = createSelfSignedCert(rootCertOpts, rootPrivateKey, "SHA-256", rng);
     string rootCertPEM = rootCert.PEM_encode();
-    
+    debug (BotanCertFileSave) std.file.write("root-ca-cert.pem.crt", rootCertPEM);
     // ルート認証局設立
     auto rootCA = X509CA(rootCert, rootPrivateKey, "SHA-256");
     
     // 2. 中間CA証明書作成
     // 2-1 秘密鍵(inter)の作成
     auto interPrivateKey = RSAPrivateKey(rng, 2048);
+    auto interPrivateKeyPEM = interPrivateKey.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("inter-private.pem.key", interPrivateKeyPEM);
     // 2-2 秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成
     auto interCertOpts = X509CertOptions("", 3650.days);
     with (interCertOpts)
@@ -273,14 +277,16 @@ import std;
         country      = "JP";
         organization = "dlang-jp";
         email        = "dlang-jp@example.com";
-        constraints  = KeyConstraints.CRL_SIGN | KeyConstraints.KEY_CERT_SIGN;
-        CAKey(1); // 下位にエンドエンティティ(サーバー/クライアント)が存在するため、1
+        // 下位にエンドエンティティ(サーバー/クライアント)が存在するため、1
+        CAKey(1);
     }
     auto interCsr = createCertReq(interCertOpts, interPrivateKey, "SHA-256", rng);
     auto interCsrPEM = interCsr.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("inter-ca-cart.pem.csr", interCsrPEM);
     // 2-3 秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成
     auto interCert = rootCA.signRequest(interCsr, rng, interCertOpts.start, interCertOpts.end);
     string interCertPEM = interCert.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("inter-ca-cert.pem.crt", interCertPEM);
     
     // 中間認証局設立
     auto interCA = X509CA(interCert, interPrivateKey, "SHA-256");
@@ -288,12 +294,14 @@ import std;
     // 3. サーバー証明書作成
     // 3-1 秘密鍵(server)の作成
     auto serverPrivateKey = RSAPrivateKey(rng, 2048);
+    auto serverPrivateKeyPEM = serverPrivateKey.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("server-private.pem.key", serverPrivateKeyPEM);
     // 3-2 秘密鍵(server)を使用して証明書要求(CSR)(server)の作成
     auto serverCertOpts = X509CertOptions("", 3650.days);
     with (serverCertOpts)
     {
         common_name  = "dlang-jp server";
-        dns          = "server.dlang-jp.github.io";
+        dns          = "localhost";
         country      = "JP";
         organization = "dlang-jp";
         email        = "dlang-jp@example.com";
@@ -302,13 +310,17 @@ import std;
     }
     auto serverCsr = createCertReq(serverCertOpts, serverPrivateKey, "SHA-256", rng);
     auto serverCsrPEM = serverCsr.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("server-cert.pem.csr", serverCsrPEM);
     // 3-3 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成
     auto serverCert = interCA.signRequest(serverCsr, rng, serverCertOpts.start, serverCertOpts.end);
     string serverCertPEM = serverCert.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("server-cert.pem.crt", serverCertPEM);
     
     // 4. クライアント証明書作成
     // 4-1 秘密鍵(client)の作成
     auto clientPrivateKey = RSAPrivateKey(rng, 2048);
+    auto clientPrivateKeyPEM = clientPrivateKey.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("client-private.pem.key", clientPrivateKeyPEM);
     // 4-2 秘密鍵(client)を使用して証明書要求(CSR)(client)の作成
     auto clientCertOpts = X509CertOptions("", 3650.days);
     with (clientCertOpts)
@@ -325,9 +337,11 @@ import std;
     }
     auto clientCsr = createCertReq(clientCertOpts, clientPrivateKey, "SHA-256", rng);
     auto clientCsrPEM = clientCsr.PEM_encode();
-    // 4-3 秘密鍵(server)とサーバー証明書(server)と証明書要求(client)を使用してクライアント証明書(client)作成
+    debug (BotanCertFileSave) std.file.write("client-cert.pem.csr", clientCsrPEM);
+    // 4-3 秘密鍵(inter)とサーバー証明書(inter)と証明書要求(client)を使用してクライアント証明書(client)作成
     auto clientCert = interCA.signRequest(clientCsr, rng, clientCertOpts.start, clientCertOpts.end);
     string clientCertPEM = clientCert.PEM_encode();
+    debug (BotanCertFileSave) std.file.write("client-cert.pem.crt", clientCertPEM);
     
     // 証明書ストアを作成
     auto store = new CertificateStoreInMemory();
