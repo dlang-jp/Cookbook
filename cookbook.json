@@ -1107,7 +1107,16 @@
     "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
     "line" : 119,
     "char" : 1,
-    "endline" : 136,
+    "endline" : 150,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L150_C1",
+    "kind" : "function",
+    "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
+    "line" : 150,
+    "char" : 1,
+    "endline" : 214,
     "endchar" : 1
    }
   ]

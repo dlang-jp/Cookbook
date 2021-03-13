@@ -311,6 +311,85 @@ string url = <span class="d_string">"https://github.com"</span>;
 <span class="d_keyword">assert</span>(url.indexOf(<span class="d_string">"GITHUB"</span>, No.CaseSensitive));
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ プログラムの整形文字列表現
+<div class="ddoc_blankline"></div>
+
+chompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。
+<div class="ddoc_blankline"></div>
+
+ポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。
+<div class="ddoc_blankline"></div>
+
+パーサーを扱うようなプログラムなどで活躍します。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">outdent</span>: <a href="https://dlang.org/phobos/std_string.html#.outdent">https://dlang.org/phobos/std_string.html#.outdent</a><br>
+<span class="d_inlinecode donthyphenate notranslate">chompPrefix</span>: <a href="https://dlang.org/phobos/std_string.html#.chompPrefix">https://dlang.org/phobos/std_string.html#.chompPrefix</a><br>
+<span class="d_inlinecode donthyphenate notranslate">strip</span>: <a href="https://dlang.org/phobos/std_string.html#.strip">https://dlang.org/phobos/std_string.html#.strip</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.json;
+<span class="d_keyword">import</span> std.string: outdent, chompPrefix, strip;
+<span class="d_keyword">auto</span> jv = JSONValue(
+    [
+        <span class="d_string">"one"</span>: JSONValue(1),
+        <span class="d_string">"two"</span>: JSONValue(
+        [
+            JSONValue(2),
+            JSONValue(<span class="d_string">"弐"</span>)
+        ])
+    ]);
+
+<span class="d_comment">// jvを文字列化したものが正しいことをassertすると
+</span><span class="d_comment">// 入れ子になっていると以下のようになってしまい、1行だと見づらいですね。
+</span><span class="d_keyword">assert</span>(jv.toString() == <span class="d_string">`{"one":1,"two":[2,"弐"]}`</span>);
+
+<span class="d_comment">// まして、整形したものｎあぁああああああああああ！！！！！
+</span><span class="d_keyword">assert</span>(jv.toPrettyString() == <span class="d_string">"{\n    \"one\": 1,\n    \"two\": [\n        2,\n        \"弐\"\n    ]\n}"</span>);
+
+<span class="d_comment">// しかしながら、改行してしまうと以下のようにインデントが崩れてしまいます。
+</span><span class="d_keyword">assert</span>(jv.toPrettyString() == <span class="d_string">`{
+"one": 1,
+"two": [
+    2,
+    "弐"
+]
+}`</span>);
+
+<span class="d_comment">// これを解決するためには、以下のようにchompPrefix, outdentを使います。
+</span><span class="d_keyword">assert</span>(jv.toPrettyString() == <span class="d_string">`
+{
+    "one": 1,
+    "two": [
+        2,
+        "弐"
+    ]
+}`</span>.chompPrefix(<span class="d_string">"\n"</span>).outdent);
+
+string fixLines(string s)
+{
+    <span class="d_keyword">version</span> (Windows)
+    {
+        <span class="d_keyword">import</span> std.array: replace;
+        <span class="d_keyword">return</span> s.replace(<span class="d_string">"\r\n"</span>, <span class="d_string">"\n"</span>);
+    }
+    <span class="d_keyword">else</span> <span class="d_keyword">return</span> s;
+}
+
+<span class="d_comment">// 最初にoutdent、次にstripでもOK。(この場合最後の改行もなくなる)
+</span><span class="d_comment">// ついでに以下の例は q{ ... } の文字列表現です。
+</span><span class="d_comment">// また、fixLinesを通すのは、q{ ... }が改行コードをそのまま拾ってしまうため
+</span><span class="d_comment">// gitの設定如何でCRLFだったりLFだったりする場合があるのを均すためです。
+</span><span class="d_keyword">assert</span>(jv.toPrettyString() == fixLines(<span class="d_string">q{
+    {
+        "one": 1,
+        "two": [
+            2,
+            "弐"
+        ]
+    }
+}</span>.outdent.strip));
+</pre>
+</div>
 
                 
             </div>
