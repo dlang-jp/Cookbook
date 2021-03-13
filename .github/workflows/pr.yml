@@ -165,9 +165,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install gcc-multilib
-          sudo apt install libcurl4-openssl-dev:i386
+          sudo apt-get update && sudo apt-get install -y gcc-multilib libz-dev:i386 libssl-dev:i386 libcurl4-openssl-dev:i386
       - name: Run unit tests
         run: rdmd ./.github/runner.d -a=x86 --mode=unit-test
 
