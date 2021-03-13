@@ -226,3 +226,37 @@ unittest
     assert(r.take(4).equal([4, 8, 16, 32]));
 }
 
+/++
+漸化式のレンジを生成する`recurrence`の例です。
++/
+unittest
+{
+    import std.range;
+    import std.algorithm;
+
+    // recurrenceを使って階乗を計算します。
+    // 漸化式を文字列で指定可能です。
+    // aは状態を表す変数で、以前の実行結果が格納されます。
+    // nには現在の実行回数が格納されます。
+    // 関数の引数には初期状態を渡します。(漸化式が必要とする分だけ必要です)
+    // 以下のように書くと、
+    // 前回の実行結果 * 現在の実行回数(つまり階乗)を計算するレンジになります。
+    auto r = recurrence!"a[n - 1] * n"(1);
+    assert(r.front == 1); // 0!
+
+    // popFrontで漸化式の関数が実行されます。
+    r.popFront();
+    assert(r.front == 1); // 1!
+    r.popFront();
+    assert(r.front == 2); // 2!
+    r.popFront();
+    assert(r.front == 6); // 3!
+    r.popFront();
+    assert(r.front == 24); // 4!
+
+    // 複数の状態を持つ漸化式も表現可能です。
+    // 以下ではフィボナッチ数の計算を行います。
+    auto fib = recurrence!((a, n) => a[n - 2] + a[n - 1])(1, 1);
+    assert(fib.take(7).equal([1, 1, 2, 3, 5, 8, 13]));
+}
+
