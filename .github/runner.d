@@ -9,7 +9,7 @@ static:
     immutable documentGenerator = "gendoc@0.0.6";
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
-    immutable subPkgs = ["windows", "libdparse_usage"];
+    immutable subPkgs = ["windows", "libdparse_usage", "vibe-d_usage"];
 }
 
 ///
