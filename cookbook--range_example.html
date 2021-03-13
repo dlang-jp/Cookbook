@@ -246,7 +246,7 @@ https://dlang.org/phobos/std_range_primitives.html#isInputRange
 {
     <span class="d_keyword">int</span> i = 0;
     <span class="d_keyword">int</span> n;
-    <span class="d_keyword">invariant</span>(i &lt;= n);
+    <span class="d_keyword">invariant</span> (i &lt;= n);
 
     <span class="d_comment">/// nを指定するコンストラクタ
 </span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> n)
@@ -277,6 +277,7 @@ https://dlang.org/phobos/std_range_primitives.html#isInputRange
 
 <span class="d_comment">// 型がInputRangeであるかは、std.rangeのisInputRangeで確認できます。
 </span><span class="d_keyword">import</span> std.range : isInputRange;
+
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInputRange!IntRange);
 
 <span class="d_comment">// InputRangeで行える操作は下記の通りです。
@@ -319,8 +320,114 @@ r.popFront();
 <span class="d_comment">// なお、IntRangeはより高機能なものがstd.rangeのiota関数として用意されています。
 </span><span class="d_comment">// 自作せずにこちらを使用しましょう。
 </span><span class="d_keyword">import</span> std.range : iota;
+
 <span class="d_keyword">assert</span>(equal(iota(0, 5), IntRange(5)));
 <span class="d_keyword">assert</span>(equal(filter!<span class="d_string">"a % 2 != 0"</span>(iota(0, 10)), [1, 3, 5, 7, 9]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 連番のレンジを作る<span class="d_inlinecode donthyphenate notranslate">iota</span>の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : iota;
+<span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_comment">// 0〜4の5つの要素を持つレンジを作る例です。
+</span><span class="d_keyword">assert</span>(iota(5).equal([0, 1, 2, 3, 4]));
+
+<span class="d_comment">// [1, 5) の4つの要素を持つレンジを作る例です。
+</span><span class="d_keyword">assert</span>(iota(1, 5).equal([1, 2, 3, 4]));
+
+<span class="d_comment">// [1, 10) の範囲で2つおきの要素を持つレンジを作る例です。
+</span><span class="d_keyword">assert</span>(iota(1, 10, 2).equal([1, 3, 5, 7, 9]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 引数に指定した要素だけのレンジを作る<span class="d_inlinecode donthyphenate notranslate">only</span>の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : only;
+<span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_comment">// 指定要素だけを持つレンジを作れます。
+</span><span class="d_keyword">assert</span>(only(1).equal([1]));
+
+<span class="d_comment">// 複数指定も可能です。
+</span><span class="d_keyword">assert</span>(only(1, 2, 3).equal([1, 2, 3]));
+
+<span class="d_comment">// onlyでは動的メモリ確保無しでレンジを生成できます。
+</span><span class="d_comment">// ただし要素のコピーが発生するので、
+</span><span class="d_comment">// サイズが巨大になる場合は注意が必要です。
+</span><span class="d_keyword">assert</span>((() @nogc <span class="d_keyword">nothrow</span> <span class="d_keyword">pure</span> @safe =&gt; only(1, 2, 3))().equal([1, 2, 3]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 引数に指定した要素を無限に繰り返す<span class="d_inlinecode donthyphenate notranslate">repeat</span>の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : repeat;
+<span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_comment">// 5を繰り返すレンジを作ります。
+</span><span class="d_keyword">auto</span> r = repeat(5);
+<span class="d_keyword">assert</span>(r.front == 5);
+<span class="d_keyword">assert</span>(!r.empty);
+
+<span class="d_comment">// 次の要素も5です。
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 5);
+
+<span class="d_comment">// ランダムアクセスも可能です。
+</span><span class="d_keyword">assert</span>(r[0] == 5);
+<span class="d_keyword">assert</span>(r[1024] == 5);
+
+<span class="d_comment">// スライスも可能です。
+</span><span class="d_keyword">assert</span>(r[0 .. 5].equal([5, 5, 5, 5, 5]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 指定された関数を使ってレンジを生成する<span class="d_inlinecode donthyphenate notranslate">generate</span>の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : generate, take;
+<span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_comment">// 関数(クロージャ)の戻り値をレンジにします。
+</span><span class="d_keyword">int</span> value = 1;
+<span class="d_keyword">auto</span> r = generate!(() =&gt; value *= 2);
+
+<span class="d_comment">// 生成時に一度関数が実行されます。
+</span><span class="d_keyword">assert</span>(r.front == 2);
+
+<span class="d_comment">// popFrontのたびに関数が実行されます。
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 4);
+
+<span class="d_comment">// std.rangeのtakeで先頭から指定した数だけ要素を取り出せます。
+</span><span class="d_keyword">assert</span>(r.take(4).equal([4, 8, 16, 32]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 漸化式のレンジを生成する<span class="d_inlinecode donthyphenate notranslate">recurrence</span>の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : recurrence, take;
+<span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_comment">// recurrenceを使って階乗を計算します。
+</span><span class="d_comment">// 漸化式を文字列で指定可能です。
+</span><span class="d_comment">// aは状態を表す変数で、以前の実行結果が格納されます。
+</span><span class="d_comment">// nには現在の実行回数が格納されます。
+</span><span class="d_comment">// 関数の引数には初期状態を渡します。(漸化式が必要とする分だけ必要です)
+</span><span class="d_comment">// 以下のように書くと、
+</span><span class="d_comment">// 前回の実行結果 * 現在の実行回数(つまり階乗)を計算するレンジになります。
+</span><span class="d_keyword">auto</span> r = recurrence!<span class="d_string">"a[n - 1] * n"</span>(1);
+<span class="d_keyword">assert</span>(r.front == 1); <span class="d_comment">// 0!
+</span>
+<span class="d_comment">// popFrontで漸化式の関数が実行されます。
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 1); <span class="d_comment">// 1!
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 2); <span class="d_comment">// 2!
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 6); <span class="d_comment">// 3!
+</span>r.popFront();
+<span class="d_keyword">assert</span>(r.front == 24); <span class="d_comment">// 4!
+</span>
+<span class="d_comment">// 複数の状態を持つ漸化式も表現可能です。
+</span><span class="d_comment">// 以下ではフィボナッチ数の計算を行います。
+</span><span class="d_keyword">auto</span> fib = recurrence!((a, n) =&gt; a[n - 2] + a[n - 1])(1, 1);
+<span class="d_keyword">assert</span>(fib.take(7).equal([1, 1, 2, 3, 5, 8, 13]));
 </pre>
 </div>
 

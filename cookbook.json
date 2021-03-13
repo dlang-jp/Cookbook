@@ -929,7 +929,52 @@
     "comment" : "最小のレンジ(InputRange)を作る\n",
     "line" : 33,
     "char" : 1,
-    "endline" : 140,
+    "endline" : 145,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L145_C1",
+    "kind" : "function",
+    "comment" : "連番のレンジを作る`iota`の例です。\n",
+    "line" : 145,
+    "char" : 1,
+    "endline" : 163,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L163_C1",
+    "kind" : "function",
+    "comment" : "引数に指定した要素だけのレンジを作る`only`の例です。\n",
+    "line" : 163,
+    "char" : 1,
+    "endline" : 183,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L183_C1",
+    "kind" : "function",
+    "comment" : "引数に指定した要素を無限に繰り返す`repeat`の例です。\n",
+    "line" : 183,
+    "char" : 1,
+    "endline" : 208,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L208_C1",
+    "kind" : "function",
+    "comment" : "指定された関数を使ってレンジを生成する`generate`の例です。\n",
+    "line" : 208,
+    "char" : 1,
+    "endline" : 231,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L231_C1",
+    "kind" : "function",
+    "comment" : "漸化式のレンジを生成する`recurrence`の例です。\n",
+    "line" : 231,
+    "char" : 1,
+    "endline" : 261,
     "endchar" : 1
    }
   ]
