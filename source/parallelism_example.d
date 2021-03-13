@@ -154,16 +154,19 @@ unittest
 unittest
 {
     import std.parallelism : TaskPool, task;
-    import std : iota, map, array;
+    import std : iota, map;
 
     // 16スレッドで処理するプールを作成します
     auto customPool = new TaskPool(16);
+
     // 利用が済んだら finish を呼んでワーカースレッドを解放します。
     // これを行わないとワーカースレッドの待機によりプログラムが終了しない場合があります。
+    // また、引数に true を指定するとワーカースレッドの解放が終わるまで待機するようになります。
+    // この例のように指定しない場合は、解放を指示するだけですぐに処理は完了します。
     scope (exit) customPool.finish();
 
-    // 50-150msの待機時間を100個用意します。
-    auto times = iota(100).map!"a + 50".array();
+    // 50-150msの待機時間を20個用意します。
+    auto times = iota(20).map!"a + 50"();
 
     // parallel による並列でプールを指定することができます
     foreach (time; customPool.parallel(times))
