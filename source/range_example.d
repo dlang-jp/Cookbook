@@ -212,7 +212,7 @@ unittest
 
     // 関数(クロージャ)の戻り値をレンジにします。
     int value = 1;
-    auto r = generate!({ value *= 2; return value; });
+    auto r = generate!(() => value *= 2);
 
     // 生成時に一度関数が実行されます。
     assert(r.front == 2);
