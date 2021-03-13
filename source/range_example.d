@@ -175,3 +175,28 @@ unittest
     assert((() @nogc nothrow pure @safe => only(1, 2, 3))().equal([1, 2, 3]));
 }
 
+/++
+引数に指定した要素を無限に繰り返す`repeat`の例です。
++/
+unittest
+{
+    import std.range;
+    import std.algorithm;
+
+    // 5を繰り返すレンジを作ります。
+    auto r = repeat(5);
+    assert(r.front == 5);
+    assert(!r.empty);
+
+    // 次の要素も5です。
+    r.popFront();
+    assert(r.front == 5);
+
+    // ランダムアクセスも可能です。
+    assert(r[0] == 5);
+    assert(r[1024] == 5);
+
+    // スライスも可能です。
+    assert(r[0 .. 5].equal([5, 5, 5, 5, 5]));
+}
+
