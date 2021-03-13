@@ -142,8 +142,8 @@ unittest
 +/
 unittest
 {
-    import std.range;
-    import std.algorithm;
+    import std.range : iota;
+    import std.algorithm : equal;
 
     // 0〜4の5つの要素を持つレンジを作る例です。
     assert(iota(5).equal([0, 1, 2, 3, 4]));
@@ -160,8 +160,8 @@ unittest
 +/
 unittest
 {
-    import std.range;
-    import std.algorithm;
+    import std.range : only;
+    import std.algorithm : equal;
 
     // 指定要素だけを持つレンジを作れます。
     assert(only(1).equal([1]));
@@ -180,8 +180,8 @@ unittest
 +/
 unittest
 {
-    import std.range;
-    import std.algorithm;
+    import std.range : repeat;
+    import std.algorithm : equal;
 
     // 5を繰り返すレンジを作ります。
     auto r = repeat(5);
@@ -205,8 +205,8 @@ unittest
 +/
 unittest
 {
-    import std.range;
-    import std.algorithm;
+    import std.range : generate, take;
+    import std.algorithm : equal;
 
     // 関数(クロージャ)の戻り値をレンジにします。
     int value = 1;
@@ -231,8 +231,8 @@ unittest
 +/
 unittest
 {
-    import std.range;
-    import std.algorithm;
+    import std.range : recurrence, take;
+    import std.algorithm : equal;
 
     // recurrenceを使って階乗を計算します。
     // 漸化式を文字列で指定可能です。
