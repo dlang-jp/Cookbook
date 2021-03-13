@@ -803,6 +803,68 @@
   ]
  },
  {
+  "name" : "parallelism_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/parallelism_example.d",
+  "comment" : "並列処理\n\n`std.parallelism` を使った並列処理の例をまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C1",
+    "kind" : "function",
+    "comment" : "配列データなどを元に、値毎の処理を並列で行い高速化する例です。\n\nこれは「データ並列」と呼ばれ、 `parallel` 関数を使うことで簡単に行えます。\n",
+    "line" : 13,
+    "char" : 1,
+    "endline" : 37,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L37_C1",
+    "kind" : "function",
+    "comment" : "`parallel` で実行する処理で一部同期が必要となる場合の例です。\n\nいくつか実現方法はありますが、ここでは組み込みの `synchronized` 文を使い、複数のスレッドが同時に処理できない区間（クリティカルセクション）を定義します。\nこれは排他処理とも呼ばれます。\n",
+    "line" : 37,
+    "char" : 1,
+    "endline" : 69,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L69_C1",
+    "kind" : "function",
+    "comment" : "並列処理の基本となる `task` の使い方をまとめます。\n\nこれは何らかの「処理」を抽象化したオブジェクトであり、指定した処理を別スレッドで処理させることができます。\n\n- 新しくスレッドを起動して実行する\n- TaskPoolとして用意しておいたスレッドで実行する\n\n以下は、処理を定義して新しいスレッドで実行、完了を待機する例です。\n",
+    "line" : 69,
+    "char" : 1,
+    "endline" : 98,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L98_C1",
+    "kind" : "function",
+    "comment" : "ランタイムが用意したスレッドを使って `task` を実行する例です。\n\n実行の際に `taskPool` を使うことでスレッドを使いまわし、実行の度に新しくスレッドを起動するコストが削減できます。\n\n処理の実行は、`taskPool` に `task` を `put` することにより行えます。\n\nなお、`taskPool` が起動するスレッド数は環境によって異なり、`CPU数 - 1` として計算されます。\nこの `CPU数` は `totalCPUs` という定数によって得ることができます。\n",
+    "line" : 98,
+    "char" : 1,
+    "endline" : 129,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L129_C1",
+    "kind" : "function",
+    "comment" : "戻り値を持つ `task` の使用例です。\n\n`task` で実行する処理は戻り値を持つことができ、処理の結果は `yieldForce` の戻り値として得られます。\n\nこれを `executeInNewThread` と組み合わせると、簡便な「戻り値を持つスレッド」として使うことができます。\n",
+    "line" : 129,
+    "char" : 1,
+    "endline" : 154,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L154_C1",
+    "kind" : "function",
+    "comment" : "スレッド数を指定した独自の TaskPool を作る例です。\n\n処理が通信などCPUを使わない処理を含む場合、CPUより多くのスレッドを起動しておくことで処理の高速化が期待できます。\n",
+    "line" : 154,
+    "char" : 1,
+    "endline" : 192,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "process_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/process_example.d",
