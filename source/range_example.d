@@ -200,3 +200,29 @@ unittest
     assert(r[0 .. 5].equal([5, 5, 5, 5, 5]));
 }
 
+/++
+指定された関数を使ってレンジを生成する`generate`の例です。
++/
+unittest
+{
+    import std.range;
+    import std.algorithm;
+
+    // 関数(クロージャ)の戻り値をレンジにします。
+    int value = 1;
+    auto r = generate!({
+        value *= 2;
+        return value;
+    });
+
+    // 生成時に一度関数が実行されます。
+    assert(r.front == 2);
+
+    // popFrontのたびに関数が実行されます。
+    r.popFront();
+    assert(r.front == 4);
+
+    // std.rangeのtakeで先頭から指定した数だけ要素を取り出せます。
+    assert(r.take(4).equal([4, 8, 16, 32]));
+}
+
