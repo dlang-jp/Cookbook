@@ -137,3 +137,41 @@ unittest
     assert(equal(filter!"a % 2 != 0"(iota(0, 10)), [1, 3, 5, 7, 9]));
 }
 
+/++
+連番のレンジを作る`iota`の例です。
++/
+unittest
+{
+    import std.range;
+    import std.algorithm;
+
+    // 0〜4の5つの要素を持つレンジを作る例です。
+    assert(iota(5).equal([0, 1, 2, 3, 4]));
+
+    // [1, 5) の4つの要素を持つレンジを作る例です。
+    assert(iota(1, 5).equal([1, 2, 3, 4]));
+
+    // [1, 10) の範囲で2つおきの要素を持つレンジを作る例です。
+    assert(iota(1, 10, 2).equal([1, 3, 5, 7, 9]));
+}
+
+/++
+引数に指定した要素だけのレンジを作る`only`の例です。
++/
+unittest
+{
+    import std.range;
+    import std.algorithm;
+
+    // 指定要素だけを持つレンジを作れます。
+    assert(only(1).equal([1]));
+
+    // 複数指定も可能です。
+    assert(only(1, 2, 3).equal([1, 2, 3]));
+
+    // onlyでは動的メモリ確保無しでレンジを生成できます。
+    // ただし要素のコピーが発生するので、
+    // サイズが巨大になる場合は注意が必要です。
+    assert((() @nogc nothrow pure @safe => only(1, 2, 3))().equal([1, 2, 3]));
+}
+
