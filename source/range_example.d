@@ -60,7 +60,7 @@ unittest
     {
         int i = 0;
         int n;
-        invariant(i <= n);
+        invariant (i <= n);
 
         /// nを指定するコンストラクタ
         this(int n)
@@ -91,6 +91,7 @@ unittest
 
     // 型がInputRangeであるかは、std.rangeのisInputRangeで確認できます。
     import std.range : isInputRange;
+
     static assert(isInputRange!IntRange);
 
     // InputRangeで行える操作は下記の通りです。
@@ -133,6 +134,7 @@ unittest
     // なお、IntRangeはより高機能なものがstd.rangeのiota関数として用意されています。
     // 自作せずにこちらを使用しましょう。
     import std.range : iota;
+
     assert(equal(iota(0, 5), IntRange(5)));
     assert(equal(filter!"a % 2 != 0"(iota(0, 10)), [1, 3, 5, 7, 9]));
 }
@@ -210,10 +212,7 @@ unittest
 
     // 関数(クロージャ)の戻り値をレンジにします。
     int value = 1;
-    auto r = generate!({
-        value *= 2;
-        return value;
-    });
+    auto r = generate!({ value *= 2; return value; });
 
     // 生成時に一度関数が実行されます。
     assert(r.front == 2);
@@ -259,4 +258,3 @@ unittest
     auto fib = recurrence!((a, n) => a[n - 2] + a[n - 1])(1, 1);
     assert(fib.take(7).equal([1, 1, 2, 3, 5, 8, 13]));
 }
-
