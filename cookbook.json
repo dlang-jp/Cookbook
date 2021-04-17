@@ -803,6 +803,41 @@
   ]
  },
  {
+  "name" : "numeric_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/numeric_example.d",
+  "comment" : "数値計算\n\n標準ライブラリで提供される数値計算の関数などについてまとめます。\n\n主に `std.math` や `std.mathspecial`、 `std.numeric` を使った例を対象とします。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L19_C1",
+    "kind" : "function",
+    "comment" : "浮動小数点数の同値判定の例です。\n\n浮動小数点数は計算の過程で誤差が出るため、相対誤差や絶対誤差を考慮して比較します。\n\n`std.math` の `isClose` を利用します。\n\nstd.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)\n",
+    "line" : 19,
+    "char" : 1,
+    "endline" : 38,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L38_C1",
+    "kind" : "function",
+    "comment" : "内積を計算する例です。\n\n`std.numeric` の `dotProduct` を利用します。\n",
+    "line" : 38,
+    "char" : 1,
+    "endline" : 54,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L54_C1",
+    "kind" : "function",
+    "comment" : "コサイン類似度を計算する例です。\n\n2つのレンジを受け取って、その類似度を0-1で返します。\n",
+    "line" : 54,
+    "char" : 1,
+    "endline" : 65,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "parallelism_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/parallelism_example.d",
@@ -1314,37 +1349,37 @@
     "storageClass" : [
      "nothrow"
     ],
-    "endline" : 115,
+    "endline" : 117,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L115_C1",
+    "name" : "__unittest_L117_C1",
     "kind" : "function",
-    "comment" : "浮動小数点数をテストする方法\n\n数値計算の結果は厳密なテストが難しいため、`approxEqual` を使い相対誤差などを利用した比較を行います。\n\nstd.math.approxEqual : $(LINK https://dlang.org/phobos/std_math.html#.approxEqual)$(BR)\n",
-    "line" : 115,
+    "comment" : "浮動小数点数をテストする方法\n\n数値計算の結果は厳密なテストが難しいため `isClose` を使い相対誤差などを利用した比較を行います。\n\nstd.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)\n\n類似の `approxEqual` はDMDのバージョンで非推奨となったため、 `isClose` を使うことが推奨されています。\n",
+    "line" : 117,
     "char" : 1,
-    "endline" : 150,
+    "endline" : 152,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L150_C1",
+    "name" : "__unittest_L152_C1",
     "kind" : "function",
     "comment" : "一般的なRangeの内容をテストする方法\n\nstd.algorithm 内の equal 関数を使ってRange同士を比較します。\n\nstd.algorithm : $(LINK https://dlang.org/phobos/std_algorithm_comparison.html)\n",
-    "line" : 150,
+    "line" : 152,
     "char" : 1,
-    "endline" : 175,
+    "endline" : 177,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L175_C9",
+    "name" : "__unittest_L177_C9",
     "kind" : "function",
     "comment" : "ファイルの生成などを確認する方法\n\n単体テストはそれぞれが独立し、順不同および繰り返し実行できることが重要です。\n\n最初と `scope(exit)` でファイルの破棄を行うとテストの再現性や独立性が高まります。\n",
-    "line" : 175,
+    "line" : 177,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 190,
+    "endline" : 192,
     "endchar" : 1
    }
   ]

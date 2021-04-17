@@ -83,6 +83,10 @@
 
 
 
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
 	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
 
 
@@ -293,12 +297,15 @@ std.exception : <a href="https://dlang.org/phobos/std_exception.html">https://dl
  浮動小数点数をテストする方法
 <div class="ddoc_blankline"></div>
 
-数値計算の結果は厳密なテストが難しいため、<span class="d_inlinecode donthyphenate notranslate">approxEqual</span> を使い相対誤差などを利用した比較を行います。
+数値計算の結果は厳密なテストが難しいため <span class="d_inlinecode donthyphenate notranslate">isClose</span> を使い相対誤差などを利用した比較を行います。
 <div class="ddoc_blankline"></div>
 
-std.math.approxEqual : <a href="https://dlang.org/phobos/std_math.html#.approxEqual">https://dlang.org/phobos/std_math.html#.approxEqual</a><br>
+std.math.isClose : <a href="https://dlang.org/phobos/std_math.html#.isClose">https://dlang.org/phobos/std_math.html#.isClose</a><br>
+<div class="ddoc_blankline"></div>
+
+類似の <span class="d_inlinecode donthyphenate notranslate">approxEqual</span> はDMDのバージョンで非推奨となったため、 <span class="d_inlinecode donthyphenate notranslate">isClose</span> を使うことが推奨されています。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.numeric : secantMethod;
-<span class="d_keyword">import</span> std.math : approxEqual, cos;
+<span class="d_keyword">import</span> std.math : isClose, cos;
 
 <span class="d_keyword">float</span> f(<span class="d_keyword">float</span> x)
 {
@@ -307,11 +314,11 @@ std.math.approxEqual : <a href="https://dlang.org/phobos/std_math.html#.approxEq
 
 <span class="d_comment">// セカント法を用いて区間内で関数fの結果が0になる引数（根）を探索します
 </span><span class="d_keyword">auto</span> x = secantMethod!(f)(0f, 1f);
-<span class="d_keyword">assert</span>(approxEqual(x, 0.865474));
+<span class="d_keyword">assert</span>(isClose(x, 0.865474));
 
-<span class="d_comment">// approxEqual は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
-</span><span class="d_comment">// それぞれ 0.01 と 0.00001 が既定値です。
-</span><span class="d_keyword">assert</span>(approxEqual(x, 0.865474, 0.01, 0.00001));
+<span class="d_comment">// isClose は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
+</span><span class="d_comment">// 相対誤差は型によって異なり、絶対誤差の既定値は 0.0 です。
+</span><span class="d_keyword">assert</span>(isClose(x, 0.865474, 0.0001, 1e-6));
 
 <span class="d_comment">// その他、こういった数値計算では結果の性質をテストすることも有効です。
 </span><span class="d_comment">// これは一般に `Propety-based testing` と呼ばれる方法です。

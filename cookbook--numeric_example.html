@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>subpkg.test</title>
+        <title>numeric_example</title>
         
         
     </head>
@@ -195,17 +195,62 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">サブパッケージの作り方</div></h1><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- DubのsubPackageの確認
+                <h1><div class="ddoc_summary">数値計算
+</div></h1><div class="ddoc_description">標準ライブラリで提供される数値計算の関数などについてまとめます。
 <div class="ddoc_blankline"></div>
 
+主に <span class="d_inlinecode donthyphenate notranslate">std.math</span> や <span class="d_inlinecode donthyphenate notranslate">std.mathspecial</span>、 <span class="d_inlinecode donthyphenate notranslate">std.numeric</span> を使った例を対象とします。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 浮動小数点数の同値判定の例です。
 <div class="ddoc_blankline"></div>
 
+浮動小数点数は計算の過程で誤差が出るため、相対誤差や絶対誤差を考慮して比較します。
 <div class="ddoc_blankline"></div>
 
- unittestの例
-<pre class="d_code notranslate"><span class="d_comment">// nothing todo
+<span class="d_inlinecode donthyphenate notranslate">std.math</span> の <span class="d_inlinecode donthyphenate notranslate">isClose</span> を利用します。
+<div class="ddoc_blankline"></div>
+
+std.math.isClose : <a href="https://dlang.org/phobos/std_math.html#.isClose">https://dlang.org/phobos/std_math.html#.isClose</a><br>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math : isClose;
+
+<span class="d_comment">// float の場合と double の場合で異なる相対誤差が用いられます
+</span><span class="d_keyword">assert</span>(isClose(1.0f, 0.999_99f));
+<span class="d_keyword">assert</span>(!isClose(1.0, 0.999_99));
+<span class="d_keyword">assert</span>(isClose(1.0, 0.999_999_999));
+
+<span class="d_comment">// isClose は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
+</span><span class="d_comment">// 相対誤差は型によって異なり、絶対誤差の既定値は 0.0 です。
+</span><span class="d_keyword">assert</span>(isClose(1.0, 1.1, 0.1)); <span class="d_comment">// 相対誤差10%まで許容し、絶対誤差は考慮しない
 </span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 内積を計算する例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.numeric</span> の <span class="d_inlinecode donthyphenate notranslate">dotProduct</span> を利用します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.numeric : dotProduct;
+
+<span class="d_keyword">auto</span> a = [1.0, 2.0, 3.0];
+<span class="d_keyword">auto</span> b = [-1.0, 2.0, -3.0];
+
+<span class="d_keyword">auto</span> s = dotProduct(a, b);
+<span class="d_keyword">assert</span>(s == -6.0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ コサイン類似度を計算する例です。
+<div class="ddoc_blankline"></div>
+
+2つのレンジを受け取って、その類似度を0-1で返します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math : isClose;
+<span class="d_keyword">import</span> std.numeric : cosineSimilarity;
+
+<span class="d_keyword">auto</span> a = [3.0, 2.0, 1.0, 1.0];
+<span class="d_keyword">auto</span> b = [2.0, 2.0, 1.0, 0.0];
+
+<span class="d_keyword">auto</span> s = cosineSimilarity(a, b);
+<span class="d_keyword">assert</span>(s.isClose(0.9467292624062573));
+</pre>
 </div>
 
                 
