@@ -356,8 +356,8 @@ module exception_example;
         import std.conv;
         return str.to!real().ifThrown(real.nan);
     }
-    import std.math;
-    assert(str2real("100").approxEqual(100));
+    import std.math: isClose, isNaN;
+    assert(str2real("100").isClose(100));
     assert(str2real("1000").isNaN);
     assert(str2real("aiueo").isNaN);
 
