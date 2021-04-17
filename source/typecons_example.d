@@ -55,3 +55,38 @@ unittest
     assert(emptyValue.get(999) == 999);
 }
 
+/++
+NullableRefの例です
+
+NullableRefは、ポインタを格納する場合に利用できるNullableです。
+ポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。
++/
+unittest
+{
+    import std.typecons : NullableRef, nullableRef;
+
+    // デフォルトコンストラクタでは空の状態のNullableRefが生成されます。
+    NullableRef!int emptyRef;
+    assert(emptyRef.isNull);
+
+    // コンストラクタやnullableRef関数で値を参照するNullableRefを生成できます。
+    int value = 100;
+    NullableRef!int valueRef1 = NullableRef!int(&value);
+    NullableRef!int valueRef2 = nullableRef(&value);
+
+    // getでは、ポインタの参照先の値そのものが取得されます。
+    assert(!valueRef1.isNull);
+    assert(valueRef1.get == 100);
+    assert(!valueRef2.isNull);
+    assert(valueRef2.get == 100);
+
+    // Nullableと同様にnullify等が使用可能です。
+    valueRef1.nullify();
+    assert(valueRef1.isNull);
+
+    // bindにより別の値を参照させることが可能です。
+    int value2 = 10000;
+    valueRef1.bind(&value2);
+    assert(valueRef1.get == value2);
+}
+
