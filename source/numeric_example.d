@@ -13,6 +13,8 @@ module numeric_example;
 浮動小数点数は計算の過程で誤差が出るため、相対誤差や絶対誤差を考慮して比較します。
 
 `std.math` の `isClose` を利用します。
+
+std.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)
 +/
 unittest
 {
@@ -23,8 +25,9 @@ unittest
     assert(!isClose(1.0, 0.999_99));
     assert(isClose(1.0, 0.999_999_999));
 
-    // 第3引数で相対誤差を指定することができます
-    assert(isClose(1.0, 1.1, 0.1)); // 10%まで許容する
+    // isClose は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
+    // 相対誤差は型によって異なり、絶対誤差の既定値は 0.0 です。
+    assert(isClose(1.0, 1.1, 0.1)); // 相対誤差10%まで許容し、絶対誤差は考慮しない
 }
 
 /++

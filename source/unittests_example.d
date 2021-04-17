@@ -108,14 +108,16 @@ nothrow unittest
 /++
 浮動小数点数をテストする方法
 
-数値計算の結果は厳密なテストが難しいため、`approxEqual` を使い相対誤差などを利用した比較を行います。
+数値計算の結果は厳密なテストが難しいため `isClose` を使い相対誤差などを利用した比較を行います。
 
-std.math.approxEqual : $(LINK https://dlang.org/phobos/std_math.html#.approxEqual)$(BR)
+std.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)
+
+類似の `approxEqual` はDMDのバージョンで非推奨となったため、 `isClose` を使うことが推奨されています。
 +/
 unittest
 {
     import std.numeric : secantMethod;
-    import std.math : approxEqual, cos;
+    import std.math : isClose, cos;
 
     float f(float x)
     {
@@ -124,11 +126,11 @@ unittest
 
     // セカント法を用いて区間内で関数fの結果が0になる引数（根）を探索します
     auto x = secantMethod!(f)(0f, 1f);
-    assert(approxEqual(x, 0.865474));
+    assert(isClose(x, 0.865474));
 
-    // approxEqual は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
-    // それぞれ 0.01 と 0.00001 が既定値です。
-    assert(approxEqual(x, 0.865474, 0.01, 0.00001));
+    // isClose は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
+    // 相対誤差は型によって異なり、絶対誤差の既定値は 0.0 です。
+    assert(isClose(x, 0.865474, 0.0001, 1e-6));
 
     // その他、こういった数値計算では結果の性質をテストすることも有効です。
     // これは一般に `Propety-based testing` と呼ばれる方法です。
