@@ -1,6 +1,15 @@
 import std;
 
 ///
+struct PackageInfo
+{
+    ///
+    string name;
+    ///
+    string[] exceptArch;
+}
+
+///
 struct Defines
 {
 static:
@@ -9,7 +18,11 @@ static:
     immutable documentGenerator = "gendoc@0.0.6";
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
-    immutable subPkgs = ["windows", "libdparse_usage"];
+    immutable subPkgs = [
+        PackageInfo("windows"),
+        PackageInfo("libdparse_usage"),
+        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+    ];
 }
 
 ///
@@ -131,7 +144,10 @@ void unitTest(string[] exDubOpts = null)
     env.addCurlPath();
     exec(["dub", "test"] ~ opt, null, env);
     foreach (pkg; Defines.subPkgs)
-        exec(["dub", "test", ":" ~ pkg] ~ opt, null, env);
+    {
+        if (!matchArch(pkg.exceptArch))
+            exec(["dub", "test", ":" ~ pkg.name] ~ opt, null, env);
+    }
 }
 
 ///
@@ -275,14 +291,23 @@ string searchPath(string name, string[] dirs = null)
         return name;
     if (name.isAbsolute())
         return name;
-    foreach (dir; dirs.chain(environment.get("Path").split(";")))
+    version (Windows)
     {
-        version (Windows)
+        foreach (dir; dirs.chain(environment.get("Path").split(";")))
+        {
             auto bin = dir.buildPath(name).setExtension(".exe");
-        else
+            if (bin.exists)
+                return bin;
+        }
+    }
+    else
+    {
+        foreach (dir; dirs.chain(environment.get("PATH").split(":")))
+        {
             auto bin = dir.buildPath(name);
-        if (bin.exists)
-            return bin;
+            if (bin.exists)
+                return bin;
+        }
     }
     return name;
 }
@@ -291,15 +316,15 @@ void addCurlPath(ref string[string] env)
 {
     if (config.os == "windows" && config.arch == "x86_64")
     {
-        auto bin64dir = searchDCompiler().dirName.buildPath("../bin64");
+        auto bin64dir = searchDCompiler().dirName.buildNormalizedPath("../bin64");
         if (bin64dir.exists && bin64dir.isDir)
-            env["Path"] = bin64dir ~ ";" ~ environment.get("Path");
+            env["Path"] = bin64dir ~ ";" ~ environment.get("Path").chomp(";");
     }
     else if (config.os == "windows" && config.arch == "x86")
     {
-        auto bin32dir = searchDCompiler().dirName.buildPath("../bin");
+        auto bin32dir = searchDCompiler().dirName.buildNormalizedPath("../bin");
         if (bin32dir.exists && bin32dir.isDir)
-            env["Path"] = bin32dir ~ ";" ~ environment.get("Path");
+            env["Path"] = bin32dir ~ ";" ~ environment.get("Path").chomp(";");
     }
 }
 
@@ -322,4 +347,123 @@ string searchDCompiler()
         return dmd;
 
     return "dmd";
+}
+
+///
+string[] getArch()
+{
+    switch (config.os)
+    {
+    case "windows":
+        switch (config.arch)
+        {
+        case "x86":
+            switch (config.compiler)
+            {
+            case "dmd": return ["windows-x86-dmd", "windows-x86_omf-dmd"];
+            case "gdc": return ["windows-x86-gdc"];
+            case "ldc": return ["windows-x86-ldc", "windows-x86-ldc2", "windows-x86_mscoff-ldc", "windows-x86_mscoff-ldc2"];
+            case "ldc2": return ["windows-x86-ldc", "windows-x86-ldc2", "windows-x86_mscoff-ldc", "windows-x86_mscoff-ldc2"];
+            default: assert(0);
+            }
+            break;
+        case "x86_omf":
+            switch (config.compiler)
+            {
+            case "dmd": return ["windows-x86-dmd", "windows-x86_omf-dmd"];
+            default: assert(0);
+            }
+            break;
+        case "x86_mscoff":
+            switch (config.compiler)
+            {
+            case "dmd": return ["windows-x86-dmd", "windows-x86_mscoff-dmd"];
+            case "ldc": return ["windows-x86-ldc", "windows-x86-ldc2", "windows-x86_mscoff-ldc", "windows-x86_mscoff-ldc2"];
+            case "ldc2": return ["windows-x86-ldc", "windows-x86-ldc2", "windows-x86_mscoff-ldc", "windows-x86_mscoff-ldc2"];
+            default: assert(0);
+            }
+            break;
+        case "x86_64":
+            switch (config.compiler)
+            {
+            case "dmd": return ["windows-x86_64-dmd"];
+            case "gdc": return ["windows-x86_64-gdc"];
+            case "ldc": return ["windows-x86_64-ldc", "windows-x86_64-ldc2"];
+            case "ldc2": return ["windows-x86_64-ldc", "windows-x86_64-ldc2"];
+            default: assert(0);
+            }
+            break;
+        default: assert(0);
+       }
+        break;
+    case "linux":
+        switch (config.arch)
+        {
+        case "x86":
+            switch (config.compiler)
+            {
+            case "dmd": return ["linux-x86-dmd"];
+            case "gdc": return ["linux-x86-gdc"];
+            case "ldc": return ["linux-x86-ldc", "linux-x86-ldc2"];
+            case "ldc2": return ["linux-x86-ldc", "linux-x86-ldc2"];
+            default: assert(0);
+            }
+            break;
+        case "x86_64":
+            switch (config.compiler)
+            {
+            case "dmd": return ["linux-x86_64-dmd"];
+            case "gdc": return ["linux-x86_64-gdc"];
+            case "ldc": return ["linux-x86_64-ldc", "linux-x86_64-ldc2"];
+            case "ldc2": return ["linux-x86_64-ldc", "linux-x86_64-ldc2"];
+            default: assert(0);
+            }
+            break;
+        default: assert(0);
+        }
+        break;
+    case "osx":
+        switch (config.arch)
+        {
+        case "x86":
+            switch (config.compiler)
+            {
+            case "dmd": return ["osx-x86-dmd"];
+            case "gdc": return ["osx-x86-gdc"];
+            case "ldc": return ["osx-x86-ldc", "osx-x86-ldc2"];
+            case "ldc2": return ["osx-x86-ldc", "osx-x86-ldc2"];
+            default: assert(0);
+            }
+            break;
+        case "x86_64":
+            switch (config.compiler)
+            {
+            case "dmd": return ["osx-x86_64-dmd"];
+            case "gdc": return ["osx-x86_64-gdc"];
+            case "ldc": return ["osx-x86_64-ldc", "osx-x86_64-ldc2"];
+            case "ldc2": return ["osx-x86_64-ldc", "osx-x86_64-ldc2"];
+            default: assert(0);
+            }
+            break;
+        default: assert(0);
+        }
+        break;
+    default: assert(0);
+    }
+    assert(0);
+}
+
+///
+bool matchArch(in string[] exceptArchs)
+{
+    auto targetArchs = getArch();
+    foreach (ea; exceptArchs)
+    {
+        foreach (a; targetArchs)
+        {
+            if (a.canFind(ea))
+                return true;
+        }
+    }
+    return false;
 }
