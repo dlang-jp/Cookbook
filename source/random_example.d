@@ -83,10 +83,10 @@ module random_example;
     auto p = uniform(-1.0f, 1.0f, rndGen1);
     auto q = uniform(-1.0f, 1.0f, rndGen1);
 
-    import std.math : approxEqual;
+    import std.math : isClose;
 
-    assert(p.approxEqual(0.307179));
-    assert(q.approxEqual(-0.588957));
+    assert(p.isClose(0.307179));
+    assert(q.isClose(-0.588957));
 }
 
 /++
