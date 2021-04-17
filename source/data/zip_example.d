@@ -117,23 +117,36 @@ See_Also:
     }
     version (Posix)
     {
-        // Posixでは core.sys.posix.iconv を使用する
-        import core.sys.posix.iconv: iconv_open, iconv_close, iconv;
-        import std.exception: enforce;
-        import core.stdc.string;
-        auto conv = iconv_open("SHIFT_JIS", "UTF-8").enforce();
-        scope (exit)
-            iconv_close(conv);
-        char* file_jp_name_utf8z = (file_jp_name ~ "\0").dup.ptr;
-        size_t file_jp_name_utf8len = file_jp_name.length;
-        char[] file_jp_name_sjis_buf = new char[file_jp_name_utf8len + 1];
-        size_t file_jp_name_sjislen = file_jp_name_utf8len + 1;
-        auto file_jp_name_sjisz = file_jp_name_sjis_buf.ptr;
-        auto iconvres = iconv(conv,
-            &file_jp_name_utf8z, &file_jp_name_utf8len,
-            &file_jp_name_sjisz, &file_jp_name_sjislen);
-        enforce(iconvres != -1);
-        file_jp_name_sjis = cast(string)file_jp_name_sjis_buf[0..$ - file_jp_name_sjislen];
+        version (none)
+        {
+            // Posixでは core.sys.posix.iconv を使用する
+            import core.sys.posix.iconv: iconv_open, iconv_close, iconv;
+            import std.exception: enforce;
+            import core.stdc.string;
+            auto conv = iconv_open("SHIFT_JIS", "UTF-8").enforce();
+            scope (exit)
+                iconv_close(conv);
+            char* file_jp_name_utf8z = (file_jp_name ~ "\0").dup.ptr;
+            size_t file_jp_name_utf8len = file_jp_name.length;
+            char[] file_jp_name_sjis_buf = new char[file_jp_name_utf8len + 1];
+            size_t file_jp_name_sjislen = file_jp_name_utf8len + 1;
+            auto file_jp_name_sjisz = file_jp_name_sjis_buf.ptr;
+            auto iconvres = iconv(conv,
+                &file_jp_name_utf8z, &file_jp_name_utf8len,
+                &file_jp_name_sjisz, &file_jp_name_sjislen);
+            enforce(iconvres != -1);
+            file_jp_name_sjis = cast(string)file_jp_name_sjis_buf[0..$ - file_jp_name_sjislen];
+        }
+        else
+        {
+            // iconvコマンド使った方が楽かも
+            import std.process: pipeProcess;
+            auto iconv = pipeProcess(["iconv", "-f", "UTF-8", "-t", "SHIFT_JIS"]);
+            iconv.stdin.write(file_jp_name);
+            iconv.stdin.flush();
+            iconv.stdin.close();
+            file_jp_name_sjis = iconv.stdout.readln();
+        }
     }
     file_jp.name = file_jp_name_sjis;
 
