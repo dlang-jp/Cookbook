@@ -35,7 +35,7 @@ See_Also:
 +/
 unittest
 {
-    import std.conv;
+    import std.conv: text;
     import vibe.vibe;
 
     // サーバールート("/")でアクセスした際に何を表示するかを記述するハンドラーを設定する。
@@ -96,22 +96,23 @@ See_Also:
 +/
 unittest
 {
-    import std.conv;
+    import std.conv: text;
     import vibe.vibe;
     import diet.html;
-    int counter;
+    import core.atomic: atomicOp;
+    shared int counter;
 
     auto router = new URLRouter;
     router.get("/", (scope req, scope res){
         import std.array: appender;
         import std.string: chompPrefix, outdent;
         // アクセスカウンター+1
-        counter++;
+        int cnt = counter.atomicOp!"+="(1);
         auto contents = appender!string;
         // compileHTMLDietStringで文字列のdietテンプレートをコンパイルできる。
         // 今回はstring importを使わないで行う例を紹介したが、
         // string importが使える場合は res.render を利用した方が素直。
-        // res.render!("hello.dt", counter);
+        // res.render!("hello.dt", cnt);
         contents.compileHTMLDietString!(`
             doctype html
             html
@@ -119,8 +120,8 @@ unittest
                     title Hello
                 body
                     h1 Hello, world!
-                    div あなたは #{counter} 人目の訪問者です！
-        `.chompPrefix("\n").outdent, counter);
+                    div あなたは #{cnt} 人目の訪問者です！
+        `.chompPrefix("\n").outdent, cnt);
         res.writeBody(contents.data, "text/html");
     });
 
