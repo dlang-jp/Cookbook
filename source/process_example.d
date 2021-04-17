@@ -37,28 +37,30 @@ unittest
 +/
 unittest
 {
+    // pipeProcessを使うとパイプでコマンドをつなげることができます
+    //
+    import std.array : array;
+    static import std.file;
+    import std.path : buildPath;
+
+    // テスト用のディレクトリを作成します
+    string dirName = "std_process_testdir";
+    assert(!std.file.exists(dirName));
+    std.file.mkdir(dirName);
+    scope (exit)
+    {
+        assert(std.file.exists(dirName));
+        std.file.rmdirRecurse(dirName);
+    }
+
+    // ファイルをディレクトリ内に作成します。
+    std.file.write(buildPath(dirName, "a.txt"), "This is File A.");
+    std.file.write(buildPath(dirName, "b.txt"), "I am File B.");
+
+    // コマンド体系がWindowsとPosixで違うため、分岐して説明しますが、
+    // やっていることは同じで、`dirName`内のファイル名一覧を逆順に並び替えます
     version (Posix)
     {
-        // pipeProcessを使うとパイプでコマンドをつなげることができます
-        //
-        import std.array : array;
-        static import std.file;
-        import std.path : buildPath;
-
-        // テスト用のディレクトリを作成します
-        string dirName = "std_process_testdir";
-        assert(!std.file.exists(dirName));
-        std.file.mkdir(dirName);
-        scope (exit)
-        {
-            assert(std.file.exists(dirName));
-            std.file.rmdirRecurse(dirName);
-        }
-
-        // ファイルをディレクトリ内に作成します。
-        std.file.write(buildPath(dirName, "a.txt"), "This is File A.");
-        std.file.write(buildPath(dirName, "b.txt"), "I am File B.");
-
         // `ls -1 | sort -r` 相当の処理を行います
         //
         auto ls = pipeProcess(["ls", "-1", dirName]);
@@ -66,21 +68,74 @@ unittest
         scope (exit)  wait(ls.pid);
         auto sort = pipeProcess(["sort", "-r"]);
         scope (exit) wait(sort.pid);
+    }
+    version (Windows)
+    {
+        // `dir /B | sort /R` 相当の処理を行います
+        // dirはコマンドプロンプトのコマンドで、sortは実行ファイルによって
+        // 提供されているので、正確には `cmd.exe /C dir /B | sort.exe /R` です
+        //
+        auto ls = pipeProcess(["cmd.exe", "/C", "dir", "/B", dirName]);
+        // コマンドの終了待ちをしないので明示的に待つ必要があります
+        scope (exit)  wait(ls.pid);
+        auto sort = pipeProcess(["sort.exe", "/r"]);
+        scope (exit) wait(sort.pid);
+    }
 
-        // lsコマンドの標準出力をsortコマンドの標準入力に渡しています
-        foreach (line; ls.stdout.byLine)
-            sort.stdin.writeln(line);
-        ls.stdout.close();
-        // stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
-        // いるか自明ではないので明示的にflushする必要があります
-        sort.stdin.flush();
-        sort.stdin.close();
+    // lsコマンドの標準出力をsortコマンドの標準入力に渡しています
+    // 移植性のため std.ascii.newline を使うと、OS間の違いを吸収できます。
+    import std.stdio: KeepTerminator;
+    import std.ascii: newline;
+    foreach (line; ls.stdout.byLine(KeepTerminator.no, newline))
+        sort.stdin.writeln(line);
+    ls.stdout.close();
+    // stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
+    // いるか自明ではないので明示的にflushする必要があります
+    sort.stdin.flush();
+    sort.stdin.close();
 
-        auto arr = sort.stdout.byLineCopy.array;
-        assert(arr[0] == "b.txt");
-        assert(arr[1] == "a.txt");
+    auto arr = sort.stdout.byLineCopy(KeepTerminator.no, newline).array;
+    assert(arr[0] == "b.txt");
+    assert(arr[1] == "a.txt");
+}
+
+/++
+WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。
+
+Windows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。
+これを抑止するため、実行時に `Config.suppressConsole` を指定することで、コンソール画面の表示を行わないようにすることができます。
+
+See_Also: https://dlang.org/phobos/std_process.html#.Config.suppressConsole
++/
+unittest
+{
+    version (Windows)
+    {
+        // ディレクトリを作ってファイルを置く
+        static import std.file;
+        import std.path : buildPath;
+        string dirName = "std_process_testdirforWin";
+        assert(!std.file.exists(dirName));
+        std.file.mkdir(dirName);
+        scope (exit)
+        {
+            assert(std.file.exists(dirName));
+            std.file.rmdirRecurse(dirName);
+        }
+        std.file.write(buildPath(dirName, "a.txt"), "This is File A.");
+        std.file.write(buildPath(dirName, "b.txt"), "I am File B.");
+
+        // コンソールアプリケーションで標準出力の結果を得たい、かつ、
+        // GUIアプリ用途のためコンソールを表示したくない場合、`Config.suppressConsole`を使用します。
+        auto ls = execute(["cmd.exe", "/C", "dir", "/B", "/O:N", dirName],
+            null, Config.suppressConsole);
+        import std.string: splitLines;
+        auto arr = ls.output.splitLines;
+        assert(arr[0] == "a.txt");
+        assert(arr[1] == "b.txt");
     }
 }
+
 
 /++
 たくさんパイプしながら、データを小分けにして渡していく場合
