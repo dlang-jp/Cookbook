@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>numeric_example</title>
+        <title>typecons_example</title>
         
         
     </head>
@@ -199,61 +199,86 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">数値計算
-</div></h1><div class="ddoc_description">標準ライブラリで提供される数値計算の関数などについてまとめます。
-<div class="ddoc_blankline"></div>
-
-主に <span class="d_inlinecode donthyphenate notranslate">std.math</span> や <span class="d_inlinecode donthyphenate notranslate">std.mathspecial</span>、 <span class="d_inlinecode donthyphenate notranslate">std.numeric</span> を使った例を対象とします。</div>
+                <h1><div class="ddoc_summary">型を作るユーティリティ
+</div></h1><div class="ddoc_description">様々な型を作れるtemplateを提供する<span class="d_inlinecode donthyphenate notranslate">std.typecons</span>パッケージについて解説します。</div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 浮動小数点数の同値判定の例です。
+ nullになる可能性のある値を表現するNullableの例です
 <div class="ddoc_blankline"></div>
 
-浮動小数点数は計算の過程で誤差が出るため、相対誤差や絶対誤差を考慮して比較します。
-<div class="ddoc_blankline"></div>
+Nullableを利用することで、値が存在しない可能性のある型を表現できます。
+int等の組み込み型やstructについても、nullとなることを明確に示せます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception : assertThrown;
+<span class="d_keyword">import</span> std.typecons : Nullable, nullable;
 
-<span class="d_inlinecode donthyphenate notranslate">std.math</span> の <span class="d_inlinecode donthyphenate notranslate">isClose</span> を利用します。
-<div class="ddoc_blankline"></div>
+<span class="d_comment">// Nullableは格納値の型を指定して利用するテンプレート構造体です。
+</span><span class="d_comment">// デフォルトコンストラクタでは、空の状態のNullableが生成されます。
+</span>Nullable!<span class="d_keyword">int</span> emptyValue;
 
-std.math.isClose : <a href="https://dlang.org/phobos/std_math.html#.isClose">https://dlang.org/phobos/std_math.html#.isClose</a><br>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math : isClose;
+<span class="d_comment">// 値が空かどうかはisNullで確認できます。
+</span><span class="d_keyword">assert</span>(emptyValue.isNull);
 
-<span class="d_comment">// float の場合と double の場合で異なる相対誤差が用いられます
-</span><span class="d_keyword">assert</span>(isClose(1.0f, 0.999_99f));
-<span class="d_keyword">assert</span>(!isClose(1.0, 0.999_99));
-<span class="d_keyword">assert</span>(isClose(1.0, 0.999_999_999));
+<span class="d_comment">// 値を格納したNullableは、Nullableのコンストラクタに値を与えることや、nullable関数で生成できます。
+</span>Nullable!<span class="d_keyword">int</span> value1 = nullable(1);
+Nullable!<span class="d_keyword">int</span> value2 = Nullable!<span class="d_keyword">int</span>(2);
 
-<span class="d_comment">// isClose は、第3引数で相対誤差、第4引数で絶対誤差をそれぞれ指定します。
-</span><span class="d_comment">// 相対誤差は型によって異なり、絶対誤差の既定値は 0.0 です。
-</span><span class="d_keyword">assert</span>(isClose(1.0, 1.1, 0.1)); <span class="d_comment">// 相対誤差10%まで許容し、絶対誤差は考慮しない
-</span></pre>
-</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 内積を計算する例です。
-<div class="ddoc_blankline"></div>
+<span class="d_comment">// 格納されている値はgetで取得できます。
+</span><span class="d_keyword">assert</span>(!value1.isNull);
+<span class="d_keyword">assert</span>(value1.get == 1);
+<span class="d_keyword">assert</span>(!value2.isNull);
+<span class="d_keyword">assert</span>(value2.get == 2);
 
-<span class="d_inlinecode donthyphenate notranslate">std.numeric</span> の <span class="d_inlinecode donthyphenate notranslate">dotProduct</span> を利用します。
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.numeric : dotProduct;
+<span class="d_comment">// Nullableのまま値の比較を行えます。
+</span><span class="d_keyword">assert</span>(value1 != value2);
+<span class="d_keyword">assert</span>(value1 == value1);
+<span class="d_keyword">assert</span>(emptyValue == emptyValue);
+<span class="d_keyword">assert</span>(emptyValue != value1);
+<span class="d_keyword">assert</span>(emptyValue != value2);
 
-<span class="d_keyword">auto</span> a = [1.0, 2.0, 3.0];
-<span class="d_keyword">auto</span> b = [-1.0, 2.0, -3.0];
+<span class="d_comment">// 代入により値を書き換えることが可能です。
+</span>value1 = 100;
+<span class="d_keyword">assert</span>(!value1.isNull &amp;&amp; value1.get == 100);
 
-<span class="d_keyword">auto</span> s = dotProduct(a, b);
-<span class="d_keyword">assert</span>(s == -6.0);
+<span class="d_comment">// nullifyにより値をnullにすることが可能です。
+</span>value1.nullify();
+<span class="d_keyword">assert</span>(value1.isNull &amp;&amp; emptyValue == value1);
+
+<span class="d_comment">// 空のNullableへのgetは例外になります。
+</span>assertThrown!Throwable(emptyValue.get);
+
+<span class="d_comment">// getにデフォルト値を指定することが可能です。
+</span><span class="d_keyword">assert</span>(emptyValue.get(999) == 999);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- コサイン類似度を計算する例です。
+ ポインタを格納するためのNullableであるNullableRefの例です
 <div class="ddoc_blankline"></div>
 
-2つのレンジを受け取って、その類似度を0-1で返します。
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math : isClose;
-<span class="d_keyword">import</span> std.numeric : cosineSimilarity;
+ポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : NullableRef, nullableRef;
 
-<span class="d_keyword">auto</span> a = [3.0, 2.0, 1.0, 1.0];
-<span class="d_keyword">auto</span> b = [2.0, 2.0, 1.0, 0.0];
+<span class="d_comment">// デフォルトコンストラクタでは空の状態のNullableRefが生成されます。
+</span>NullableRef!<span class="d_keyword">int</span> emptyRef;
+<span class="d_keyword">assert</span>(emptyRef.isNull);
 
-<span class="d_keyword">auto</span> s = cosineSimilarity(a, b);
-<span class="d_keyword">assert</span>(s.isClose(0.9467292624062573));
+<span class="d_comment">// コンストラクタやnullableRef関数で値を参照するNullableRefを生成できます。
+</span><span class="d_keyword">int</span> value = 100;
+NullableRef!<span class="d_keyword">int</span> valueRef1 = NullableRef!<span class="d_keyword">int</span>(&amp;value);
+NullableRef!<span class="d_keyword">int</span> valueRef2 = nullableRef(&amp;value);
+
+<span class="d_comment">// getでは、ポインタの参照先の値そのものが取得されます。
+</span><span class="d_keyword">assert</span>(!valueRef1.isNull);
+<span class="d_keyword">assert</span>(valueRef1.get == 100);
+<span class="d_keyword">assert</span>(!valueRef2.isNull);
+<span class="d_keyword">assert</span>(valueRef2.get == 100);
+
+<span class="d_comment">// Nullableと同様にnullify等が使用可能です。
+</span>valueRef1.nullify();
+<span class="d_keyword">assert</span>(valueRef1.isNull);
+
+<span class="d_comment">// bindにより別の値を参照させることが可能です。
+</span><span class="d_keyword">int</span> value2 = 10000;
+valueRef1.bind(&amp;value2);
+<span class="d_keyword">assert</span>(valueRef1.get == value2);
 </pre>
 </div>
 

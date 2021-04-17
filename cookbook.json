@@ -1273,6 +1273,32 @@
   ]
  },
  {
+  "name" : "typecons_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/typecons_example.d",
+  "comment" : "型を作るユーティリティ\n\n様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L14_C1",
+    "kind" : "function",
+    "comment" : "nullになる可能性のある値を表現するNullableの例です\n\nNullableを利用することで、値が存在しない可能性のある型を表現できます。\nint等の組み込み型やstructについても、nullとなることを明確に示せます。\n",
+    "line" : 14,
+    "char" : 1,
+    "endline" : 63,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L63_C1",
+    "kind" : "function",
+    "comment" : "ポインタを格納するためのNullableであるNullableRefの例です\n\nポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。\n",
+    "line" : 63,
+    "char" : 1,
+    "endline" : 92,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "uda_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/uda_example.d",
