@@ -1293,7 +1293,16 @@
     "comment" : "ポインタを格納するためのNullableであるNullableRefの例です\n\nポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。\n",
     "line" : 63,
     "char" : 1,
-    "endline" : 92,
+    "endline" : 97,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L97_C1",
+    "kind" : "function",
+    "comment" : "constやimmutableの参照型の変数でも再代入可能とするRebindableの例です\n\nconstやimmutableの参照型の変数はそのままでは再代入できませんが、Rebindableでラップした変数は再代入可能になります。\n",
+    "line" : 97,
+    "char" : 1,
+    "endline" : 126,
     "endchar" : 1
    }
   ]
