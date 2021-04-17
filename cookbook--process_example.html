@@ -220,28 +220,30 @@
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  パイプでコマンドをつなげる例です。
-<pre class="d_code notranslate"><span class="d_keyword">version</span> (Posix)
+<pre class="d_code notranslate"><span class="d_comment">// pipeProcessを使うとパイプでコマンドをつなげることができます
+</span><span class="d_comment">//
+</span><span class="d_keyword">import</span> std.array : array;
+<span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.path : buildPath;
+
+<span class="d_comment">// テスト用のディレクトリを作成します
+</span>string dirName = <span class="d_string">"std_process_testdir"</span>;
+<span class="d_keyword">assert</span>(!std.file.exists(dirName));
+std.file.mkdir(dirName);
+<span class="d_keyword">scope</span> (exit)
 {
-    <span class="d_comment">// pipeProcessを使うとパイプでコマンドをつなげることができます
-</span>    <span class="d_comment">//
-</span>    <span class="d_keyword">import</span> std.array : array;
-    <span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
-    <span class="d_keyword">import</span> std.path : buildPath;
+    <span class="d_keyword">assert</span>(std.file.exists(dirName));
+    std.file.rmdirRecurse(dirName);
+}
 
-    <span class="d_comment">// テスト用のディレクトリを作成します
-</span>    string dirName = <span class="d_string">"std_process_testdir"</span>;
-    <span class="d_keyword">assert</span>(!std.file.exists(dirName));
-    std.file.mkdir(dirName);
-    <span class="d_keyword">scope</span> (exit)
-    {
-        <span class="d_keyword">assert</span>(std.file.exists(dirName));
-        std.file.rmdirRecurse(dirName);
-    }
+<span class="d_comment">// ファイルをディレクトリ内に作成します。
+</span>std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
 
-    <span class="d_comment">// ファイルをディレクトリ内に作成します。
-</span>    std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
-    std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
-
+<span class="d_comment">// コマンド体系がWindowsとPosixで違うため、分岐して説明しますが、
+</span><span class="d_comment">// やっていることは同じで、`dirName`内のファイル名一覧を逆順に並び替えます
+</span><span class="d_keyword">version</span> (Posix)
+{
     <span class="d_comment">// `ls -1 | sort -r` 相当の処理を行います
 </span>    <span class="d_comment">//
 </span>    <span class="d_keyword">auto</span> ls = pipeProcess([<span class="d_string">"ls"</span>, <span class="d_string">"-1"</span>, dirName]);
@@ -249,19 +251,70 @@
 </span>    <span class="d_keyword">scope</span> (exit)  wait(ls.pid);
     <span class="d_keyword">auto</span> sort = pipeProcess([<span class="d_string">"sort"</span>, <span class="d_string">"-r"</span>]);
     <span class="d_keyword">scope</span> (exit) wait(sort.pid);
+}
+<span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_comment">// `dir /B | sort /R` 相当の処理を行います
+</span>    <span class="d_comment">// dirはコマンドプロンプトのコマンドで、sortは実行ファイルによって
+</span>    <span class="d_comment">// 提供されているので、正確には `cmd.exe /C dir /B | sort.exe /R` です
+</span>    <span class="d_comment">//
+</span>    <span class="d_keyword">auto</span> ls = pipeProcess([<span class="d_string">"cmd.exe"</span>, <span class="d_string">"/C"</span>, <span class="d_string">"dir"</span>, <span class="d_string">"/B"</span>, dirName]);
+    <span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span>    <span class="d_keyword">scope</span> (exit)  wait(ls.pid);
+    <span class="d_keyword">auto</span> sort = pipeProcess([<span class="d_string">"sort.exe"</span>, <span class="d_string">"/r"</span>]);
+    <span class="d_keyword">scope</span> (exit) wait(sort.pid);
+}
 
-    <span class="d_comment">// lsコマンドの標準出力をsortコマンドの標準入力に渡しています
-</span>    <span class="d_keyword">foreach</span> (line; ls.stdout.byLine)
-        sort.stdin.writeln(line);
-    ls.stdout.close();
-    <span class="d_comment">// stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
-</span>    <span class="d_comment">// いるか自明ではないので明示的にflushする必要があります
-</span>    sort.stdin.flush();
-    sort.stdin.close();
+<span class="d_comment">// lsコマンドの標準出力をsortコマンドの標準入力に渡しています
+</span><span class="d_comment">// 移植性のため std.ascii.newline を使うと、OS間の違いを吸収できます。
+</span><span class="d_keyword">import</span> std.stdio: KeepTerminator;
+<span class="d_keyword">import</span> std.ascii: newline;
+<span class="d_keyword">foreach</span> (line; ls.stdout.byLine(KeepTerminator.no, newline))
+    sort.stdin.writeln(line);
+ls.stdout.close();
+<span class="d_comment">// stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
+</span><span class="d_comment">// いるか自明ではないので明示的にflushする必要があります
+</span>sort.stdin.flush();
+sort.stdin.close();
 
-    <span class="d_keyword">auto</span> arr = sort.stdout.byLineCopy.array;
-    <span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"b.txt"</span>);
-    <span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"a.txt"</span>);
+<span class="d_keyword">auto</span> arr = sort.stdout.byLineCopy(KeepTerminator.no, newline).array;
+<span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"b.txt"</span>);
+<span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"a.txt"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。
+<div class="ddoc_blankline"></div>
+
+Windows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。
+これを抑止するため、実行時に <span class="d_inlinecode donthyphenate notranslate">Config.suppressConsole</span> を指定することで、コンソール画面の表示を行わないようにすることができます。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_process.html#.Config.suppressConsole">https://dlang.org/phobos/std_process.html#.Config.suppressConsole</a>
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_comment">// ディレクトリを作ってファイルを置く
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+    <span class="d_keyword">import</span> std.path : buildPath;
+    string dirName = <span class="d_string">"std_process_testdirforWin"</span>;
+    <span class="d_keyword">assert</span>(!std.file.exists(dirName));
+    std.file.mkdir(dirName);
+    <span class="d_keyword">scope</span> (exit)
+    {
+        <span class="d_keyword">assert</span>(std.file.exists(dirName));
+        std.file.rmdirRecurse(dirName);
+    }
+    std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+    std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
+
+    <span class="d_comment">// コンソールアプリケーションで標準出力の結果を得たい、かつ、
+</span>    <span class="d_comment">// GUIアプリ用途のためコンソールを表示したくない場合、`Config.suppressConsole`を使用します。
+</span>    <span class="d_keyword">auto</span> ls = execute([<span class="d_string">"cmd.exe"</span>, <span class="d_string">"/C"</span>, <span class="d_string">"dir"</span>, <span class="d_string">"/B"</span>, <span class="d_string">"/O:N"</span>, dirName],
+        <span class="d_keyword">null</span>, Config.suppressConsole);
+    <span class="d_keyword">import</span> std.string: splitLines;
+    <span class="d_keyword">auto</span> arr = ls.output.splitLines;
+    <span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"a.txt"</span>);
+    <span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"b.txt"</span>);
 }
 </pre>
 </div>

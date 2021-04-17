@@ -920,40 +920,49 @@
     "comment" : "パイプでコマンドをつなげる例です。\n",
     "line" : 38,
     "char" : 1,
-    "endline" : 88,
+    "endline" : 110,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L88_C9",
+    "name" : "__unittest_L110_C1",
+    "kind" : "function",
+    "comment" : "WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。\n\nWindows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。\nこれを抑止するため、実行時に `Config.suppressConsole` を指定することで、コンソール画面の表示を行わないようにすることができます。\n\nSee_Also: https://dlang.org/phobos/std_process.html#.Config.suppressConsole\n",
+    "line" : 110,
+    "char" : 1,
+    "endline" : 143,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L143_C9",
     "kind" : "function",
     "comment" : "たくさんパイプしながら、データを小分けにして渡していく場合\n",
-    "line" : 88,
+    "line" : 143,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 182,
+    "endline" : 237,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L182_C1",
+    "name" : "__unittest_L237_C1",
     "kind" : "function",
     "comment" : "標準出力をファイルにリダイレクトする例です\n",
-    "line" : 182,
+    "line" : 237,
     "char" : 1,
-    "endline" : 208,
+    "endline" : 263,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L208_C7",
+    "name" : "__unittest_L263_C7",
     "kind" : "function",
     "comment" : "環境変数を扱う例です。\n",
-    "line" : 208,
+    "line" : 263,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 236,
+    "endline" : 291,
     "endchar" : 1
    }
   ]
