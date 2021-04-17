@@ -546,8 +546,8 @@ L_ERR:
     <span class="d_keyword">import</span> std.conv;
     <span class="d_keyword">return</span> str.to!<span class="d_keyword">real</span>().ifThrown(<span class="d_keyword">real</span>.nan);
 }
-<span class="d_keyword">import</span> std.math;
-<span class="d_keyword">assert</span>(str2real(<span class="d_string">"100"</span>).approxEqual(100));
+<span class="d_keyword">import</span> std.math: isClose, isNaN;
+<span class="d_keyword">assert</span>(str2real(<span class="d_string">"100"</span>).isClose(100));
 <span class="d_keyword">assert</span>(str2real(<span class="d_string">"1000"</span>).isNaN);
 <span class="d_keyword">assert</span>(str2real(<span class="d_string">"aiueo"</span>).isNaN);
 
