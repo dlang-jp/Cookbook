@@ -100,3 +100,30 @@ D言語のコード片が実際にコンパイルできる場合にはtrueに、
         auto s3 = s1 + s2; // →できないのでfalse
     }));
 }
+
+/+
+一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。
++/
+unittest
+{
+    template MyTemplate(T, U)
+    {
+        alias Key = T;
+        alias Value = U;
+    }
+
+    alias MyT = MyTemplate!(int, string);
+
+    // 特殊化に使ったパラメーターを得るには TemplateArgsOf を利用します
+    import std.traits : TemplateArgsOf;
+
+    alias Args = TemplateArgsOf!MyT;
+    static assert(is(Args[0] == int));
+    static assert(is(Args[1] == string));
+
+    // 特殊化前のテンプレートそのものを取り出すには TemplateOf を利用します
+    import std.traits : TemplateOf;
+
+    alias Temp = TemplateOf!MyT;
+    static assert(__traits(isSame, Temp, MyTemplate));
+}
