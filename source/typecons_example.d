@@ -89,3 +89,37 @@ unittest
     assert(valueRef1.get == value2);
 }
 
+/++
+constやimmutableの参照型の変数でも再代入可能とするRebindableの例です
+
+constやimmutableの参照型の変数はそのままでは再代入できませんが、Rebindableでラップした変数は再代入可能になります。
++/
+unittest
+{
+    import std.typecons : Rebindable, rebindable;
+
+    // 不変のオブジェクト生成
+    immutable class Example
+    {
+        this(int v) { this.value = v; }
+        int value;
+    }
+
+    immutable Example value1 = new immutable Example(100);
+    immutable Example value2 = new immutable Example(200);
+
+    // 上記の変数はそのままでは再代入不能です。
+    // value2 = value1; // compile error
+
+    // Rebindableでラップすることで、通常の変数と同じように再代入可能になります。
+    // Rebindableはrebindable関数で生成可能です。
+    Rebindable!(immutable Example) rebindableValue1 = rebindable(value1);
+    Rebindable!(immutable Example) rebindableValue2 = rebindable(value2);
+    assert(rebindableValue1.value == value1.value);
+    assert(rebindableValue2.value == value2.value);
+
+    // 再代入実行
+    rebindableValue2 = rebindableValue1;
+    assert(rebindableValue2.value == value1.value);
+}
+
