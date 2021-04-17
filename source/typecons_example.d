@@ -1,12 +1,12 @@
 /++
 型を作るユーティリティ
 
-様々な型テンプレートを提供する`std.typecons`パッケージについて解説します。
+様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。
 +/
 module typecons_example;
 
 /++
-Nullableの例です
+nullになる可能性のある値を表現するNullableの例です
 
 Nullableを利用することで、値が存在しない可能性のある型を表現できます。
 int等の組み込み型やstructについても、nullとなることを明確に示せます。
@@ -56,9 +56,8 @@ unittest
 }
 
 /++
-NullableRefの例です
+ポインタを格納するためのNullableであるNullableRefの例です
 
-NullableRefは、ポインタを格納する場合に利用できるNullableです。
 ポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。
 +/
 unittest
