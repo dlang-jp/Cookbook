@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>Documentation for cookbook</title>
+        <title>vibed_usage.web</title>
         
         
     </head>
@@ -229,217 +229,79 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <div class="ddoc_blankline"></div>
-
+                <h1><div class="ddoc_summary">Webインターフェースの利用</div></h1><div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Webインターフェースを利用する
 <div class="ddoc_blankline"></div>
 
-<h1>Documentation for cookbook</h1>
-
-<span class="module_index_dubpkgname">cookbook</span><ul>
-	
-
-	<li><a href="cookbook--array_example.html"><span class="module_index">配列</span></a></li>
-
-
-
-	<li><a href="cookbook--assoc_array_example.html"><span class="module_index">連想配列</span></a></li>
-
-
-
-	<li><a href="cookbook--concurrency_example.html"><span class="module_index">並行処理</span></a></li>
-
-
-	
-		<span class="module_index"><a href="
-			cookbook--data.html"><li>データ形式
-		<ul>
-			
-
-	<li><a href="cookbook--data.csv_example.html"><span class="module_index">CSV操作</span></a></li>
-
-
-
-	<li><a href="cookbook--data.json_example.html"><span class="module_index">JSON操作</span></a></li>
-
-</ul></li></a></span>
-	
-	
-
-
-
-
-
-	<li><a href="cookbook--datetime_example.html"><span class="module_index">時刻・日付</span></a></li>
-
-
-
-	<li><a href="cookbook--exception_example.html"><span class="module_index">例外</span></a></li>
-
-
-
-	<li><a href="cookbook--file_example.html"><span class="module_index">ファイルシステム</span></a></li>
-
-
-
-	<li><a href="cookbook--getopt_example.html"><span class="module_index">コマンドライン解析</span></a></li>
-
-
-
-	<li><a href="cookbook--is_example.html"><span class="module_index">is式</span></a></li>
-
-
-
-	<li><a href="cookbook--meta_example.html"><span class="module_index">メタプログラミング</span></a></li>
-
-
-
-	<li><a href="cookbook--network_example.html"><span class="module_index">ネットワーク(cURL)</span></a></li>
-
-
-
-	<li><a href="cookbook--numeric_example.html"><span class="module_index">数値計算</span></a></li>
-
-
-
-	<li><a href="cookbook--parallelism_example.html"><span class="module_index">並列処理</span></a></li>
-
-
-
-	<li><a href="cookbook--process_example.html"><span class="module_index">プロセス</span></a></li>
-
-
-
-	<li><a href="cookbook--random_example.html"><span class="module_index">乱数</span></a></li>
-
-
-
-	<li><a href="cookbook--range_example.html"><span class="module_index">レンジ</span></a></li>
-
-
-
-	<li><a href="cookbook--regex_example.html"><span class="module_index">正規表現</span></a></li>
-
-
-
-	<li><a href="cookbook--string_example.html"><span class="module_index">文字列</span></a></li>
-
-
-
-	<li><a href="cookbook--typecons_example.html"><span class="module_index">型を作るユーティリティ</span></a></li>
-
-
-
-	<li><a href="cookbook--uda_example.html"><span class="module_index">UDA(User Defined Attribute)</span></a></li>
-
-
-
-	<li><a href="cookbook--unittests_example.html"><span class="module_index">単体テスト</span></a></li>
-
-
+Webインターフェースを利用すると、D言語のメタプログラミングを使って、クラスのメソッド名からURLへのルーティングやPOSTパラメーターの自動生成などができます。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://vibed.org/docs#web-interface-generator">https://vibed.org/docs#web-interface-generator</a></li>
+<li><a href="https://vibed.org/api/vibe.web.web/">https://vibed.org/api/vibe.web.web/</a></li>
+<li><a href="https://vibed.org/api/vibe.web.common/">https://vibed.org/api/vibe.web.common/</a> (利用できるUDAが記載されている)</li>
+<li><a href="https://vibed.org/api/vibe.web.web/registerWebInterface">https://vibed.org/api/vibe.web.web/registerWebInterface</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.string: outdent, strip;
+<span class="d_keyword">import</span> std.conv;
+<span class="d_keyword">import</span> vibe.vibe;
+<span class="d_keyword">import</span> vibe.stream.tls;
+
+<span class="d_keyword">class</span> Web
+{
+    <span class="d_comment">// "/" にGETでアクセスしたときのふるまい
+</span>    <span class="d_keyword">void</span> index(HTTPServerRequest req, HTTPServerResponse res)
+    {
+        res.writeBody(<span class="d_string">`
+            &lt;html&gt;&lt;body&gt;Hello, World&lt;/body&gt;&lt;/html&gt;
+        `</span>.strip.outdent, <span class="d_string">"text/html"</span>);
+    }
+    <span class="d_comment">// "/test" にGETでアクセスしたときのふるまい
+</span>    <span class="d_keyword">void</span> getTest(HTTPServerRequest req, HTTPServerResponse res)
+    {
+        res.writeBody(<span class="d_string">`
+            Test
+        `</span>.strip.outdent, <span class="d_string">"text/plain"</span>);
+    }
+}
+
+<span class="d_keyword">auto</span> port = getUnusedPort();
+<span class="d_keyword">auto</span> router = <span class="d_keyword">new</span> URLRouter;
+<span class="d_comment">// Webインターフェースを元に、URLRouterに自動的に登録してくれる
+</span><span class="d_comment">// 今回の場合は、"/"と"/test"の登録が自動的に行われる
+</span>router.registerWebInterface(<span class="d_keyword">new</span> Web);
+
+<span class="d_comment">// サーバー起動
+</span><span class="d_keyword">immutable</span> serverAddr = listenHTTP(<span class="d_string">"localhost:"</span>.text(port), router).bindAddresses[0];
+
+Throwable thrown;
+runTask({
+    <span class="d_keyword">scope</span> (exit)
+        exitEventLoop();
+    <span class="d_keyword">try</span>
+    {
+        <span class="d_comment">// クライアント側の記述
+</span>        <span class="d_comment">// "/"をGETする
+</span>        <span class="d_keyword">auto</span> res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr), (<span class="d_keyword">scope</span> req) {});
+        <span class="d_keyword">assert</span>(res.statusCode == 200, res.toString);
+        <span class="d_keyword">assert</span>(res.contentType == <span class="d_string">"text/html"</span>);
+        <span class="d_keyword">assert</span>(res.bodyReader.readAllUTF8() == <span class="d_string">"&lt;html&gt;&lt;body&gt;Hello, World&lt;/body&gt;&lt;/html&gt;"</span>);
+
+        <span class="d_comment">// "/test"をGETする
+</span>        res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr) ~ <span class="d_string">"/test"</span>, (<span class="d_keyword">scope</span> req) { req.method = HTTPMethod.GET; });
+        <span class="d_keyword">assert</span>(res.statusCode == 200, res.toString);
+        <span class="d_keyword">assert</span>(res.contentType == <span class="d_string">"text/plain"</span>);
+        <span class="d_keyword">assert</span>(res.bodyReader.readAllUTF8() == <span class="d_string">"Test"</span>);
+    }
+    <span class="d_keyword">catch</span> (Throwable e)
+        thrown = e;
+});
+
+<span class="d_keyword">auto</span> exitCode = runEventLoop();
+<span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
+<span class="d_keyword">assert</span>(!thrown, thrown.toString());
+</pre></li>
 </ul>
-
-<span class="module_index_dubpkgname">cookbook:subpkg</span><ul>
-	
-	
-	
-		
-			
-
-	<li><a href="cookbook-subpkg--subpkg.test.html"><span class="module_index">サブパッケージの作り方</span></a></li>
-
-
-		
-	
-
-
-
-
-</ul>
-
-<span class="module_index_dubpkgname">cookbook:windows</span><ul>
-	
-	
-	
-		
-			
-
-	<li><a href="cookbook-windows--windows.basic.html"><span class="module_index">Win32API</span></a></li>
-
-
-		
-	
-
-
-
-
-</ul>
-
-<span class="module_index_dubpkgname">cookbook:libdparse_usage</span><ul>
-	
-	
-	
-		
-			
-
-	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span class="module_index">libdparse</span></a></li>
-
-
-		
-	
-
-
-
-
-</ul>
-
-<span class="module_index_dubpkgname">cookbook:asdf_usage</span><ul>
-	
-	
-	
-		
-			
-
-	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span class="module_index">Asdfの使用例</span></a></li>
-
-
-		
-	
-
-
-
-
-</ul>
-
-<span class="module_index_dubpkgname">cookbook:vibe-d_usage</span><ul>
-	
-	
-	
-		
-			
-
-	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span class="module_index">HTTPサーバー</span></a></li>
-
-
-
-	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span class="module_index">HTTPSサーバー</span></a></li>
-
-
-
-	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span class="module_index">RESTインターフェースの利用</span></a></li>
-
-
-
-	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span class="module_index">Webインターフェースの利用</span></a></li>
-
-
-		
-	
-
-
-
-
-</ul>
-
+</div>
 
                 
             </div>
