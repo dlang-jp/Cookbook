@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>getopt_example</title>
+        <title>container_example</title>
         
         
     </head>
@@ -241,63 +241,98 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">コマンドライン解析
-</div></h1><div class="ddoc_description"><span class="d_inlinecode donthyphenate notranslate">std.getopt</span> の使い方についてまとめます。
+                <h1><div class="ddoc_summary">コンテナ
+</div></h1><div class="ddoc_description">スタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ スタックを構成する例です。
 <div class="ddoc_blankline"></div>
 
-実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 基本的な引数解析の例です
-<pre class="d_code notranslate"><span class="d_comment">// 以下のようにプログラムを実行した場合の例です
-</span><span class="d_comment">// app --format=json
-</span>string[] args = [<span class="d_string">"app.exe"</span>, <span class="d_string">"--format=json"</span>];
+汎用データ構造である <span class="d_inlinecode donthyphenate notranslate">std.container</span> の <span class="d_inlinecode donthyphenate notranslate">SList</span> （単方向リンクリスト）を利用して実現します。
+<div class="ddoc_blankline"></div>
 
-<span class="d_keyword">import</span> std.getopt;
+See_Also: <a href="https://dlang.org/phobos/std_container_slist.html">https://dlang.org/phobos/std_container_slist.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.container : SList;
 
-<span class="d_comment">//
-</span>string format;
+SList!<span class="d_keyword">int</span> stack;
 
-<span class="d_comment">// 引数の名前、引数を受け付ける変数、説明、で1セットの指定になります
-</span><span class="d_comment">// 説明は省略可能です
-</span><span class="d_keyword">auto</span> result = getopt(args, <span class="d_string">"format"</span>, <span class="d_string">"format引数の説明になります"</span>, &amp;format);
+<span class="d_comment">// insertで要素を追加します
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、SListではすべて同じ意味になります
+</span>stack.insert(1);
+stack.insertFront(2);
+stack.stableInsert(3);
+stack.stableInsertFront(4);
 
-<span class="d_comment">// --helpなどの引数が指定されたかどうかで分岐することができます
-</span><span class="d_keyword">if</span> (result.helpWanted)
-{
-    <span class="d_comment">// 自動的に引数の説明などを表示します
-</span>    std.getopt.defaultGetoptPrinter(<span class="d_string">"プログラム説明"</span>, result.options);
-    <span class="d_keyword">return</span>;
-}
+<span class="d_comment">// スライス演算で全体をレンジとして取得、中身を確認します
+</span><span class="d_comment">// 結果はレンジになるため、equalで比較します
+</span><span class="d_keyword">import</span> std.algorithm : equal;
 
-<span class="d_keyword">assert</span>(format == <span class="d_string">"json"</span>);
+<span class="d_keyword">assert</span>(equal(stack[], [4, 3, 2, 1]));
+
+<span class="d_comment">// 先頭要素を取り除かずに確認します
+</span><span class="d_keyword">assert</span>(stack.front == 4);
+
+<span class="d_comment">// removeAnyで要素を取り除きます。先頭要素を取り除く操作になります。
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、SListではすべて同じ意味になります
+</span><span class="d_keyword">auto</span> elem_4 = stack.removeAny();
+<span class="d_keyword">auto</span> elem_3 = stack.stableRemoveAny();
+<span class="d_keyword">assert</span>(elem_4 == 4);
+<span class="d_keyword">assert</span>(elem_3 == 3);
+
+<span class="d_comment">// 要素をクリアします
+</span>stack.clear();
+<span class="d_keyword">assert</span>(stack.empty);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。
-<pre class="d_code notranslate">string[] args = [<span class="d_string">"app.exe"</span>, <span class="d_string">"--format=json"</span>];
+ Queueを構成する例です
+<div class="ddoc_blankline"></div>
 
-<span class="d_keyword">import</span> std.getopt;
+汎用データ構造である <span class="d_inlinecode donthyphenate notranslate">std.container</span> の <span class="d_inlinecode donthyphenate notranslate">DList</span> (双方向リンクリスト)を利用します。
+<div class="ddoc_blankline"></div>
 
-string format;
+See_Also: <a href="https://dlang.org/phobos/std_container_dlist.html">https://dlang.org/phobos/std_container_dlist.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.container : DList;
 
-<span class="d_comment">// 以下の記述によってdfmtの有効無効を切り替えることができます
-</span><span class="d_comment">// dfmt off
-</span><span class="d_keyword">auto</span> result = getopt(
-    args,
-    <span class="d_comment">// getoptは歴史的経緯によってデフォルトの挙動がcaseInsensitiveですが
-</span>    <span class="d_comment">// 多くの場合ではcaseSensitiveなほうが好ましいでしょう
-</span>    std.getopt.config.caseSensitive,
-    <span class="d_string">"format"</span>, <span class="d_string">"format引数の説明になります"</span>, &amp;format,
-);
-<span class="d_comment">// dfmt on
-</span>
-<span class="d_keyword">if</span> (result.helpWanted)
-{
-    std.getopt.defaultGetoptPrinter(<span class="d_string">"プログラム説明"</span>, result.options);
-    <span class="d_keyword">return</span>;
-}
+DList!<span class="d_keyword">int</span> queue;
 
-<span class="d_keyword">assert</span>(format == <span class="d_string">"json"</span>);
+<span class="d_comment">// insertで要素を追加します
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、DListではすべて同じ意味になります
+</span>queue.insertFront(1);
+queue.stableInsertFront(2);
+
+<span class="d_comment">// removeAnyで要素を取得します。後ろの要素を取り出す操作になります
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、DListではすべて同じ意味になります
+</span><span class="d_keyword">int</span> elem_1 = queue.removeAny();
+<span class="d_keyword">int</span> elem_2 = queue.stableRemoveAny();
+<span class="d_keyword">assert</span>(elem_1 == 1);
+<span class="d_keyword">assert</span>(elem_2 == 2);
+
+<span class="d_comment">// スライス演算で全体をレンジとして取得、中身を確認します
+</span>queue.insertFront(10);
+queue.insertFront(20);
+queue.insertFront(30);
+queue.insertFront(40);
+
+<span class="d_comment">// 結果はレンジになるため、equalで比較します
+</span><span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_keyword">assert</span>(equal(queue[], [40, 30, 20, 10]));
+
+<span class="d_comment">// 先頭要素を取り除かずに確認します
+</span><span class="d_keyword">assert</span>(queue.back == 10);
+<span class="d_comment">// 最後に追加した要素を確認します
+</span><span class="d_keyword">assert</span>(queue.front == 40);
+
+<span class="d_comment">// removeAnyで要素を取り除きます。末尾要素を取り除く操作になります。
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、DListではすべて同じ意味になります
+</span><span class="d_keyword">auto</span> elem_10 = queue.removeAny();
+<span class="d_keyword">auto</span> elem_20 = queue.stableRemoveAny();
+<span class="d_keyword">assert</span>(elem_10 == 10);
+<span class="d_keyword">assert</span>(elem_20 == 20);
+
+<span class="d_comment">// 要素をクリアします
+</span>queue.clear();
+<span class="d_keyword">assert</span>(queue.empty);
 </pre>
 </div>
 

@@ -124,6 +124,52 @@
   ]
  },
  {
+  "name" : "container_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/container_example.d",
+  "comment" : "コンテナ\n\nスタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "スタックを構成する例です。\n\n汎用データ構造である `std.container` の `SList` （単方向リンクリスト）を利用して実現します。\n\nSee_Also: https://dlang.org/phobos/std_container_slist.html\n",
+    "line" : 15,
+    "char" : 1,
+    "endline" : 54,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L54_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "line" : 54,
+    "char" : 1,
+    "endline" : 78,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L78_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Queueを構成する例です\n\n汎用データ構造である `std.container` の `DList` (双方向リンクリスト)を利用します。\n\nSee_Also: https://dlang.org/phobos/std_container_dlist.html\n",
+    "line" : 78,
+    "char" : 1,
+    "endline" : 129,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L129_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "line" : 129,
+    "char" : 1,
+    "endline" : 145,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "data",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/package.d",
