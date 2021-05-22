@@ -674,14 +674,113 @@ string createBuf(string x) @trusted
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>try-catch-finary</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+ <h1>try-catch-finally</h1>
+Java等と同じように、finallyブロックが利用できます。
+しかし、D言語ではメジャーな機能ではありません。これと同等のことを行いたい場合は<span class="d_inlinecode donthyphenate notranslate">scope (exit)</span>を使用することが多いです。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.stdc.stdlib: malloc, free;
+<span class="d_keyword">import</span> std.algorithm, std.range;
+<span class="d_comment">// try-catchの例と違ってGCで管理しない＝解放が必要なメモリを確保します
+</span><span class="d_comment">// 割り当てが発生したら、解放が必要です。
+</span><span class="d_keyword">void</span>* buf;
+string createBuf(string x) @trusted
+{
+    <span class="d_keyword">import</span> core.exception;
+    <span class="d_keyword">import</span> std.conv, std.exception;
+    <span class="d_keyword">try</span>
+    {
+        <span class="d_keyword">auto</span> y = to!<span class="d_keyword">ulong</span>(x);
+        <span class="d_keyword">if</span> (y == 0)
+            <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Invalid number"</span>);
+        enforce!InvalidMemoryOperationError(y &lt;= 0xffffffffUL, <span class="d_string">"Cannot allocate memory"</span>);
+        buf = malloc(<span class="d_keyword">cast</span>(size_t)y);
+        <span class="d_keyword">return</span> <span class="d_string">"Converted!"</span>;
+    }
+    <span class="d_keyword">catch</span> (ConvException e)
+        <span class="d_keyword">return</span> <span class="d_string">"Cannot convert"</span>;
+    <span class="d_keyword">catch</span> (Exception e)
+        <span class="d_keyword">return</span> <span class="d_string">"Unknown Exception["</span> ~ e.msg ~ <span class="d_string">"]"</span>;
+    <span class="d_keyword">catch</span> (Throwable e)
+        <span class="d_keyword">return</span> <span class="d_string">"Fatal Error"</span>;
+    <span class="d_keyword">finally</span>
+    {
+        free(buf);
+        buf = <span class="d_keyword">null</span>;
+    }
+}
+<span class="d_comment">// どんな呼び出しでも、確実に解放されている
+</span><span class="d_keyword">assert</span>(createBuf(<span class="d_string">"1"</span>) == <span class="d_string">"Converted!"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0.1"</span>) == <span class="d_string">"Cannot convert"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0"</span>) == <span class="d_string">"Unknown Exception[Invalid number]"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"274877906943"</span>) == <span class="d_string">"Fatal Error"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>scope (success) / scope (failure) / scope (exit)</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+ <h1>スコープガード文： <span class="d_inlinecode donthyphenate notranslate">scope (success)</span> / <span class="d_inlinecode donthyphenate notranslate">scope (failure)</span> / <span class="d_inlinecode donthyphenate notranslate">scope (exit)</span></h1>
+スコープガード文です。try-catch-finallyの代わりに利用できます。
+それぞれ以下の文が利用できます。
+<ul><li><span class="d_inlinecode donthyphenate notranslate">scope (success)</span>は成功した(例外が発生しなかった)ときだけ実行されるブロックです</li>
+<li><span class="d_inlinecode donthyphenate notranslate">scope (failure)</span>は失敗した(例外が発生した)ときだけ実行されるブロックです</li>
+<li><span class="d_inlinecode donthyphenate notranslate">scope (exit)</span>は成否にかかわらず(例外が発生有無にかかわらず)必ず_実行されるブロックです
+</li>
+</ul>
+特に <span class="d_inlinecode donthyphenate notranslate">scope (exit)</span> は、リソースの確保と解放のコードを近くに記載することができるのが便利です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.stdc.stdlib: malloc, free, realloc;
+<span class="d_keyword">import</span> std.algorithm, std.range;
+<span class="d_comment">// try-catchの例と違ってGCで管理しない＝解放が必要なメモリを確保します
+</span><span class="d_comment">// 割り当てが発生したら、解放が必要です。
+</span><span class="d_keyword">void</span>* buf;
+string createBuf(string x) @trusted
+{
+    string msg;
+    <span class="d_keyword">import</span> core.exception;
+    <span class="d_keyword">import</span> std.conv, std.exception;
+    <span class="d_keyword">try</span>
+    {
+        <span class="d_comment">// scope文は、後に記述されたものから逆順で実行されます
+</span>        <span class="d_comment">// わかりやすいように実行順に番号を振ります
+</span>        <span class="d_keyword">scope</span> (exit)
+            buf = <span class="d_keyword">null</span>;
+        <span class="d_comment">// 割り当ての直後にscope (exit)を記載することで、
+</span>        <span class="d_comment">// 解放を忘れることなく安全に終了することができます
+</span>        buf = malloc(100).enforce!InvalidMemoryOperationError(<span class="d_string">"Cannot allocate memory"</span>);
+        <span class="d_keyword">scope</span> (exit)
+            free(buf);
+        <span class="d_comment">// 例外なく終了した場合
+</span>        <span class="d_keyword">scope</span> (success)
+            msg = <span class="d_string">"Converted!"</span>;
+        <span class="d_comment">// 途中で例外が発生した場合
+</span>        <span class="d_keyword">scope</span> (failure)
+            msg = <span class="d_string">"Failed..."</span>;
+        <span class="d_keyword">auto</span> y = to!<span class="d_keyword">ulong</span>(x);
+        <span class="d_keyword">if</span> (y == 0)
+            <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Invalid number"</span>);
+        enforce!InvalidMemoryOperationError(y &lt;= 0xffffffffUL, <span class="d_string">"Cannot allocate memory"</span>);
+        buf = realloc(buf, <span class="d_keyword">cast</span>(size_t)y).enforce!InvalidMemoryOperationError(<span class="d_string">"Cannot allocate memory"</span>);
+    }
+    <span class="d_keyword">catch</span> (ConvException e)
+        msg ~= <span class="d_string">" Cannot convert"</span>;
+    <span class="d_keyword">catch</span> (Exception e)
+        msg ~= <span class="d_string">" Unknown Exception["</span> ~ e.msg ~ <span class="d_string">"]"</span>;
+    <span class="d_keyword">catch</span> (Throwable e)
+        msg ~= <span class="d_string">" Fatal Error"</span>;
+    <span class="d_keyword">return</span> msg;
+}
+<span class="d_comment">// スコープガード文によってどんな呼び出しでも、確実に解放されています。
+</span><span class="d_comment">// また、例外が発生しない場合は`"Converted!"`が、
+</span><span class="d_comment">// そうでない場合は`msg`の先頭に`"Failed..."`がつきます
+</span><span class="d_keyword">assert</span>(createBuf(<span class="d_string">"1"</span>) == <span class="d_string">"Converted!"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0.1"</span>) == <span class="d_string">"Failed... Cannot convert"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"0"</span>) == <span class="d_string">"Failed... Unknown Exception[Invalid number]"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(createBuf(<span class="d_string">"274877906943"</span>) == <span class="d_string">"Failed... Fatal Error"</span>);
+<span class="d_keyword">assert</span>(buf <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>例外とエラー</h1>

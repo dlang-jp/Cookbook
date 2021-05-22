@@ -594,137 +594,137 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 450,
+    "endline" : 452,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L450_C7",
+    "name" : "__unittest_L452_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# try-catch-finary\n",
-    "line" : 450,
+    "comment" : "# try-catch-finally\nJava等と同じように、finallyブロックが利用できます。\nしかし、D言語ではメジャーな機能ではありません。これと同等のことを行いたい場合は`scope (exit)`を使用することが多いです。\n",
+    "line" : 452,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 458,
+    "endline" : 505,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L458_C7",
+    "name" : "__unittest_L505_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# scope (success) / scope (failure) / scope (exit)\n",
-    "line" : 458,
+    "comment" : "# スコープガード文： `scope (success)` / `scope (failure)` / `scope (exit)`\nスコープガード文です。try-catch-finallyの代わりに利用できます。\nそれぞれ以下の文が利用できます。\n- `scope (success)`は成功した(例外が発生しなかった)ときだけ実行されるブロックです\n- `scope (failure)`は失敗した(例外が発生した)ときだけ実行されるブロックです\n- `scope (exit)`は成否にかかわらず(例外が発生有無にかかわらず)_必ず_実行されるブロックです\n\n特に `scope (exit)` は、リソースの確保と解放のコードを近くに記載することができるのが便利です。\n",
+    "line" : 505,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 466,
+    "endline" : 564,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L466_C7",
+    "name" : "__unittest_L564_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外とエラー\n",
-    "line" : 466,
+    "line" : 564,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 474,
+    "endline" : 572,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L474_C7",
+    "name" : "__unittest_L572_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# nothrow\n",
-    "line" : 474,
+    "line" : 572,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 482,
+    "endline" : 580,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L482_C7",
+    "name" : "__unittest_L580_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外の自作\n",
-    "line" : 482,
+    "line" : 580,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 490,
+    "endline" : 588,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L490_C7",
+    "name" : "__unittest_L588_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.enforce\n",
-    "line" : 490,
+    "line" : 588,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 498,
+    "endline" : 596,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L498_C7",
+    "name" : "__unittest_L596_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.collectException\n",
-    "line" : 498,
+    "line" : 596,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 506,
+    "endline" : 604,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L506_C7",
+    "name" : "__unittest_L604_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.ifThrown\n",
-    "line" : 506,
+    "line" : 604,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 514,
+    "endline" : 612,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L514_C7",
+    "name" : "__unittest_L612_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.assertThrown / std.exception.assertNotThrown\n",
-    "line" : 514,
+    "line" : 612,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 522,
+    "endline" : 620,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L522_C7",
+    "name" : "__unittest_L620_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.handle\n",
-    "line" : 522,
+    "line" : 620,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 527,
+    "endline" : 625,
     "endchar" : 1
    }
   ]
