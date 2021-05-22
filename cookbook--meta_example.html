@@ -352,6 +352,52 @@ D言語のコード片が実際にコンパイルできる場合にはtrueに、
 </span>}));
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> MyTemplate(T, U)
+{
+    <span class="d_keyword">alias</span> Key = T;
+    <span class="d_keyword">alias</span> Value = U;
+}
+
+<span class="d_keyword">alias</span> MyT = MyTemplate!(<span class="d_keyword">int</span>, string);
+
+<span class="d_comment">// 特殊化に使ったパラメーターを得るには TemplateArgsOf を利用します
+</span><span class="d_keyword">import</span> std.traits : TemplateArgsOf;
+
+<span class="d_keyword">alias</span> Args = TemplateArgsOf!MyT;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[0] == <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[1] == string));
+
+<span class="d_comment">// 特殊化前のテンプレートそのものを取り出すには TemplateOf を利用します
+</span><span class="d_keyword">import</span> std.traits : TemplateOf;
+
+<span class="d_keyword">alias</span> Temp = TemplateOf!MyT;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(isSame, Temp, MyTemplate));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> MyTemplate(T, U)
+{
+    <span class="d_keyword">alias</span> Key = T;
+    <span class="d_keyword">alias</span> Value = U;
+}
+
+<span class="d_keyword">alias</span> MyT1 = MyTemplate!(<span class="d_keyword">int</span>, string);
+<span class="d_keyword">alias</span> MyT2 = MyTemplate!(string, string);
+
+<span class="d_comment">// 判定するには isInstanceOf を利用します
+</span><span class="d_keyword">import</span> std.traits : isInstanceOf;
+
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInstanceOf!(MyTemplate, MyT1));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInstanceOf!(MyTemplate, MyT2));
+
+<span class="d_comment">// 関係ない型については false を返します
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!isInstanceOf!(MyTemplate, <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!isInstanceOf!(MyTemplate, string));
+</pre>
+</div>
 
                 
             </div>

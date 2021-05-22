@@ -884,7 +884,27 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 103,
+    "endline" : 107,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L107_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。\n",
+    "line" : 107,
+    "char" : 1,
+    "endline" : 134,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L134_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。\n",
+    "line" : 134,
+    "char" : 1,
+    "endline" : 155,
     "endchar" : 1
    }
   ]
