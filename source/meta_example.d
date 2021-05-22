@@ -101,7 +101,7 @@ D言語のコード片が実際にコンパイルできる場合にはtrueに、
     }));
 }
 
-/+
+/++
 一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。
 +/
 unittest
@@ -126,4 +126,29 @@ unittest
 
     alias Temp = TemplateOf!MyT;
     static assert(__traits(isSame, Temp, MyTemplate));
+}
+
+/++
+ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。
++/
+unittest
+{
+    template MyTemplate(T, U)
+    {
+        alias Key = T;
+        alias Value = U;
+    }
+
+    alias MyT1 = MyTemplate!(int, string);
+    alias MyT2 = MyTemplate!(string, string);
+
+    // 判定するには isInstanceOf を利用します
+    import std.traits : isInstanceOf;
+
+    static assert(isInstanceOf!(MyTemplate, MyT1));
+    static assert(isInstanceOf!(MyTemplate, MyT2));
+
+    // 関係ない型については false を返します
+    static assert(!isInstanceOf!(MyTemplate, int));
+    static assert(!isInstanceOf!(MyTemplate, string));
 }
