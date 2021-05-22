@@ -8,6 +8,7 @@
    {
     "name" : "__unittest_L22_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "JSON文字列の解析例です。\n\n`parseJson` 関数を使って解析し、汎用的な `Asdf` オブジェクトに変換します。\n",
     "line" : 22,
     "char" : 1,
@@ -17,6 +18,7 @@
    {
     "name" : "__unittest_L60_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "JSON文字列を独自の構造体にデシリアライズする例です。\n\n1度 Asdf オブジェクトに変換した後か、文字列に `deserialize` 関数を使うことで独自構造体に変換できます。\n",
     "line" : 60,
     "char" : 1,
@@ -26,6 +28,7 @@
    {
     "name" : "__unittest_L81_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "オブジェクトのJSON文字列化（シリアライズ）の例です。\n",
     "line" : 81,
     "char" : 1,
@@ -35,6 +38,7 @@
    {
     "name" : "__unittest_L114_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "Unix timestampである数値をSysTimeとして扱う場合の変換方法です。\n\nデータ型に合わせたProxyを定義して変換ロジックを書き、 `serializedAs` を対象フィールドに属性として付与します。\n\nSee_Also: http://docs.asdf.dlang.io/asdf_serialization.html\n",
     "line" : 114,
     "char" : 1,
@@ -44,6 +48,7 @@
    {
     "name" : "__unittest_L160_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "特定のキーが複数の形式を取り得る場合の解析例です。\n\nデータ型を `SumType` で定義することで安全に取り扱います。\n解析ではAsdfの `kind` を用いて分岐します。\n\nsumtype : $(LINK http://code.dlang.org/packages/sumtype)\n",
     "line" : 160,
     "char" : 1,
@@ -53,6 +58,7 @@
    {
     "name" : "__unittest_L216_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "特定のキーが複数のオブジェクト形式を取り得る場合の解析例です。\n\nデータ型を `SumType` で定義することで安全に取り扱います。\n解析ではオブジェクトがtypeキーを持つと想定し、キーを確認して形式を切り替えます。\n\nsumtype : $(LINK http://code.dlang.org/packages/sumtype)\n",
     "line" : 216,
     "char" : 1,

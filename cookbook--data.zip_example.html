@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>data.zip_example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP走査</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">ZIP走査
+</div></h1><div class="ddoc_description"><span class="d_inlinecode donthyphenate notranslate">std.zip</span>を用いてZIP形式のデータの圧縮・解凍を取り扱います。
+ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ZIP圧縮ファイルの作成と解凍
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_zip.html">https://dlang.org/phobos/std_zip.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.zip;
+<span class="d_keyword">import</span> std.string: representation;
+<span class="d_comment">// ZIPファイルは、ZIPアーカイブに、アーカイブメンバー(ファイル)
+</span><span class="d_comment">// を追加していくことで作成します
+</span><span class="d_keyword">auto</span> zip = <span class="d_keyword">new</span> ZipArchive;
+
+<span class="d_comment">// a.txt ファイルを作成してZIPに詰めます
+</span><span class="d_comment">// 基本は`name`と`expandedData`に非圧縮のデータを指定して
+</span><span class="d_comment">// `compressionMethod`に`deflate`を指定すると、
+</span><span class="d_comment">// ZIPアーカイブに`addMember`で追加する際に圧縮されます
+</span><span class="d_keyword">auto</span> file_a = <span class="d_keyword">new</span> ArchiveMember;
+file_a.name = <span class="d_string">"a.txt"</span>;
+file_a.expandedData = <span class="d_string">"File A"</span>.dup.representation;
+file_a.compressionMethod = CompressionMethod.deflate;
+zip.addMember(file_a);
+
+<span class="d_comment">// b.txt ファイルを作成してZIPに詰めます
+</span><span class="d_keyword">auto</span> file_b = <span class="d_keyword">new</span> ArchiveMember;
+file_b.name = <span class="d_string">"b.txt"</span>;
+file_b.expandedData = <span class="d_string">"File B"</span>.dup.representation;
+<span class="d_comment">// ファイルには更新日時などを付与することもできます
+</span><span class="d_keyword">import</span> std.datetime: Clock;
+file_b.time = Clock.currTime;
+<span class="d_comment">// `compressionMethod`に`none`を指定すると、無圧縮になります
+</span><span class="d_comment">// ※圧縮率を指定することはできません。
+</span>file_b.compressionMethod = CompressionMethod.none;
+zip.addMember(file_b);
+
+<span class="d_comment">// c.txt ファイルをtestディレクトリの中に作成して、ZIPに詰めます
+</span><span class="d_comment">// ディレクトリの表現は、単に `&lt;dirname&gt;/`という感じに、/で区切ります
+</span><span class="d_keyword">auto</span> file_c = <span class="d_keyword">new</span> ArchiveMember;
+file_c.name = <span class="d_string">"test/c.txt"</span>;
+file_c.expandedData = <span class="d_string">"File C"</span>.dup.representation;
+file_c.compressionMethod = CompressionMethod.deflate;
+zip.addMember(file_c);
+
+<span class="d_comment">// ZIPファイルのデータを作成します
+</span><span class="d_keyword">auto</span> zippedData = zip.build();
+
+<span class="d_comment">// ファイルに書き出します
+</span><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+std.file.write(<span class="d_string">"std_zip_example.zip"</span>, zippedData);
+<span class="d_keyword">scope</span> (exit)
+{
+    <span class="d_keyword">assert</span>(std.file.exists(<span class="d_string">"std_zip_example.zip"</span>));
+    std.file.remove(<span class="d_string">"std_zip_example.zip"</span>);
+}
+
+
+<span class="d_comment">// ファイルを読み込んで解凍します
+</span><span class="d_comment">/+ zippedData = std.file.read("std_zip_example.zip"); +/</span>
+<span class="d_comment">// ZipArchiveの引数に圧縮されたZIPファイルの内容を渡します
+</span><span class="d_keyword">auto</span> zip2 = <span class="d_keyword">new</span> ZipArchive(zippedData);
+
+<span class="d_comment">// アーカイブメンバーは、ZipArchiveの`directory`にて、
+</span><span class="d_comment">// ファイル名をキーとして連想配列と同じようにアクセスできます
+</span><span class="d_keyword">auto</span> file_a2 = zip2.directory[<span class="d_string">"a.txt"</span>];
+<span class="d_keyword">assert</span>(file_a2.name == <span class="d_string">"a.txt"</span>);
+
+<span class="d_comment">// ZipArchiveの`expand`関数を実行することでアーカイブメンバーの圧縮データ
+</span><span class="d_comment">// を解凍し、ファイルの中身を確認することができます
+</span><span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">const</span>(<span class="d_keyword">char</span>)[])zip2.expand(file_a2) == <span class="d_string">`File A`</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 日本語ファイル名の保存方法
+<div class="ddoc_blankline"></div>
+
+日本語のファイル名を保存し、かつプラットフォーム依存をなくすには、工夫が必要です。
+<div class="ddoc_blankline"></div>
+
+具体的には、各<span class="d_inlinecode donthyphenate notranslate">ArchiveMemver</span>の<span class="d_inlinecode donthyphenate notranslate">extra</span>に、Info-ZIP Unicode Path Extra Field、というものを使用します。このExtra Fieldが設定されている場合、<span class="d_inlinecode donthyphenate notranslate">ArchiveMemver</span>の<span class="d_inlinecode donthyphenate notranslate">name</span>より優先してこのパス名が使用されます。
+<div class="ddoc_blankline"></div>
+
+ただし、Unicode Path Extra Field非対応のツールでは<span class="d_inlinecode donthyphenate notranslate">name</span>に指定したパスが利用されてしまうので、その対応のため、<span class="d_inlinecode donthyphenate notranslate">ArchiveMemver</span>の<span class="d_inlinecode donthyphenate notranslate">name</span>にはShift_JISのファイル名を指定します。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT">https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT</a></li>
+<li>(和訳) <a href="http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt">http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.zip;
+<span class="d_keyword">import</span> std.string: representation;
+<span class="d_comment">// ZIPファイルは、ZIPアーカイブに、アーカイブメンバー(ファイル)
+</span><span class="d_comment">// を追加していくことで作成します
+</span><span class="d_keyword">auto</span> zip = <span class="d_keyword">new</span> ZipArchive;
+
+<span class="d_comment">// 日本語ファイル名の保存方法です
+</span><span class="d_keyword">auto</span> file_jp = <span class="d_keyword">new</span> ArchiveMember;
+file_jp.expandedData = <span class="d_string">"日本語テスト"</span>.dup.representation;
+
+string file_jp_name = <span class="d_string">"テスト/日本語.txt"</span>;
+
+<span class="d_comment">// nameにはShiftJISの名称を設定します
+</span>string file_jp_name_sjis;
+<span class="d_comment">// UTF-8 → Shift_JIS 変換
+</span><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_comment">// Windowsでは std.windows.charset.toMBSz() を使用する
+</span>    <span class="d_keyword">import</span> std.windows.charset;
+    <span class="d_keyword">import</span> core.stdc.string;
+    <span class="d_keyword">auto</span> file_jp_name_sjisz = toMBSz(file_jp_name, 932);
+    file_jp_name_sjis = <span class="d_keyword">cast</span>(string) file_jp_name_sjisz[0..strlen(file_jp_name_sjisz)];
+}
+<span class="d_keyword">version</span> (Posix)
+{
+    <span class="d_keyword">version</span> (none)
+    {
+        <span class="d_comment">// Posixでは core.sys.posix.iconv を使用する
+</span>        <span class="d_keyword">import</span> core.sys.posix.iconv: iconv_open, iconv_close, iconv;
+        <span class="d_keyword">import</span> std.exception: enforce;
+        <span class="d_keyword">import</span> core.stdc.string;
+        <span class="d_keyword">auto</span> conv = iconv_open(<span class="d_string">"SHIFT_JIS"</span>, <span class="d_string">"UTF-8"</span>).enforce();
+        <span class="d_keyword">scope</span> (exit)
+            iconv_close(conv);
+        <span class="d_keyword">char</span>* file_jp_name_utf8z = (file_jp_name ~ <span class="d_string">"\0"</span>).dup.ptr;
+        size_t file_jp_name_utf8len = file_jp_name.length;
+        <span class="d_keyword">char</span>[] file_jp_name_sjis_buf = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[file_jp_name_utf8len + 1];
+        size_t file_jp_name_sjislen = file_jp_name_utf8len + 1;
+        <span class="d_keyword">auto</span> file_jp_name_sjisz = file_jp_name_sjis_buf.ptr;
+        <span class="d_keyword">auto</span> iconvres = iconv(conv,
+            &amp;file_jp_name_utf8z, &amp;file_jp_name_utf8len,
+            &amp;file_jp_name_sjisz, &amp;file_jp_name_sjislen);
+        enforce(iconvres != -1);
+        file_jp_name_sjis = <span class="d_keyword">cast</span>(string)file_jp_name_sjis_buf[0..$ - file_jp_name_sjislen];
+    }
+    <span class="d_keyword">else</span>
+    {
+        <span class="d_comment">// iconvコマンド使った方が楽かも
+</span>        <span class="d_keyword">import</span> std.process: pipeProcess;
+        <span class="d_keyword">auto</span> iconv = pipeProcess([<span class="d_string">"iconv"</span>, <span class="d_string">"-f"</span>, <span class="d_string">"UTF-8"</span>, <span class="d_string">"-t"</span>, <span class="d_string">"SHIFT_JIS"</span>]);
+        iconv.stdin.write(file_jp_name);
+        iconv.stdin.flush();
+        iconv.stdin.close();
+        file_jp_name_sjis = iconv.stdout.readln();
+    }
+}
+file_jp.name = file_jp_name_sjis;
+
+<span class="d_comment">// Extra Fieldに、Info-ZIP Unicode Path Extra Field(0x7075)を設定する。
+</span><span class="d_keyword">import</span> std.zlib: crc32;
+<span class="d_keyword">auto</span> tsize = <span class="d_keyword">cast</span>(<span class="d_keyword">ushort</span>)(5 + file_jp_name.length);
+<span class="d_keyword">auto</span> crc = crc32(0, file_jp_name_sjis);
+file_jp.extra ~= <span class="d_keyword">cast</span>(<span class="d_keyword">ubyte</span>[])[
+    <span class="d_comment">// タグタイプ: UPath = 0x7075('U', 'P')
+</span>    <span class="d_keyword">ubyte</span>(0x75), <span class="d_keyword">ubyte</span>(0x70),
+    <span class="d_comment">// TSize: Version以降のバイト数をLittle Endianで
+</span>    (tsize &gt;&gt; 0) &amp; 0xFF, (tsize &gt;&gt; 8) &amp; 0xFF,
+    <span class="d_comment">// Version: 現行バージョン1
+</span>    1,
+    <span class="d_comment">// NameCRC32: nameに指定したShift_JISのCRC32を記載する。
+</span>    <span class="d_comment">//            別ツール等でUnicodeパスを無視してnameが書き換えられていたら
+</span>    <span class="d_comment">//            そちらを優先するために必要らしい。
+</span>    (crc &gt;&gt; 0) &amp; 0xFF, (crc &gt;&gt; 8) &amp; 0xFF, (crc &gt;&gt; 16) &amp; 0xFF, (crc &gt;&gt; 24) &amp; 0xFF,
+    ]
+    <span class="d_comment">// UTF-8でファイル名
+</span>    ~ file_jp_name.dup.representation;
+
+zip.addMember(file_jp);
+
+<span class="d_comment">// ZIPファイルのデータを作成します
+</span><span class="d_keyword">auto</span> zippedData = zip.build();
+
+<span class="d_comment">// ファイルに書き出します
+</span><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+std.file.write(<span class="d_string">"std_zip_example_jp.zip"</span>, zippedData);
+<span class="d_keyword">scope</span> (exit)
+{
+    <span class="d_keyword">assert</span>(std.file.exists(<span class="d_string">"std_zip_example_jp.zip"</span>));
+    std.file.remove(<span class="d_string">"std_zip_example_jp.zip"</span>);
+}
+</pre></li>
+</ul>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

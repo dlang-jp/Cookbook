@@ -8,6 +8,7 @@
    {
     "name" : "__unittest_L12_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : " DubのsubPackageの確認\n\n\n\n unittestの例\n",
     "line" : 12,
     "char" : 1,

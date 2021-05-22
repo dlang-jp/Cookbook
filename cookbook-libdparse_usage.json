@@ -8,6 +8,7 @@
    {
     "name" : "__unittest_L25_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "`dparse.lexer`モジュールを用いてソースコードをトークン分解する例です。\n\nSee_Also: https://libdparse.dlang.io/dparse/lexer.html\n",
     "line" : 25,
     "char" : 1,
@@ -17,6 +18,7 @@
    {
     "name" : "__unittest_L78_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "`dparse.parser`モジュールを用いてトークン列をASTに変換する例です。\nASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。\n\nSee_Also: https://libdparse.dlang.io/dparse/parser.html\n",
     "line" : 78,
     "char" : 1,
@@ -26,6 +28,7 @@
    {
     "name" : "__unittest_L118_C1",
     "kind" : "function",
+    "protection" : "public",
     "comment" : "`dparser.ast`モジュールを用いてASTを処理する例です。\nASTの一部を見たい場合は効果的です。\n\nSee_Also: https://libdparse.dlang.io/dparse/ast.html\n",
     "line" : 118,
     "char" : 1,
