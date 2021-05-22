@@ -128,27 +128,68 @@ unittest
 
 コピー不能な構造体やデストラクタによる解放処理が必要な構造体を共有する用途で使えます。
 +/
-unittest
+@nogc unittest
 {
-    import std.typecons : RefCounted, refCounted;
+    import std.typecons : RefCounted, RefCountedAutoInitialize;
 
-    // コピー不能な構造体
-    struct A
+    // 解放が必要なPayloadを格納しているContainer
+    struct Container
     {
-        @disable this(this);
+        this(int value) @nogc nothrow scope
+        {
+            // 参照カウンタPayloadを初期化
+            this.payload = Payload(value);
+        }
 
-        int value;
+    private:
+
+        static int lastDestructed = int.min;
+        static size_t destructedCount = 0;
+
+        // コピー不可かつデストラクタのあるPayload
+        struct Payload
+        {
+            @disable this(this);
+
+            // Payload解放処理
+            // Container初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
+            // 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+            ~this() @nogc nothrow @safe scope
+            {
+                // ここでは解放時点の情報を記録します。
+                lastDestructed = value;
+                ++destructedCount;
+            }
+
+            int value;
+        }
+
+        RefCounted!(Payload, RefCountedAutoInitialize.no) payload;
     }
 
-    // コピー不能な構造体を参照するRefCountedを生成
-    auto a = refCounted(A(123));
-    assert(a.value == 123);
+    // Container初期化
+    auto container = Container(1234);
+    assert(container.payload.value == 1234);
 
-    // 参照のため別の変数にコピー可能
-    auto b = a;
+    // この時点でPayload.initのデストラクタが既に呼ばれています。
+    assert(Container.lastDestructed == 0);
+    assert(Container.destructedCount == 1);
 
-    b.value = 1234;
-    assert(b.value == 1234);
-    assert(a.value == 1234);
+    // 新コンテナ生成
+    auto newContainer = Container(9999);
+    assert(Container.lastDestructed == 0);
+    assert(Container.destructedCount == 2);
+
+    // コンテナ全体を別の値で上書きする。
+    container = newContainer;
+    assert(container.payload.value == 9999);
+
+    // 以前のPayloadが破棄されている。
+    assert(Container.lastDestructed == 1234);
+    assert(Container.destructedCount == 3);
+
+    // payloadはcontainerとnewContainerで共有されています。
+    newContainer.payload.value = 1000;
+    assert(container.payload.value == 1000);
 }
 
