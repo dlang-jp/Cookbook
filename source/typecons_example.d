@@ -123,3 +123,32 @@ unittest
     assert(rebindableValue2.value == value1.value);
 }
 
+/++
+構造体を参照カウンタで管理できるRefCountedの例です
+
+コピー不能な構造体やデストラクタによる解放処理が必要な構造体を共有する用途で使えます。
++/
+unittest
+{
+    import std.typecons : RefCounted, refCounted;
+
+    // コピー不能な構造体
+    struct A
+    {
+        @disable this(this);
+
+        int value;
+    }
+
+    // コピー不能な構造体を参照するRefCountedを生成
+    auto a = refCounted(A(123));
+    assert(a.value == 123);
+
+    // 参照のため別の変数にコピー可能
+    auto b = a;
+
+    b.value = 1234;
+    assert(b.value == 1234);
+    assert(a.value == 1234);
+}
+
