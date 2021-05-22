@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>botan_usage.example</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <h2>cookbook</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP走査</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >botan_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-botan_usage--botan_usage.example.html"><span >Botanの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">Botanの使用例
+</div></h1><div class="ddoc_description">BotanはベースがC++の暗号化ライブラリです。そのためD言語っぽくないインターフェースが多々見受けられます。 <br>
+Botanのライセンスは2条項BSDライセンスで、ApacheライセンスのOpenSSLとあまり変わらない条件になっています。
+
+<h2>ドキュメント</h2>
+<ul><li>APIドキュメント: <a href="http://etcimon.github.io/botan/index.html">http://etcimon.github.io/botan/index.html</a></li>
+<li>Wiki: <a href="https://github.com/etcimon/botan/wiki">https://github.com/etcimon/botan/wiki</a></li>
+<li>C++のほうの公式: <a href="https://botan.randombit.net/">https://botan.randombit.net/</a></li>
+</ul></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ AES-128-CBCによる共通鍵暗号化/復号の例です。
+<div class="ddoc_blankline"></div>
+
+getCipherのファクトリ関数で「フィルター」として変換器を作成します。 <br>
+Pipeはストリームのように、さまざまなロジックを組み合わせることができます。 <br>
+例えばBase64デコード→AES-128-CBCでエンコード→AES-256-CBCでエンコード→Base64エンコードする…といったことも可能です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://github.com/etcimon/botan/wiki/Pipe-and-Filter-Message-Processing">https://github.com/etcimon/botan/wiki/Pipe-and-Filter-Message-Processing</a></li>
+<li><a href="https://github.com/etcimon/botan#recommended-algorithms">https://github.com/etcimon/botan#recommended-algorithms</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf</a> P13</li>
+<li><a href="https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf">https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf</a> P26, P37</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_comment">// importはbotan.allでだいたいのものがimportできます。
+</span><span class="d_comment">// (allという割に全部じゃないので、たまにこれだけだとサンプルが動きません)
+</span><span class="d_comment">// そういう時はgitリポジトリを丸ごとcloneしてgrepかけるのが捜しやすいです(力技)。
+</span><span class="d_keyword">import</span> botan.all;
+<span class="d_comment">// AES共通鍵と初期化ベクトル(IV)の生成
+</span><span class="d_keyword">auto</span> key = SymmetricKey(<span class="d_string">"9F86D081884C7D659A2FEAA0C55AD015"</span>);
+<span class="d_keyword">auto</span> iv = InitializationVector(<span class="d_string">"A3BF4F1B2B0B822CD15D6C15B0F00A08"</span>);
+
+<span class="d_comment">// 暗号化
+</span><span class="d_keyword">auto</span> encoder = Pipe(getCipher(<span class="d_string">"AES-128/CBC"</span>, key, iv, ENCRYPTION));
+encoder.startMsg();
+encoder.write(<span class="d_string">"TEST"</span>);
+encoder.endMsg();
+<span class="d_keyword">auto</span> encrypted = encoder.readAll();
+
+<span class="d_comment">// 復号
+</span><span class="d_keyword">auto</span> decoder = Pipe(getCipher(<span class="d_string">"AES-128/CBC"</span>, key, iv, DECRYPTION));
+decoder.startMsg();
+decoder.write(encrypted);
+decoder.endMsg();
+<span class="d_keyword">auto</span> decrypted = decoder.readAll();
+
+<span class="d_comment">// 元のデータに復元される
+</span><span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">const</span> <span class="d_keyword">char</span>[])decrypted[] == <span class="d_string">"TEST"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ RSAによる公開鍵での暗号化と秘密鍵での復号
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://github.com/etcimon/botan/wiki/Public-Key-Cryptography">https://github.com/etcimon/botan/wiki/Public-Key-Cryptography</a></li>
+<li><a href="https://github.com/etcimon/botan/blob/master/examples/pubkey/source/app.d">https://github.com/etcimon/botan/blob/master/examples/pubkey/source/app.d</a></li>
+<li><a href="https://github.com/etcimon/botan#recommended-algorithms">https://github.com/etcimon/botan#recommended-algorithms</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf</a> P13</li>
+<li><a href="https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf">https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf</a> P26, P37</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> botan.all;
+<span class="d_keyword">import</span> botan.pubkey.pubkey: PKEncryptorEME, PKDecryptorEME;
+<span class="d_keyword">import</span> botan.pubkey.algo.rsa: RSAPrivateKey, RSAPublicKey;
+
+<span class="d_comment">// 乱数機
+</span><span class="d_keyword">auto</span> rng = <span class="d_keyword">new</span> AutoSeededRNG;
+<span class="d_comment">// 新しいRSA秘密鍵/RSA公開鍵の生成
+</span><span class="d_keyword">auto</span> privateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> publicKey = RSAPublicKey(privateKey);
+<span class="d_comment">// 暗号化と復号を行うオブジェクトの生成
+</span><span class="d_keyword">auto</span> enc = <span class="d_keyword">new</span> PKEncryptorEME(publicKey, <span class="d_string">"EME-PKCS1-v1_5"</span>);
+<span class="d_keyword">auto</span> dec = <span class="d_keyword">new</span> PKDecryptorEME(privateKey, <span class="d_string">"EME-PKCS1-v1_5"</span>);
+
+<span class="d_comment">// 暗号化と復号
+</span><span class="d_keyword">auto</span> data = <span class="d_string">"ほげほげ"</span>;
+<span class="d_keyword">auto</span> buf = Vector!<span class="d_keyword">ubyte</span>(data);
+<span class="d_keyword">auto</span> encrypted = enc.encrypt(buf, rng);
+<span class="d_keyword">auto</span> decrypted = dec.decrypt(encrypted);
+
+<span class="d_comment">// 復号できてるか確認
+</span><span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">const</span> <span class="d_keyword">char</span>[])decrypted[] == data);
+
+<span class="d_comment">// PEM形式に"password"付きで変換＆"password"を使って読み込み
+</span><span class="d_keyword">import</span> botan.pubkey.pkcs8: PEM_encode, loadKey;
+<span class="d_keyword">import</span> botan.filters.data_src: DataSource, DataSourceMemory;
+<span class="d_keyword">auto</span> privateKeyPEM = PEM_encode(privateKey, rng, <span class="d_string">"password"</span>);
+<span class="d_keyword">auto</span> privateKeyPEMSrc = <span class="d_keyword">cast</span>(DataSource)DataSourceMemory(privateKeyPEM);
+<span class="d_keyword">auto</span> publicKeyLoaded = loadKey(privateKeyPEMSrc, rng, <span class="d_string">"password"</span>);
+<span class="d_keyword">auto</span> dec2 = <span class="d_keyword">new</span> PKDecryptorEME(publicKeyLoaded, <span class="d_string">"EME-PKCS1-v1_5"</span>);
+
+<span class="d_comment">// PEMに一度変換したものを再読み込みしたキーで復号
+</span><span class="d_keyword">auto</span> decrypted2 = dec2.decrypt(encrypted);
+<span class="d_comment">// PEMに変換しても鍵が損なわれていないことを確認
+</span><span class="d_keyword">assert</span>(decrypted[] == decrypted2[]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ RSAによる秘密鍵での署名と公開鍵での検証
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://github.com/etcimon/botan/wiki/Public-Key-Cryptography#signatures">https://github.com/etcimon/botan/wiki/Public-Key-Cryptography#signatures</a></li>
+<li><a href="https://github.com/etcimon/botan#recommended-algorithms">https://github.com/etcimon/botan#recommended-algorithms</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf</a> P13</li>
+<li><a href="https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf">https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf</a> P26, P37</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> botan.all;
+<span class="d_keyword">import</span> botan.pubkey.pubkey: PKSigner, PKVerifier;
+<span class="d_keyword">import</span> botan.pubkey.algo.rsa: RSAPrivateKey, RSAPublicKey;
+
+<span class="d_comment">// 乱数機
+</span><span class="d_keyword">auto</span> rng = <span class="d_keyword">new</span> AutoSeededRNG;
+<span class="d_comment">// 新しいRSA秘密鍵/RSA公開鍵の生成
+</span><span class="d_keyword">auto</span> privateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> publicKey  = RSAPublicKey(privateKey);
+
+<span class="d_comment">// RSA秘密鍵による署名/RSA公開鍵による検証を行うオブジェクトの生成
+</span><span class="d_keyword">auto</span> signer   = PKSigner(privateKey, <span class="d_string">"EMSA4(SHA-256)"</span>);
+<span class="d_keyword">auto</span> verifier = PKVerifier(publicKey, <span class="d_string">"EMSA4(SHA-256)"</span>);
+
+<span class="d_comment">// 署名と検証
+</span><span class="d_keyword">auto</span> data = <span class="d_string">"ほげほげ"</span>;
+<span class="d_keyword">auto</span> buf = Vector!<span class="d_keyword">ubyte</span>(data);
+<span class="d_keyword">auto</span> signature = signer.signMessage(buf, rng);
+<span class="d_keyword">auto</span> result    = verifier.verifyMessage(buf, signature);
+
+<span class="d_comment">// 検証結果確認
+</span><span class="d_keyword">assert</span>(result);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 証明書の作成
+<div class="ddoc_blankline"></div>
+
+以下の例では、ルートCA証明書と、それにより署名された中間CA証明書、中間CA証明書で署名したサーバー証明書、
+中間CA証明書で署名したクライアント証明書をそれぞれ作成します。
+
+<ul><li>botan.pubkey.algo.rsa.RSAPrivateKey;</li>
+<li>botan.cert.x509.x509self.createCertReq
+</li>
+</ul>
+<ol><li>ルートCA証明書の作成
+<ol><li>秘密鍵(root)の作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl genrsa -<span class="d_keyword">out</span> <span class="d_keyword">private</span>-root.key 2048
+</pre></li>
+<li>秘密鍵(root)を使用して証明書要求(CSR)(root)の作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl req -<span class="d_keyword">new</span> -key <span class="d_keyword">private</span>-root.key -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-root.ca.pem.csr
+</pre></li>
+<li>秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl x509 -req -days 3650 -signkey <span class="d_keyword">private</span>-root.key -<span class="d_keyword">in</span> <span class="d_keyword">public</span>-root.ca.pem.csr -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-root.ca.pem.crt
+</pre>
+      なお、self-signedな証明書(=オレオレのルート証明書)であれば、2の工程をすっ飛ばし、以下のコマンドで秘密鍵(root)を使用してルートCA証明書(root)を直接生成可能。
+<pre class="d_code notranslate">openssl req -x509 -<span class="d_keyword">new</span> -key <span class="d_keyword">private</span>-root.key -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-root.ca.pem.crt
+</pre></li>
+</ol></li>
+<li>中間CA証明書の作成
+<ol><li>秘密鍵(inter)の作成
+      OpenSSLだと
+<pre class="d_code notranslate">openssl genrsa -<span class="d_keyword">out</span> <span class="d_keyword">private</span>-inter.key 2048
+</pre></li>
+<li>秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl req -<span class="d_keyword">new</span> -key <span class="d_keyword">private</span>-inter.key -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-inter.ca.pem.csr
+</pre></li>
+<li>秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl ca -keyfile <span class="d_keyword">private</span>-root.key -cert <span class="d_keyword">public</span>-root.ca.pem.crt -<span class="d_keyword">in</span> <span class="d_keyword">public</span>-inter.ca.pem.csr -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-inter.ca.pem.crt
+</pre></li>
+</ol></li>
+<li>サーバー証明書の作成
+<ol><li>秘密鍵(server)の作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl genrsa -<span class="d_keyword">out</span> <span class="d_keyword">private</span>-server.key 2048
+</pre></li>
+<li>秘密鍵(server)を使用して証明書要求(CSR)(server)の作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl req -<span class="d_keyword">new</span> -key <span class="d_keyword">private</span>-server.key -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-server.ca.pem.csr
+</pre></li>
+<li>秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成<br>
+      OpenSSLだと
+<pre class="d_code notranslate">openssl ca -keyfile <span class="d_keyword">private</span>-inter.key -cert <span class="d_keyword">public</span>-inter.ca.pem.crt -<span class="d_keyword">in</span> <span class="d_keyword">public</span>-server.ca.pem.csr -<span class="d_keyword">out</span> <span class="d_keyword">public</span>-server.ca.pem.crt
+</pre></li>
+</ol></li>
+<li>クライアント証明書の作成
+<ol><li>秘密鍵(client)の作成</li>
+<li>秘密鍵(client)を使用して証明書要求(CSR)(client)の作成</li>
+<li>秘密鍵(inter)と中間CA証明書(inter)と証明書要求(client)を使用してクライアント証明書(client)作成</li>
+</ol></li>
+<li>サーバー証明書(server)を検証
+   OpenSSLだと
+<pre class="d_code notranslate">openssl verify -CApath cacert <span class="d_keyword">public</span>.server.pem.crt
+</pre></li>
+<li>クライアント証明書(client)を検証
+   OpenSSLだと
+<pre class="d_code notranslate">openssl verify -CApath cacert <span class="d_keyword">public</span>.client.pem.crt
+</pre>
+</li>
+</ol>
+See_Also:
+<ul><li><a href="https://github.com/etcimon/botan/wiki/X.509-Certificates-and-CRLs">https://github.com/etcimon/botan/wiki/X.509-Certificates-and-CRLs</a>
+</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">debug</span> (BotanCertFileSave) <span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> core.time;
+<span class="d_keyword">import</span> botan.all;
+<span class="d_keyword">import</span> botan.pubkey.algo.rsa: RSAPrivateKey, PEM_encode;
+<span class="d_keyword">import</span> botan.cert.x509.key_constraint: KeyConstraints;
+<span class="d_keyword">import</span> botan.cert.x509.x509self: X509CertOptions, createCertReq, createSelfSignedCert;
+<span class="d_keyword">import</span> botan.cert.x509.x509cert: X509Certificate;
+<span class="d_keyword">import</span> botan.cert.x509.x509_ca: X509CA;
+<span class="d_keyword">import</span> botan.cert.x509.x509path: x509PathValidate, PathValidationRestrictions, PathValidationResult;
+<span class="d_keyword">import</span> botan.cert.x509.certstor: CertificateStore, CertificateStoreInMemory;
+
+<span class="d_comment">// 乱数機
+</span><span class="d_keyword">auto</span> rng = <span class="d_keyword">new</span> AutoSeededRNG;
+
+<span class="d_comment">// 1. ルートCA自己証明書作成
+</span><span class="d_comment">// 1-1 秘密鍵(root)の作成
+</span><span class="d_keyword">auto</span> rootPrivateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> rootPrivateKeyPEM = rootPrivateKey.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"root-private.pem.key"</span>, rootPrivateKeyPEM);
+<span class="d_comment">// 1-2 秘密鍵(root)を使用して証明書要求(CSR)(root)の作成
+</span><span class="d_keyword">auto</span> rootCertOpts = X509CertOptions(<span class="d_string">""</span>, 3650.days);
+<span class="d_keyword">with</span> (rootCertOpts)
+{
+    common_name  = <span class="d_string">"dlang-jp-root CA"</span>;
+    dns          = <span class="d_string">"dlang-jp.github.io"</span>;
+    country      = <span class="d_string">"JP"</span>;
+    organization = <span class="d_string">"dlang-jp"</span>;
+    email        = <span class="d_string">"dlang-jp@example.com"</span>;
+    <span class="d_comment">// 下位に中間CAとエンドエンティティ(サーバー/クライアント)が存在するため、2
+</span>    CAKey(2);
+}
+<span class="d_keyword">auto</span> rootCsr = createCertReq(rootCertOpts, rootPrivateKey, <span class="d_string">"SHA-256"</span>, rng);
+<span class="d_keyword">auto</span> rootCsrPEM = rootCsr.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"root-ca-cert.pem.csr"</span>, rootCsrPEM);
+<span class="d_comment">// 1-3 秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成
+</span><span class="d_comment">//     ルートCA証明書は絶対self-signed(オレオレ証明書)なので、要求とか実は不要
+</span><span class="d_comment">//     多分がんばれば証明書要求(CSR)からでも発行できるが、
+</span><span class="d_comment">//     createSelfSignedCert 相当の関数を自分で記載する必要がある。
+</span><span class="d_keyword">auto</span> rootCert = createSelfSignedCert(rootCertOpts, rootPrivateKey, <span class="d_string">"SHA-256"</span>, rng);
+string rootCertPEM = rootCert.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"root-ca-cert.pem.crt"</span>, rootCertPEM);
+<span class="d_comment">// ルート認証局設立
+</span><span class="d_keyword">auto</span> rootCA = X509CA(rootCert, rootPrivateKey, <span class="d_string">"SHA-256"</span>);
+
+<span class="d_comment">// 2. 中間CA証明書作成
+</span><span class="d_comment">// 2-1 秘密鍵(inter)の作成
+</span><span class="d_keyword">auto</span> interPrivateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> interPrivateKeyPEM = interPrivateKey.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"inter-private.pem.key"</span>, interPrivateKeyPEM);
+<span class="d_comment">// 2-2 秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成
+</span><span class="d_keyword">auto</span> interCertOpts = X509CertOptions(<span class="d_string">""</span>, 3650.days);
+<span class="d_keyword">with</span> (interCertOpts)
+{
+    common_name  = <span class="d_string">"dlang-jp-inter CA"</span>;
+    dns          = <span class="d_string">"inter.dlang-jp.github.io"</span>;
+    country      = <span class="d_string">"JP"</span>;
+    organization = <span class="d_string">"dlang-jp"</span>;
+    email        = <span class="d_string">"dlang-jp@example.com"</span>;
+    <span class="d_comment">// 下位にエンドエンティティ(サーバー/クライアント)が存在するため、1
+</span>    CAKey(1);
+}
+<span class="d_keyword">auto</span> interCsr = createCertReq(interCertOpts, interPrivateKey, <span class="d_string">"SHA-256"</span>, rng);
+<span class="d_keyword">auto</span> interCsrPEM = interCsr.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"inter-ca-cart.pem.csr"</span>, interCsrPEM);
+<span class="d_comment">// 2-3 秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成
+</span><span class="d_keyword">auto</span> interCert = rootCA.signRequest(interCsr, rng, interCertOpts.start, interCertOpts.end);
+string interCertPEM = interCert.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"inter-ca-cert.pem.crt"</span>, interCertPEM);
+
+<span class="d_comment">// 中間認証局設立
+</span><span class="d_keyword">auto</span> interCA = X509CA(interCert, interPrivateKey, <span class="d_string">"SHA-256"</span>);
+
+<span class="d_comment">// 3. サーバー証明書作成
+</span><span class="d_comment">// 3-1 秘密鍵(server)の作成
+</span><span class="d_keyword">auto</span> serverPrivateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> serverPrivateKeyPEM = serverPrivateKey.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"server-private.pem.key"</span>, serverPrivateKeyPEM);
+<span class="d_comment">// 3-2 秘密鍵(server)を使用して証明書要求(CSR)(server)の作成
+</span><span class="d_keyword">auto</span> serverCertOpts = X509CertOptions(<span class="d_string">""</span>, 3650.days);
+<span class="d_keyword">with</span> (serverCertOpts)
+{
+    common_name  = <span class="d_string">"dlang-jp server"</span>;
+    dns          = <span class="d_string">"localhost"</span>;
+    country      = <span class="d_string">"JP"</span>;
+    organization = <span class="d_string">"dlang-jp"</span>;
+    email        = <span class="d_string">"dlang-jp@example.com"</span>;
+    constraints  = KeyConstraints.DIGITAL_SIGNATURE | KeyConstraints.KEY_ENCIPHERMENT;
+    addExConstraint(<span class="d_string">"PKIX.ServerAuth"</span>);
+}
+<span class="d_keyword">auto</span> serverCsr = createCertReq(serverCertOpts, serverPrivateKey, <span class="d_string">"SHA-256"</span>, rng);
+<span class="d_keyword">auto</span> serverCsrPEM = serverCsr.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"server-cert.pem.csr"</span>, serverCsrPEM);
+<span class="d_comment">// 3-3 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成
+</span><span class="d_keyword">auto</span> serverCert = interCA.signRequest(serverCsr, rng, serverCertOpts.start, serverCertOpts.end);
+string serverCertPEM = serverCert.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"server-cert.pem.crt"</span>, serverCertPEM);
+
+<span class="d_comment">// 4. クライアント証明書作成
+</span><span class="d_comment">// 4-1 秘密鍵(client)の作成
+</span><span class="d_keyword">auto</span> clientPrivateKey = RSAPrivateKey(rng, 2048);
+<span class="d_keyword">auto</span> clientPrivateKeyPEM = clientPrivateKey.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"client-private.pem.key"</span>, clientPrivateKeyPEM);
+<span class="d_comment">// 4-2 秘密鍵(client)を使用して証明書要求(CSR)(client)の作成
+</span><span class="d_keyword">auto</span> clientCertOpts = X509CertOptions(<span class="d_string">""</span>, 3650.days);
+<span class="d_keyword">with</span> (clientCertOpts)
+{
+    common_name  = <span class="d_string">"dlang-jp userA"</span>;
+    country      = <span class="d_string">"JP"</span>;
+    organization = <span class="d_string">"dlang-jp"</span>;
+    email        = <span class="d_string">"userA@dlang-jp.example.com"</span>;
+    constraints  = KeyConstraints.DIGITAL_SIGNATURE | KeyConstraints.KEY_ENCIPHERMENT;
+    addExConstraint(<span class="d_string">"PKIX.ClientAuth"</span>);
+    addExConstraint(<span class="d_string">"PKIX.CodeSigning"</span>);
+    addExConstraint(<span class="d_string">"PKIX.EmailProtection"</span>);
+    addExConstraint(<span class="d_string">"PKIX.TimeStamping"</span>);
+}
+<span class="d_keyword">auto</span> clientCsr = createCertReq(clientCertOpts, clientPrivateKey, <span class="d_string">"SHA-256"</span>, rng);
+<span class="d_keyword">auto</span> clientCsrPEM = clientCsr.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"client-cert.pem.csr"</span>, clientCsrPEM);
+<span class="d_comment">// 4-3 秘密鍵(inter)とサーバー証明書(inter)と証明書要求(client)を使用してクライアント証明書(client)作成
+</span><span class="d_keyword">auto</span> clientCert = interCA.signRequest(clientCsr, rng, clientCertOpts.start, clientCertOpts.end);
+string clientCertPEM = clientCert.PEM_encode();
+<span class="d_keyword">debug</span> (BotanCertFileSave) std.file.write(<span class="d_string">"client-cert.pem.crt"</span>, clientCertPEM);
+
+<span class="d_comment">// 証明書ストアを作成
+</span><span class="d_keyword">auto</span> store = <span class="d_keyword">new</span> CertificateStoreInMemory();
+store.addCertificate(rootCert);
+store.addCertificate(interCert);
+
+<span class="d_comment">// 5. サーバー証明書(server)を検証
+</span><span class="d_keyword">auto</span> serverCertValidation = x509PathValidate(serverCert, PathValidationRestrictions(<span class="d_keyword">false</span>), store);
+<span class="d_keyword">assert</span>(serverCertValidation.successfulValidation);
+
+<span class="d_comment">// 6. クライアント証明書(client)を検証
+</span><span class="d_keyword">auto</span> store2 = <span class="d_keyword">new</span> CertificateStoreInMemory();
+<span class="d_keyword">auto</span> clientCertValidation = x509PathValidate(clientCert, PathValidationRestrictions(<span class="d_keyword">false</span>), store);
+<span class="d_keyword">assert</span>(clientCertValidation.successfulValidation);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>
