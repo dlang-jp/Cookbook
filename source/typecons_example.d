@@ -133,6 +133,8 @@ unittest
     import std.typecons : RefCounted, RefCountedAutoInitialize;
 
     // 解放が必要なPayloadを格納しているContainer
+    // このContainerは値セマンティックスで利用でき、
+    // 内部のPayloadを複数のContainerで共有することができます。
     struct Container
     {
         this(int value) @nogc nothrow scope
@@ -164,7 +166,8 @@ unittest
             int value;
         }
 
-        RefCounted!(Payload, RefCountedAutoInitialize.no) payload;
+        // 参照カウンタで管理するPayload。
+        RefCounted!Payload payload;
     }
 
     // Container初期化
@@ -180,11 +183,9 @@ unittest
     assert(Container.lastDestructed == 0);
     assert(Container.destructedCount == 2);
 
-    // コンテナ全体を別の値で上書きする。
+    // コンテナ全体を別の値で上書きすると、格納されていたPayloadが破棄されます。
     container = newContainer;
     assert(container.payload.value == 9999);
-
-    // 以前のPayloadが破棄されている。
     assert(Container.lastDestructed == 1234);
     assert(Container.destructedCount == 3);
 
