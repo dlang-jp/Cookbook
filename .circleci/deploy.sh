@@ -10,7 +10,7 @@ echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 source "$(curl -fsS  --retry 3 https://dlang.org/install.sh | bash -s $1 --activate)"
 
 # ドキュメント生成のテストは行うが、デプロイはGitHub Actionsが行う
-dub run gendoc@0.0.4 -y
+dub run gendoc@0.0.6 -y
 #mv docs ../
 #
 #git checkout gh-pages

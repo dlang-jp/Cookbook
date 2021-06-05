@@ -571,6 +571,11 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
     display: block;
 }
 
+.sidebar-searchbox > form
+{
+    display: flex;
+}
+
 /* These add the lines to the sidebar */
 .sidebar ul ul ul
 {

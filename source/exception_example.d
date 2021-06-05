@@ -445,19 +445,117 @@ Exceptionと記載しましたが、ここには例外の型を記載でき、�
 }
 
 /++
-# try-catch-finary
+# try-catch-finally
+Java等と同じように、finallyブロックが利用できます。
+しかし、D言語ではメジャーな機能ではありません。これと同等のことを行いたい場合は`scope (exit)`を使用することが多いです。
 +/
 @safe unittest
 {
-    // todo
+    import core.stdc.stdlib: malloc, free;
+    import std.algorithm, std.range;
+    // try-catchの例と違ってGCで管理しない＝解放が必要なメモリを確保します
+    // 割り当てが発生したら、解放が必要です。
+    void* buf;
+    string createBuf(string x) @trusted
+    {
+        import core.exception;
+        import std.conv, std.exception;
+        try
+        {
+            auto y = to!ulong(x);
+            if (y == 0)
+                throw new Exception("Invalid number");
+            enforce!InvalidMemoryOperationError(y <= 0xffffffffUL, "Cannot allocate memory");
+            buf = malloc(cast(size_t)y);
+            return "Converted!";
+        }
+        catch (ConvException e)
+            return "Cannot convert";
+        catch (Exception e)
+            return "Unknown Exception[" ~ e.msg ~ "]";
+        catch (Throwable e)
+            return "Fatal Error";
+        finally
+        {
+            free(buf);
+            buf = null;
+        }
+    }
+    // どんな呼び出しでも、確実に解放されている
+    assert(createBuf("1") == "Converted!");
+    assert(buf is null);
+    assert(createBuf("0.1") == "Cannot convert");
+    assert(buf is null);
+    assert(createBuf("0") == "Unknown Exception[Invalid number]");
+    assert(buf is null);
+    assert(createBuf("274877906943") == "Fatal Error");
+    assert(buf is null);
 }
 
 /++
-# scope (success) / scope (failure) / scope (exit)
+# スコープガード文： `scope (success)` / `scope (failure)` / `scope (exit)`
+スコープガード文です。try-catch-finallyの代わりに利用できます。
+それぞれ以下の文が利用できます。
+- `scope (success)`は成功した(例外が発生しなかった)ときだけ実行されるブロックです
+- `scope (failure)`は失敗した(例外が発生した)ときだけ実行されるブロックです
+- `scope (exit)`は成否にかかわらず(例外が発生有無にかかわらず)_必ず_実行されるブロックです
+
+特に `scope (exit)` は、リソースの確保と解放のコードを近くに記載することができるのが便利です。
 +/
 @safe unittest
 {
-    // todo
+    import core.stdc.stdlib: malloc, free, realloc;
+    import std.algorithm, std.range;
+    // try-catchの例と違ってGCで管理しない＝解放が必要なメモリを確保します
+    // 割り当てが発生したら、解放が必要です。
+    void* buf;
+    string createBuf(string x) @trusted
+    {
+        string msg;
+        import core.exception;
+        import std.conv, std.exception;
+        try
+        {
+            // scope文は、後に記述されたものから逆順で実行されます
+            // わかりやすいように実行順に番号を振ります
+            scope (exit)
+                buf = null;
+            // 割り当ての直後にscope (exit)を記載することで、
+            // 解放を忘れることなく安全に終了することができます
+            buf = malloc(100).enforce!InvalidMemoryOperationError("Cannot allocate memory");
+            scope (exit)
+                free(buf);
+            // 例外なく終了した場合
+            scope (success)
+                msg = "Converted!";
+            // 途中で例外が発生した場合
+            scope (failure)
+                msg = "Failed...";
+            auto y = to!ulong(x);
+            if (y == 0)
+                throw new Exception("Invalid number");
+            enforce!InvalidMemoryOperationError(y <= 0xffffffffUL, "Cannot allocate memory");
+            buf = realloc(buf, cast(size_t)y).enforce!InvalidMemoryOperationError("Cannot allocate memory");
+        }
+        catch (ConvException e)
+            msg ~= " Cannot convert";
+        catch (Exception e)
+            msg ~= " Unknown Exception[" ~ e.msg ~ "]";
+        catch (Throwable e)
+            msg ~= " Fatal Error";
+        return msg;
+    }
+    // スコープガード文によってどんな呼び出しでも、確実に解放されています。
+    // また、例外が発生しない場合は`"Converted!"`が、
+    // そうでない場合は`msg`の先頭に`"Failed..."`がつきます
+    assert(createBuf("1") == "Converted!");
+    assert(buf is null);
+    assert(createBuf("0.1") == "Failed... Cannot convert");
+    assert(buf is null);
+    assert(createBuf("0") == "Failed... Unknown Exception[Invalid number]");
+    assert(buf is null);
+    assert(createBuf("274877906943") == "Failed... Fatal Error");
+    assert(buf is null);
 }
 
 /++

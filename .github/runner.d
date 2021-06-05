@@ -22,6 +22,7 @@ static:
         PackageInfo("windows"),
         PackageInfo("libdparse_usage"),
         PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+        PackageInfo("botan_usage", ["linux-x86-"]),
     ];
 }
 
@@ -157,7 +158,7 @@ void generateDocument()
     string[string] env;
     env.addCurlPath();
     exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch,
-        "--", "-a", config.arch, "-b=release"], null, env);
+        "--", "-a", config.arch, "-b=release", "--compiler", config.compiler], null, env);
 
     // CircleCIでgh-pagesへのデプロイがビルドエラーになる件を回避
     auto circleCiConfigDir = config.scriptDir.buildPath("../docs/.circleci");
