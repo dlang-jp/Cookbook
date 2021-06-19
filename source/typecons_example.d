@@ -147,6 +147,7 @@ unittest
 
         static int lastDestructed = int.min;
         static size_t destructedCount = 0;
+        static size_t destructorCallCount = 0;
 
         // コピー不可かつデストラクタのあるPayload
         struct Payload
@@ -180,21 +181,25 @@ unittest
     assert(container.payload.value == 1234);
 
     // この時点でPayload.initのデストラクタが既に呼ばれています。
-    assert(Container.lastDestructed == 0);
-    assert(Container.destructedCount == 1);
+    assert(Container.destructorCallCount == 1);
+    assert(Container.lastDestructed == int.min);
+    assert(Container.destructedCount == 0);
 
     // 新コンテナ生成
     auto newContainer = Container(9999);
-    assert(Container.lastDestructed == 0);
-    assert(Container.destructedCount == 2);
+    assert(Container.destructorCallCount == 2);
+    assert(Container.lastDestructed == int.min);
+    assert(Container.destructedCount == 0);
 
     // コンテナ全体を別の値で上書きすると、格納されていたPayloadが破棄されます。
     container = newContainer;
     assert(container.payload.value == 9999);
     assert(Container.lastDestructed == 1234);
-    assert(Container.destructedCount == 3);
+    assert(Container.destructedCount == 1);
+    assert(Container.destructorCallCount == 3);
 
     // payloadはcontainerとnewContainerで共有されています。
     newContainer.payload.value = 1000;
     assert(container.payload.value == 1000);
 }
+
