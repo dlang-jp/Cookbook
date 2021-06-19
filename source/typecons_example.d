@@ -156,14 +156,19 @@ unittest
             // Payload解放処理
             // Container初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
             // 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+            // このため、初期値だったら解放しない、というロジックが必要です。
             ~this() @nogc nothrow @safe scope
             {
-                // ここでは解放時点の情報を記録します。
-                lastDestructed = value;
-                ++destructedCount;
+                if (value != int.max)
+                {
+                    // ここでは解放時点の情報を記録します。
+                    lastDestructed = value;
+                    ++destructedCount;
+                }
+                ++destructorCallCount;
             }
 
-            int value;
+            int value = int.max;
         }
 
         // 参照カウンタで管理するPayload。
@@ -193,4 +198,3 @@ unittest
     newContainer.payload.value = 1000;
     assert(container.payload.value == 1000);
 }
-
