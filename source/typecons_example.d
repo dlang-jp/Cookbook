@@ -124,82 +124,82 @@ unittest
 }
 
 /++
-構造体を参照カウンタで管理できるRefCountedの例です
+コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。
 
-コピー不能な構造体やデストラクタによる解放処理が必要な構造体を共有する用途で使えます。
+ポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために `RefCounted` を使う方法があります。
+内部的には参照カウンタで管理されます。
 +/
 @nogc unittest
 {
-    import std.typecons : RefCounted, RefCountedAutoInitialize;
+    import core.memory : pureMalloc, pureFree;
+    import std.typecons : refCounted;
 
-    // 解放が必要なPayloadを格納しているContainer
-    // このContainerは値セマンティックスで利用でき、
-    // 内部のPayloadを複数のContainerで共有することができます。
-    struct Container
+    // コピー不能でデストラクタを持つデータ
+    struct Payload
     {
-        this(int value) @nogc nothrow scope
+        // 最後に破棄された値(デストラクタ呼び出し確認用)
+        static int lastDestructedValue;
+
+        @disable this(this);
+
+        this(int* pointer) @nogc nothrow @safe scope
         {
-            // 参照カウンタPayloadを初期化
-            this.payload = Payload(value);
+            this.pointer = pointer;
         }
 
-    private:
-
-        static int lastDestructed = int.min;
-        static size_t destructedCount = 0;
-        static size_t destructorCallCount = 0;
-
-        // コピー不可かつデストラクタのあるPayload
-        struct Payload
+        // Payload解放処理
+        // RefCounted初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
+        // 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+        // このため、初期値だったら解放しない、というロジックが必要です。
+        ~this() @nogc nothrow @safe scope
         {
-            @disable this(this);
-
-            // Payload解放処理
-            // Container初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
-            // 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
-            // このため、初期値だったら解放しない、というロジックが必要です。
-            ~this() @nogc nothrow @safe scope
+            if (pointer)
             {
-                if (value != int.max)
-                {
-                    // ここでは解放時点の情報を記録します。
-                    lastDestructed = value;
-                    ++destructedCount;
-                }
-                ++destructorCallCount;
+                lastDestructedValue = *pointer;
+                (() @trusted => pureFree(pointer))();
+                pointer = null;
             }
-
-            int value = int.max;
         }
 
-        // 参照カウンタで管理するPayload。
-        RefCounted!Payload payload;
+        int* pointer;
     }
 
-    // Container初期化
-    auto container = Container(1234);
-    assert(container.payload.value == 1234);
+    // 管理対象のリソース
+    auto resource1 = cast(int*) pureMalloc(int.sizeof);
+    *resource1 = 1234;
 
-    // この時点でPayload.initのデストラクタが既に呼ばれています。
-    assert(Container.destructorCallCount == 1);
-    assert(Container.lastDestructed == int.min);
-    assert(Container.destructedCount == 0);
+    // resource1を管理するRefCounted!PayloadをrefCounted関数で生成します。
+    auto rc1 = refCounted(Payload(resource1));
+    
+    // 現在の参照カウントは1です。
+    assert(rc1.refCountedStore.refCount == 1);
 
-    // 新コンテナ生成
-    auto newContainer = Container(9999);
-    assert(Container.destructorCallCount == 2);
-    assert(Container.lastDestructed == int.min);
-    assert(Container.destructedCount == 0);
+    // resource1をrc2にも共有します。参照カウントは2になります。
+    auto rc2 = rc1;
+    assert(rc1.refCountedStore.refCount == 2);
+    assert(rc2.refCountedStore.refCount == 2);
+    assert(rc1.pointer is resource1);
+    assert(rc1.pointer is rc2.pointer);
 
-    // コンテナ全体を別の値で上書きすると、格納されていたPayloadが破棄されます。
-    container = newContainer;
-    assert(container.payload.value == 9999);
-    assert(Container.lastDestructed == 1234);
-    assert(Container.destructedCount == 1);
-    assert(Container.destructorCallCount == 3);
+    // rcに別の値を格納します。rc2で参照が続いているため、resourceはまだ解放されません。
+    auto resource2 = cast(int*) pureMalloc(int.sizeof);
+    *resource2 = 5678;
 
-    // payloadはcontainerとnewContainerで共有されています。
-    newContainer.payload.value = 1000;
-    assert(container.payload.value == 1000);
+    rc1 = refCounted(Payload(resource2));
+    assert(Payload.lastDestructedValue == Payload.lastDestructedValue.init);
+    assert(rc1.refCountedStore.refCount == 1);
+    assert(rc2.refCountedStore.refCount == 1);
+    assert(rc1.pointer is resource2);
+    assert(rc2.pointer is resource1);
+
+    // rc2も更新することで、resource1の参照カウントが0になり、解放されます。
+    rc2 = rc1;
+    assert(rc1.refCountedStore.refCount == 2);
+    assert(rc2.refCountedStore.refCount == 2);
+    assert(rc1.pointer is resource2);
+    assert(rc2.pointer is resource2);
+
+    // resource1が解放されていることを確認
+    assert(Payload.lastDestructedValue == 1234);
 }
 
