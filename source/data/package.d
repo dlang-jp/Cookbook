@@ -4,6 +4,10 @@
 特定のデータ形式を取り扱う例をまとめました
 
 $(DL
+    $(DT $(A cookbook--_data.base64_example.html, Base64))
+    $(DD
+        `std.base64`を用いてBase64形式でのデータのエンコード/デコードを取り扱います。
+    )
     $(DT $(A cookbook--_data.csv_example.html, CSV))
     $(DD
         `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)
