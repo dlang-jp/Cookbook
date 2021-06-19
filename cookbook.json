@@ -173,25 +173,66 @@
   "name" : "data",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/package.d",
-  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.csv_example.html, CSV))\n    $(DD\n        `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)\n        また、`std.csv`ではサポートされていないCSVの書き出し方についても取り扱います。\n    )\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n    $(DT $(A cookbook--_data.zip_example.html, ZIP))\n    $(DD\n        `std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。 $(BR)\n        ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n    )\n)\n\n",
+  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.base64_example.html, Base64))\n    $(DD\n        `std.base64`を用いてBase64形式でのデータのエンコード/デコードを取り扱います。\n    )\n    $(DT $(A cookbook--_data.csv_example.html, CSV))\n    $(DD\n        `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)\n        また、`std.csv`ではサポートされていないCSVの書き出し方についても取り扱います。\n    )\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n    $(DT $(A cookbook--_data.zip_example.html, ZIP))\n    $(DD\n        `std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。 $(BR)\n        ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n    )\n)\n\n",
   "members" : [
    {
     "name" : "data.csv_example",
     "kind" : "import",
-    "line" : 27,
+    "line" : 31,
     "char" : 15
    },
    {
     "name" : "data.json_example",
     "kind" : "import",
-    "line" : 28,
+    "line" : 32,
     "char" : 15
    },
    {
     "name" : "data.zip_example",
     "kind" : "import",
-    "line" : 29,
+    "line" : 33,
     "char" : 15
+   }
+  ]
+ },
+ {
+  "name" : "data.base64_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/data/base64_example.d",
+  "comment" : "Base64エンコード/デコード\n\nBase64のエンコードとデコードを行うサンプルです\n\nSee_Also:\n    - https://dlang.org/phobos/std_base64.html\n",
+  "members" : [
+   {
+    "name" : "__unittest_L14_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Base64エンコード/デコードを行うサンプルです\n",
+    "line" : 14,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 28,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L28_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Base64エンコード/デコードの保存先をOutputRangeにすることもできます\n",
+    "line" : 28,
+    "char" : 1,
+    "endline" : 46,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L46_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Base64エンコード/デコードの入力元をInputRangeにすることもできます\n",
+    "line" : 46,
+    "char" : 1,
+    "endline" : 63,
+    "endchar" : 1
    }
   ]
  },
