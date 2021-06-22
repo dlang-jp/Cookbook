@@ -142,9 +142,11 @@ unittest
 
         @disable this(this);
 
-        this(int* pointer) @nogc nothrow @safe scope
+        // 管理対象のリソース確保
+        this(int value) @nogc nothrow @safe scope
         {
-            this.pointer = pointer;
+            this.pointer = (() @trusted => cast(int*) pureMalloc(int.sizeof))();
+            *this.pointer = value;
         }
 
         // Payload解放処理
@@ -164,42 +166,37 @@ unittest
         int* pointer;
     }
 
-    // 管理対象のリソース
-    auto resource1 = cast(int*) pureMalloc(int.sizeof);
-    *resource1 = 1234;
-
-    // resource1を管理するRefCounted!PayloadをrefCounted関数で生成します。
-    auto rc1 = refCounted(Payload(resource1));
+    // 新しいリソースを保持するRefCounted!Payloadを、refCounted関数で生成します。
+    auto rc1 = refCounted(Payload(1234));
     
     // 現在の参照カウントは1です。
     assert(rc1.refCountedStore.refCount == 1);
 
-    // resource1をrc2にも共有します。参照カウントは2になります。
+    // 確保したリソースを共有する別のRefCounted!Payloadを生成します。
     auto rc2 = rc1;
+
+    // 参照カウントは2になります。
     assert(rc1.refCountedStore.refCount == 2);
     assert(rc2.refCountedStore.refCount == 2);
-    assert(rc1.pointer is resource1);
     assert(rc1.pointer is rc2.pointer);
 
-    // rcに別の値を格納します。rc2で参照が続いているため、resourceはまだ解放されません。
-    auto resource2 = cast(int*) pureMalloc(int.sizeof);
-    *resource2 = 5678;
+    // rc1を別のRefCounted!Paylodで更新します。
+    rc1 = refCounted(Payload(5678));
 
-    rc1 = refCounted(Payload(resource2));
+    // rc2で参照が続いているため、以前のリソースはまだ解放されません。
     assert(Payload.lastDestructedValue == Payload.lastDestructedValue.init);
     assert(rc1.refCountedStore.refCount == 1);
     assert(rc2.refCountedStore.refCount == 1);
-    assert(rc1.pointer is resource2);
-    assert(rc2.pointer is resource1);
+    assert(rc1.pointer !is rc2.pointer);
 
-    // rc2も更新することで、resource1の参照カウントが0になり、解放されます。
+    // rc2も更新することで、最初のリソースの参照カウントが0になり、解放されます。
     rc2 = rc1;
     assert(rc1.refCountedStore.refCount == 2);
     assert(rc2.refCountedStore.refCount == 2);
-    assert(rc1.pointer is resource2);
-    assert(rc2.pointer is resource2);
+    assert(rc1.pointer is rc2.pointer);
+    assert(*rc1.pointer == 5678);
 
-    // resource1が解放されていることを確認
+    // 最初のリソースが解放されていることを確認
     assert(Payload.lastDestructedValue == 1234);
 }
 
