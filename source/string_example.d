@@ -211,3 +211,52 @@ unittest
         }
     }.outdent.strip));
 }
+
+/++
+16進数文字列の変換
+
+バイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。
+
+See_Also:
+    - https://dlang.org/phobos/std_conv.html#hexString
+    - https://dlang.org/phobos/std_conv.html#to
+    - https://dlang.org/phobos/std_range.html#chunks
+    - https://dlang.org/phobos/std_algorithm_iteration.html#.map
+    - https://dlang.org/phobos/std_array.html#.array
+    - https://dlang.org/phobos/std_format.html#.format
+    - https://dlang.org/phobos/std_digest.html#.toHexString
++/
+@safe unittest
+{
+    // コンパイル時に、バイト列を16進数の文字列で表現したものをバイト列に変換
+    import std.conv: hexString;
+    static immutable bindat = hexString!"010203a4b5c6";
+    static assert(bindat == [0x01, 0x02, 0x03, 0xa4, 0xb5, 0xc6]);
+
+    // 実行時に、バイト列を16進数の文字列で表現したものをバイト列に変換
+    import std.conv: to;
+    import std.range: chunks;
+    import std.algorithm: map;
+    import std.array: array;
+    auto hexstr = "010203a4b5c6";
+    auto rtbindat = hexstr.chunks(2).map!(a => a.to!ubyte(16)).array;
+    assert(rtbindat == [0x01, 0x02, 0x03, 0xa4, 0xb5, 0xc6]);
+    // コンパイル時でも行ける
+    static immutable ctbindat = "010203a4b5c6".chunks(2).map!(a => a.to!ubyte(16)).array;
+    static assert(ctbindat == [0x01, 0x02, 0x03, 0xa4, 0xb5, 0xc6]);
+
+    // 実行時に、バイト列を16進数の文字列で表現したものに変換
+    import std.format: format;
+    auto rthexstr = format!"%(%02x%)"(rtbindat);
+    assert(rthexstr == "010203a4b5c6");
+    // コンパイル時でも行ける
+    static immutable cthexstr = format!"%(%02x%)"(ctbindat);
+    static assert(cthexstr == "010203a4b5c6");
+
+    // 本当はダイジェスト値用ですが、これでも大丈夫です。
+    // formatより若干速いはず。
+    // ただし、コンパイル時には使えません。
+    import std.digest: toHexString, LetterCase;
+    assert(rtbindat.toHexString() == "010203A4B5C6");
+    assert(rtbindat.toHexString!(LetterCase.lower) == "010203a4b5c6");
+}
