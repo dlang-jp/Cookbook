@@ -643,16 +643,27 @@ ExceptionもErrorもThrowableというインターフェースを継承してい
 /++
 # 例外の自作
 例外クラスはExceptionを継承したクラスを自分で定義することができます。
+
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#basicExceptionCtors
 +/
 @safe unittest
 {
     // Exceptionを継承したTestExceptionを定義
     class TestException: Exception
     {
+        /+
+        // コンストラクタでメッセージ、ファイル名、行数を渡せるようにします
         this(string msg, string file = __FILE__, size_t line = __LINE__)
         {
             super(msg, file, line);
         }
+        +/
+        // 上記のようなコンストラクタを毎回書くのは面倒なので、
+        // 以下のような便利テンプレートがあります。
+        import std.exception: basicExceptionCtors;
+        ///
+        mixin basicExceptionCtors;
     }
 
     void someEx() { throw new TestException("TestException"); }
