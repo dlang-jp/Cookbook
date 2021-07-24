@@ -170,3 +170,66 @@ unittest
     static assert(!__traits(compiles, bar(rvalueOf!int)));
     static assert( __traits(compiles, bar(lvalueOf!int)));
 }
+
+/++
+要素の型を得る
+
+ElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。
+See_Also:
+    - https://dlang.org/phobos/std_range_primitives.html#ElementType
+    - https://dlang.org/phobos/std_traits.html#ForeachType
++/
+unittest
+{
+    import std.range: ElementType;
+    import std.traits: ForeachType;
+
+    // 適当にレンジを作成
+    struct Range
+    {
+        uint[] ary;
+        uint front() const { return ary[0]; }
+        void popFront() { ary = ary[1..$]; }
+        bool empty() const { return ary.length == 0; }
+    }
+
+    // Rangeは同じように扱ってくれる
+    static assert(is(ElementType!Range == uint));
+    static assert(is(ForeachType!Range == uint));
+
+    // 配列でも同じように扱ってくれる
+    static assert(is(ElementType!(uint[]) == uint));
+    static assert(is(ForeachType!(uint[]) == uint));
+
+    // ElementTypeの場合はcharからdcharへの変換が行われてしまうが
+    // ForeachTypeの場合はcharのまま取り扱ってくれる
+    static assert(is(ElementType!(char[]) == dchar));
+    static assert(is(ForeachType!(char[]) == char));
+
+    // Foreach over Delegates
+    // https://dlang.org/spec/statement.html#foreach_over_delegates
+    // デリゲートではElementTypeはうまく扱ってくれない(void判定されてしまう)
+    alias DgRange = int delegate(scope int delegate(ref uint) dg);
+    static assert(!is(ElementType!DgRange == uint));
+    static assert( is(ForeachType!DgRange == uint));
+
+    // opApplyでforeachできる構造体を作成
+    struct Iterable
+    {
+        uint[] ary;
+        int opApply(scope int delegate(ref uint a) dg)
+        {
+            int result = 0;
+            foreach (item; ary)
+            {
+                result = dg(item);
+                if (result)
+                    break;
+            }
+            return result;
+        }
+    }
+    // ElementTypeではopApplyのある構造体は扱えない
+    static assert(!is(ElementType!Iterable == uint));
+    static assert( is(ForeachType!Iterable == uint));
+}
