@@ -152,3 +152,21 @@ unittest
     static assert(!isInstanceOf!(MyTemplate, int));
     static assert(!isInstanceOf!(MyTemplate, string));
 }
+
+/++
+関数が右辺値/左辺値で呼ぶことができるか確認する方法
++/
+unittest
+{
+    import std.traits: rvalueOf, lvalueOf;
+    void foo(int a) {}
+    void bar(ref int a) {}
+
+    // fooは右辺値でも左辺値でも呼べるが
+    // barは右辺値では呼ぶことができない。
+    // このような引数の特徴を持つ関数を弁別する際に使う。
+    static assert( __traits(compiles, foo(rvalueOf!int)));
+    static assert( __traits(compiles, foo(lvalueOf!int)));
+    static assert(!__traits(compiles, bar(rvalueOf!int)));
+    static assert( __traits(compiles, bar(lvalueOf!int)));
+}
