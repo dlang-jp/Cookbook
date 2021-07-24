@@ -806,18 +806,116 @@ string createBuf(string x) @trusted
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>例外とエラー</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+D言語では、修復可能な問題を例外と呼び、ExceptionやExceptionを継承したクラスのオブジェクトをthrowすることによって発生させます。
+一方で、修復不可能な問題の場合はエラーといって、ErrorやErrorを継承したクラスのオブジェクトをthrowします。
+基本的にはErrorは修復不可能であるため、catchする必要はありません。
+ExceptionもErrorもThrowableというインターフェースを継承しているので、ExceptionもErrorもcatchしたいという場合はThrowableをcatchすることができます(が、推奨されません)。
+<div class="ddoc_blankline"></div>
+
+なお、safeコードの中では、ErrorやThrowableをcatchすることはできません。
+<pre class="d_code notranslate"><span class="d_keyword">void</span> someErr() { <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Error(<span class="d_string">"Error"</span>); }
+<span class="d_keyword">void</span> someEx() { <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Exception"</span>); }
+
+<span class="d_keyword">bool</span> thrown = <span class="d_keyword">false</span>;
+
+<span class="d_comment">// 例外を投げる場合
+</span><span class="d_keyword">try</span>
+    someEx();
+<span class="d_keyword">catch</span> (Exception e)
+    thrown = <span class="d_keyword">true</span>;
+<span class="d_keyword">catch</span> (Error e)
+    <span class="d_keyword">assert</span>(0);
+
+<span class="d_keyword">assert</span>(thrown);
+thrown = <span class="d_keyword">false</span>;
+
+<span class="d_comment">// エラーを投げる場合
+</span><span class="d_keyword">try</span>
+    someErr();
+<span class="d_keyword">catch</span> (Exception e)
+    <span class="d_keyword">assert</span>(0);
+<span class="d_keyword">catch</span> (Error e)
+    thrown = <span class="d_keyword">true</span>;
+
+<span class="d_keyword">assert</span>(thrown);
+thrown = <span class="d_keyword">false</span>;
+
+<span class="d_comment">// Throwableをcatchすればどちらでも捕捉できる
+</span><span class="d_keyword">try</span>
+    someEx();
+<span class="d_keyword">catch</span> (Throwable e)
+    thrown = <span class="d_keyword">true</span>;
+
+<span class="d_keyword">assert</span>(thrown);
+thrown = <span class="d_keyword">false</span>;
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>nothrow</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+例外を投げない関数はnothrowをつけることができます。
+ただし、nothrowとついていても、Errorは投げることができるので注意が必要です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception: assertThrown;
+<span class="d_keyword">void</span> someErr() { <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Error(<span class="d_string">"Error"</span>); }
+<span class="d_keyword">void</span> someEx() { <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"Exception"</span>); }
+<span class="d_keyword">bool</span> thrown = <span class="d_keyword">false</span>;
+
+<span class="d_keyword">void</span> foo() <span class="d_keyword">nothrow</span>
+{
+    <span class="d_comment">// nothrow内では、例外を投げる可能性のある関数を呼ぶ場合はtry-catchして、
+</span>    <span class="d_comment">// すべての例外に対処する必要があります。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, someEx()));
+    <span class="d_keyword">try</span>
+        someEx();
+    <span class="d_keyword">catch</span> (Exception e)
+        thrown = <span class="d_keyword">true</span>;
+    <span class="d_keyword">assert</span>(thrown);
+    thrown = <span class="d_keyword">false</span>;
+}
+foo();
+
+<span class="d_keyword">void</span> bar() <span class="d_keyword">nothrow</span>
+{
+    <span class="d_comment">// nothrow内では、エラーなら投げられる
+</span>    someErr();
+}
+assertThrown!Error(bar());
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>例外の自作</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+例外クラスはExceptionを継承したクラスを自分で定義することができます。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#basicExceptionCtors">https://dlang.org/phobos/std_exception.html#basicExceptionCtors</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_comment">// Exceptionを継承したTestExceptionを定義
+</span><span class="d_keyword">class</span> TestException: Exception
+{
+    <span class="d_comment">/+
+    // コンストラクタでメッセージ、ファイル名、行数を渡せるようにします
+    this(string msg, string file = __FILE__, size_t line = __LINE__)
+    {
+        super(msg, file, line);
+    }
+    +/</span>
+    <span class="d_comment">// 上記のようなコンストラクタを毎回書くのは面倒なので、
+</span>    <span class="d_comment">// 以下のような便利テンプレートがあります。
+</span>    <span class="d_keyword">import</span> std.exception: basicExceptionCtors;
+    <span class="d_comment">///
+</span>    <span class="d_keyword">mixin</span> basicExceptionCtors;
+}
+
+<span class="d_keyword">void</span> someEx() { <span class="d_keyword">throw</span> <span class="d_keyword">new</span> TestException(<span class="d_string">"TestException"</span>); }
+<span class="d_keyword">bool</span> thrown = <span class="d_keyword">false</span>;
+
+<span class="d_comment">// TestExceptionが発生したときだけに対処することができます。
+</span><span class="d_keyword">try</span>
+    someEx();
+<span class="d_keyword">catch</span> (TestException e)
+    thrown = <span class="d_keyword">true</span>;
+<span class="d_keyword">assert</span>(thrown);
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>std.exception.enforce</h1>

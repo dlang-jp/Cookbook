@@ -661,111 +661,111 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 564,
+    "endline" : 570,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L564_C7",
+    "name" : "__unittest_L570_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# 例外とエラー\n",
-    "line" : 564,
+    "comment" : "# 例外とエラー\nD言語では、修復可能な問題を例外と呼び、ExceptionやExceptionを継承したクラスのオブジェクトをthrowすることによって発生させます。\n一方で、修復不可能な問題の場合はエラーといって、ErrorやErrorを継承したクラスのオブジェクトをthrowします。\n基本的にはErrorは修復不可能であるため、catchする必要はありません。\nExceptionもErrorもThrowableというインターフェースを継承しているので、ExceptionもErrorもcatchしたいという場合はThrowableをcatchすることができます(が、推奨されません)。\n\nなお、safeコードの中では、ErrorやThrowableをcatchすることはできません。\n",
+    "line" : 570,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 614,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L614_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# nothrow\n例外を投げない関数はnothrowをつけることができます。\nただし、nothrowとついていても、Errorは投げることができるので注意が必要です。\n",
+    "line" : 614,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 650,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L650_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 例外の自作\n例外クラスはExceptionを継承したクラスを自分で定義することができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#basicExceptionCtors\n",
+    "line" : 650,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 572,
+    "endline" : 683,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L572_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# nothrow\n",
-    "line" : 572,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 580,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L580_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 例外の自作\n",
-    "line" : 580,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 588,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L588_C7",
+    "name" : "__unittest_L683_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.enforce\n",
-    "line" : 588,
+    "line" : 683,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 596,
+    "endline" : 691,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L596_C7",
+    "name" : "__unittest_L691_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.collectException\n",
-    "line" : 596,
+    "line" : 691,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 604,
+    "endline" : 699,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L604_C7",
+    "name" : "__unittest_L699_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.ifThrown\n",
-    "line" : 604,
+    "line" : 699,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 612,
+    "endline" : 707,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L612_C7",
+    "name" : "__unittest_L707_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.assertThrown / std.exception.assertNotThrown\n",
-    "line" : 612,
+    "line" : 707,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 620,
+    "endline" : 715,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L620_C7",
+    "name" : "__unittest_L715_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.handle\n",
-    "line" : 620,
+    "line" : 715,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 625,
+    "endline" : 720,
     "endchar" : 1
    }
   ]
