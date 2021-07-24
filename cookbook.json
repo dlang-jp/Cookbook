@@ -386,7 +386,7 @@
   "name" : "data.zip_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/zip_example.d",
-  "comment" : "ZIP走査\n\n`std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。\nディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n",
+  "comment" : "ZIP操作\n\n`std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。\nディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n",
   "members" : [
    {
     "name" : "__unittest_L14_C9",
