@@ -560,26 +560,110 @@ Java等と同じように、finallyブロックが利用できます。
 
 /++
 # 例外とエラー
+D言語では、修復可能な問題を例外と呼び、ExceptionやExceptionを継承したクラスのオブジェクトをthrowすることによって発生させます。
+一方で、修復不可能な問題の場合はエラーといって、ErrorやErrorを継承したクラスのオブジェクトをthrowします。
+基本的にはErrorは修復不可能であるため、catchする必要はありません。
+ExceptionもErrorもThrowableというインターフェースを継承しているので、ExceptionもErrorもcatchしたいという場合はThrowableをcatchすることができます(が、推奨されません)。
+
+なお、safeコードの中では、ErrorやThrowableをcatchすることはできません。
 +/
-@safe unittest
+@system unittest
 {
-    // todo
+    void someErr() { throw new Error("Error"); }
+    void someEx() { throw new Exception("Exception"); }
+
+    bool thrown = false;
+
+    // 例外を投げる場合
+    try
+        someEx();
+    catch (Exception e)
+        thrown = true;
+    catch (Error e)
+        assert(0);
+
+    assert(thrown);
+    thrown = false;
+
+    // エラーを投げる場合
+    try
+        someErr();
+    catch (Exception e)
+        assert(0);
+    catch (Error e)
+        thrown = true;
+
+    assert(thrown);
+    thrown = false;
+
+    // Throwableをcatchすればどちらでも捕捉できる
+    try
+        someEx();
+    catch (Throwable e)
+        thrown = true;
+
+    assert(thrown);
+    thrown = false;
 }
 
 /++
 # nothrow
+例外を投げない関数はnothrowをつけることができます。
+ただし、nothrowとついていても、Errorは投げることができるので注意が必要です。
 +/
-@safe unittest
+@system unittest
 {
-    // todo
+    import std.exception: assertThrown;
+    void someErr() { throw new Error("Error"); }
+    void someEx() { throw new Exception("Exception"); }
+    bool thrown = false;
+
+    void foo() nothrow
+    {
+        // nothrow内では、例外を投げる可能性のある関数を呼ぶ場合はtry-catchして、
+        // すべての例外に対処する必要があります。
+        static assert(!__traits(compiles, someEx()));
+        try
+            someEx();
+        catch (Exception e)
+            thrown = true;
+        assert(thrown);
+        thrown = false;
+    }
+    foo();
+
+    void bar() nothrow
+    {
+        // nothrow内では、エラーなら投げられる
+        someErr();
+    }
+    assertThrown!Error(bar());
 }
 
 /++
 # 例外の自作
+例外クラスはExceptionを継承したクラスを自分で定義することができます。
 +/
 @safe unittest
 {
-    // todo
+    // Exceptionを継承したTestExceptionを定義
+    class TestException: Exception
+    {
+        this(string msg, string file = __FILE__, size_t line = __LINE__)
+        {
+            super(msg, file, line);
+        }
+    }
+
+    void someEx() { throw new TestException("TestException"); }
+    bool thrown = false;
+
+    // TestExceptionが発生したときだけに対処することができます。
+    try
+        someEx();
+    catch (TestException e)
+        thrown = true;
+    assert(thrown);
 }
 
 /++
