@@ -377,6 +377,81 @@ Rebindable!(<span class="d_keyword">immutable</span> Example) rebindableValue2 =
 <span class="d_keyword">assert</span>(rebindableValue2.value == value1.value);
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。
+<div class="ddoc_blankline"></div>
+
+ポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために <span class="d_inlinecode donthyphenate notranslate">RefCounted</span> を使う方法があります。
+内部的には参照カウンタで管理されます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.memory : pureMalloc, pureFree;
+<span class="d_keyword">import</span> std.typecons : refCounted;
+
+<span class="d_comment">// コピー不能でデストラクタを持つデータ
+</span><span class="d_keyword">struct</span> Payload
+{
+    <span class="d_comment">// 最後に破棄された値(デストラクタ呼び出し確認用)
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">int</span> lastDestructedValue;
+
+    @disable <span class="d_keyword">this</span>(<span class="d_keyword">this</span>);
+
+    <span class="d_comment">// 管理対象のリソース確保
+</span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> value) @nogc <span class="d_keyword">nothrow</span> @safe <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">this</span>.pointer = (() @trusted =&gt; <span class="d_keyword">cast</span>(<span class="d_keyword">int</span>*) pureMalloc(<span class="d_keyword">int</span>.sizeof))();
+        *<span class="d_keyword">this</span>.pointer = value;
+    }
+
+    <span class="d_comment">// Payload解放処理
+</span>    <span class="d_comment">// RefCounted初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
+</span>    <span class="d_comment">// 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+</span>    <span class="d_comment">// このため、初期値だったら解放しない、というロジックが必要です。
+</span>    ~<span class="d_keyword">this</span>() @nogc <span class="d_keyword">nothrow</span> @safe <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">if</span> (pointer)
+        {
+            lastDestructedValue = *pointer;
+            (() @trusted =&gt; pureFree(pointer))();
+            pointer = <span class="d_keyword">null</span>;
+        }
+    }
+
+    <span class="d_keyword">int</span>* pointer;
+}
+
+<span class="d_comment">// 新しいリソースを保持するRefCounted!Payloadを、refCounted関数で生成します。
+</span><span class="d_keyword">auto</span> rc1 = refCounted(Payload(1234));
+
+<span class="d_comment">// 現在の参照カウントは1です。
+</span><span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 1);
+
+<span class="d_comment">// 確保したリソースを共有する別のRefCounted!Payloadを生成します。
+</span><span class="d_keyword">auto</span> rc2 = rc1;
+
+<span class="d_comment">// 参照カウントは2になります。
+</span><span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc1.pointer <span class="d_keyword">is</span> rc2.pointer);
+
+<span class="d_comment">// rc1を別のRefCounted!Paylodで更新します。
+</span>rc1 = refCounted(Payload(5678));
+
+<span class="d_comment">// rc2で参照が続いているため、以前のリソースはまだ解放されません。
+</span><span class="d_keyword">assert</span>(Payload.lastDestructedValue == Payload.lastDestructedValue.init);
+<span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 1);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 1);
+<span class="d_keyword">assert</span>(rc1.pointer !<span class="d_keyword">is</span> rc2.pointer);
+
+<span class="d_comment">// rc2も更新することで、最初のリソースの参照カウントが0になり、解放されます。
+</span>rc2 = rc1;
+<span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc1.pointer <span class="d_keyword">is</span> rc2.pointer);
+<span class="d_keyword">assert</span>(*rc1.pointer == 5678);
+
+<span class="d_comment">// 最初のリソースが解放されていることを確認
+</span><span class="d_keyword">assert</span>(Payload.lastDestructedValue == 1234);
+</pre>
+</div>
 
                 
             </div>

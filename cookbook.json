@@ -1601,7 +1601,20 @@
     "comment" : "constやimmutableの参照型の変数でも再代入可能とするRebindableの例です\n\nconstやimmutableの参照型の変数はそのままでは再代入できませんが、Rebindableでラップした変数は再代入可能になります。\n",
     "line" : 97,
     "char" : 1,
-    "endline" : 126,
+    "endline" : 132,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L132_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。\n\nポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために `RefCounted` を使う方法があります。\n内部的には参照カウンタで管理されます。\n",
+    "line" : 132,
+    "char" : 7,
+    "storageClass" : [
+     "@nogc"
+    ],
+    "endline" : 203,
     "endchar" : 1
    }
   ]
