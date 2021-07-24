@@ -270,16 +270,203 @@
 <div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">TODO:</span>
 置換(replace)</div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 文字列の連結
+ D言語の文字列の種類
+<div class="ddoc_blankline"></div>
+
+D言語の文字列は、基本的に文字の配列で、特別な型やクラスがあるわけではありません。ただし、文字型はchar(UTF-8), wchar(UTF-16), dchar(UTF-32)があり、それぞれ修飾子がありますので、種類は多いです。
+また、UTF-8, UTF-16, UTF-32 以外の文字コードは「バイト列(符号なし8bit整数の配列)」という扱いです。ただし、一部のライブラリや、C言語との受け渡しインターフェースなどには便宜上char型を使うことがあります。
+<div class="ddoc_blankline"></div>
+
+<table><tr><th><tr><th align="center">型修飾</th><th align="center">UTF-8</th><th align="center">UTF-16</th><th align="center">UTF-32</th><th align="center">それ以外</th></tr></th></tr><tbody><tr><td align="center">(none)</td><td align="center">char[]</td><td align="center">wchar[]</td><td align="center">dchar[]</td><td align="center">ubyte[]</td></tr>
+<tr><td align="center">const型</td><td align="center">const(char)[]</td><td align="center">const(wchar)[]</td><td align="center">const(dchar)[]</td><td align="center">const(ubyte)[]</td></tr>
+<tr><td align="center">inout型</td><td align="center">inout(char)[]</td><td align="center">inout(wchar)[]</td><td align="center">inout(dchar)[]</td><td align="center">inout(ubyte)[]</td></tr>
+<tr><td align="center">shared型</td><td align="center">shared(char)[]</td><td align="center">shared(wchar)[]</td><td align="center">shared(dchar)[]</td><td align="center">shared(ubyte)[]</td></tr>
+<tr><td align="center">const shared型</td><td align="center">const shared(char)[]</td><td align="center">const shared(wchar)[]</td><td align="center">const shared(dchar)[]</td><td align="center">const shared(ubyte)[]</td></tr>
+<tr><td align="center">inout shared型</td><td align="center">inout shared(char)[]</td><td align="center">inout shared(wchar)[]</td><td align="center">inout shared(dchar)[]</td><td align="center">inout shared(ubyte)[]</td></tr>
+<tr><td align="center">const inout型</td><td align="center">const inout(char)[]</td><td align="center">const inout(wchar)[]</td><td align="center">const inout(dchar)[]</td><td align="center">const inout(ubyte)[]</td></tr>
+<tr><td align="center">const inout shared型</td><td align="center">const inout(shared char)[]</td><td align="center">const inout shared(wchar)[]</td><td align="center">const inout shared(dchar)[]</td><td align="center">const inout shared(ubyte)[]</td></tr>
+<tr><td align="center">immutable型</td><td align="center">immutable(char)[]</td><td align="center">immutable(wchar)[]</td><td align="center">immutable(dchar)[]</td><td align="center">immutable(ubyte)[]</td></tr>
+</tbody></table>
+この中でも、特に利用頻度が高いのが<span class="d_inlinecode donthyphenate notranslate">immutable(char)[]</span>型で、これは文字列リテラルの型であり、特別に<span class="d_inlinecode donthyphenate notranslate">string</span>という別名が利用できます。
+同様に、<span class="d_inlinecode donthyphenate notranslate">immutable(wchar)[]</span>には<span class="d_inlinecode donthyphenate notranslate">wstring</span>という別名が、<span class="d_inlinecode donthyphenate notranslate">immutable(dchar)[]</span>には<span class="d_inlinecode donthyphenate notranslate">dstring</span>という別名が、それぞれ利用できます。
+<div class="ddoc_blankline"></div>
+
+immutableはマルチスレッド間でクリティカルセクションなしに同時アクセスできたり、寿命を考えなくてもよい点、const型への暗黙変換ができる点などが便利です。
+<div class="ddoc_blankline"></div>
+
+以下のサンプルでは文字コード(UTF-8, UTF-16, UTF-32)のそれぞれの変換について説明します
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.utf: toUTF8, toUTF16, toUTF32, toUTF16z;
+<span class="d_comment">// 日本語のあいうえおはUTF-8で15バイト
+</span>string str1 = <span class="d_string">"あいうえお"</span>;
+<span class="d_keyword">assert</span>(str1.length == 15);
+
+<span class="d_comment">// "あいうえお"を5要素で扱いたい場合は、dstringを使用する
+</span>dstring str2 = <span class="d_string">"あいうえお"d</span>;
+<span class="d_keyword">assert</span>(str2.length == 5);
+
+<span class="d_comment">// UTF-8からUTF-32への変換は toUTF32 でできます
+</span>dstring str3 = str1.toUTF32();
+<span class="d_keyword">assert</span>(str3 == str2);
+<span class="d_comment">// 逆に、UTF-32からUTF-8は、toUTF8()
+</span><span class="d_keyword">assert</span>(str2.toUTF8() == str1);
+
+<span class="d_comment">// char型(UTF-8)の配列であるstr1でも、foreachで
+</span><span class="d_comment">// dchar型(UTF-32)に変換して要素アクセスできます。
+</span>size_t idx = 0;
+<span class="d_keyword">foreach</span> (<span class="d_keyword">dchar</span> c; str1)
+{
+    <span class="d_keyword">assert</span>(str2[idx] == c);
+    idx++;
+}
+
+<span class="d_comment">// UTF-16型へは toUTF16 を使います。
+</span>wstring str4 = str1.toUTF16();
+wstring str5 = str2.toUTF16();
+
+<span class="d_comment">// string型(immutable(char)[]型)をchar[]型にする場合は、
+</span><span class="d_comment">// .dupでコピーを行います。
+</span><span class="d_keyword">char</span>[] str6 = str1.dup;
+
+<span class="d_comment">// char[]型をstring型(immutable(char)[]型)にする場合は、
+</span><span class="d_comment">// .idupで破壊されないメモリとしてコピーします
+</span>string str7 = str6.idup;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列型の使い分け
+<div class="ddoc_blankline"></div>
+
+文字列の型は、おおむね次のような使い分けをします。
+
+<ul><li>普段使いは<span class="d_inlinecode donthyphenate notranslate">string</span></li>
+<li>関数引数で、関数が終わった後はメモリが破壊されてもいいなら<span class="d_inlinecode donthyphenate notranslate">const(char)[]</span></li>
+<li>関数引数で、関数が終わった後にメモリが破壊されて困るなら<span class="d_inlinecode donthyphenate notranslate">string</span></li>
+<li>1文字が1要素であってほしい場合は<span class="d_inlinecode donthyphenate notranslate">dchar[]</span>や<span class="d_inlinecode donthyphenate notranslate">dstring</span></li>
+<li>N文字目を書き換えたい場合は<span class="d_inlinecode donthyphenate notranslate">dchar[]</span></li>
+<li>Windows APIに渡すなら<span class="d_inlinecode donthyphenate notranslate">wchar[]</span>や<span class="d_inlinecode donthyphenate notranslate">const(wchar)[]</span>
+</li>
+</ul>
+さらに、D言語では、スライスの型はありません。<span class="d_inlinecode donthyphenate notranslate">string</span>のスライスは<span class="d_inlinecode donthyphenate notranslate">string</span>だし、<span class="d_inlinecode donthyphenate notranslate">const(char)[]</span>のスライスは<span class="d_inlinecode donthyphenate notranslate">const(char)[]</span>です。
+<pre class="d_code notranslate"><span class="d_comment">// ■ 普段使いは string で大丈夫です
+</span>string str1 = <span class="d_string">"あいうえお"</span>;
+
+<span class="d_comment">// ■ 関数引数で、関数が終わった後はメモリが破壊されてもいいなら
+</span><span class="d_comment">// `const(char)[]`を使います。
+</span><span class="d_comment">// サンプルとして、文字列から「あい」を見つける関数
+</span><span class="d_comment">// 「あい」をさがした後は死んでもかまわないので、
+</span><span class="d_comment">// 引数は const(char)[] が妥当でしょう。
+</span><span class="d_keyword">bool</span> findLove(<span class="d_keyword">const</span>(<span class="d_keyword">char</span>)[] str)
+{
+    <span class="d_keyword">import</span> std.string;
+    <span class="d_keyword">return</span> str.indexOf(<span class="d_string">"あい"</span>) != -1;
+}
+<span class="d_comment">// 関数を読んだ後でも引数が生き続けるケース
+</span><span class="d_keyword">assert</span>(findLove(str1));
+<span class="d_comment">// 関数を読んだ後に引数の寿命が終わり、メモリが破損するケース
+</span>{
+    <span class="d_keyword">char</span>[15] str2 = <span class="d_string">"かきくけこ"</span>;
+    <span class="d_keyword">assert</span>(!findLove(str2[]));
+}
+
+<span class="d_comment">// ■ 関数引数で、関数が終わった後にメモリが破壊されて困るなら`string`
+</span><span class="d_comment">// 以下のメンバ関数のsetName, のように、関数が終わった後で
+</span><span class="d_comment">// 寿命が尽きてはいけない場合には、stringや、コピーを保存する必要があります。
+</span><span class="d_keyword">struct</span> Data
+{
+    string name;
+    <span class="d_keyword">void</span> setName(string str)
+    {
+        name = str;
+    }
+    <span class="d_keyword">void</span> setNameCopy(<span class="d_keyword">const</span>(<span class="d_keyword">char</span>)[] str)
+    {
+        <span class="d_comment">// idupをつけるとconst(char)[]やchar[]のコピーを作り、
+</span>        <span class="d_comment">// string型にしてくれます。
+</span>        name = str.idup;
+    }
+}
+Data dat;
+<span class="d_comment">// 関数を読んだ後でも引数が生き続けるケース
+</span>dat.setName(str1);
+<span class="d_keyword">assert</span>(dat.name == <span class="d_string">"あいうえお"</span>);
+<span class="d_comment">// 関数を読んだ後に引数の寿命が終わり、メモリが破損するケース
+</span>{
+    <span class="d_keyword">char</span>[15] str3 = <span class="d_string">"かきくけこ"</span>;
+    dat.setNameCopy(str3[]);
+}
+<span class="d_comment">// str3はすでに破棄されているが、コピーを取っているので
+</span><span class="d_comment">// dat.nameにはアクセスできる
+</span><span class="d_keyword">assert</span>(dat.name == <span class="d_string">"かきくけこ"</span>);
+
+<span class="d_comment">// ■ 1文字が1要素であってほしい場合は`dchar[]`や`dstring`
+</span>dstring str4 = <span class="d_string">"さしすせそ"</span>;
+<span class="d_comment">// 以下のように文字数やN文字目の文字が欲しい場合、UTF-32を使います。
+</span><span class="d_keyword">assert</span>(str4.length == 5);
+<span class="d_keyword">assert</span>(str4[2] == 'す');
+
+<span class="d_comment">// ■ N文字目を書き換えたい場合は`dchar[]`
+</span><span class="d_keyword">dchar</span>[] str5 = <span class="d_string">"やかん"d</span>.dup;
+str5[0] = 'ち';
+<span class="d_keyword">assert</span>(str5 == <span class="d_string">"ちかん"d</span>);
+
+<span class="d_comment">// ■ Windows APIに渡すなら`wchar[]`や`const(wchar)[]`
+</span><span class="d_comment">// 特にWindowsAPIに渡す場合はtoUTF16z()を呼び出して
+</span><span class="d_comment">// "\0"終端の文字列の先頭ポインタを得ることができ、
+</span><span class="d_comment">// そのままLPCWSTR等の型を要求する関数へ渡すことができます
+</span><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_keyword">import</span> std.utf: toUTF16z;
+    <span class="d_keyword">import</span> core.sys.windows.windows: GetEnvironmentVariableW, NULL;
+    GetEnvironmentVariableW(str1.toUTF16z(), NULL, 0);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列の連結➀
+<div class="ddoc_blankline"></div>
+
+文字列は単純な文字の配列なので、<span class="d_inlinecode donthyphenate notranslate">~</span>演算子で連結できます。
+<pre class="d_code notranslate">string str1 = <span class="d_string">"あいうえお"</span>;
+string str2 = <span class="d_string">"かきくけこ"</span>;
+<span class="d_comment">// ~ で連結
+</span><span class="d_keyword">assert</span>(str1 ~ str2 == <span class="d_string">"あいうえおかきくけこ"</span>);
+
+<span class="d_keyword">const</span>(<span class="d_keyword">char</span>)[] str3 = <span class="d_string">"さしすせそ"</span>;
+<span class="d_keyword">char</span>[] str4 = <span class="d_string">"たちつてと"</span>.dup;
+
+<span class="d_comment">// ~ による連結は、必ず新規でメモリを確保してコピーを作成するので、
+</span><span class="d_comment">// char[]型にもstring型にもできます。
+</span><span class="d_keyword">char</span>[] str5 = str1 ~ str3 ~ str4;
+<span class="d_keyword">assert</span>(str5 == <span class="d_string">"あいうえおさしすせそたちつてと"</span>);
+
+<span class="d_comment">// ただし、stringとchar[]型など、違う型修飾子が混じっている場合の
+</span><span class="d_comment">// 連結後の型はchar[]型となるので、string型にするにはcastが必要です。
+</span>string str6 = <span class="d_keyword">cast</span>(<span class="d_keyword">immutable</span>)(str1 ~ str3 ~ str4);
+<span class="d_keyword">assert</span>(str6 == <span class="d_string">"あいうえおさしすせそたちつてと"</span>);
+
+<span class="d_comment">// やってることはcast(immutable)と同じですが、assumeUniqueのほうが明示的です。
+</span><span class="d_comment">// (ユニークと見なす＝ここ以外で参照していないメモリなので、immutableにして問題ないという意味)
+</span><span class="d_keyword">import</span> std.exception: assumeUnique;
+string str7 = assumeUnique(str1 ~ str3 ~ str4);
+<span class="d_keyword">assert</span>(str7 == <span class="d_string">"あいうえおさしすせそたちつてと"</span>);
+
+<span class="d_comment">// 伸展しながら連結する場合、 ~= を使用します。
+</span><span class="d_comment">// これは、str2 = str2 ~ str3 と同じ意味となります。
+</span>str2 ~= str3;
+<span class="d_keyword">assert</span>(str2 == <span class="d_string">"かきくけこさしすせそ"</span>);
+str2 ~= str4;
+<span class="d_keyword">assert</span>(str2 == <span class="d_string">"かきくけこさしすせそたちつてと"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列の連結➁
 <div class="ddoc_blankline"></div>
 
 事前に長さの分からない文字列を構築する場合、<span class="d_inlinecode donthyphenate notranslate">std.array</span> の <span class="d_inlinecode donthyphenate notranslate">appender</span> を使います。
 <div class="ddoc_blankline"></div>
 
 <span class="d_inlinecode donthyphenate notranslate">appender</span> : <a href="https://dlang.org/phobos/std_array.html#appender">https://dlang.org/phobos/std_array.html#appender</a>
-<pre class="d_code notranslate"><span class="d_keyword">assert</span>(<span class="d_string">"ABC"</span> ~ <span class="d_string">"DEF"</span> == <span class="d_string">"ABCDEF"</span>);
-
-<span class="d_comment">// 多くの文字を連結するときはappenderを使います
+<pre class="d_code notranslate"><span class="d_comment">// 多くの文字を連結するときはappenderを使います
 </span>
 <span class="d_keyword">import</span> std.array : appender;
 

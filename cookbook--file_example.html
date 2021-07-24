@@ -345,7 +345,10 @@ sort(paths);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- パスに関する操作の例です。
+ 基本的なパスに操作の例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">baseName</span> 関数でファイル名の取得、<span class="d_inlinecode donthyphenate notranslate">dirName</span> 関数でディレクトリパスを取得します。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.path;
 
 string filePath = buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>, <span class="d_string">"bar.txt"</span>);
@@ -357,10 +360,146 @@ string filePath = buildPath(<span class="d_string">"test"</span>, <span class="d
 <span class="d_comment">// ディレクトリ名を抽出します。
 </span>string fileDir = filePath.dirName;
 <span class="d_keyword">assert</span>(fileDir == buildPath(<span class="d_string">"test"</span>, <span class="d_string">"foo"</span>));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ファイルパスの拡張子を操作する例です。
+<div class="ddoc_blankline"></div>
 
-<span class="d_comment">// 拡張子のみを抽出します。
-</span>string fileExtension = filePath.extension;
-<span class="d_keyword">assert</span>(fileExtension == <span class="d_string">".txt"</span>);
+取得、変更、取り除く、といった操作ができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.path : extension, setExtension, stripExtension;
+
+<span class="d_comment">// extension 関数で拡張子を取得します。結果としてピリオド付きの拡張子が得られます。
+</span><span class="d_comment">// ディレクトリパスなど、拡張子が無い場合は空文字が得られます。
+</span><span class="d_keyword">assert</span>(extension(<span class="d_string">"/temp/hoge/test.txt"</span>) == <span class="d_string">".txt"</span>);
+<span class="d_keyword">assert</span>(extension(<span class="d_string">"/data/2021-01-01/records.csv"</span>) == <span class="d_string">".csv"</span>);
+<span class="d_keyword">assert</span>(extension(<span class="d_string">"/test/hoge/fuga"</span>) == <span class="d_string">""</span>);
+<span class="d_comment">// 複数の拡張子がある場合、最後のピリオドより後ろの部分が得られます
+</span><span class="d_keyword">assert</span>(extension(<span class="d_string">"/test/hoge/fuga.txt.old"</span>) == <span class="d_string">".old"</span>);
+
+<span class="d_comment">// setExtension 関数で拡張子を変更したパスが得られます。
+</span><span class="d_comment">// 設定する拡張子は、先頭にピリオドがあってもなくても構いません。
+</span><span class="d_keyword">assert</span>(setExtension(<span class="d_string">"/temp/hoge/test.txt"</span>, <span class="d_string">".md"</span>) == <span class="d_string">"/temp/hoge/test.md"</span>);
+<span class="d_keyword">assert</span>(setExtension(<span class="d_string">"/temp/hoge/test.txt"</span>, <span class="d_string">"md"</span>) == <span class="d_string">"/temp/hoge/test.md"</span>);
+<span class="d_comment">// 複数の拡張子がある場合、最後のピリオドより後ろの部分が置き換えられます
+</span><span class="d_keyword">assert</span>(setExtension(<span class="d_string">"/temp/hoge/test.txt.old"</span>, <span class="d_string">"md"</span>) == <span class="d_string">"/temp/hoge/test.txt.md"</span>);
+
+<span class="d_comment">// stripExtension 関数で拡張子を取り除いたパスが得られます。
+</span><span class="d_keyword">assert</span>(stripExtension(<span class="d_string">"/temp/hoge/test.txt"</span>) == <span class="d_string">"/temp/hoge/test"</span>);
+<span class="d_keyword">assert</span>(stripExtension(<span class="d_string">"/data/2021-01-01/records.csv"</span>) == <span class="d_string">"/data/2021-01-01/records"</span>);
+<span class="d_comment">// 複数の拡張子がある場合、最後のピリオドより後ろの部分が削除されます
+</span><span class="d_keyword">assert</span>(stripExtension(<span class="d_string">"/data/2021-01-01/records.csv.bak"</span>) == <span class="d_string">"/data/2021-01-01/records.csv"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ファイル移動の例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">rename</span> を使い、ファイル名はそのままでディレクトリパスを変更することで移動が実現できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.file : rename, mkdir, rmdirRecurse, write;
+
+<span class="d_comment">// 作業用に temp1 temp2 のディレクトリを作成し、temp1 にファイルを作成しておきます
+</span>mkdir(<span class="d_string">"temp1"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"temp1"</span>);
+
+mkdir(<span class="d_string">"temp2"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"temp2"</span>);
+
+write(<span class="d_string">"temp1/test.txt"</span>, <span class="d_string">"TEST"</span>);
+
+<span class="d_comment">// rename関数で名前を付け替えて移動します
+</span>rename(<span class="d_string">"temp1/test.txt"</span>, <span class="d_string">"temp2/test.txt"</span>);
+
+<span class="d_comment">// 確認
+</span><span class="d_keyword">import</span> std.file : exists, readText;
+
+<span class="d_keyword">assert</span>(!exists(<span class="d_string">"temp1/test.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"temp2/test.txt"</span>));
+<span class="d_keyword">assert</span>(readText(<span class="d_string">"temp2/test.txt"</span>) == <span class="d_string">"TEST"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ディレクトリ内のファイル一覧のうち、パターンに合致するものだけを列挙する例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">dirEntries</span> に対して対象とするファイル名の glob パターンを指定します。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_file.html#dirEntries">https://dlang.org/phobos/std_file.html#dirEntries</a>
+See_Also: <a href="https://dlang.org/phobos/std_path.html#.globMatch">https://dlang.org/phobos/std_path.html#.globMatch</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.file : mkdir, rmdirRecurse, write;
+
+mkdir(<span class="d_string">"temp"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"temp"</span>);
+
+write(<span class="d_string">"temp/test1.txt"</span>, <span class="d_string">""</span>);
+write(<span class="d_string">"temp/test2-1.txt"</span>, <span class="d_string">""</span>);
+write(<span class="d_string">"temp/test2-2.txt"</span>, <span class="d_string">""</span>);
+write(<span class="d_string">"temp/test2-3.txt"</span>, <span class="d_string">""</span>);
+write(<span class="d_string">"temp/test3.txt"</span>, <span class="d_string">""</span>);
+
+<span class="d_keyword">import</span> std.file : DirEntry, dirEntries, SpanMode;
+
+<span class="d_comment">// dirEntriesの第2引数で、globと呼ばれるパターンを指定するとファイルの一覧を絞り込めます
+</span><span class="d_comment">// * を指定すると任意の文字列にマッチします
+</span>string[] testFiles;
+<span class="d_keyword">foreach</span> (DirEntry entry; dirEntries(<span class="d_string">"temp"</span>, <span class="d_string">"test*.txt"</span>, SpanMode.shallow))
+{
+    testFiles ~= entry.name;
+}
+
+<span class="d_keyword">import</span> std.algorithm : sort;
+<span class="d_keyword">import</span> std.path : buildPath;
+
+sort(testFiles);
+<span class="d_keyword">assert</span>(testFiles == [
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test1.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-1.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-2.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-3.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test3.txt"</span>),
+]);
+
+<span class="d_comment">// ? は任意の1文字にマッチします
+</span><span class="d_comment">// [] で囲まれた文字はいずれか1文字にマッチします
+</span>string[] test1or2;
+<span class="d_keyword">foreach</span> (DirEntry entry; dirEntries(<span class="d_string">"temp"</span>, <span class="d_string">"test?-[12].txt"</span>, SpanMode.shallow))
+{
+    test1or2 ~= entry.name;
+}
+
+sort(test1or2);
+<span class="d_keyword">assert</span>(test1or2 == [
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-1.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-2.txt"</span>),
+]);
+
+<span class="d_comment">// [!a] と指定した場合、a以外の1文字にマッチします
+</span>string[] tempNot1;
+<span class="d_keyword">foreach</span> (DirEntry entry; dirEntries(<span class="d_string">"temp"</span>, <span class="d_string">"test2-[!1].txt"</span>, SpanMode.shallow))
+{
+    tempNot1 ~= entry.name;
+}
+
+sort(tempNot1);
+<span class="d_keyword">assert</span>(tempNot1 == [
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-2.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test2-3.txt"</span>),
+]);
+
+<span class="d_comment">// {A,B}とすると、A または B というパターンも表現できます
+</span><span class="d_comment">// こちらは文字ではなく任意の文字列が指定できます
+</span>string[] test1or3;
+<span class="d_keyword">foreach</span> (DirEntry entry; dirEntries(<span class="d_string">"temp"</span>, <span class="d_string">"{test1,test3}.txt"</span>, SpanMode.shallow))
+{
+    test1or3 ~= entry.name;
+}
+
+sort(test1or3);
+<span class="d_keyword">assert</span>(test1or3 == [
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test1.txt"</span>),
+    buildPath(<span class="d_string">"temp"</span>, <span class="d_string">"test3.txt"</span>),
+]);
 </pre>
 </div>
 

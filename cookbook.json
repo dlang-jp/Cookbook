@@ -793,17 +793,47 @@
     "comment" : "ディレクトリ操作の例です。\n",
     "line" : 52,
     "char" : 1,
-    "endline" : 97,
+    "endline" : 99,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L97_C1",
+    "name" : "__unittest_L99_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "パスに関する操作の例です。\n",
-    "line" : 97,
+    "comment" : "基本的なパスに操作の例です。\n\n`baseName` 関数でファイル名の取得、`dirName` 関数でディレクトリパスを取得します。\n",
+    "line" : 99,
     "char" : 1,
-    "endline" : 115,
+    "endline" : 119,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L119_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ファイルパスの拡張子を操作する例です。\n\n取得、変更、取り除く、といった操作ができます。\n",
+    "line" : 119,
+    "char" : 1,
+    "endline" : 151,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L151_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ファイル移動の例です。\n\n`rename` を使い、ファイル名はそのままでディレクトリパスを変更することで移動が実現できます。\n",
+    "line" : 151,
+    "char" : 1,
+    "endline" : 183,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L183_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ディレクトリ内のファイル一覧のうち、パターンに合致するものだけを列挙する例です。\n\n`dirEntries` に対して対象とするファイル名の glob パターンを指定します。\n\nSee_Also: https://dlang.org/phobos/std_file.html#dirEntries\nSee_Also: https://dlang.org/phobos/std_path.html#.globMatch\n",
+    "line" : 183,
+    "char" : 1,
+    "endline" : 259,
     "endchar" : 1
    }
   ]
@@ -1450,86 +1480,116 @@
   "comment" : "文字列\n\n文字列操作についてまとめます。\n\nTODO: 置換(replace), 削除(remove), 分割(split)\n",
   "members" : [
    {
-    "name" : "__unittest_L18_C1",
+    "name" : "__unittest_L35_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "文字列の連結\n\n事前に長さの分からない文字列を構築する場合、`std.array` の `appender` を使います。\n\n`appender` : https://dlang.org/phobos/std_array.html#appender\n",
-    "line" : 18,
+    "comment" : "D言語の文字列の種類\n\nD言語の文字列は、基本的に文字の配列で、特別な型やクラスがあるわけではありません。ただし、文字型はchar(UTF-8), wchar(UTF-16), dchar(UTF-32)があり、それぞれ修飾子がありますので、種類は多いです。\nまた、UTF-8, UTF-16, UTF-32 以外の文字コードは「バイト列(符号なし8bit整数の配列)」という扱いです。ただし、一部のライブラリや、C言語との受け渡しインターフェースなどには便宜上char型を使うことがあります。\n\n| 型修飾               | UTF-8                      | UTF-16                      | UTF-32                      | それ以外                    |\n|:--------------------:|:--------------------------:|:---------------------------:|:---------------------------:|:---------------------------:|\n| (none)               | char[]                     | wchar[]                     | dchar[]                     | ubyte[]                     |\n| const型              | const(char)[]              | const(wchar)[]              | const(dchar)[]              | const(ubyte)[]              |\n| inout型              | inout(char)[]              | inout(wchar)[]              | inout(dchar)[]              | inout(ubyte)[]              |\n| shared型             | shared(char)[]             | shared(wchar)[]             | shared(dchar)[]             | shared(ubyte)[]             |\n| const shared型       | const shared(char)[]       | const shared(wchar)[]       | const shared(dchar)[]       | const shared(ubyte)[]       |\n| inout shared型       | inout shared(char)[]       | inout shared(wchar)[]       | inout shared(dchar)[]       | inout shared(ubyte)[]       |\n| const inout型        | const inout(char)[]        | const inout(wchar)[]        | const inout(dchar)[]        | const inout(ubyte)[]        |\n| const inout shared型 | const inout(shared char)[] | const inout shared(wchar)[] | const inout shared(dchar)[] | const inout shared(ubyte)[] |\n| immutable型          | immutable(char)[]          | immutable(wchar)[]          | immutable(dchar)[]          | immutable(ubyte)[]          |\n\nこの中でも、特に利用頻度が高いのが`immutable(char)[]`型で、これは文字列リテラルの型であり、特別に`string`という別名が利用できます。\n同様に、`immutable(wchar)[]`には`wstring`という別名が、`immutable(dchar)[]`には`dstring`という別名が、それぞれ利用できます。\n\nimmutableはマルチスレッド間でクリティカルセクションなしに同時アクセスできたり、寿命を考えなくてもよい点、const型への暗黙変換ができる点などが便利です。\n\n以下のサンプルでは文字コード(UTF-8, UTF-16, UTF-32)のそれぞれの変換について説明します\n",
+    "line" : 35,
     "char" : 1,
-    "endline" : 42,
+    "endline" : 88,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L42_C1",
+    "name" : "__unittest_L88_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "文字列型の使い分け\n\n文字列の型は、おおむね次のような使い分けをします。\n\n- 普段使いは`string`\n- 関数引数で、関数が終わった後はメモリが破壊されてもいいなら`const(char)[]`\n- 関数引数で、関数が終わった後にメモリが破壊されて困るなら`string`\n- 1文字が1要素であってほしい場合は`dchar[]`や`dstring`\n- N文字目を書き換えたい場合は`dchar[]`\n- Windows APIに渡すなら`wchar[]`や`const(wchar)[]`\n\nさらに、D言語では、スライスの型はありません。`string`のスライスは`string`だし、`const(char)[]`のスライスは`const(char)[]`です。\n",
+    "line" : 88,
+    "char" : 1,
+    "endline" : 170,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L170_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "文字列の連結➀\n\n文字列は単純な文字の配列なので、`~`演算子で連結できます。\n",
+    "line" : 170,
+    "char" : 1,
+    "endline" : 212,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L212_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "文字列の連結➁\n\n事前に長さの分からない文字列を構築する場合、`std.array` の `appender` を使います。\n\n`appender` : https://dlang.org/phobos/std_array.html#appender\n",
+    "line" : 212,
+    "char" : 1,
+    "endline" : 234,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L234_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "書式化文字列\n\n`std.format` の `format` を使います。\n\nhttps://dlang.org/phobos/std_format.html#.format\n",
-    "line" : 42,
+    "line" : 234,
     "char" : 1,
-    "endline" : 58,
+    "endline" : 250,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L58_C1",
+    "name" : "__unittest_L250_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "完全一致、辞書順での比較\n",
-    "line" : 58,
+    "line" : 250,
     "char" : 1,
-    "endline" : 72,
+    "endline" : 264,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L72_C1",
+    "name" : "__unittest_L264_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "大文字小文字を無視して比較\n\n`std.uni` の `icmp` を使います\n\n`icmp` : https://dlang.org/phobos/std_uni.html#icmp\n",
-    "line" : 72,
+    "line" : 264,
     "char" : 1,
-    "endline" : 97,
+    "endline" : 289,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L97_C1",
+    "name" : "__unittest_L289_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "「で始まる」「で終わる」の例\n\n`std.algorithm` の `startsWith`, `endsWith` を使います。\n\n`startsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.startsWith)$(BR)\n`endsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.endsWith)\n",
-    "line" : 97,
+    "line" : 289,
     "char" : 1,
-    "endline" : 119,
+    "endline" : 311,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L119_C1",
+    "name" : "__unittest_L311_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
-    "line" : 119,
+    "line" : 311,
     "char" : 1,
-    "endline" : 150,
+    "endline" : 342,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L150_C1",
+    "name" : "__unittest_L342_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
-    "line" : 150,
+    "line" : 342,
     "char" : 1,
-    "endline" : 229,
+    "endline" : 421,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L229_C7",
+    "name" : "__unittest_L421_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n",
-    "line" : 229,
+    "line" : 421,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 263,
+    "endline" : 455,
     "endchar" : 1
    }
   ]
