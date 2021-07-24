@@ -125,15 +125,21 @@ unittest
     assert(extension("/temp/hoge/test.txt") == ".txt");
     assert(extension("/data/2021-01-01/records.csv") == ".csv");
     assert(extension("/test/hoge/fuga") == "");
+    // 複数の拡張子がある場合、最後のピリオドより後ろの部分が得られます
+    assert(extension("/test/hoge/fuga.txt.old") == ".old");
 
     // setExtension 関数で拡張子を変更したパスが得られます。
     // 設定する拡張子は、先頭にピリオドがあってもなくても構いません。
     assert(setExtension("/temp/hoge/test.txt", ".md") == "/temp/hoge/test.md");
     assert(setExtension("/temp/hoge/test.txt", "md") == "/temp/hoge/test.md");
+    // 複数の拡張子がある場合、最後のピリオドより後ろの部分が置き換えられます
+    assert(setExtension("/temp/hoge/test.txt.old", "md") == "/temp/hoge/test.txt.md");
 
     // stripExtension 関数で拡張子を取り除いたパスが得られます。
     assert(stripExtension("/temp/hoge/test.txt") == "/temp/hoge/test");
     assert(stripExtension("/data/2021-01-01/records.csv") == "/data/2021-01-01/records");
+    // 複数の拡張子がある場合、最後のピリオドより後ろの部分が削除されます
+    assert(stripExtension("/data/2021-01-01/records.csv.bak") == "/data/2021-01-01/records.csv");
 }
 
 
@@ -197,8 +203,10 @@ unittest
         testFiles ~= entry.name;
     }
 
+    import std.algorithm : sort;
     import std.path : buildPath;
 
+    sort(testFiles);
     assert(testFiles == [
         buildPath("temp", "test1.txt"),
         buildPath("temp", "test2-1.txt"),
@@ -215,6 +223,7 @@ unittest
         test1or2 ~= entry.name;
     }
 
+    sort(test1or2);
     assert(test1or2 == [
         buildPath("temp", "test2-1.txt"),
         buildPath("temp", "test2-2.txt"),
@@ -227,6 +236,7 @@ unittest
         tempNot1 ~= entry.name;
     }
 
+    sort(tempNot1);
     assert(tempNot1 == [
         buildPath("temp", "test2-2.txt"),
         buildPath("temp", "test2-3.txt"),
@@ -240,6 +250,7 @@ unittest
         test1or3 ~= entry.name;
     }
 
+    sort(test1or3);
     assert(test1or3 == [
         buildPath("temp", "test1.txt"),
         buildPath("temp", "test3.txt"),
