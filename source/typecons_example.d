@@ -158,3 +158,80 @@ unittest
     assert(aRef.value == 1234);
 }
 
+/++
+コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。
+
+ポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために `RefCounted` を使う方法があります。
+内部的には参照カウンタで管理されます。
++/
+@nogc unittest
+{
+    import core.memory : pureMalloc, pureFree;
+    import std.typecons : refCounted;
+
+    // コピー不能でデストラクタを持つデータ
+    struct Payload
+    {
+        // 最後に破棄された値(デストラクタ呼び出し確認用)
+        static int lastDestructedValue;
+
+        @disable this(this);
+
+        // 管理対象のリソース確保
+        this(int value) @nogc nothrow @safe scope
+        {
+            this.pointer = (() @trusted => cast(int*) pureMalloc(int.sizeof))();
+            *this.pointer = value;
+        }
+
+        // Payload解放処理
+        // RefCounted初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
+        // 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+        // このため、初期値だったら解放しない、というロジックが必要です。
+        ~this() @nogc nothrow @safe scope
+        {
+            if (pointer)
+            {
+                lastDestructedValue = *pointer;
+                (() @trusted => pureFree(pointer))();
+                pointer = null;
+            }
+        }
+
+        int* pointer;
+    }
+
+    // 新しいリソースを保持するRefCounted!Payloadを、refCounted関数で生成します。
+    auto rc1 = refCounted(Payload(1234));
+    
+    // 現在の参照カウントは1です。
+    assert(rc1.refCountedStore.refCount == 1);
+
+    // 確保したリソースを共有する別のRefCounted!Payloadを生成します。
+    auto rc2 = rc1;
+
+    // 参照カウントは2になります。
+    assert(rc1.refCountedStore.refCount == 2);
+    assert(rc2.refCountedStore.refCount == 2);
+    assert(rc1.pointer is rc2.pointer);
+
+    // rc1を別のRefCounted!Paylodで更新します。
+    rc1 = refCounted(Payload(5678));
+
+    // rc2で参照が続いているため、以前のリソースはまだ解放されません。
+    assert(Payload.lastDestructedValue == Payload.lastDestructedValue.init);
+    assert(rc1.refCountedStore.refCount == 1);
+    assert(rc2.refCountedStore.refCount == 1);
+    assert(rc1.pointer !is rc2.pointer);
+
+    // rc2も更新することで、最初のリソースの参照カウントが0になり、解放されます。
+    rc2 = rc1;
+    assert(rc1.refCountedStore.refCount == 2);
+    assert(rc2.refCountedStore.refCount == 2);
+    assert(rc1.pointer is rc2.pointer);
+    assert(*rc1.pointer == 5678);
+
+    // 最初のリソースが解放されていることを確認
+    assert(Payload.lastDestructedValue == 1234);
+}
+
