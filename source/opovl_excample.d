@@ -10,6 +10,7 @@ D言語では、演算子オーバーロードを定義する際には、もと�
 
 See_Also:
     - https://dlang.org/spec/operatoroverloading.html
+    - https://dlang.org/dstyle.html#operator_overloading
 +/
 module opovl_excample;
 
