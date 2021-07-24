@@ -124,41 +124,6 @@ unittest
 }
 
 /++
-classのインスタンスをスタック上に確保するscopedの例です
-
-scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
-その代わり、インスタンスをスコープの外に移動させることはできません。
-+/
-unittest
-{
-    import std.typecons : scoped;
-
-    class A
-    {
-        this() { this.value = -1; }
-        this(int value) { this.value = value; }
-        int value;
-    }
-
-    // scopedによるインスタンス生成
-    // インスタンスはスタック上に確保されます。
-    // スコープ終了時はデストラクタが呼び出されます。
-    // scopedで生成したインスタンスは元の型の変数で直接参照できません。
-    // autoを経由する必要があります。
-    auto a1 = scoped!A();
-    assert(a1.value == -1);
-
-    // 引数ありコンストラクタも使用可能です。
-    auto a2 = scoped!A(1234);
-    assert(a2.value == 1234);
-
-    // scopedで生成したインスタンスを別の変数で参照することが可能です。
-    // ただし、スコープの外では参照は無効になります。
-    A aRef = a2;
-    assert(aRef.value == 1234);
-}
-
-/++
 コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。
 
 ポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために `RefCounted` を使う方法があります。
@@ -233,5 +198,40 @@ unittest
 
     // 最初のリソースが解放されていることを確認
     assert(Payload.lastDestructedValue == 1234);
+}
+
+/++
+classのインスタンスをスタック上に確保するscopedの例です
+
+scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
+その代わり、インスタンスをスコープの外に移動させることはできません。
++/
+unittest
+{
+    import std.typecons : scoped;
+
+    class A
+    {
+        this() { this.value = -1; }
+        this(int value) { this.value = value; }
+        int value;
+    }
+
+    // scopedによるインスタンス生成
+    // インスタンスはスタック上に確保されます。
+    // スコープ終了時はデストラクタが呼び出されます。
+    // scopedで生成したインスタンスは元の型の変数で直接参照できません。
+    // autoを経由する必要があります。
+    auto a1 = scoped!A();
+    assert(a1.value == -1);
+
+    // 引数ありコンストラクタも使用可能です。
+    auto a2 = scoped!A(1234);
+    assert(a2.value == 1234);
+
+    // scopedで生成したインスタンスを別の変数で参照することが可能です。
+    // ただし、スコープの外では参照は無効になります。
+    A aRef = a2;
+    assert(aRef.value == 1234);
 }
 
