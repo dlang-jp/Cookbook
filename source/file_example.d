@@ -112,3 +112,64 @@ unittest
     string fileExtension = filePath.extension;
     assert(fileExtension == ".txt");
 }
+
+/++
+ディレクトリ階層をまとめて作成および削除する例です
++/
+unittest
+{
+    import std.file : mkdirRecurse, rmdirRecurse, exists;
+
+    // mkdirRecurse を使うとディレクトリ階層をまとめて作成することができます
+    mkdirRecurse("temp/t1/t2");
+    assert(exists("temp/t1/t2"));
+
+    // rmdirRecurs を使うとディレクトリ階層をまとめて削除することができます
+    // ファイルやディレクトリが含まれていても削除できます
+    rmdirRecurse("temp");
+    assert(!exists("temp"));
+}
+
+/++
+ディレクトリに含まれるファイルを別のディレクトリへ移動、コピーする例です。
+この例では階層構造を考慮せず、ディレクトリ直下のファイルのみを処理します。
++/
+unittest
+{
+    import std.file : fwrite = write, mkdirRecurse, rmdirRecurse;
+
+    // テストに必要なファイルを準備します
+    mkdirRecurse("temp");
+    scope (exit) rmdirRecurse("temp");
+    fwrite("temp/test1.txt", "TEST");
+    fwrite("temp/test2.txt", "TEST");
+
+    mkdirRecurse("copied");
+    scope (exit) rmdirRecurse("copied");
+
+    mkdirRecurse("moved");
+    scope (exit) rmdirRecurse("moved");
+
+    import std.file : dirEntries, SpanMode, fcopy = copy, frename = rename, exists;
+    import std.path : buildPath, baseName;
+
+    // copy関数によりコピーになります。既存ファイルは上書きされます。
+    foreach (entry; dirEntries("temp", SpanMode.shallow))
+    {
+        fcopy(entry.name, buildPath("copied", baseName(entry.name)));
+    }
+    assert(exists("temp/test1.txt"));
+    assert(exists("temp/test2.txt"));
+    assert(exists("copied/test1.txt"));
+    assert(exists("copied/test2.txt"));
+
+    // rename関数により移動になります。既存ファイルは上書きされます。
+    foreach (entry; dirEntries("temp", SpanMode.shallow))
+    {
+        frename(entry.name, buildPath("moved", baseName(entry.name)));
+    }
+    assert(!exists("temp/test1.txt")); // 元ファイルは存在しません
+    assert(!exists("temp/test2.txt"));
+    assert(exists("moved/test1.txt"));
+    assert(exists("moved/test2.txt"));
+}
