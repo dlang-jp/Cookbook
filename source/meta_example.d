@@ -230,6 +230,8 @@ unittest
         }
     }
     // ElementTypeではopApplyのある構造体は扱えない
+    // また、ForeachTypeでも複数opApplyがオーバーロードされている場合は
+    // コンパイルエラーが発生します。
     static assert(!is(ElementType!Iterable == uint));
     static assert( is(ForeachType!Iterable == uint));
 }
