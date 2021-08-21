@@ -187,6 +187,9 @@ Conditionのコンストラクタに渡したMutexをロックしているとき
 
 逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。
 
+使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。
+- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)
+
 See_Also:
     - https://dlang.org/phobos/core_sync_condition.html
 +/
