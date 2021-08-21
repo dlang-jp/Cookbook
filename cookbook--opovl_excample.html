@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>array_example</title>
+        <title>opovl_excample</title>
         
         
     </head>
@@ -267,87 +267,111 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">配列
-</div></h1><div class="ddoc_description">動的配列と静的配列の操作についてまとめます。
+                <h1><div class="ddoc_summary">演算子オーバーロード
+</div></h1><div class="ddoc_description">D言語では演算子オーバーロードを定義することができます。
 <div class="ddoc_blankline"></div>
 
-要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 初期化の例です
-<pre class="d_code notranslate"><span class="d_comment">// 簡単な配列は new T[N] という形式で初期化できます
-</span><span class="d_keyword">int</span>[] data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[100];
-<span class="d_keyword">assert</span>(data.length == 100);
+例えばstd.bigintでは、BigIntに対して、整数型のような特徴を持たせるため、四則演算などの演算子オーバーロードを実装しています。
+<div class="ddoc_blankline"></div>
 
-<span class="d_comment">// 型に対しコンストラクタを呼ぶような記法でも初期化できます
-</span>data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[](100);
-<span class="d_keyword">assert</span>(data.length == 100);
+D言語では、演算子オーバーロードを定義する際には、もともとの演算子の意味を損なうような利用方法は非推奨としています。
+例えばC++であるように、<span class="d_inlinecode donthyphenate notranslate">std::cout &lt;&lt; hogehoge &lt;&lt; std::endl;</span>のような、ビットシフトのための演算子<span class="d_inlinecode donthyphenate notranslate">&lt;&lt;</span>をストリーム操作のために使用するような利用方法は非推奨です。
+
+</div>
+<div class="ddoc_see_also"><span class="ddoc_see_also_header">See Also:</span>
+ 
+<ul><li><a href="https://dlang.org/spec/operatoroverloading.html">https://dlang.org/spec/operatoroverloading.html</a></li>
+<li><a href="https://dlang.org/dstyle.html#operator_overloading">https://dlang.org/dstyle.html#operator_overloading</a></li>
+</ul></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 演算子オーバーロードの活用例: BigInt
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.bigint;
+BigInt a = 100_000_000_000;
+BigInt b = 300_000_000_000;
+
+BigInt c = a + b;
+BigInt d = c * a;
+BigInt e = d - b;
+BigInt f = e / a;
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 二次元以上の多次元配列を一括で確保する例です
-<pre class="d_code notranslate"><span class="d_comment">// 4要素の配列を要素に持つ2要素の配列を初期化します
-</span><span class="d_comment">// 型に対してコンストラクタのように初期化でき、引数の順序は外側から（使うときにアクセスする順）指定するイメージになります
-</span><span class="d_keyword">int</span>[][] data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][](2, 4);
+ opBinary: 二項演算子のオーバーロード
+<div class="ddoc_blankline"></div>
 
-<span class="d_keyword">assert</span>(data.length == 2);
-<span class="d_keyword">assert</span>(data[0].length == 4);
+先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。
+ここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。
+opBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。
+<div class="ddoc_blankline"></div>
 
-<span class="d_keyword">int</span>[][][] data2 = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][](2, 3, 4);
-<span class="d_keyword">assert</span>(data2.length == 2);
-<span class="d_keyword">assert</span>(data2[1].length == 3);
-<span class="d_keyword">assert</span>(data2[1][2].length == 4);
+opBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や &amp; 等の演算子でも利用できます。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/spec/operatoroverloading.html#binary">https://dlang.org/spec/operatoroverloading.html#binary</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> Integer
+{
+    <span class="d_keyword">int</span> data;
+    <span class="d_comment">// 足し算の演算子オーバーロード
+</span>    <span class="d_comment">// テンプレート制約を使った例
+</span>    Integer opBinary(string op)(Integer x) <span class="d_keyword">if</span> (op == <span class="d_string">"+"</span>)
+    {
+        <span class="d_keyword">return</span> Integer(data + x.data);
+    }
+    <span class="d_comment">// 引き算の演算子オーバーロード
+</span>    <span class="d_comment">// テンプレートの特殊化を使った例
+</span>    Integer opBinary(string op: <span class="d_string">"-"</span>)(Integer x)
+    {
+        <span class="d_keyword">return</span> Integer(data - x.data);
+    }
+    <span class="d_comment">// 掛け算の演算子オーバーロード
+</span>    Integer opBinary(string op)(Integer x) <span class="d_keyword">if</span> (op == <span class="d_string">"*"</span>)
+    {
+        <span class="d_keyword">return</span> Integer(data * x.data);
+    }
+    <span class="d_comment">// 割り算の演算子オーバーロード
+</span>    Integer opBinary(string op)(Integer x) <span class="d_keyword">if</span> (op == <span class="d_string">"/"</span>)
+    {
+        <span class="d_keyword">return</span> Integer(data / x.data);
+    }
+}
+Integer a = Integer(100);
+Integer b = Integer(300);
+
+Integer c = a + b; <span class="d_comment">/* 100 + 300 */</span>
+<span class="d_keyword">assert</span>(c.data == 400);
+Integer d = c * a; <span class="d_comment">/* 400 * 100 */</span>
+<span class="d_keyword">assert</span>(d.data == 40_000);
+Integer e = d - b; <span class="d_comment">/* 40000 - 300 */</span>
+<span class="d_keyword">assert</span>(e.data == 39_700);
+Integer f = e / a; <span class="d_comment">/* 39700 / 40000 */</span>
+<span class="d_keyword">assert</span>(f.data == 397);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 要素のインデックス、または条件式を指定した値の削除
+ opUnary: 単項演算子のオーバーロード
 <div class="ddoc_blankline"></div>
 
-<span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> の <span class="d_inlinecode donthyphenate notranslate">remove</span> を使います
+<span class="d_inlinecode donthyphenate notranslate"> auto b = -a; </span> の <span class="d_inlinecode donthyphenate notranslate">-a</span> (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。
+たとえば、<span class="d_inlinecode donthyphenate notranslate">-</span>に加えて'+'、<span class="d_inlinecode donthyphenate notranslate">*</span>(ポインタ外し), <span class="d_inlinecode donthyphenate notranslate">~</span>(ビット反転), <span class="d_inlinecode donthyphenate notranslate">!</span>(否定), <span class="d_inlinecode donthyphenate notranslate">++</span>(インクリメント), <span class="d_inlinecode donthyphenate notranslate">--</span>(デクリメント)が相当します。
 <div class="ddoc_blankline"></div>
 
-<span class="d_inlinecode donthyphenate notranslate">remove</span> : <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.remove">https://dlang.org/phobos/std_algorithm_mutation.html#.remove</a>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : remove;
-
-<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-
-<span class="d_comment">// removeは配列を破壊的に編集して結果を返すため、再度使うときは結果を元の変数に代入しなおします
-</span>data = data.remove(1); <span class="d_comment">// インデックス指定（20を削除）
-</span>data = data.remove!(a =&gt; a &gt; 50); <span class="d_comment">// 条件式指定（50より大きいものを削除）
-</span>
-<span class="d_keyword">assert</span>(data == [10, 30, 40, 50]);
-</pre>
-</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 要素の追加の例です。
-<div class="ddoc_blankline"></div>
-
-動的配列に対しては <span class="d_inlinecode donthyphenate notranslate">~=</span> 演算子で要素を追加することができます。
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] data;
-
-data ~= 10;
-data ~= 20;
-
-<span class="d_keyword">assert</span>(data == [10, 20]);
-</pre>
-</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- 事前にサイズがわからない配列を構築する場合は <span class="d_inlinecode donthyphenate notranslate">std.array</span> の <span class="d_inlinecode donthyphenate notranslate">appender</span> を使用すると効率的です。
-<div class="ddoc_blankline"></div>
-
-要素の追加は <span class="d_inlinecode donthyphenate notranslate">~=</span> または <span class="d_inlinecode donthyphenate notranslate">put</span> で行います。
-<div class="ddoc_blankline"></div>
-
-<span class="d_inlinecode donthyphenate notranslate">appender</span> : <a href="https://dlang.org/phobos/std_array.html#appender">https://dlang.org/phobos/std_array.html#appender</a>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.array : appender;
-
-<span class="d_keyword">auto</span> buffer = appender!(<span class="d_keyword">int</span>[]);
-
-buffer ~= 10;
-buffer.put(20);
-
-<span class="d_keyword">int</span>[] data = buffer.data;
-
-<span class="d_keyword">assert</span>(data == [10, 20]);
+See_Also:
+<ul><li><a href="https://dlang.org/spec/operatoroverloading.html#unary">https://dlang.org/spec/operatoroverloading.html#unary</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> Integer
+{
+    <span class="d_keyword">int</span> data;
+    <span class="d_comment">// 符号反転の演算子オーバーロード
+</span>    Integer opUnary(string op)() <span class="d_keyword">if</span> (op == <span class="d_string">"-"</span>)
+    {
+        <span class="d_keyword">return</span> Integer(-data);
+    }
+}
+Integer a = Integer(100);
+Integer b = -a;
+<span class="d_keyword">assert</span>(b.data == -100);
 </pre>
 </div>
 

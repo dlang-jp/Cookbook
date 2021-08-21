@@ -1099,6 +1099,53 @@
   ]
  },
  {
+  "name" : "opovl_excample",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/opovl_excample.d",
+  "comment" : "演算子オーバーロード\n\nD言語では演算子オーバーロードを定義することができます。\n\n例えばstd.bigintでは、BigIntに対して、整数型のような特徴を持たせるため、四則演算などの演算子オーバーロードを実装しています。\n\nD言語では、演算子オーバーロードを定義する際には、もともとの演算子の意味を損なうような利用方法は非推奨としています。\n例えばC++であるように、`std::cout << hogehoge << std::endl;`のような、ビットシフトのための演算子`<<`をストリーム操作のために使用するような利用方法は非推奨です。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html\n    - https://dlang.org/dstyle.html#operator_overloading\n",
+  "members" : [
+   {
+    "name" : "__unittest_L20_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "演算子オーバーロードの活用例: BigInt\n",
+    "line" : 20,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 44,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L44_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "opBinary: 二項演算子のオーバーロード\n\n先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。\nここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。\nopBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。\n\nopBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や & 等の演算子でも利用できます。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#binary\n",
+    "line" : 44,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 94,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L94_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "opUnary: 単項演算子のオーバーロード\n\n` auto b = -a; ` の `-a` (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。\nたとえば、`-`に加えて'+'、`*`(ポインタ外し), `~`(ビット反転), `!`(否定), `++`(インクリメント), `--`(デクリメント)が相当します。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#unary\n",
+    "line" : 94,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 109,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "parallelism_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/parallelism_example.d",
