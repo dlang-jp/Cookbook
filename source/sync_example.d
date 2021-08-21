@@ -9,9 +9,9 @@
 - 単独の `synchronized` 文
 - `Mutex`
 - `ReadWriteMutex`
-- `Condition` (TODO)
+- `Barrier`
+- `Condition`
 - `Semaphore` (TODO)
-- `Barrier` (TODO)
 - `Event` (TODO)
 +/
 module sync_example;
@@ -146,4 +146,97 @@ unittest
     // 既定値は Writer が優先されます
     auto t = new ReadWriteMutex;
     assert(t.policy == ReadWriteMutex.Policy.PREFER_WRITERS);
+}
+
+/++
+Barrierで、複数のスレッドで所定のポイントに達まで待機する例です。
+
+See_Also:
+    - https://dlang.org/phobos/core_sync_barrier.html
++/
+unittest
+{
+    import core.thread: ThreadGroup;
+    import core.sync.barrier: Barrier;
+
+    int test;
+
+    // 2つのスレッドを同期
+    auto b = new Barrier(2);
+
+    auto tg = new ThreadGroup;
+    // スレッド1
+    tg.create({
+        test = 1;
+        b.wait();
+    });
+    // スレッド2
+    tg.create({
+        // スレッド1がtest変数を1にするまで待つ
+        b.wait();
+        assert(test == 1);
+    });
+    tg.joinAll(true);
+}
+
+/++
+Conditionで、通知による同期を行う例です。
+
+Conditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。
+その後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。
+
+逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。
+
+See_Also:
+    - https://dlang.org/phobos/core_sync_condition.html
++/
+unittest
+{
+    import core.thread: ThreadGroup;
+    import core.sync.mutex: Mutex;
+    import core.sync.condition: Condition;
+    import core.sync.barrier: Barrier;
+
+    auto m = new Mutex;
+    auto c = new Condition(m);
+    auto b = new Barrier(2);
+
+    int test;
+
+    auto tg = new ThreadGroup;
+    // スレッド1
+    tg.create({
+        // ➀mをロック
+        synchronized (m)
+        {
+            // スレッド2が開始されるまで待つ
+            b.wait();
+            // ➂cをwaitと同時にmをロック解除
+            c.wait();
+            // mをロックしたことをスレッド2に知らせる
+            b.wait();
+
+            assert(test == 1);
+            test = 2;
+        }
+    });
+    // スレッド2
+    tg.create({
+        // mがロックされるまで待つ
+        b.wait();
+        // ➁cがwaitしてロック解除するまで待機
+        synchronized (m)
+        {
+            // ➃注意：ここで即時➂でのwaitが解除されるわけではありません
+            c.notify();
+            assert(test == 0);
+            test = 1;
+        }
+        // synchronized を抜けた(mのロック解除した)ここで➂のwaitが解除されます
+        // mがロックされるまで待つ
+        b.wait();
+        synchronized (m)
+            assert(test == 2);
+    });
+    tg.joinAll(true);
 }
