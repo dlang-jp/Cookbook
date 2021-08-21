@@ -1685,7 +1685,7 @@
   "name" : "sync_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/sync_example.d",
-  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Condition` (TODO)\n- `Semaphore` (TODO)\n- `Barrier` (TODO)\n- `Event` (TODO)\n",
+  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Barrier`\n- `Condition`\n- `Semaphore` (TODO)\n- `Event` (TODO)\n",
   "members" : [
    {
     "name" : "__unittest_L26_C1",
@@ -1723,7 +1723,27 @@
     "protection" : "public",
     "line" : 138,
     "char" : 1,
-    "endline" : 150,
+    "endline" : 157,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L157_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_barrier.html\n",
+    "line" : 157,
+    "char" : 1,
+    "endline" : 196,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L196_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Conditionで、通知による同期を行う例です。\n\nConditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。\nその後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。\n\n逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。\n\n使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。\n- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_condition.html\n",
+    "line" : 196,
+    "char" : 1,
+    "endline" : 246,
     "endchar" : 1
    }
   ]

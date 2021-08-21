@@ -277,9 +277,9 @@
 <ul><li>単独の <span class="d_inlinecode donthyphenate notranslate">synchronized</span> 文</li>
 <li><span class="d_inlinecode donthyphenate notranslate">Mutex</span></li>
 <li><span class="d_inlinecode donthyphenate notranslate">ReadWriteMutex</span></li>
-<li><span class="d_inlinecode donthyphenate notranslate">Condition</span> (TODO)</li>
+<li><span class="d_inlinecode donthyphenate notranslate">Barrier</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Condition</span></li>
 <li><span class="d_inlinecode donthyphenate notranslate">Semaphore</span> (TODO)</li>
-<li><span class="d_inlinecode donthyphenate notranslate">Barrier</span> (TODO)</li>
 <li><span class="d_inlinecode donthyphenate notranslate">Event</span> (TODO)</li>
 </ul></div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
@@ -382,6 +382,103 @@ tg.create({
 </span>    }
 });
 tg.joinAll();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_barrier.html">https://dlang.org/phobos/core_sync_barrier.html</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.barrier: Barrier;
+
+<span class="d_keyword">int</span> test;
+
+<span class="d_comment">// 2つのスレッドを同期
+</span><span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> Barrier(2);
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    test = 1;
+    b.wait();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1がtest変数を1にするまで待つ
+</span>    b.wait();
+    <span class="d_keyword">assert</span>(test == 1);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Conditionで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+Conditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。
+その後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。
+<div class="ddoc_blankline"></div>
+
+逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。
+<div class="ddoc_blankline"></div>
+
+使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。
+<ul><li><a href="https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer">解説サイト</a>
+</li>
+</ul>
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_condition.html">https://dlang.org/phobos/core_sync_condition.html</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.mutex: Mutex;
+<span class="d_keyword">import</span> core.sync.condition: Condition;
+<span class="d_keyword">import</span> core.sync.barrier: Barrier;
+
+<span class="d_keyword">auto</span> m = <span class="d_keyword">new</span> Mutex;
+<span class="d_keyword">auto</span> c = <span class="d_keyword">new</span> Condition(m);
+<span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> Barrier(2);
+
+<span class="d_keyword">int</span> test;
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// ➀mをロック
+</span>    <span class="d_keyword">synchronized</span> (m)
+    {
+        <span class="d_comment">// スレッド2が開始されるまで待つ
+</span>        b.wait();
+        <span class="d_comment">// ➂cをwaitと同時にmをロック解除
+</span>        c.wait();
+        <span class="d_comment">// mをロックしたことをスレッド2に知らせる
+</span>        b.wait();
+
+        <span class="d_keyword">assert</span>(test == 1);
+        test = 2;
+    }
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// mがロックされるまで待つ
+</span>    b.wait();
+    <span class="d_comment">// ➁cがwaitしてロック解除するまで待機
+</span>    <span class="d_keyword">synchronized</span> (m)
+    {
+        <span class="d_comment">// ➃注意：ここで即時➂でのwaitが解除されるわけではありません
+</span>        c.notify();
+        <span class="d_keyword">assert</span>(test == 0);
+        test = 1;
+    }
+    <span class="d_comment">// synchronized を抜けた(mのロック解除した)ここで➂のwaitが解除されます
+</span>    <span class="d_comment">// mがロックされるまで待つ
+</span>    b.wait();
+    <span class="d_keyword">synchronized</span> (m)
+        <span class="d_keyword">assert</span>(test == 2);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
 </pre>
 </div>
 
