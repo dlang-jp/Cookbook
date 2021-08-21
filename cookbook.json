@@ -833,7 +833,27 @@
     "comment" : "ディレクトリ内のファイル一覧のうち、パターンに合致するものだけを列挙する例です。\n\n`dirEntries` に対して対象とするファイル名の glob パターンを指定します。\n\nSee_Also: https://dlang.org/phobos/std_file.html#dirEntries\nSee_Also: https://dlang.org/phobos/std_path.html#.globMatch\n",
     "line" : 183,
     "char" : 1,
-    "endline" : 259,
+    "endline" : 263,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L263_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ディレクトリ階層をまとめて作成および削除する例です\n",
+    "line" : 263,
+    "char" : 1,
+    "endline" : 281,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L281_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ディレクトリに含まれるファイルを別のディレクトリへ移動、コピーする例です。\nこの例では階層構造を考慮せず、ディレクトリ直下のファイルのみを処理します。\n",
+    "line" : 281,
+    "char" : 1,
+    "endline" : 320,
     "endchar" : 1
    }
   ]

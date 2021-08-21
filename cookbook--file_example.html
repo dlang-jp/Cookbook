@@ -506,6 +506,61 @@ sort(test1or3);
 ]);
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ディレクトリ階層をまとめて作成および削除する例です
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.file : mkdirRecurse, rmdirRecurse, exists;
+
+<span class="d_comment">// mkdirRecurse を使うとディレクトリ階層をまとめて作成することができます
+</span>mkdirRecurse(<span class="d_string">"temp/t1/t2"</span>);
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"temp/t1/t2"</span>));
+
+<span class="d_comment">// rmdirRecurs を使うとディレクトリ階層をまとめて削除することができます
+</span><span class="d_comment">// ファイルやディレクトリが含まれていても削除できます
+</span>rmdirRecurse(<span class="d_string">"temp"</span>);
+<span class="d_keyword">assert</span>(!exists(<span class="d_string">"temp"</span>));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ディレクトリに含まれるファイルを別のディレクトリへ移動、コピーする例です。
+この例では階層構造を考慮せず、ディレクトリ直下のファイルのみを処理します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.file : fwrite = write, mkdirRecurse, rmdirRecurse;
+
+<span class="d_comment">// テストに必要なファイルを準備します
+</span>mkdirRecurse(<span class="d_string">"temp"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"temp"</span>);
+fwrite(<span class="d_string">"temp/test1.txt"</span>, <span class="d_string">"TEST"</span>);
+fwrite(<span class="d_string">"temp/test2.txt"</span>, <span class="d_string">"TEST"</span>);
+
+mkdirRecurse(<span class="d_string">"copied"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"copied"</span>);
+
+mkdirRecurse(<span class="d_string">"moved"</span>);
+<span class="d_keyword">scope</span> (exit) rmdirRecurse(<span class="d_string">"moved"</span>);
+
+<span class="d_keyword">import</span> std.file : dirEntries, SpanMode, fcopy = copy, frename = rename, exists;
+<span class="d_keyword">import</span> std.path : buildPath, baseName;
+
+<span class="d_comment">// copy関数によりコピーになります。既存ファイルは上書きされます。
+</span><span class="d_keyword">foreach</span> (entry; dirEntries(<span class="d_string">"temp"</span>, SpanMode.shallow))
+{
+    fcopy(entry.name, buildPath(<span class="d_string">"copied"</span>, baseName(entry.name)));
+}
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"temp/test1.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"temp/test2.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"copied/test1.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"copied/test2.txt"</span>));
+
+<span class="d_comment">// rename関数により移動になります。既存ファイルは上書きされます。
+</span><span class="d_keyword">foreach</span> (entry; dirEntries(<span class="d_string">"temp"</span>, SpanMode.shallow))
+{
+    frename(entry.name, buildPath(<span class="d_string">"moved"</span>, baseName(entry.name)));
+}
+<span class="d_keyword">assert</span>(!exists(<span class="d_string">"temp/test1.txt"</span>)); <span class="d_comment">// 元ファイルは存在しません
+</span><span class="d_keyword">assert</span>(!exists(<span class="d_string">"temp/test2.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"moved/test1.txt"</span>));
+<span class="d_keyword">assert</span>(exists(<span class="d_string">"moved/test2.txt"</span>));
+</pre>
+</div>
 
                 
             </div>
