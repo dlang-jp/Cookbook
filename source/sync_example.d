@@ -149,7 +149,7 @@ unittest
 }
 
 /++
-Barrierで、複数のスレッドで所定のポイントに達まで待機する例です。
+Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。
 
 See_Also:
     - https://dlang.org/phobos/core_sync_barrier.html
