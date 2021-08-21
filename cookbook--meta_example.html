@@ -402,6 +402,85 @@ D言語のコード片が実際にコンパイルできる場合にはtrueに、
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!isInstanceOf!(MyTemplate, string));
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 関数が右辺値/左辺値で呼ぶことができるか確認する方法
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.traits: rvalueOf, lvalueOf;
+<span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> a) {}
+<span class="d_keyword">void</span> bar(<span class="d_keyword">ref</span> <span class="d_keyword">int</span> a) {}
+
+<span class="d_comment">// fooは右辺値でも左辺値でも呼べるが
+</span><span class="d_comment">// barは右辺値では呼ぶことができない。
+</span><span class="d_comment">// このような引数の特徴を持つ関数を弁別する際に使う。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, foo(rvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, foo(lvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, bar(rvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, bar(lvalueOf!<span class="d_keyword">int</span>)));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 要素の型を得る
+<div class="ddoc_blankline"></div>
+
+ElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_range_primitives.html#ElementType">https://dlang.org/phobos/std_range_primitives.html#ElementType</a></li>
+<li><a href="https://dlang.org/phobos/std_traits.html#ForeachType">https://dlang.org/phobos/std_traits.html#ForeachType</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range: ElementType;
+<span class="d_keyword">import</span> std.traits: ForeachType;
+
+<span class="d_comment">// 適当にレンジを作成
+</span><span class="d_keyword">struct</span> Range
+{
+    <span class="d_keyword">uint</span>[] ary;
+    <span class="d_keyword">uint</span> front() <span class="d_keyword">const</span> { <span class="d_keyword">return</span> ary[0]; }
+    <span class="d_keyword">void</span> popFront() { ary = ary[1..$]; }
+    <span class="d_keyword">bool</span> empty() <span class="d_keyword">const</span> { <span class="d_keyword">return</span> ary.length == 0; }
+}
+
+<span class="d_comment">// Rangeは同じように扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!Range == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!Range == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// 配列でも同じように扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!(<span class="d_keyword">uint</span>[]) == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!(<span class="d_keyword">uint</span>[]) == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// ElementTypeの場合はcharからdcharへの変換が行われてしまうが
+</span><span class="d_comment">// ForeachTypeの場合はcharのまま取り扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!(<span class="d_keyword">char</span>[]) == <span class="d_keyword">dchar</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!(<span class="d_keyword">char</span>[]) == <span class="d_keyword">char</span>));
+
+<span class="d_comment">// Foreach over Delegates
+</span><span class="d_comment">// https://dlang.org/spec/statement.html#foreach_over_delegates
+</span><span class="d_comment">// デリゲートではElementTypeはうまく扱ってくれない(void判定されてしまう)
+</span><span class="d_keyword">alias</span> DgRange = <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">scope</span> <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">ref</span> <span class="d_keyword">uint</span>) dg);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(ElementType!DgRange == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(ForeachType!DgRange == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// opApplyでforeachできる構造体を作成
+</span><span class="d_keyword">struct</span> Iterable
+{
+    <span class="d_keyword">uint</span>[] ary;
+    <span class="d_keyword">int</span> opApply(<span class="d_keyword">scope</span> <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">ref</span> <span class="d_keyword">uint</span> a) dg)
+    {
+        <span class="d_keyword">int</span> result = 0;
+        <span class="d_keyword">foreach</span> (item; ary)
+        {
+            result = dg(item);
+            <span class="d_keyword">if</span> (result)
+                <span class="d_keyword">break</span>;
+        }
+        <span class="d_keyword">return</span> result;
+    }
+}
+<span class="d_comment">// ElementTypeではopApplyのある構造体は扱えない
+</span><span class="d_comment">// また、ForeachTypeでも複数opApplyがオーバーロードされている場合は
+</span><span class="d_comment">// コンパイルエラーが発生します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(ElementType!Iterable == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(ForeachType!Iterable == <span class="d_keyword">uint</span>));
+</pre>
+</div>
 
                 
             </div>

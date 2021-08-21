@@ -975,7 +975,27 @@
     "comment" : "ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。\n",
     "line" : 134,
     "char" : 1,
-    "endline" : 155,
+    "endline" : 159,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L159_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "関数が右辺値/左辺値で呼ぶことができるか確認する方法\n",
+    "line" : 159,
+    "char" : 1,
+    "endline" : 182,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L182_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "要素の型を得る\n\nElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。\nSee_Also:\n    - https://dlang.org/phobos/std_range_primitives.html#ElementType\n    - https://dlang.org/phobos/std_traits.html#ForeachType\n",
+    "line" : 182,
+    "char" : 1,
+    "endline" : 238,
     "endchar" : 1
    }
   ]
