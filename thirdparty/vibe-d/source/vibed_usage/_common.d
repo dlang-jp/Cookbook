@@ -8,7 +8,7 @@ module vibed_usage._common;
 /++
 利用していないポート番号を取得する
 +/
-ushort getUnusedPort()
+ushort getUnusedPort() @safe
 {
     import core.atomic;
     shared static ushort _serial = 50_000;
