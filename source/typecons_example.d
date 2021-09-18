@@ -221,10 +221,7 @@ unittest
 
     // ただし、指定するインデックスはコンパイル時に解決できる必要があります。
     // 実行時に値が決まる変数などはインデックスに使用できません。
-    static assert(!__traits(compiles, {
-        size_t i = 1;
-        t1[i] = 456;
-    }));
+    static assert(!__traits(compiles, { size_t i = 1; t1[i] = 456; }));
 
     // Tupleはtuple関数を利用して簡潔に生成することもできます。
     auto t2 = tuple(123, "456", 789.012);
@@ -235,7 +232,7 @@ unittest
 
     // Tupleはコンパイル時にも利用可能です。
     // foreachによりフィールドを順に取り出すことができます。
-    foreach(i, e; tuple("test", 123))
+    foreach (i, e; tuple("test", 123))
     {
         assert(t1[i] == e);
     }
@@ -276,10 +273,13 @@ unittest
     static assert(!__traits(compiles, tuple(1, 2, 3, 5, "abc").slice!(1, 5) == tuple(2, 3, 5)));
 
     // expandにより関数の引数として展開することが可能です。
-    void f(int x, string y, double z) {}
+    void f(int x, string y, double z)
+    {
+    }
+
     f(tuple(1, "bar", 0.1).expand);
 
     // fieldNamesによりフィールド名を取得することが可能です。
-    static assert(Tuple!(int, "first", double, "second", string, "third").fieldNames == tuple("first", "second", "third"));
+    static assert(Tuple!(int, "first", double, "second", string, "third")
+            .fieldNames == tuple("first", "second", "third"));
 }
-
