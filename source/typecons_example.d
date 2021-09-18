@@ -233,6 +233,13 @@ unittest
     assert(t2[1] == "456");
     assert(t2[2].isClose(789.012));
 
+    // Tupleはコンパイル時にも利用可能です。
+    // foreachによりフィールドを順に取り出すことができます。
+    foreach(i, e; tuple("test", 123))
+    {
+        assert(t1[i] == e);
+    }
+
     // フィールドに名前の付いているTupleも作ることができます。
     // テンプレート引数に型・フィールド名のペアを指定すると、名前付きメンバーになります。
     Tuple!(int, "intValue", string, "stringValue") t3;
@@ -243,7 +250,36 @@ unittest
     assert(t3.intValue == 123);
     assert(t3.stringValue == "abc");
 
+    // 名前付きフィールドでもインデックスによるアクセスが可能です。
     assert(t3[0] == 123);
     assert(t3[1] == "abc");
+
+    // 互換性のある型のTupleは比較が行えます。
+    // フィールドの順に行っていく比較(辞書式順序)になります。
+    assert(tuple(1, 2, 3) == tuple(1, 2, 3));
+    assert(tuple(1, 2, 3, 4) != tuple(1, 2, 3, 5));
+    assert(tuple(1, 2, 3) < tuple(3, 2, 1));
+    assert(tuple(123456L, 2, 0) > tuple(3, 2, 1));
+
+    // Tuple同士の結合が行えます。
+    assert(tuple(1, 2, 3) ~ tuple("abc", "def") == tuple(1, 2, 3, "abc", "def"));
+
+    // 指定範囲のフィールドだけを取り出すsliceが行えます。
+    assert(tuple("test", 2, 3, 5, "abc").slice!(1, 4) == tuple(2, 3, 5));
+
+    // 参照により取り出すため、値のコピー等は発生しません。値の変更も可能です。
+    auto t4 = tuple(1, 2, "foo");
+    t4.slice!(0, 2) = tuple(100, 200);
+    assert(t4 == tuple(100, 200, "foo"));
+
+    // その代わり、メモリ上のアライメントが変わってしまうようなスライスは行えません。
+    static assert(!__traits(compiles, tuple(1, 2, 3, 5, "abc").slice!(1, 5) == tuple(2, 3, 5)));
+
+    // expandにより関数の引数として展開することが可能です。
+    void f(int x, string y, double z) {}
+    f(tuple(1, "bar", 0.1).expand);
+
+    // fieldNamesによりフィールド名を取得することが可能です。
+    static assert(Tuple!(int, "first", double, "second", string, "third").fieldNames == tuple("first", "second", "third"));
 }
 
