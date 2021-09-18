@@ -212,8 +212,10 @@ unittest
 
     class A
     {
-        this() { this.value = -1; }
-        this(int value) { this.value = value; }
+    @nogc nothrow pure @safe:
+
+        this() scope { this.value = -1; }
+        this(int value) scope { this.value = value; }
         int value;
     }
 
@@ -233,5 +235,23 @@ unittest
     // ただし、スコープの外では参照は無効になります。
     A aRef = a2;
     assert(aRef.value == 1234);
+
+    {
+        // スコープ内で新しいインスタンスを生成
+        auto a3 = scoped!A(4567);
+        aRef = a3;
+
+        // a3はここでデストラクタが呼ばれ、破棄されます。
+    }
+    // a3を指していたaRefは無効な参照になっています。
+
+    // なお、scope記憶クラスを利用しても
+    // scopedと同様にGC無しでのインスタンス生成・スコープ終了時の破棄が実現できます。
+    (() @nogc nothrow pure scope @safe {
+       scope a4 = new A(9012);
+       assert(a4.value == 9012);
+
+       // a4はここでデストラクタが呼ばれ、破棄されます。
+    })();
 }
 
