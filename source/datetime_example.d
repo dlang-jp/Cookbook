@@ -8,7 +8,7 @@ module datetime_example;
 /++
 # 時間を表す7つの型
 
-以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。
+以下の説明では、「日時」「日付」「時刻」「時間」「期間」を明確に使い分けます。
 +/
 @safe unittest
 {
@@ -40,25 +40,26 @@ Durationは「時間」を表す型です。
 }
 
 /++
-## 2. 「時刻」 $(D SysTime)
+## 2. 「日時」 $(D SysTime)
 
-SysTimeは「時刻」を表す型です。
-現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。
+SysTimeは「時差を考慮した日時」を表す型です。
+現在日時を取得するには、 std.datetime でimportできるClockのメソッドを使用します。
 +/
 @safe unittest
 {
     import std.datetime: Clock, SysTime;
-    auto tim = Clock.currTime();
+
+    // Clock.currTimeでは、OSで設定されたタイムゾーンに基づく時差を持った「ローカル日時」が得られます。
+    auto localTime = Clock.currTime();
 
     // 時計から得た「時刻」の型は SysTime です
-    static assert(is(typeof(tim) == SysTime));
+    static assert(is(typeof(localTime) == SysTime));
 }
 
 /++
-## 3. 「時刻」 $(D DateTime)
+## 3. 「日時」 $(D DateTime)
 
-DateTimeは「時刻」を表す型です。
-ただし、SysTimeとは内部表現が違います。
+DateTimeは「時差を考慮しない日時」を表す型です。
 SysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ
 何年何月何日の何時何分何秒という情報だけを持っています。
 ミリ秒以下の情報も持ちません。
@@ -112,7 +113,7 @@ Dateは、DateTimeのうち、何年何月何日(つまり日付)の部分です
 }
 
 /++
-## 5. $(D TimeOfDay)
+## 5. 「時刻」$(D TimeOfDay)
 
 TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
 +/
@@ -221,7 +222,7 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     auto timA = SysTime(DateTime(1989, 1, 8, 10, 0, 0));
     // 令和元年 5/1 10時
     auto timB = SysTime(DateTime(2020, 5, 1, 10, 0, 0));
-    // 2つの「時刻」から「時間」を得る
+    // 2つの「日時」から「時間」を得る
     auto dur = timB - timA;
 
     // 平成の秒数
