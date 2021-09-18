@@ -394,3 +394,43 @@ SysTime型の場合は、DateTime型やDate型へ直接キャストすること�
     assert(dt2.year == st.year && dt2.month == st.month && dt2.day == st.day);
     assert(dt2.hour == st.hour && dt2.minute == st.minute && dt2.second == st.second);
 }
+
+/++
+Unix timeとSysTimeの相互変換方法、Unix timeの作成方法
+
+Unix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となります。
+これはタイムゾーンがUTC基準と定められていることから、
+タイムゾーン情報を持つ SysTimeのみ が相互変換の方法を提供しています。
++/
+@safe unittest
+{
+    import std.datetime;
+
+    // ローカル時刻を想定したUnix時間をSysTimeへ変換
+    long unixtime = 1640913630; // 2021-12-31 01:20:30 + 00:00
+
+    // fromUnixTimeにタイムゾーンを指定するとSysTimeに反映される
+    auto stLocal = SysTime.fromUnixTime(unixtime);       // 2021-12-31 10:20:30 + 09:00
+    auto stUTC = SysTime.fromUnixTime(unixtime, UTC());  // 2021-12-31 01:20:30 + 00:00
+
+    assert(cast(Date) stLocal == Date(2021, 12, 31));
+    assert(cast(TimeOfDay) stLocal == TimeOfDay(10, 20, 30));
+    assert(stLocal.timezone is LocalTime());
+    assert(cast(Date) stUTC == Date(2021, 12, 31));
+    assert(cast(TimeOfDay) stUTC == TimeOfDay(1, 20, 30));
+    assert(stUTC.timezone is UTC());
+
+    // Unix時間にする場合
+    auto utFromLocal = stLocal.toUnixTime();
+    auto utFromUTC = stUTC.toUnixTime();
+
+    assert(utFromLocal == unixtime);
+    assert(utFromUTC == unixtime);
+
+    // 日時を指定して Unix time を作成する
+    auto ut1 = SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC()).toUnixTime();
+    assert(ut1 == 0);
+    // 元のSysTimeがローカル時刻でもUnix timeはUTC基準です
+    auto ut2 = SysTime(DateTime(2021, 12, 31, 23, 59, 59), LocalTime()).toUnixTime();
+    assert(ut2 == 1640962799);
+}
