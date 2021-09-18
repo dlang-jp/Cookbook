@@ -210,10 +210,10 @@ unittest
     import std.typecons : Tuple, tuple;
     import std.math : isClose;
 
-    // stringとintの2つの値を持つTupleを生成します。
+    // stringとintの2つのフィールドを持つTupleを生成します。
     Tuple!(string, int) t1;
 
-    // 各値には配列のようなインデックス指定でアクセスできます。
+    // 各フィールドには配列のようなインデックス指定でアクセスできます。
     t1[0] = "test";
     t1[1] = 123;
     assert(t1[0] == "test");
@@ -233,11 +233,11 @@ unittest
     assert(t2[1] == "456");
     assert(t2[2].isClose(789.012));
 
-    // メンバーに名前の付いているTupleも作ることができます。
-    // テンプレート引数に型・メンバー名のペアを指定すると、名前付きメンバーになります。
+    // フィールドに名前の付いているTupleも作ることができます。
+    // テンプレート引数に型・フィールド名のペアを指定すると、名前付きメンバーになります。
     Tuple!(int, "intValue", string, "stringValue") t3;
 
-    // 名前付きメンバーについては、通常のメンバー変数のように名前を指定してアクセスできます。
+    // 名前付きフィールドについては、通常のメンバー変数のように名前を指定してアクセスできます。
     t3.intValue = 123;
     t3.stringValue = "abc";
     assert(t3.intValue == 123);
