@@ -203,6 +203,7 @@ See_Also:
 - https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d
 
 +/
+// TODO: Redisを使った分散ストアなど専用ページを設けて認証と分ける
 unittest
 {
     import vibe.vibe;
@@ -234,9 +235,11 @@ unittest
         }
 
         // POST /login
+        // 認証API風ですが、本サンプルではセッション情報の記録に主眼を置いて
+        // いるため、パスワード等のセキュリティは考慮していません。
         void postLogin(string username, scope HTTPServerRequest req, scope HTTPServerResponse res)
         {
-            // セッション情報を保存します
+            // セッション情報を保存します。
             // 以下のコードとおおむね同等
             //auto session = res.startSession();
             //session.set("username", username);
@@ -268,7 +271,7 @@ unittest
             // セッション情報をCookieに記録するため、レスポンスヘッダから保存して
             // クライアント呼び出し時にリクエストヘッダに付与する。
             string cookies;
-            alias updateCookie = (res) => cookies = res
+            alias saveCookie = (res) => cookies = res
                 .byKeyValue
                 .map!(pair => pair.key ~ "=" ~ pair.value.rawValue)
                 .join(";");
@@ -287,7 +290,7 @@ unittest
             });
             assert(res.statusCode == 302, res.toString);
             // セッション情報のあるCookieを保存
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             res.dropBody();
 
             // ログイン後に"/"をGETする
@@ -365,8 +368,8 @@ unittest
         // 権限管理に必要な関数。
         // AuthInfoで isXxx という関数を定義していると、
         // Role.xxx というUDAが利用可能になる。
-        // Role.xxx をつけた関数は、registerWebInterface
-        // で authenticate() を呼んで AuthInfo を取得し、
+        // @auth(Role.xxx) のUDAをつけた関数は、リクエストされた
+        // ときに authenticate() を呼んで AuthInfo を取得し、
         // isXxx() を呼んでtrueのときだけアクセスできるようになる。
         @noRoute
         AuthInfo authenticate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -439,7 +442,7 @@ unittest
             // クライアント側の記述
             import std.algorithm: map;
             string cookies;
-            alias updateCookie = (res) => cookies = res
+            alias saveCookie = (res) => cookies = res
                 .byKeyValue
                 .map!(pair => pair.key ~ "=" ~ pair.value.rawValue)
                 .join(";");
@@ -451,13 +454,18 @@ unittest
             assert(res.bodyReader.readAllUTF8() == "Index");
             res.dropBody();
 
+            // 認証なしでuser権限が必要なところを閲覧
+            res = requestHTTP("http://".text(serverAddr, "/entrance"), (scope req) {});
+            assert(res.statusCode == 403, res.toString);
+            res.dropBody();
+
             // guest権限のユーザーでログインする
             res = requestHTTP("http://".text(serverAddr, "/login"), (scope req) {
                 req.method = HTTPMethod.POST;
                 req.writeFormBody(["username": "marisa"]);
             });
             assert(res.statusCode == 302, res.toString);
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             res.dropBody();
 
             // guest権限で誰でも見れるところを閲覧
@@ -482,7 +490,7 @@ unittest
                 req.writeFormBody(["username": "patchouli"]);
             });
             assert(res.statusCode == 302, res.toString);
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             res.dropBody();
 
             // admin権限でuser以上なら見れるところを閲覧
@@ -501,7 +509,7 @@ unittest
             assert(res.statusCode == 200, res.toString);
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "ControlRoom");
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             res.dropBody();
         }
         catch (Throwable e)
@@ -790,7 +798,7 @@ unittest
             import std.algorithm: map;
             import std.uri: encodeComponent;
             string cookies;
-            alias updateCookie = (res) => cookies = res
+            alias saveCookie = (res) => cookies = res
                 .byKeyValue
                 .map!(pair => pair.key ~ "=" ~ pair.value.rawValue)
                 .join(";");
@@ -807,7 +815,7 @@ unittest
                 req.method = HTTPMethod.POST;
                 req.writeFormBody(["username": username, "password": "foo"]);
             });
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             res.dropBody();
 
             // ➂ ログイン済みのユーザーでリクエストトークンからPINの作成
@@ -816,7 +824,7 @@ unittest
                 req.headers["Cookie"] = cookies;
                 req.writeFormBody(["reqkey": requestToken.key]);
             });
-            updateCookie(res.cookies);
+            saveCookie(res.cookies);
             auto pin = res.bodyReader.readAllUTF8();
             res.dropBody();
 
