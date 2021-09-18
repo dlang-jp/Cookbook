@@ -1804,7 +1804,17 @@
     "storageClass" : [
      "@nogc"
     ],
-    "endline" : 203,
+    "endline" : 209,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L209_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "classのインスタンスをスタック上に確保するscopedの例です\n\nscopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。\nその代わり、インスタンスをスコープの外に移動させることはできません。\n",
+    "line" : 209,
+    "char" : 1,
+    "endline" : 258,
     "endchar" : 1
    }
   ]
