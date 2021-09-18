@@ -62,3 +62,30 @@ unittest
     auto s = cosineSimilarity(a, b);
     assert(s.isClose(0.9467292624062573));
 }
+
+/++
+標準正規分布の累積分布関数とその逆関数を計算する例です。
+
+それぞれ `std.mathspecial` モジュールの `normalDistribution` と `normalDistributionInverse` という関数で提供されます。
+
+正規分布 : $(LINK https://ja.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83)
+
+累積分布関数 : $(LINK https://ja.wikipedia.org/wiki/%E7%B4%AF%E7%A9%8D%E5%88%86%E5%B8%83%E9%96%A2%E6%95%B0)
++/
+unittest
+{
+    import std.math : isClose;
+    import std.mathspecial : normalDistribution, normalDistributionInverse;
+
+    // 引数は real 型で提供されます。
+    real x = 0.5;
+
+    // 標準正規分布であり、平均は0、分散は1となります。
+    // 累積分布関数なので、戻り値は確率であり [0, 1] となります。
+    auto p = normalDistribution(x);
+    assert(p.isClose(0.691462461));
+
+    // 累積分布の逆関数を計算します。引数に確率を指定し、対応する値を得ます。
+    auto x_inv = normalDistributionInverse(p);
+    assert(x_inv.isClose(x));
+}
