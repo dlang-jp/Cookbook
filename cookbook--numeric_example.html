@@ -324,6 +324,33 @@ std.math.isClose : <a href="https://dlang.org/phobos/std_math.html#.isClose">htt
 <span class="d_keyword">assert</span>(s.isClose(0.9467292624062573));
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 標準正規分布の累積分布関数とその逆関数を計算する例です。
+<div class="ddoc_blankline"></div>
+
+それぞれ <span class="d_inlinecode donthyphenate notranslate">std.mathspecial</span> モジュールの <span class="d_inlinecode donthyphenate notranslate">normalDistribution</span> と <span class="d_inlinecode donthyphenate notranslate">normalDistributionInverse</span> という関数で提供されます。
+<div class="ddoc_blankline"></div>
+
+正規分布 : <a href="https://ja.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83">https://ja.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83</a>
+<div class="ddoc_blankline"></div>
+
+累積分布関数 : <a href="https://ja.wikipedia.org/wiki/%E7%B4%AF%E7%A9%8D%E5%88%86%E5%B8%83%E9%96%A2%E6%95%B0">https://ja.wikipedia.org/wiki/%E7%B4%AF%E7%A9%8D%E5%88%86%E5%B8%83%E9%96%A2%E6%95%B0</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math : isClose;
+<span class="d_keyword">import</span> std.mathspecial : normalDistribution, normalDistributionInverse;
+
+<span class="d_comment">// 引数は real 型で提供されます。
+</span><span class="d_keyword">real</span> x = 0.5;
+
+<span class="d_comment">// 標準正規分布であり、平均は0、分散は1となります。
+</span><span class="d_comment">// 累積分布関数なので、戻り値は確率であり [0, 1] となります。
+</span><span class="d_keyword">auto</span> p = normalDistribution(x);
+<span class="d_keyword">assert</span>(p.isClose(0.691462461));
+
+<span class="d_comment">// 累積分布の逆関数を計算します。引数に確率を指定し、対応する値を得ます。
+</span><span class="d_keyword">auto</span> x_inv = normalDistributionInverse(p);
+<span class="d_keyword">assert</span>(x_inv.isClose(x));
+</pre>
+</div>
 
                 
             </div>

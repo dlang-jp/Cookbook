@@ -1113,7 +1113,17 @@
     "comment" : "コサイン類似度を計算する例です。\n\n2つのレンジを受け取って、その類似度を0-1で返します。\n",
     "line" : 54,
     "char" : 1,
-    "endline" : 65,
+    "endline" : 75,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L75_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "標準正規分布の累積分布関数とその逆関数を計算する例です。\n\nそれぞれ `std.mathspecial` モジュールの `normalDistribution` と `normalDistributionInverse` という関数で提供されます。\n\n正規分布 : $(LINK https://ja.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83)\n\n累積分布関数 : $(LINK https://ja.wikipedia.org/wiki/%E7%B4%AF%E7%A9%8D%E5%88%86%E5%B8%83%E9%96%A2%E6%95%B0)\n",
+    "line" : 75,
+    "char" : 1,
+    "endline" : 92,
     "endchar" : 1
    }
   ]
