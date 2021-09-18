@@ -313,6 +313,16 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     auto tim2 = SysTime(DateTime(2019, 5, 1, 10, 0, 0), UTC());
     assert(tim2.toSimpleString() == "2019-May-01 10:00:00Z");
 
+    // ローカル日時は toUTC でUTC基準に変更できる
+    auto utc = tim1.toUTC();
+    assert(utc.timezone is UTC());
+    assert(utc.toUTC() == utc); // 複数回実行しても変化しない
+
+    // UTC日時は toLocalTime でローカル日時に変換できる
+    auto local = tim2.toLocalTime();
+    assert(local.timezone is LocalTime());
+    assert(local.toLocalTime() == local); // 複数回実行しても変化しない
+
     // UTCから任意のタイムゾーンに変換する。
     auto JST = new immutable SimpleTimeZone(9.hours);
     auto tim3 = tim2.toOtherTZ(JST);
