@@ -231,8 +231,10 @@ unittest
     assert(t2[2].isClose(789.012));
 
     // Tupleはコンパイル時にも利用可能です。
+    enum staticTuple = tuple("test", 123);
+
     // foreachによりフィールドを順に取り出すことができます。
-    foreach (i, e; tuple("test", 123))
+    foreach (i, e; staticTuple)
     {
         assert(t1[i] == e);
     }
