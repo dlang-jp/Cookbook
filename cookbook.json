@@ -1759,6 +1759,54 @@
   ]
  },
  {
+  "name" : "template_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/template_example.d",
+  "comment" : "テンプレート\n\nテンプレートについてまとめます。\n- テンプレート\n- テンプレート関数\n- テンプレートクラス・構造体\n- mixinテンプレート(TODO)\n- enum, aliasのテンプレート(TODO)\n\nSee_Also:\n    - https://dlang.org/spec/template.html\n",
+  "members" : [
+   {
+    "name" : "__unittest_L19_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "テンプレートの例です\n",
+    "line" : 19,
+    "char" : 1,
+    "endline" : 48,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L48_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "テンプレート関数の例です\n\nテンプレートを使った関数の定義・使い方の例です。\n構文糖によって通常のテンプレートを使うよりも見やすく、書きやすく使用することができます。\n",
+    "line" : 48,
+    "char" : 1,
+    "endline" : 73,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L73_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ditto\n",
+    "line" : 73,
+    "char" : 1,
+    "endline" : 99,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L99_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "テンプレートクラス・構造体の例です\n",
+    "line" : 99,
+    "char" : 1,
+    "endline" : 126,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "typecons_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/typecons_example.d",

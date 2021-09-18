@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>data.base64_example</title>
+        <title>template_example</title>
         
         
     </head>
@@ -271,55 +271,120 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">Base64エンコード/デコード
-</div></h1><div class="ddoc_description">Base64のエンコードとデコードを行うサンプルです
-
+                <h1><div class="ddoc_summary">テンプレート
+</div></h1><div class="ddoc_description">テンプレートについてまとめます。
+<ul><li>テンプレート</li>
+<li>テンプレート関数</li>
+<li>テンプレートクラス・構造体</li>
+<li>mixinテンプレート(TODO)</li>
+<li>enum, aliasのテンプレート(TODO)
+</li>
+</ul>
 </div>
 <div class="ddoc_see_also"><span class="ddoc_see_also_header">See Also:</span>
  
-<ul><li><a href="https://dlang.org/phobos/std_base64.html">https://dlang.org/phobos/std_base64.html</a></li>
+<ul><li><a href="https://dlang.org/spec/template.html">https://dlang.org/spec/template.html</a></li>
 </ul></div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- Base64エンコード/デコードを行うサンプルです
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.base64;
-<span class="d_keyword">immutable</span> <span class="d_keyword">ubyte</span>[] decodedData = [0,1,2,3,4,5,6,7];
-<span class="d_comment">// エンコード
-</span>string encodedData = Base64.encode(decodedData);
-<span class="d_keyword">assert</span>(encodedData == <span class="d_string">"AAECAwQFBgc="</span>);
-<span class="d_comment">// デコード
-</span><span class="d_keyword">assert</span>(Base64.decode(encodedData) == decodedData);
+ テンプレートの例です
+<pre class="d_code notranslate"><span class="d_comment">// テンプレートの中には構造体やクラス、関数、定数などが定義できます。
+</span><span class="d_keyword">template</span> Data(T)
+{
+    <span class="d_keyword">struct</span> X
+    {
+        T data;
+    }
+    <span class="d_keyword">void</span> copy(X src, <span class="d_keyword">ref</span> X dst)
+    {
+        dst.data = src.data;
+    }
+}
+<span class="d_comment">// Data!intで、Tをintに特殊化します。
+</span><span class="d_comment">// 特殊化されたテンプレートは一種の名前空間として利用されます。
+</span>Data!<span class="d_keyword">int</span>.X x;
+Data!<span class="d_keyword">int</span>.X y;
+x.data = 10;
+Data!<span class="d_keyword">int</span>.copy(x, y);
+<span class="d_keyword">assert</span>(y.data == 10);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- Base64エンコード/デコードの保存先をOutputRangeにすることもできます
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.base64;
-<span class="d_keyword">import</span> std.array: appender;
-<span class="d_keyword">immutable</span> <span class="d_keyword">ubyte</span>[] decodedData = [0,1,2,3,4,5,6,7];
-<span class="d_comment">// エンコード
-</span><span class="d_keyword">auto</span> enc = appender!string;
-Base64.encode(decodedData, enc);
-<span class="d_keyword">assert</span>(enc.data == <span class="d_string">"AAECAwQFBgc="</span>);
-<span class="d_comment">// デコード
-</span><span class="d_keyword">auto</span> dec = appender!(<span class="d_keyword">ubyte</span>[]);
-Base64.decode(enc.data, dec);
-<span class="d_keyword">assert</span>(dec.data == decodedData);
+ テンプレート関数の例です
+<div class="ddoc_blankline"></div>
+
+テンプレートを使った関数の定義・使い方の例です。
+構文糖によって通常のテンプレートを使うよりも見やすく、書きやすく使用することができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.math: isClose;
+
+<span class="d_comment">// +演算子で計算できるならどんな型でも対応可能なadd関数
+</span>T add(T)(T a, T b)
+{
+    <span class="d_keyword">return</span> a + b;
+}
+
+<span class="d_keyword">int</span> x = 10;
+<span class="d_keyword">int</span> y = 20;
+<span class="d_comment">// add関数のTをint型に特殊化して使用する。
+</span><span class="d_keyword">assert</span>(add!<span class="d_keyword">int</span>(x, y) == 30);
+<span class="d_comment">// `add!int(x, y)`` と書いてもよいが、
+</span><span class="d_comment">// add関数は T = int を推論してくれるので、`!int`の部分は不要。
+</span><span class="d_keyword">assert</span>(add(x, y) == 30);
+
+<span class="d_keyword">double</span> t = 3.14;
+<span class="d_keyword">double</span> u = 0.001592;
+<span class="d_comment">// add関数をdouble型のために使用する。
+</span><span class="d_keyword">assert</span>(add(t, u).isClose(3.141592, 0.0000001, 0.0000001));
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- Base64エンコード/デコードの入力元をInputRangeにすることもできます
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.base64;
-<span class="d_keyword">import</span> std.array: appender;
-<span class="d_keyword">import</span> std.range: iota;
-<span class="d_keyword">import</span> std.algorithm: equal;
-<span class="d_keyword">auto</span> decodedData = iota(<span class="d_keyword">ubyte</span>(0), <span class="d_keyword">ubyte</span>(8));
-<span class="d_comment">// エンコード
-</span><span class="d_keyword">auto</span> enc = appender!string;
-Base64.encode(decodedData.save, enc);
-<span class="d_keyword">assert</span>(enc.data == <span class="d_string">"AAECAwQFBgc="</span>);
-<span class="d_comment">// デコード
-</span><span class="d_keyword">auto</span> dec = appender!(<span class="d_keyword">ubyte</span>[]);
-Base64.decode(enc.data, dec);
-<span class="d_keyword">assert</span>(dec.data.equal(decodedData.save));
+ ditto
+<pre class="d_code notranslate"><span class="d_comment">// 前述のadd関数は以下の構文糖となっています
+</span><span class="d_keyword">template</span> add(T)
+{
+    T add(T a, T b)
+    {
+        <span class="d_keyword">return</span> a + b;
+    }
+}
+<span class="d_keyword">int</span> x = 10;
+<span class="d_keyword">int</span> y = 20;
+<span class="d_comment">// テンプレートと同名のメンバーがある場合は、
+</span><span class="d_comment">// 以下のようなアクセスができなくなります
+</span><span class="d_comment">//assert(add!(int).add(x, y) == 30);
+</span>
+<span class="d_comment">// 以下3つはすべて同じ意味で、構文糖によって
+</span><span class="d_comment">// 簡略化された書き方ができます
+</span><span class="d_keyword">assert</span>(add!(<span class="d_keyword">int</span>)(x, y) == 30);
+<span class="d_keyword">assert</span>(add!<span class="d_keyword">int</span>(x, y) == 30);
+<span class="d_keyword">assert</span>(add(x, y) == 30);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ テンプレートクラス・構造体の例です
+<pre class="d_code notranslate"><span class="d_comment">// テンプレート構造体
+</span><span class="d_keyword">struct</span> Point(T)
+{
+    T x;
+    T y;
+    Point!T add(Point!T pt)
+    {
+        <span class="d_keyword">return</span> Point(x + pt.x, y + pt.y);
+    }
+}
+<span class="d_comment">// Point!intでint型に特殊化
+</span><span class="d_comment">// 関数と違い、 Point(10, 20) 等として推論はできないので注意。
+</span>Point!<span class="d_keyword">int</span> p = Point!<span class="d_keyword">int</span>(10, 20);
+Point!<span class="d_keyword">int</span> t = Point!<span class="d_keyword">int</span>(30, 40);
+Point!<span class="d_keyword">int</span> v = p.add(t);
+<span class="d_keyword">assert</span>(v.x == 40);
+<span class="d_keyword">assert</span>(v.y == 60);
+
+<span class="d_comment">// floatで特殊化する場合はこう
+</span>Point!<span class="d_keyword">float</span> r;
+Point!<span class="d_keyword">float</span> s;
+
+<span class="d_comment">// クラスならこう
+</span><span class="d_keyword">class</span> Vector(T){}
 </pre>
 </div>
 
