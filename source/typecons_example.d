@@ -200,3 +200,50 @@ unittest
     assert(Payload.lastDestructedValue == 1234);
 }
 
+/++
+複数の値の組を作れる`Tuple`の例です。
+
+複数の異なる型の値をまとめて扱いたい時や、関数から複数の値を返したい場合などに利用できます。
++/
+unittest
+{
+    import std.typecons : Tuple, tuple;
+    import std.math : isClose;
+
+    // stringとintの2つの値を持つTupleを生成します。
+    Tuple!(string, int) t1;
+
+    // 各値には配列のようなインデックス指定でアクセスできます。
+    t1[0] = "test";
+    t1[1] = 123;
+    assert(t1[0] == "test");
+    assert(t1[1] == 123);
+
+    // ただし、指定するインデックスはコンパイル時に解決できる必要があります。
+    // 実行時に値が決まる変数などはインデックスに使用できません。
+    static assert(!__traits(compiles, {
+        size_t i = 1;
+        t1[i] = 456;
+    }));
+
+    // Tupleはtuple関数を利用して簡潔に生成することもできます。
+    auto t2 = tuple(123, "456", 789.012);
+    static assert(is(typeof(t2) == Tuple!(int, string, double)));
+    assert(t2[0] == 123);
+    assert(t2[1] == "456");
+    assert(t2[2].isClose(789.012));
+
+    // メンバーに名前の付いているTupleも作ることができます。
+    // テンプレート引数に型・メンバー名のペアを指定すると、名前付きメンバーになります。
+    Tuple!(int, "intValue", string, "stringValue") t3;
+
+    // 名前付きメンバーについては、通常のメンバー変数のように名前を指定してアクセスできます。
+    t3.intValue = 123;
+    t3.stringValue = "abc";
+    assert(t3.intValue == 123);
+    assert(t3.stringValue == "abc");
+
+    assert(t3[0] == 123);
+    assert(t3[1] == "abc");
+}
+
