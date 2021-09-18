@@ -317,3 +317,14 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     auto tim3 = tim2.toOtherTZ(JST);
     assert(tim3.toSimpleString() == "2019-May-01 19:00:00+09:00");
 }
+
+/++
+# 「今日」の日付を得る
++/
+@safe unittest
+{
+    import std.datetime : Clock, Date;
+
+    // 現在のシステム日時（ローカル）を得て、日付部分を取り出すことで今日の日付を得ます。
+    Date today = cast(Date) Clock.currTime();
+}
