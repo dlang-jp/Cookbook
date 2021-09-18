@@ -329,3 +329,68 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
     // 現在のシステム日時（ローカル）を得て、日付部分を取り出すことで今日の日付を得ます。
     Date today = cast(Date) Clock.currTime();
 }
+
+/++
+# 値の構築方法に関するパターン
+
+std.datetimeの各型は、値の直接指定か、ベースとなる型＋付加情報、というパターンでコンストラクタを使って構築します。
++/
+@safe unittest
+{
+    import std.datetime;
+
+    // 直接値を指定できるタイプの型
+    //     Date, TimeOfDay, DateTime
+    auto date = Date(2020, 10, 20);
+    auto time = TimeOfDay(12, 34, 56);
+    auto dt1 = DateTime(2021, 12, 31, 10, 20, 30);
+
+    // 他の値から合成するタイプの型
+    //     DateTime, SysTime, Interval
+
+    // 日時（DateTime） = 日付（Date） + 時刻（TimeOfDay、未指定の場合は 0時0分0秒）
+    auto dt2 = DateTime(date); // 0時0分0秒の日時を得るにはこれが簡単です
+    auto dt3 = DateTime(date, time);
+
+    // 日時（SysTime）  = 日時（DateTime） + タイムゾーン（TimeZone、未指定の場合は OSのタイムゾーンに基づく時差）
+    auto st1 = SysTime(dt1); // ローカル日時として、OSのタイムゾーンから時差が設定されます
+    auto st2 = SysTime(dt2, UTC());
+
+    // 期間 = 開始時点 + 終了時点
+    auto interval = Interval!DateTime(dt2, dt1);
+}
+
+/++
+# DateTimeからDateを得るなど、上位の複合型から一部を取り出す方法
+
+多くの場合、目的の部分型を得るためのプロパティがあります。
+DateTime型の場合は `date` と `timeOfDay` プロパティで取り出します。
+Interval型の場合は `begin` と `end` プロパティで取り出します。
+
+SysTime型の場合は、DateTime型やDate型へ直接キャストすることで部分型を得ることができます。
++/
+@safe unittest
+{
+    import std.datetime;
+
+    // 直接構築したあと、日付や時刻部分を取り出す
+    auto dt = DateTime(2021, 12, 31, 10, 20, 30);
+    auto date = dt.date;
+    auto time = dt.timeOfDay;
+    assert(date.year == 2021 && date.month == 12 && date.day == 31);
+    assert(time.hour == 10 && time.minute == 20 && time.second == 30);
+
+    auto interval = Interval!Date(Date(2020, 1, 1), Date(2021, 12, 31));
+    assert(interval.begin == Date(2020, 1, 1));
+    assert(interval.end == Date(2021, 12, 31));
+
+    auto st = Clock.currTime();
+    Date date2 = cast(Date) st;
+    TimeOfDay time2 = cast(TimeOfDay) st;
+    DateTime dt2 = cast(DateTime) st;
+
+    assert(date2.year == st.year && date2.month == st.month && date2.day == st.day);
+    assert(time2.hour == st.hour && time2.minute == st.minute && time2.second == st.second);
+    assert(dt2.year == st.year && dt2.month == st.month && dt2.day == st.day);
+    assert(dt2.hour == st.hour && dt2.minute == st.minute && dt2.second == st.second);
+}
