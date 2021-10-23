@@ -200,6 +200,61 @@ unittest
     assert(Payload.lastDestructedValue == 1234);
 }
 
+/+
+classのインスタンスをスタック上に確保するscopedの例です
+
+scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
+その代わり、インスタンスをスコープの外に移動させることはできません。
++/
+unittest
+{
+    import std.typecons : scoped;
+
+    class A
+    {
+    @nogc nothrow pure @safe:
+
+        this() scope { this.value = -1; }
+        this(int value) scope { this.value = value; }
+        int value;
+    }
+
+    // scopedによるインスタンス生成
+    // インスタンスはスタック上に確保されます。
+    // スコープ終了時はデストラクタが呼び出されます。
+    // scopedで生成したインスタンスは元の型の変数で直接参照できません。
+    // autoを経由する必要があります。
+    auto a1 = scoped!A();
+    assert(a1.value == -1);
+
+    // 引数ありコンストラクタも使用可能です。
+    auto a2 = scoped!A(1234);
+    assert(a2.value == 1234);
+
+    // scopedで生成したインスタンスを別の変数で参照することが可能です。
+    // ただし、スコープの外では参照は無効になります。
+    A aRef = a2;
+    assert(aRef.value == 1234);
+
+    {
+        // スコープ内で新しいインスタンスを生成
+        auto a3 = scoped!A(4567);
+        aRef = a3;
+
+        // a3はここでデストラクタが呼ばれ、破棄されます。
+    }
+    // a3を指していたaRefは無効な参照になっています。
+
+    // なお、scope記憶クラスを利用しても
+    // scopedと同様にGC無しでのインスタンス生成・スコープ終了時の破棄が実現できます。
+    (() @nogc nothrow pure scope @safe {
+       scope a4 = new A(9012);
+       assert(a4.value == 9012);
+
+       // a4はここでデストラクタが呼ばれ、破棄されます。
+    })();
+}
+
 /++
 複数の値の組を作れる`Tuple`の例です。
 
@@ -284,60 +339,5 @@ unittest
     // fieldNamesによりフィールド名を取得することが可能です。
     static assert(Tuple!(int, "first", double, "second", string, "third")
             .fieldNames == tuple("first", "second", "third"));
-}
-
-/+
-classのインスタンスをスタック上に確保するscopedの例です
-
-scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
-その代わり、インスタンスをスコープの外に移動させることはできません。
-+/
-unittest
-{
-    import std.typecons : scoped;
-
-    class A
-    {
-    @nogc nothrow pure @safe:
-
-        this() scope { this.value = -1; }
-        this(int value) scope { this.value = value; }
-        int value;
-    }
-
-    // scopedによるインスタンス生成
-    // インスタンスはスタック上に確保されます。
-    // スコープ終了時はデストラクタが呼び出されます。
-    // scopedで生成したインスタンスは元の型の変数で直接参照できません。
-    // autoを経由する必要があります。
-    auto a1 = scoped!A();
-    assert(a1.value == -1);
-
-    // 引数ありコンストラクタも使用可能です。
-    auto a2 = scoped!A(1234);
-    assert(a2.value == 1234);
-
-    // scopedで生成したインスタンスを別の変数で参照することが可能です。
-    // ただし、スコープの外では参照は無効になります。
-    A aRef = a2;
-    assert(aRef.value == 1234);
-
-    {
-        // スコープ内で新しいインスタンスを生成
-        auto a3 = scoped!A(4567);
-        aRef = a3;
-
-        // a3はここでデストラクタが呼ばれ、破棄されます。
-    }
-    // a3を指していたaRefは無効な参照になっています。
-
-    // なお、scope記憶クラスを利用しても
-    // scopedと同様にGC無しでのインスタンス生成・スコープ終了時の破棄が実現できます。
-    (() @nogc nothrow pure scope @safe {
-       scope a4 = new A(9012);
-       assert(a4.value == 9012);
-
-       // a4はここでデストラクタが呼ばれ、破棄されます。
-    })();
 }
 
