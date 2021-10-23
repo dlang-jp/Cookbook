@@ -200,7 +200,7 @@ unittest
     assert(Payload.lastDestructedValue == 1234);
 }
 
-/+
+/++
 classのインスタンスをスタック上に確保するscopedの例です
 
 scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
