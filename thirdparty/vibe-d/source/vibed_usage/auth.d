@@ -100,7 +100,7 @@ Bug:
 現在バグのためダイジェスト認証はうまく動作しない。
 - https://github.com/vibe-d/vibe.d/issues/2597
 +/
-version (none) unittest
+unittest
 {
     import vibe.vibe;
     import std.conv: text;
