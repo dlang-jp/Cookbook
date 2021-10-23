@@ -289,7 +289,7 @@ unittest
     enum staticTuple = tuple("test", 123);
 
     // foreachによりフィールドを順に取り出すことができます。
-    foreach (i, e; staticTuple)
+    static foreach (i, e; staticTuple[])
     {
         assert(t1[i] == e);
     }
