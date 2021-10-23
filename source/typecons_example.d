@@ -326,9 +326,6 @@ unittest
     t4[0..2] = tuple(100, 200);
     assert(t4 == tuple(100, 200, "foo"));
 
-    // その代わり、メモリ上のアライメントが変わってしまうようなスライスは行えません。
-    static assert(!__traits(compiles, tuple(1, 2, 3, 5, "abc")[1..5] == tuple(2, 3, 5)));
-
     // expandにより関数の引数として展開することが可能です。
     void f(int x, string y, double z)
     {
