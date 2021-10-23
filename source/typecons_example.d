@@ -318,8 +318,8 @@ unittest
     // Tuple同士の結合が行えます。
     assert(tuple(1, 2, 3) ~ tuple("abc", "def") == tuple(1, 2, 3, "abc", "def"));
 
-    // 指定範囲のフィールドだけを取り出すsliceが行えます。
-    assert(tuple("test", 2, 3, 5, "abc").slice!(1, 4) == tuple(2, 3, 5));
+    // スライスで指定範囲のフィールドだけを取り出せます。
+    assert(tuple("test", 2, 3, 5, "abc")[1..4] == tuple(2, 3, 5));
 
     // 参照により取り出すため、値のコピー等は発生しません。値の変更も可能です。
     auto t4 = tuple(1, 2, "foo");
