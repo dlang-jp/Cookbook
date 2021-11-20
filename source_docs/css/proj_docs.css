@@ -511,8 +511,15 @@ dt.ddoc_decl:hover .ddoc_decl_anchor
 .sidebar h2
 {
     border-bottom: 1px solid #993333;
-    font-size: 1em;
-    margin-right: -1em;
+    font-size: 1.2em;
+    line-height: 32px;
+    text-transform: capitalize;
+    margin-right: 40px;
+}
+
+.sidebar .githublinkimg
+{
+    float: right;
 }
 
 .sidebar ul
@@ -677,7 +684,7 @@ table a
     body > .container {
         overflow: auto;
     }
-    
+
     .d_code {
         overflow: auto;
     }
@@ -685,7 +692,7 @@ table a
 
 @media screen and (min-width:768px) {
     /* For PC Layout */
-    
+
     body > .container {
         margin: 15px;
     }
