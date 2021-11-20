@@ -2,6 +2,8 @@
 プロセス
 
 プロセス操作についてまとめます。
+
+Source: $(LINK_TO_SRC source/_process_example.d)
 +/
 module process_example;
 

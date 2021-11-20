@@ -8,6 +8,8 @@ Botanのライセンスは2条項BSDライセンスで、Apacheライセンス�
     - APIドキュメント: http://etcimon.github.io/botan/index.html
     - Wiki: https://github.com/etcimon/botan/wiki
     - C++のほうの公式: https://botan.randombit.net/
+
+Source: $(LINK_TO_SRC thirdparty/botan/source/botan_usage/_example.d)
 +/
 module botan_usage.example;
 
@@ -229,10 +231,10 @@ unittest
     import botan.cert.x509.x509_ca: X509CA;
     import botan.cert.x509.x509path: x509PathValidate, PathValidationRestrictions, PathValidationResult;
     import botan.cert.x509.certstor: CertificateStore, CertificateStoreInMemory;
-    
+
     // 乱数機
     auto rng = new AutoSeededRNG;
-    
+
     // 1. ルートCA自己証明書作成
     // 1-1 秘密鍵(root)の作成
     auto rootPrivateKey = RSAPrivateKey(rng, 2048);
@@ -262,7 +264,7 @@ unittest
     debug (BotanCertFileSave) std.file.write("root-ca-cert.pem.crt", rootCertPEM);
     // ルート認証局設立
     auto rootCA = X509CA(rootCert, rootPrivateKey, "SHA-256");
-    
+
     // 2. 中間CA証明書作成
     // 2-1 秘密鍵(inter)の作成
     auto interPrivateKey = RSAPrivateKey(rng, 2048);
@@ -287,10 +289,10 @@ unittest
     auto interCert = rootCA.signRequest(interCsr, rng, interCertOpts.start, interCertOpts.end);
     string interCertPEM = interCert.PEM_encode();
     debug (BotanCertFileSave) std.file.write("inter-ca-cert.pem.crt", interCertPEM);
-    
+
     // 中間認証局設立
     auto interCA = X509CA(interCert, interPrivateKey, "SHA-256");
-    
+
     // 3. サーバー証明書作成
     // 3-1 秘密鍵(server)の作成
     auto serverPrivateKey = RSAPrivateKey(rng, 2048);
@@ -315,7 +317,7 @@ unittest
     auto serverCert = interCA.signRequest(serverCsr, rng, serverCertOpts.start, serverCertOpts.end);
     string serverCertPEM = serverCert.PEM_encode();
     debug (BotanCertFileSave) std.file.write("server-cert.pem.crt", serverCertPEM);
-    
+
     // 4. クライアント証明書作成
     // 4-1 秘密鍵(client)の作成
     auto clientPrivateKey = RSAPrivateKey(rng, 2048);
@@ -342,16 +344,16 @@ unittest
     auto clientCert = interCA.signRequest(clientCsr, rng, clientCertOpts.start, clientCertOpts.end);
     string clientCertPEM = clientCert.PEM_encode();
     debug (BotanCertFileSave) std.file.write("client-cert.pem.crt", clientCertPEM);
-    
+
     // 証明書ストアを作成
     auto store = new CertificateStoreInMemory();
     store.addCertificate(rootCert);
     store.addCertificate(interCert);
-    
+
     // 5. サーバー証明書(server)を検証
     auto serverCertValidation = x509PathValidate(serverCert, PathValidationRestrictions(false), store);
     assert(serverCertValidation.successfulValidation);
-    
+
     // 6. クライアント証明書(client)を検証
     auto store2 = new CertificateStoreInMemory();
     auto clientCertValidation = x509PathValidate(clientCert, PathValidationRestrictions(false), store);

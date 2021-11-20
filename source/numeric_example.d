@@ -4,6 +4,8 @@
 標準ライブラリで提供される数値計算の関数などについてまとめます。
 
 主に `std.math` や `std.mathspecial`、 `std.numeric` を使った例を対象とします。
+
+Source: $(LINK_TO_SRC source/_numeric_example.d)
 +/
 module numeric_example;
 

@@ -15,6 +15,8 @@ Windowsにおける標準API(Win32API)の呼び出しについてまとめます
 See_Also:
     関数に対応するヘッダーとlibファイルはMicrosoft Docsのサイトから検索して見つけることができます。$(BR)
     $(LINK https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/)
+
+Source: $(LINK_TO_SRC windows/source/windows/_basic.d)
 +/
 module windows.basic;
 

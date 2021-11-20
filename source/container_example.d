@@ -2,6 +2,8 @@
 コンテナ
 
 スタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。
+
+Source: $(LINK_TO_SRC source/_container_example.d)
 +/
 module container_example;
 

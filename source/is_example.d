@@ -2,6 +2,8 @@
 is式
 
 is式についてまとめます。
+
+Source: $(LINK_TO_SRC source/_is_example.d)
 +/
 module is_example;
 

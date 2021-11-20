@@ -11,6 +11,7 @@ Asdf の特徴として、PhobosのJSONではできない、構造体やクラ�
 ## ドキュメント
 http://docs.asdf.dlang.io/index.html
 
+Source: $(LINK_TO_SRC thirdparty/json/source/asdf_usage/_example.d)
 +/
 module asdf_usage.example;
 
