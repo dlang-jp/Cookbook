@@ -258,3 +258,73 @@ unittest
     auto fib = recurrence!((a, n) => a[n - 2] + a[n - 1])(1, 1);
     assert(fib.take(7).equal([1, 1, 2, 3, 5, 8, 13]));
 }
+
+/++
+配列をRangeとして扱う場合の例です。
++/
+unittest
+{
+    import std.range : isInputRange, isRandomAccessRange, only;
+
+    // 動的配列はstd.rangeやstd.algorithmの内部ではRangeと見なされます。
+    static assert(isRandomAccessRange!(int[]));
+
+    // ただし、そのままではRangeに備わっているメンバーを利用できません。
+    int[] values = [1, 2, 3, 4];
+    static assert(!__traits(compiles, {
+        values.empty;
+        values.popFront;
+        values.front;
+        values.save;
+        values.back;
+        values.popBack;
+    }));
+
+    // 動的配列に対してRangeのメンバーを利用するには
+    // std.rangeの関数をimportする必要があります。
+    {
+        import std.range : empty, front, popFront, save, back, popBack;
+
+        assert(!values.empty);
+        assert(values.front == 1);
+        assert(values.back == 4);
+
+        auto saved = values.save;
+
+        values.popFront;
+        assert(values == [2, 3, 4]);
+        values.popBack;
+        assert(values == [2, 3]);
+
+        assert(saved == [1, 2, 3, 4]);
+    }
+
+    // 配列向けの関数をimportしておくことで、
+    // 動的配列とRangeのどちらにも使用できる関数が定義できます。
+    // ただし、パフォーマンスが重要になる場合は、
+    // 動的配列向けに最適化した実装を別途用意することも検討してください。
+    bool myAny(InputRange, Element)(InputRange range, Element needle)
+        if (isInputRange!InputRange)
+    {
+        import std.range : empty, front, popFront;
+        for (; !range.empty; range.popFront())
+        {
+            if (range.front == needle)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // 自作関数を動的配列に対して使用
+    values = [1, 2, 3];
+    assert(myAny(values, 1));
+    assert(!myAny(values, 100));
+
+    // 動的配列ではないRangeに対しても利用可能
+    assert(myAny(only(1), 1));
+    assert(!myAny(only(1), 100));
+}
+
