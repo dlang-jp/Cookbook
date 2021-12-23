@@ -1692,6 +1692,27 @@
   ]
  },
  {
+  "name" : "sumtype_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/sumtype_example.d",
+  "comment" : "SumTypeの例\n\nSumTypeを使用すると、複数の型を複合した型を形成することができます。\nタグ付き共用体の1形態です。\n\nSee_Also:\n    - https://dlang.org/phobos/std_sumtype.html\n",
+  "members" : [
+   {
+    "name" : "__unittest_L24_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "SumTypeの初期化と値の取り出し方\n\n値の設定はコンストラクタか、代入によって行います。\n値の取り出しは、matchテンプレートを使用します。\n\nSee_Also:\n    - https://dlang.org/phobos/std_sumtype.html#.match\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.this\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign\n",
+    "line" : 24,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 46,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "sync_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/sync_example.d",
@@ -1862,7 +1883,17 @@
     "comment" : "classのインスタンスをスタック上に確保するscopedの例です\n\nscopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。\nその代わり、インスタンスをスコープの外に移動させることはできません。\n",
     "line" : 209,
     "char" : 1,
-    "endline" : 258,
+    "endline" : 263,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L263_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "複数の値の組を作れる`Tuple`の例です。\n\n複数の異なる型の値をまとめて扱いたい時や、関数から複数の値を返したい場合などに利用できます。\n",
+    "line" : 263,
+    "char" : 1,
+    "endline" : 341,
     "endchar" : 1
    }
   ]

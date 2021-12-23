@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>windows.basic</title>
+        <title>sumtype_example</title>
         
         
     </head>
@@ -275,68 +275,47 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">Win32API
-</div></h1><div class="ddoc_description">Windowsにおける標準API(Win32API)の呼び出しについてまとめます。
-<div class="ddoc_blankline"></div>
-
-概要
-<ol><li>C言語では多くの場合 <span class="d_inlinecode donthyphenate notranslate">#include &lt;windows.h&gt;</span> と記述しますが、Dでは <span class="d_inlinecode donthyphenate notranslate">import core.sys.windows.windows;</span> と記述します。</li>
-<li>あとは利用する関数が含まれるlibファイルをリンクすればシステム関数が利用できます。
-<ul><li>dubでは設定ファイルの <span class="d_inlinecode donthyphenate notranslate">libs</span> セクションにファイル名を拡張子を除いて書きます。</li>
-<li><span class="d_inlinecode donthyphenate notranslate">pragma(lib, "ファイル名");</span> とする書き方もあります
-</li>
-</ul></li>
-</ol>
-なおライブラリ等でWindows以外のプラットフォームと共用するためには <span class="d_inlinecode donthyphenate notranslate">version (Windows) { } else { }</span> で別々に書きます。<br>
-以下の例ではLinux等の環境でもビルドできるようにするためversionで囲って表記しています。
+                <h1><div class="ddoc_summary">SumTypeの例
+</div></h1><div class="ddoc_description">SumTypeを使用すると、複数の型を複合した型を形成することができます。
+タグ付き共用体の1形態です。
 
 </div>
 <div class="ddoc_see_also"><span class="ddoc_see_also_header">See Also:</span>
- 関数に対応するヘッダーとlibファイルはMicrosoft Docsのサイトから検索して見つけることができます。<br>
-    <a href="https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/">https://docs.microsoft.com/en-us/windows/win32/api/_winmsg/</a></div>
+ 
+<ul><li><a href="https://dlang.org/phobos/std_sumtype.html">https://dlang.org/phobos/std_sumtype.html</a></li>
+</ul></div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <span class="d_inlinecode donthyphenate notranslate">GetSystemMetrics</span>関数を使ってシステム情報（マウスのボタン数）を取得する例です。
-<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
-{
-    <span class="d_keyword">import</span> core.sys.windows.windows;
-
-    <span class="d_keyword">auto</span> n = GetSystemMetrics(SM_CMOUSEBUTTONS);
-    <span class="d_keyword">assert</span>(n &gt;= 0);
-}
-</pre>
-</div>
-<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- GetComputerNameEx関数を使ってコンピューター名を取得する例です。
+ SumTypeの初期化と値の取り出し方
 <div class="ddoc_blankline"></div>
 
-Windowsのシステム関数には末尾にAかWが付くものがあり、それぞれchar向けかwchar向けを表します。
+値の設定はコンストラクタか、代入によって行います。
+値の取り出しは、matchテンプレートを使用します。
 <div class="ddoc_blankline"></div>
 
-Aが付く関数はシステムロケールに従って結果を返すため、多くはASCII文字列ですが日本語環境ではShift_JISになることがあります。<br>
-Wが付く関数はUnicodeで結果を返すため、そのままwcharの文字列として扱うことができます。
-<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
-{
-    <span class="d_keyword">import</span> core.sys.windows.windows;
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_sumtype.html#.match">https://dlang.org/phobos/std_sumtype.html#.match</a></li>
+<li><a href="https://dlang.org/phobos/std_sumtype.html#.SumType.this">https://dlang.org/phobos/std_sumtype.html#.SumType.this</a></li>
+<li><a href="https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign">https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.sumtype: SumType, match;
+<span class="d_comment">// intとdoubleを入れることのできるSumTypeを作成します。
+</span><span class="d_comment">// 初期値はintの10。
+</span><span class="d_keyword">auto</span> val = SumType!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>)(10);
 
-    <span class="d_comment">// 適当な長さのバッファを確保しておきます。
-</span>    DWORD length = 256;
-    <span class="d_keyword">wchar</span>[256] buf;
+<span class="d_comment">// valにはint型の10が入っているので、 (int a) にマッチします。
+</span><span class="d_keyword">auto</span> dat1 = val.match!(
+    (<span class="d_keyword">int</span> a) =&gt; a,
+    (<span class="d_keyword">double</span> a) =&gt; 0);
+<span class="d_keyword">assert</span>(dat1 == 10);
 
-    BOOL ret = GetComputerNameExW(COMPUTER_NAME_FORMAT.ComputerNamePhysicalNetBIOS,
-            buf.ptr, &amp;length);
-
-    <span class="d_keyword">assert</span>(ret != 0);
-    <span class="d_keyword">assert</span>(0 &lt; length &amp;&amp; length &lt;= 256);
-
-    <span class="d_comment">// 結果をスライスで取り出すことでwchar[]の文字列として利用できます。
-</span>    <span class="d_keyword">wchar</span>[] computerName = buf[0 .. length];
-
-    <span class="d_comment">// wchar[]で確保したものはstd.convのtoでstringに変換することができます。
-</span>    <span class="d_keyword">import</span> std.conv : to;
-
-    string strComputerName = computerName.to!string();
-    <span class="d_keyword">assert</span>(0 &lt; strComputerName.length &amp;&amp; strComputerName.length &lt;= 256);
-}
+<span class="d_comment">// 再代入はこのように行います。
+</span><span class="d_comment">// int型かdouble型なら代入可能です。
+</span>val = 3.1416;
+<span class="d_comment">// 今度は (double a) にマッチします。
+</span><span class="d_keyword">auto</span> dat2 = val.match!(
+    (<span class="d_keyword">int</span> a) =&gt; a,
+    (<span class="d_keyword">double</span> a) =&gt; 0);
+<span class="d_keyword">assert</span>(dat2 == 0);
 </pre>
 </div>
 

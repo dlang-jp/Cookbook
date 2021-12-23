@@ -127,6 +127,10 @@
 
 
 
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
 	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
 
 
@@ -511,6 +515,87 @@ scopedによりclassのインスタンスを生成した場合、ヒープを使
 
    <span class="d_comment">// a4はここでデストラクタが呼ばれ、破棄されます。
 </span>})();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 複数の値の組を作れる<span class="d_inlinecode donthyphenate notranslate">Tuple</span>の例です。
+<div class="ddoc_blankline"></div>
+
+複数の異なる型の値をまとめて扱いたい時や、関数から複数の値を返したい場合などに利用できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : Tuple, tuple;
+<span class="d_keyword">import</span> std.math : isClose;
+
+<span class="d_comment">// stringとintの2つのフィールドを持つTupleを生成します。
+</span>Tuple!(string, <span class="d_keyword">int</span>) t1;
+
+<span class="d_comment">// 各フィールドには配列のようなインデックス指定でアクセスできます。
+</span>t1[0] = <span class="d_string">"test"</span>;
+t1[1] = 123;
+<span class="d_keyword">assert</span>(t1[0] == <span class="d_string">"test"</span>);
+<span class="d_keyword">assert</span>(t1[1] == 123);
+
+<span class="d_comment">// ただし、指定するインデックスはコンパイル時に解決できる必要があります。
+</span><span class="d_comment">// 実行時に値が決まる変数などはインデックスに使用できません。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, { size_t i = 1; t1[i] = 456; }));
+
+<span class="d_comment">// Tupleはtuple関数を利用して簡潔に生成することもできます。
+</span><span class="d_keyword">auto</span> t2 = tuple(123, <span class="d_string">"456"</span>, 789.012);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(t2) == Tuple!(<span class="d_keyword">int</span>, string, <span class="d_keyword">double</span>)));
+<span class="d_keyword">assert</span>(t2[0] == 123);
+<span class="d_keyword">assert</span>(t2[1] == <span class="d_string">"456"</span>);
+<span class="d_keyword">assert</span>(t2[2].isClose(789.012));
+
+<span class="d_comment">// Tupleはコンパイル時にも利用可能です。
+</span><span class="d_keyword">enum</span> staticTuple = tuple(<span class="d_string">"test"</span>, 123);
+
+<span class="d_comment">// foreachによりフィールドを順に取り出すことができます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">foreach</span> (i, e; staticTuple[])
+{
+    <span class="d_keyword">assert</span>(t1[i] == e);
+}
+
+<span class="d_comment">// フィールドに名前の付いているTupleも作ることができます。
+</span><span class="d_comment">// テンプレート引数に型・フィールド名のペアを指定すると、名前付きメンバーになります。
+</span>Tuple!(<span class="d_keyword">int</span>, <span class="d_string">"intValue"</span>, string, <span class="d_string">"stringValue"</span>) t3;
+
+<span class="d_comment">// 名前付きフィールドについては、通常のメンバー変数のように名前を指定してアクセスできます。
+</span>t3.intValue = 123;
+t3.stringValue = <span class="d_string">"abc"</span>;
+<span class="d_keyword">assert</span>(t3.intValue == 123);
+<span class="d_keyword">assert</span>(t3.stringValue == <span class="d_string">"abc"</span>);
+
+<span class="d_comment">// 名前付きフィールドでもインデックスによるアクセスが可能です。
+</span><span class="d_keyword">assert</span>(t3[0] == 123);
+<span class="d_keyword">assert</span>(t3[1] == <span class="d_string">"abc"</span>);
+
+<span class="d_comment">// 互換性のある型のTupleは比較が行えます。
+</span><span class="d_comment">// フィールドの順に行っていく比較(辞書式順序)になります。
+</span><span class="d_keyword">assert</span>(tuple(1, 2, 3) == tuple(1, 2, 3));
+<span class="d_keyword">assert</span>(tuple(1, 2, 3, 4) != tuple(1, 2, 3, 5));
+<span class="d_keyword">assert</span>(tuple(1, 2, 3) &lt; tuple(3, 2, 1));
+<span class="d_keyword">assert</span>(tuple(123456L, 2, 0) &gt; tuple(3, 2, 1));
+
+<span class="d_comment">// Tuple同士の結合が行えます。
+</span><span class="d_keyword">assert</span>(tuple(1, 2, 3) ~ tuple(<span class="d_string">"abc"</span>, <span class="d_string">"def"</span>) == tuple(1, 2, 3, <span class="d_string">"abc"</span>, <span class="d_string">"def"</span>));
+
+<span class="d_comment">// スライスで指定範囲のフィールドだけを取り出せます。
+</span><span class="d_keyword">assert</span>(tuple(<span class="d_string">"test"</span>, 2, 3, 5, <span class="d_string">"abc"</span>)[1..4] == tuple(2, 3, 5));
+
+<span class="d_comment">// 参照により取り出すため、値のコピー等は発生しません。値の変更も可能です。
+</span><span class="d_keyword">auto</span> t4 = tuple(1, 2, <span class="d_string">"foo"</span>);
+t4[0..2] = tuple(100, 200);
+<span class="d_keyword">assert</span>(t4 == tuple(100, 200, <span class="d_string">"foo"</span>));
+
+<span class="d_comment">// expandにより関数の引数として展開することが可能です。
+</span><span class="d_keyword">void</span> f(<span class="d_keyword">int</span> x, string y, <span class="d_keyword">double</span> z)
+{
+}
+
+f(tuple(1, <span class="d_string">"bar"</span>, 0.1).expand);
+
+<span class="d_comment">// fieldNamesによりフィールド名を取得することが可能です。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(Tuple!(<span class="d_keyword">int</span>, <span class="d_string">"first"</span>, <span class="d_keyword">double</span>, <span class="d_string">"second"</span>, string, <span class="d_string">"third"</span>)
+        .fieldNames == tuple(<span class="d_string">"first"</span>, <span class="d_string">"second"</span>, <span class="d_string">"third"</span>));
 </pre>
 </div>
 
