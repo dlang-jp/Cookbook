@@ -3,46 +3,46 @@
   "name" : "botan_usage.example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/botan/source/botan_usage/example.d",
-  "comment" : "Botanの使用例\n\nBotanはベースがC++の暗号化ライブラリです。そのためD言語っぽくないインターフェースが多々見受けられます。 $(BR)\nBotanのライセンスは2条項BSDライセンスで、ApacheライセンスのOpenSSLとあまり変わらない条件になっています。\n\n## ドキュメント\n    - APIドキュメント: http://etcimon.github.io/botan/index.html\n    - Wiki: https://github.com/etcimon/botan/wiki\n    - C++のほうの公式: https://botan.randombit.net/\n",
+  "comment" : "Botanの使用例\n\nBotanはベースがC++の暗号化ライブラリです。そのためD言語っぽくないインターフェースが多々見受けられます。 $(BR)\nBotanのライセンスは2条項BSDライセンスで、ApacheライセンスのOpenSSLとあまり変わらない条件になっています。\n\n## ドキュメント\n    - APIドキュメント: http://etcimon.github.io/botan/index.html\n    - Wiki: https://github.com/etcimon/botan/wiki\n    - C++のほうの公式: https://botan.randombit.net/\n\nSource: $(LINK_TO_SRC thirdparty/botan/source/botan_usage/_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L27_C1",
+    "name" : "__unittest_L29_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "AES-128-CBCによる共通鍵暗号化/復号の例です。\n\ngetCipherのファクトリ関数で「フィルター」として変換器を作成します。 $(BR)\nPipeはストリームのように、さまざまなロジックを組み合わせることができます。 $(BR)\n例えばBase64デコード→AES-128-CBCでエンコード→AES-256-CBCでエンコード→Base64エンコードする…といったことも可能です。\n\nSee_Also:\n    - https://github.com/etcimon/botan/wiki/Pipe-and-Filter-Message-Processing\n    - https://github.com/etcimon/botan#recommended-algorithms\n    - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf P13\n    - https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf P26, P37\n",
-    "line" : 27,
+    "line" : 29,
     "char" : 1,
-    "endline" : 66,
+    "endline" : 68,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L66_C1",
+    "name" : "__unittest_L68_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "RSAによる公開鍵での暗号化と秘密鍵での復号\n\nSee_Also:\n    - https://github.com/etcimon/botan/wiki/Public-Key-Cryptography\n    - https://github.com/etcimon/botan/blob/master/examples/pubkey/source/app.d\n    - https://github.com/etcimon/botan#recommended-algorithms\n    - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf P13\n    - https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf P26, P37\n",
-    "line" : 66,
+    "line" : 68,
     "char" : 1,
-    "endline" : 114,
+    "endline" : 116,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L114_C1",
+    "name" : "__unittest_L116_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "RSAによる秘密鍵での署名と公開鍵での検証\n\nSee_Also:\n    - https://github.com/etcimon/botan/wiki/Public-Key-Cryptography#signatures\n    - https://github.com/etcimon/botan#recommended-algorithms\n    - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf P13\n    - https://www.ipa.go.jp/security/ipg/documents/ipa-cryptrec-gl-3001-3.0.1.pdf P26, P37\n",
-    "line" : 114,
+    "line" : 116,
     "char" : 1,
-    "endline" : 220,
+    "endline" : 222,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L220_C1",
+    "name" : "__unittest_L222_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "証明書の作成\n\n以下の例では、ルートCA証明書と、それにより署名された中間CA証明書、中間CA証明書で署名したサーバー証明書、\n中間CA証明書で署名したクライアント証明書をそれぞれ作成します。\n\n- botan.pubkey.algo.rsa.RSAPrivateKey;\n- botan.cert.x509.x509self.createCertReq\n\n1. ルートCA証明書の作成\n   1. 秘密鍵(root)の作成$(BR)\n      OpenSSLだと\n      ```\n      openssl genrsa -out private-root.key 2048\n      ```\n   2. 秘密鍵(root)を使用して証明書要求(CSR)(root)の作成$(BR)\n      OpenSSLだと\n      ```\n      openssl req -new -key private-root.key -out public-root.ca.pem.csr\n      ```\n   3. 秘密鍵(root)と証明書要求(root)を使用してルートCA証明書(root)作成$(BR)\n      OpenSSLだと\n      ```\n      openssl x509 -req -days 3650 -signkey private-root.key -in public-root.ca.pem.csr -out public-root.ca.pem.crt\n      ```\n      なお、self-signedな証明書(=オレオレのルート証明書)であれば、2の工程をすっ飛ばし、以下のコマンドで秘密鍵(root)を使用してルートCA証明書(root)を直接生成可能。\n      ```\n      openssl req -x509 -new -key private-root.key -out public-root.ca.pem.crt\n      ```\n2. 中間CA証明書の作成\n   1. 秘密鍵(inter)の作成\n      OpenSSLだと\n      ```\n      openssl genrsa -out private-inter.key 2048\n      ```\n   2. 秘密鍵(inter)を使用して証明書要求(CSR)(inter)の作成$(BR)\n      OpenSSLだと\n      ```\n      openssl req -new -key private-inter.key -out public-inter.ca.pem.csr\n      ```\n   3. 秘密鍵(root)とルートCA証明書(root)と証明書要求(inter)を使用して中間CA証明書(inter)作成$(BR)\n      OpenSSLだと\n      ```\n      openssl ca -keyfile private-root.key -cert public-root.ca.pem.crt -in public-inter.ca.pem.csr -out public-inter.ca.pem.crt\n      ```\n3. サーバー証明書の作成\n   1. 秘密鍵(server)の作成$(BR)\n      OpenSSLだと\n      ```\n      openssl genrsa -out private-server.key 2048\n      ```\n   2. 秘密鍵(server)を使用して証明書要求(CSR)(server)の作成$(BR)\n      OpenSSLだと\n      ```\n      openssl req -new -key private-server.key -out public-server.ca.pem.csr\n      ```\n   3. 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(server)を使用してサーバー証明書(server)作成$(BR)\n      OpenSSLだと\n      ```\n      openssl ca -keyfile private-inter.key -cert public-inter.ca.pem.crt -in public-server.ca.pem.csr -out public-server.ca.pem.crt\n      ```\n4. クライアント証明書の作成\n   1. 秘密鍵(client)の作成\n   2. 秘密鍵(client)を使用して証明書要求(CSR)(client)の作成\n   3. 秘密鍵(inter)と中間CA証明書(inter)と証明書要求(client)を使用してクライアント証明書(client)作成\n5. サーバー証明書(server)を検証\n   OpenSSLだと\n   ```\n   openssl verify -CApath cacert public.server.pem.crt\n   ```\n6. クライアント証明書(client)を検証\n   OpenSSLだと\n   ```\n   openssl verify -CApath cacert public.client.pem.crt\n   ```\n\nSee_Also:\n    - https://github.com/etcimon/botan/wiki/X.509-Certificates-and-CRLs\n\n",
-    "line" : 220,
+    "line" : 222,
     "char" : 1,
-    "endline" : 360,
+    "endline" : 362,
     "endchar" : 1
    }
   ]

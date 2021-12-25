@@ -3,33 +3,33 @@
   "name" : "vibed_usage.http",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/http.d",
-  "comment" : "HTTPサーバー\n",
+  "comment" : "HTTPサーバー\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_http.d)\n",
   "members" : [
    {
     "name" : "vibed_usage._common",
     "kind" : "import",
-    "line" : 6,
+    "line" : 8,
     "char" : 8,
     "protection" : "private"
    },
    {
-    "name" : "__unittest_L36_C1",
+    "name" : "__unittest_L38_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ふつうのHTTPサーバー\n\n基本的な流れは、以下。\n- URLRouterでパスとハンドラの割り付けを行う\n- HTTPServerSettingsで接続のための情報を設定する\n- listenHTTP でサーバーを起動する\n- runEventLoop または runApplication でイベントループを開始する\n\n加えて、今回はクライアント側からのアクセスでサーバーの動作を検証しています。$(BR)\nさらに、Cookbookのサンプルはテストケースとして動作するように作っているため、exitEventLoopでサーバーを終了しています。\n- runTask で非同期的な処理を実行する\n- requestHTTP でクライアントからのリクエストを行う\n- exitEventLoop でイベントループを終了する\n\nSee_Also:\n- https://vibed.org/docs#http\n- https://vibed.org/api/vibe.http.router/URLRouter\n- https://vibed.org/api/vibe.http.server/listenHTTP\n- https://vibed.org/api/vibe.http.server/HTTPServerSettings\n- https://vibed.org/api/vibe.http.server/HTTPServerRequest\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse\n- https://vibed.org/api/vibe.core.core/runTask\n- https://vibed.org/api/vibe.http.client/requestHTTP\n- https://vibed.org/api/vibe.core.core/runEventLoop\n- https://vibed.org/api/vibe.core.core/runApplication\n- https://vibed.org/api/vibe.core.core/exitEventLoop\n",
-    "line" : 36,
+    "line" : 38,
     "char" : 1,
-    "endline" : 97,
+    "endline" : 99,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L97_C1",
+    "name" : "__unittest_L99_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "dietテンプレートを使用する例\n\nvibe.dはHTML生成のためのテンプレートライブラリを使用しています。\ndietテンプレートは、PUGテンプレートと互換性の高いテンプレートライブラリです。\n\nSee_Also:\n- https://vibed.org/templates/diet\n- https://vibed.org/api/vibe.http.server/render : dietテンプレートファイルをコンパイルしてレスポンスヘッダに設定する\n- https://vibed.org/api/diet.html/compileHTMLDietFileString : dietテンプレートファイルをコンパイルしてOutputRangeに入れる\n- https://vibed.org/api/diet.html/compileHTMLDietString : 文字列をコンパイルしてOutputRangeに入れる\n",
-    "line" : 97,
+    "line" : 99,
     "char" : 1,
-    "endline" : 163,
+    "endline" : 165,
     "endchar" : 1
    }
   ]
@@ -38,33 +38,33 @@
   "name" : "vibed_usage.https",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/https.d",
-  "comment" : "HTTPSサーバー\n",
+  "comment" : "HTTPSサーバー\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_https.d)\n",
   "members" : [
    {
     "name" : "vibed_usage._common",
     "kind" : "import",
-    "line" : 6,
+    "line" : 8,
     "char" : 8,
     "protection" : "private"
    },
    {
-    "name" : "__unittest_L24_C1",
+    "name" : "__unittest_L26_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "HTTPSサーバー\n\nサーバー設定時に、 HTTPServerSettings の tlsContext を設定します。\n\n準備するもの：\n- サーバー側\n  - サーバー証明書(チェーン)\n  - サーバー証明書発行時の秘密鍵\n- クライアント側\n  - サーバー証明書を発行したCAの証明書\n\nSee_Also:\n- https://vibed.org/docs#http-https\n- https://vibed.org/api/vibe.stream.tls/TLSContext\n",
-    "line" : 24,
+    "line" : 26,
     "char" : 1,
-    "endline" : 108,
+    "endline" : 110,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L108_C1",
+    "name" : "__unittest_L110_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "クライアント認証を要求するHTTPSサーバー\n\nサーバー設定時に、 HTTPServerSettings の tlsContext を設定します。\n特に tlsContext.peerValidationMode で TLSPeerValidationMode.requireCert を指定することで、クライアントに対してクライアント証明書を要求するようになります。\n\n準備するもの：\n- サーバー側\n  - サーバー証明書(チェーン)\n  - サーバー証明書発行時の秘密鍵\n  - クライアント証明書を発行したCAの証明書\n- クライアント側\n  - クライアント証明書(チェーン)\n  - クライアント証明書発行時の秘密鍵\n  - サーバー証明書を発行したCAの証明書\n\nSee_Also:\n- https://vibed.org/api/vibe.stream.tls/\n- https://vibed.org/api/vibe.stream.tls/TLSPeerValidationMode\n- https://github.com/vibe-d/vibe.d/blob/master/tests/tls/source/app.d (vibe.dのTLSのテスト)\n",
-    "line" : 108,
+    "line" : 110,
     "char" : 1,
-    "endline" : 184,
+    "endline" : 186,
     "endchar" : 1
    }
   ]
@@ -73,23 +73,23 @@
   "name" : "vibed_usage.rest",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/rest.d",
-  "comment" : "RESTインターフェースの利用\n",
+  "comment" : "RESTインターフェースの利用\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_rest.d)\n",
   "members" : [
    {
     "name" : "vibed_usage._common",
     "kind" : "import",
-    "line" : 6,
+    "line" : 8,
     "char" : 8,
     "protection" : "private"
    },
    {
-    "name" : "__unittest_L38_C1",
+    "name" : "__unittest_L40_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "REST APIに対応する\n\nD言語のメタプログラミングを使って、リクエストのJSONからオブジェクトへシリアライズしてマッピングしたり、戻り値からレスポンスのJSONへのデシリアライズしたり、URLへのルーティングなどを自動化します。\n\n主に以下を行います。\n- interfaceでREST APIを定義します。\n- classで上記interfaceを実装します。\n- registerRestInterfaceで、interfaceを実装したclassを使って、URLRouterへの設定を自動的に行います。\n  - パスの設定が自動的に行われます。\n  - 受信したJSONをHTTPサーバーリクエストから分析してパラメータに割り振る、\n    returnした構造体をJSONにシリアライズしてHTTPサーバーレスポンスに設定するなどのふるまいが自動的に生成され、\n    ハンドラとして登録されます。\n- 必須ではありませんが、 serveRestJSClient でクライアント側のJavascriptで実行できるスクリプトを自動生成でき、それをURLRouterに設定できます。\n\nvibe.dではクライアント側についても楽できる機能 RestInterfaceClient を持っています。\nRestInterfaceClient を使うと、サーバー側のinterfaceで定義したREST APIを使って、以下のようなことができます。\n- interfaceの各仮想関数に対して、HTTPリクエストを行ってデータをもらってくる実装を自動的に生成します。\n- リクエスト先のパスの設定も自動的に行われます。\n- 引数のオブジェクトをJSONにシリアライズし、リクエストのボディに設定します。\n- レスポンスのJSONをデシリアライズし、戻り値のオブジェクトにマッピングします。\n\nSee_Also:\n- https://vibed.org/docs#rest-interface-generator\n- https://vibed.org/api/vibe.web.rest/\n- https://vibed.org/api/vibe.web.rest/registerRestInterface\n- https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)\n- https://vibed.org/api/vibe.web.rest/RestInterfaceClient\n- https://vibed.org/api/vibe.web.rest/serveRestJSClient\n",
-    "line" : 38,
+    "line" : 40,
     "char" : 1,
-    "endline" : 141,
+    "endline" : 143,
     "endchar" : 1
    }
   ]
@@ -98,23 +98,23 @@
   "name" : "vibed_usage.web",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/web.d",
-  "comment" : "Webインターフェースの利用\n",
+  "comment" : "Webインターフェースの利用\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_web.d)\n",
   "members" : [
    {
     "name" : "vibed_usage._common",
     "kind" : "import",
-    "line" : 6,
+    "line" : 8,
     "char" : 8,
     "protection" : "private"
    },
    {
-    "name" : "__unittest_L19_C1",
+    "name" : "__unittest_L21_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Webインターフェースを利用する\n\nWebインターフェースを利用すると、D言語のメタプログラミングを使って、クラスのメソッド名からURLへのルーティングやPOSTパラメーターの自動生成などができます。\n\nSee_Also:\n- https://vibed.org/docs#web-interface-generator\n- https://vibed.org/api/vibe.web.web/\n- https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)\n- https://vibed.org/api/vibe.web.web/registerWebInterface\n",
-    "line" : 19,
+    "line" : 21,
     "char" : 1,
-    "endline" : 80,
+    "endline" : 82,
     "endchar" : 1
    }
   ]

@@ -3,57 +3,57 @@
   "name" : "array_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/array_example.d",
-  "comment" : "配列\n\n動的配列と静的配列の操作についてまとめます。\n\n要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)\n",
+  "comment" : "配列\n\n動的配列と静的配列の操作についてまとめます。\n\n要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)\n\nSource: $(LINK_TO_SRC source/_array_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L13_C1",
+    "name" : "__unittest_L15_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "初期化の例です\n",
-    "line" : 13,
+    "line" : 15,
     "char" : 1,
-    "endline" : 27,
+    "endline" : 29,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L27_C1",
+    "name" : "__unittest_L29_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "二次元以上の多次元配列を一括で確保する例です\n",
-    "line" : 27,
+    "line" : 29,
     "char" : 1,
-    "endline" : 49,
+    "endline" : 51,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L49_C1",
+    "name" : "__unittest_L51_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "要素のインデックス、または条件式を指定した値の削除\n\n`std.algorithm` の `remove` を使います\n\n`remove` : $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.remove)\n",
-    "line" : 49,
+    "line" : 51,
     "char" : 1,
-    "endline" : 67,
+    "endline" : 69,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L67_C1",
+    "name" : "__unittest_L69_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "要素の追加の例です。\n\n動的配列に対しては `~=` 演算子で要素を追加することができます。\n",
-    "line" : 67,
+    "line" : 69,
     "char" : 1,
-    "endline" : 84,
+    "endline" : 86,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L84_C1",
+    "name" : "__unittest_L86_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "事前にサイズがわからない配列を構築する場合は `std.array` の `appender` を使用すると効率的です。\n\n要素の追加は `~=` または `put` で行います。\n\n`appender` : $(LINK https://dlang.org/phobos/std_array.html#appender)\n",
-    "line" : 84,
+    "line" : 86,
     "char" : 1,
-    "endline" : 96,
-    "endchar" : 2
+    "endline" : 99,
+    "endchar" : 1
    }
   ]
  },
@@ -61,36 +61,36 @@
   "name" : "assoc_array_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/assoc_array_example.d",
-  "comment" : "連想配列\n\n連想配列の操作についてまとめます。\n",
+  "comment" : "連想配列\n\n連想配列の操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_assoc_array_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L11_C1",
+    "name" : "__unittest_L13_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# データ操作\n",
-    "line" : 11,
+    "line" : 13,
     "char" : 1,
-    "endline" : 66,
+    "endline" : 68,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L66_C1",
+    "name" : "__unittest_L68_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# プロパティ\n",
-    "line" : 66,
+    "line" : 68,
     "char" : 1,
-    "endline" : 112,
+    "endline" : 114,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L112_C1",
+    "name" : "__unittest_L114_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 空連想配列とnull\n",
-    "line" : 112,
+    "line" : 114,
     "char" : 1,
-    "endline" : 136,
+    "endline" : 138,
     "endchar" : 1
    }
   ]
@@ -99,26 +99,26 @@
   "name" : "concurrency_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/concurrency_example.d",
-  "comment" : "並行処理\n\n`std.concurrency` を使った並行処理の例をまとめます。\n",
+  "comment" : "並行処理\n\n`std.concurrency` を使った並行処理の例をまとめます。\n\nSource: $(LINK_TO_SRC source/_concurrency_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L13_C1",
+    "name" : "__unittest_L15_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ファイルの書き込みを専用のスレッドで処理することで、大量の書き込みを効率良く行う例です。\n\nこれは主に大量の繰り返し計算に伴うログの記録や計算の途中経過を保存する場合のパターンとして役立ちます。\n",
-    "line" : 13,
+    "line" : 15,
     "char" : 1,
-    "endline" : 90,
+    "endline" : 92,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L90_C1",
+    "name" : "__unittest_L92_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "前述の大量書き込みの例に対し、起動する処理を使いまわしが可能な関数として定義する例です。\n\n実行に必要なパラメーターを引数として宣言しておくとspawnの際に渡すことができます。\n",
-    "line" : 90,
+    "line" : 92,
     "char" : 1,
-    "endline" : 147,
+    "endline" : 149,
     "endchar" : 1
    }
   ]
@@ -127,44 +127,44 @@
   "name" : "container_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/container_example.d",
-  "comment" : "コンテナ\n\nスタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。\n",
+  "comment" : "コンテナ\n\nスタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。\n\nSource: $(LINK_TO_SRC source/_container_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L15_C1",
+    "name" : "__unittest_L17_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "スタックを構成する例です。\n\n汎用データ構造である `std.container` の `SList` （単方向リンクリスト）を利用して実現します。\n\nSee_Also: https://dlang.org/phobos/std_container_slist.html\n",
-    "line" : 15,
+    "line" : 17,
     "char" : 1,
-    "endline" : 54,
+    "endline" : 56,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L54_C1",
+    "name" : "__unittest_L56_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 54,
+    "line" : 56,
     "char" : 1,
-    "endline" : 78,
+    "endline" : 80,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L78_C1",
+    "name" : "__unittest_L80_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Queueを構成する例です\n\n汎用データ構造である `std.container` の `DList` (双方向リンクリスト)を利用します。\n\nSee_Also: https://dlang.org/phobos/std_container_dlist.html\n",
-    "line" : 78,
+    "line" : 80,
     "char" : 1,
-    "endline" : 129,
+    "endline" : 131,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L129_C1",
+    "name" : "__unittest_L131_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 129,
+    "line" : 131,
     "char" : 1,
-    "endline" : 145,
+    "endline" : 147,
     "endchar" : 1
    }
   ]
@@ -173,24 +173,24 @@
   "name" : "data",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/package.d",
-  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.base64_example.html, Base64))\n    $(DD\n        `std.base64`を用いてBase64形式でのデータのエンコード/デコードを取り扱います。\n    )\n    $(DT $(A cookbook--_data.csv_example.html, CSV))\n    $(DD\n        `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)\n        また、`std.csv`ではサポートされていないCSVの書き出し方についても取り扱います。\n    )\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n    $(DT $(A cookbook--_data.zip_example.html, ZIP))\n    $(DD\n        `std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。 $(BR)\n        ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n    )\n)\n\n",
+  "comment" : "データ形式\n\n特定のデータ形式を取り扱う例をまとめました\n\n$(DL\n    $(DT $(A cookbook--_data.base64_example.html, Base64))\n    $(DD\n        `std.base64`を用いてBase64形式でのデータのエンコード/デコードを取り扱います。\n    )\n    $(DT $(A cookbook--_data.csv_example.html, CSV))\n    $(DD\n        `std.csv`を用いてCSV形式のデータを取り扱います。 $(BR)\n        また、`std.csv`ではサポートされていないCSVの書き出し方についても取り扱います。\n    )\n    $(DT $(A cookbook--_data.json_example.html, JSON))\n    $(DD\n        `std.json`を用いてJSON形式のデータを取り扱います。 $(BR)\n        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。\n    )\n    $(DT $(A cookbook--_data.zip_example.html, ZIP))\n    $(DD\n        `std.zip`を用いてZIP形式のデータの圧縮・解凍を取り扱います。 $(BR)\n        ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。\n    )\n)\n\nSource: $(LINK_TO_SRC source/_data/package.d)\n",
   "members" : [
    {
     "name" : "data.csv_example",
-    "kind" : "import",
-    "line" : 31,
-    "char" : 15
-   },
-   {
-    "name" : "data.json_example",
     "kind" : "import",
     "line" : 32,
     "char" : 15
    },
    {
-    "name" : "data.zip_example",
+    "name" : "data.json_example",
     "kind" : "import",
     "line" : 33,
+    "char" : 15
+   },
+   {
+    "name" : "data.zip_example",
+    "kind" : "import",
+    "line" : 34,
     "char" : 15
    }
   ]
@@ -199,39 +199,39 @@
   "name" : "data.base64_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/base64_example.d",
-  "comment" : "Base64エンコード/デコード\n\nBase64のエンコードとデコードを行うサンプルです\n\nSee_Also:\n    - https://dlang.org/phobos/std_base64.html\n",
+  "comment" : "Base64エンコード/デコード\n\nBase64のエンコードとデコードを行うサンプルです\n\nSee_Also:\n    - https://dlang.org/phobos/std_base64.html\n\nSource: $(LINK_TO_SRC source/data/_base64_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L14_C7",
+    "name" : "__unittest_L16_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Base64エンコード/デコードを行うサンプルです\n",
-    "line" : 14,
+    "line" : 16,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 28,
+    "endline" : 30,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L28_C1",
+    "name" : "__unittest_L30_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Base64エンコード/デコードの保存先をOutputRangeにすることもできます\n",
-    "line" : 28,
+    "line" : 30,
     "char" : 1,
-    "endline" : 46,
+    "endline" : 48,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L46_C1",
+    "name" : "__unittest_L48_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Base64エンコード/デコードの入力元をInputRangeにすることもできます\n",
-    "line" : 46,
+    "line" : 48,
     "char" : 1,
-    "endline" : 63,
+    "endline" : 65,
     "endchar" : 1
    }
   ]
@@ -240,58 +240,58 @@
   "name" : "data.csv_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/csv_example.d",
-  "comment" : "CSV操作\n\nCSVファイル/CSVデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.csvモジュールを用いたCSVファイルの読み込みと、\nCSVファイルへの書き出しについて説明します。\n",
+  "comment" : "CSV操作\n\nCSVファイル/CSVデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.csvモジュールを用いたCSVファイルの読み込みと、\nCSVファイルへの書き出しについて説明します。\n\nSource: $(LINK_TO_SRC source/data/_csv_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L16_C7",
+    "name" : "__unittest_L18_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# CSVのパース\n",
-    "line" : 16,
+    "line" : 18,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 40,
+    "endline" : 42,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L40_C7",
+    "name" : "__unittest_L42_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "もう少し複雑な場合\n",
-    "line" : 40,
+    "line" : 42,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 87,
+    "endline" : 89,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L87_C7",
+    "name" : "__unittest_L89_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "構造体でデータ構造をレイアウトする場合\n",
-    "line" : 87,
+    "line" : 89,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 133,
+    "endline" : 135,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L133_C7",
+    "name" : "__unittest_L135_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# CSVの書き出し\n\n残念ながら、CSVを書き出す機能はありません。自分で作ります。\n以下の例では汎用性を高めるため、`\",\\n`を含むものを変換することを前提とします。\nこれらが含まれると、各セルをエスケープする必要が出るためです。\n数値だけということがあらかじめわかっているときなど、\nエスケープする必要がない場合は`format!\"%-(%-(%-s,%)\\n%)\"(mat)`とするだけでOK。\n",
-    "line" : 133,
+    "line" : 135,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 180,
+    "endline" : 182,
     "endchar" : 1
    }
   ]
@@ -300,84 +300,84 @@
   "name" : "data.json_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/data/json_example.d",
-  "comment" : "JSON操作\n\nJSONファイル/JSONデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.jsonモジュールと、その中のJSONValueについて説明します。\nこのモジュールは、あくまでもJSONが最低限取り扱える程度の機能があって、速度や利便性は二の次です。\nほかにもサードパーティのライブラリとして、asdfを代表として、より高度な取り扱いができるライブラリがあります。\n",
+  "comment" : "JSON操作\n\nJSONファイル/JSONデータの読み書き等操作を扱います。\nここでは、標準で備えているstd.jsonモジュールと、その中のJSONValueについて説明します。\nこのモジュールは、あくまでもJSONが最低限取り扱える程度の機能があって、速度や利便性は二の次です。\nほかにもサードパーティのライブラリとして、asdfを代表として、より高度な取り扱いができるライブラリがあります。\n\nSource: $(LINK_TO_SRC source/data/_json_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L15_C7",
+    "name" : "__unittest_L17_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 文字列⇔JSON\n",
-    "line" : 15,
+    "line" : 17,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 35,
+    "endline" : 37,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L35_C7",
+    "name" : "__unittest_L37_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 数値⇔JSON\n",
-    "line" : 35,
+    "line" : 37,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 74,
+    "endline" : 76,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L74_C7",
+    "name" : "__unittest_L76_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 真偽値・null⇔JSON\n\n真偽値(true / false)とnullの状態は、上記文字列や数値とは異なり、\nそれぞれ個別にJSONTypeが存在します。\n",
-    "line" : 74,
+    "line" : 76,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 111,
+    "endline" : 113,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L111_C7",
+    "name" : "__unittest_L113_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 配列⇔JSON\n",
-    "line" : 111,
+    "line" : 113,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 153,
+    "endline" : 155,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L153_C7",
+    "name" : "__unittest_L155_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 連想配列⇔JSON\n",
-    "line" : 153,
+    "line" : 155,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 214,
+    "endline" : 216,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L214_C7",
+    "name" : "__unittest_L216_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# JSONファイルの書き込み・読み込み\n",
-    "line" : 214,
+    "line" : 216,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 257,
+    "endline" : 259,
     "endchar" : 1
    }
   ]
@@ -420,162 +420,162 @@
   "name" : "datetime_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/datetime_example.d",
-  "comment" : "時刻・日付\n\n時刻・日付の操作についてまとめます。\n",
+  "comment" : "時刻・日付\n\n時刻・日付の操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_datetime_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L13_C7",
+    "name" : "__unittest_L15_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 時間を表す7つの型\n\n以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。\n",
-    "line" : 13,
+    "line" : 15,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 27,
+    "endline" : 29,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L27_C7",
+    "name" : "__unittest_L29_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "\n## 1. 「時間」 $(D Duration)\nDurationは「時間」を表す型です。\nここでの「時間」とは、10秒間とか、3時間、のような、時間的な長さを表す表現です。\n各種単位の「時間」を得るには、hours関数や、seconds関数のようなものを core.time からimportして使います。\n",
-    "line" : 27,
+    "line" : 29,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 48,
+    "endline" : 50,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L48_C7",
+    "name" : "__unittest_L50_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 2. 「時刻」 $(D SysTime)\n\nSysTimeは「時刻」を表す型です。\n現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。\n",
-    "line" : 48,
+    "line" : 50,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 66,
+    "endline" : 68,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L66_C7",
+    "name" : "__unittest_L68_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 3. 「時刻」 $(D DateTime)\n\nDateTimeは「時刻」を表す型です。\nただし、SysTimeとは内部表現が違います。\nSysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ\n何年何月何日の何時何分何秒という情報だけを持っています。\nミリ秒以下の情報も持ちません。\n",
-    "line" : 66,
+    "line" : 68,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 85,
+    "endline" : 87,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L85_C7",
+    "name" : "__unittest_L87_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 4. 「日付」 $(D Date)\n\nDateは、DateTimeのうち、何年何月何日(つまり日付)の部分です。\n",
-    "line" : 85,
+    "line" : 87,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 120,
+    "endline" : 122,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L120_C7",
+    "name" : "__unittest_L122_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 5. $(D TimeOfDay)\n\nTimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。\n",
-    "line" : 120,
+    "line" : 122,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 134,
+    "endline" : 136,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L134_C7",
+    "name" : "__unittest_L136_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 6. 「期間」 $(D Interval)\n\n2つの「時刻」の間の時間を「期間」とすることができます。\n",
-    "line" : 134,
+    "line" : 136,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 151,
+    "endline" : 153,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L151_C7",
+    "name" : "__unittest_L153_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 7. 「時間」 $(D MonoTime)\n\n2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、\n高精度な時間単位を扱います。\nまた、NTPによる巻き戻しがおこらず、単調増加(monotonic)であることが特徴です。\n「時間」を測定するストップウォッチで得られます。\n",
-    "line" : 151,
+    "line" : 153,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 171,
+    "endline" : 173,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L171_C7",
+    "name" : "__unittest_L173_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# SysTimeと文字列の変換\n",
-    "line" : 171,
+    "line" : 173,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 214,
+    "endline" : 216,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L214_C7",
+    "name" : "__unittest_L216_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# Durationの使い方\n",
-    "line" : 214,
+    "line" : 216,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 242,
+    "endline" : 244,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L242_C7",
+    "name" : "__unittest_L244_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# StopWatchの使い方\n",
-    "line" : 242,
+    "line" : 244,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 298,
+    "endline" : 300,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L298_C7",
+    "name" : "__unittest_L300_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# タイムゾーンの扱い\n",
-    "line" : 298,
+    "line" : 300,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 320,
+    "endline" : 322,
     "endchar" : 1
    }
   ]
@@ -584,188 +584,188 @@
   "name" : "exception_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/exception_example.d",
-  "comment" : "例外\n\nD言語は「例外機構」をもつ言語です。\nここでいう例外は、発生したら関数が最後まで終わるのを待たずに強制終了して、\n例外を捕まえるまで関数呼び出し元をたどっていってスタックをロールバックして…\nといった、いわゆる大域ジャンプを伴う、プログラムの特殊なフローのことです。\nここでは例外の使い方についてまとめます。\n",
+  "comment" : "例外\n\nD言語は「例外機構」をもつ言語です。\nここでいう例外は、発生したら関数が最後まで終わるのを待たずに強制終了して、\n例外を捕まえるまで関数呼び出し元をたどっていってスタックをロールバックして…\nといった、いわゆる大域ジャンプを伴う、プログラムの特殊なフローのことです。\nここでは例外の使い方についてまとめます。\n\nSource: $(LINK_TO_SRC source/_exception_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L39_C9",
+    "name" : "__unittest_L41_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 従来の方法とその欠点\n\n従来の例外機構のない言語では、関数の戻り値をチェックするのが一般的でした。\nしかし、戻り値のチェックは、以下のような欠点を抱えていました。\n\n1.  戻り値が無視されがち\n    戻り値でエラーが発生したことを伝えても、その戻り値が無視されてしまった場合、\n    失敗しても何事もなかったかのように処理が継続してしまいます。\n2.  プログラムの流れが汚れがち\n    たとえif文でエラーチェックをしても、同じ関数内で2回3回とチェックをするうち、\n    ネストが深くなったり、gotoで関数末尾のエラー処理部へジャンプしたり、\n    エラー処理のための本来行うべき処理とは関係の浅いフラグ変数が生じたりと、\n    プログラムが汚くなる場合が多く存在しました。\n3.  エラー処理分散しがち\n    同じエラーに対処しているはずなのに、呼び出した関数すべてにエラー処理を仕込む\n    必要があったり、様々なエラーをまとめて処理するのが難しい場合がありました。\n4.  nullを参照してしまう問題\n    1の場合とかぶりますが、nullが返る可能性のあるものでチェックを省くと、所謂\n    ぬるぽ(Null Pointer Exception)や、AV(Access Violation)、\n    SEGV(セグフォ/Segmentation Fault/Segmentation Violation)が発生します。\n    ぬるぽが一昔前にネットスラングにまでなったように、プログラムのユーザーが目に\n    する深刻な問題になりやすい異常です。しっかりガッ(対処)する必要がありますが、\n    プログラムの本来の処理に手一杯になると対処を怠ってしまうことも。\n\n以下に挙げる例は例外を使用しない場合の問題になりやすい記述方法です。\n",
-    "line" : 39,
+    "line" : 41,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 207,
+    "endline" : 209,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L207_C9",
+    "name" : "__unittest_L209_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外のメリット\n\n例外機構を用いるメリットは、明示しない限り例外が無視されず、例外処理に対応する\n箇所をまとめて記述することができるため、本来のプログラムに集中した記述ができる\nという点です。\n\n以下の例は、先述の戻り値のチェックで問題になりやすいものを、例外を使用して解決\nする場合を示したものです。\n",
-    "line" : 207,
+    "line" : 209,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 326,
+    "endline" : 328,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L326_C9",
+    "name" : "__unittest_L328_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# デメリットと使用を避けるべき時の判断基準\n\nデメリットとしては、例外が発生するとプログラムを途中で切り上げてスタックの\n巻戻し処理が行われるといったことが起こるため、処理速度は遅いことが挙げられます。\nこのため、適切な箇所でのみ例外機構を利用しましょう。\n具体的には以下のようなケースでは、例外機構を用いるより、if文による事前チェックや\n戻り値のチェック、表明(assert)や契約プログラミング(in/out/invariant)が望ましい\nでしょう。\n\n1.  秒間何千何万と繰り返し実行されるような処理の中で例外を発生させたり捕まえたり\n    をするのは止めておくのがよいでしょう。\n2.  事前のチェックを行うことで容易かつ高速に異常発生を防ぐことができるものは、\n    チェックしましょう。\n    (例外発生の頻度が著しく低い場合や、チェックが重い場合はとりあえずトライした\n    方が速いかも)\n3.  外的要因が絡まない場合はassertや、事前条件で代用できるかもしれません。\n    外的要因というのは、プログラムの利用者が作成したファイルや、ネットワーク越し\n    に渡されるパラメータ、GUIやCUIで入力した値、コマンドライン引数、ハードウェア\n    の状態に依存するようなものなどです。\n    例えばプログラム自身で作成したファイルを読み込む場合、文法チェック等は\n    assertによるチェックが望ましいかもしれません。\n4.  ほかの言語の関数呼び出しを行う場合、他言語間での例外のやり取りはできません。\n    これは、OSのAPIやシステムコール、C言語の標準関数を使用する場合も同様です。\n\n以下に挙げる例はあえて例外を使用しない方がよい場合の典型的な処理です。\n",
-    "line" : 326,
+    "line" : 328,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 405,
+    "endline" : 407,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L405_C7",
+    "name" : "__unittest_L407_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# try-catch\n\n基本的な文法は `try {} catch(Exception e){}` です。\ntryの中(呼び出した関数を含め)で例外が発生した場合、catchで例外を捕捉できます。\nExceptionと記載しましたが、ここには例外の型を記載でき、よりマッチする条件の型\nから順番に記載することで、適切な対処を行うことが可能です。\n",
-    "line" : 405,
+    "line" : 407,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 452,
+    "endline" : 454,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L452_C7",
+    "name" : "__unittest_L454_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# try-catch-finally\nJava等と同じように、finallyブロックが利用できます。\nしかし、D言語ではメジャーな機能ではありません。これと同等のことを行いたい場合は`scope (exit)`を使用することが多いです。\n",
-    "line" : 452,
+    "line" : 454,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 505,
+    "endline" : 507,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L505_C7",
+    "name" : "__unittest_L507_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# スコープガード文： `scope (success)` / `scope (failure)` / `scope (exit)`\nスコープガード文です。try-catch-finallyの代わりに利用できます。\nそれぞれ以下の文が利用できます。\n- `scope (success)`は成功した(例外が発生しなかった)ときだけ実行されるブロックです\n- `scope (failure)`は失敗した(例外が発生した)ときだけ実行されるブロックです\n- `scope (exit)`は成否にかかわらず(例外が発生有無にかかわらず)_必ず_実行されるブロックです\n\n特に `scope (exit)` は、リソースの確保と解放のコードを近くに記載することができるのが便利です。\n",
-    "line" : 505,
+    "line" : 507,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 570,
+    "endline" : 572,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L570_C9",
+    "name" : "__unittest_L572_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外とエラー\nD言語では、修復可能な問題を例外と呼び、ExceptionやExceptionを継承したクラスのオブジェクトをthrowすることによって発生させます。\n一方で、修復不可能な問題の場合はエラーといって、ErrorやErrorを継承したクラスのオブジェクトをthrowします。\n基本的にはErrorは修復不可能であるため、catchする必要はありません。\nExceptionもErrorもThrowableというインターフェースを継承しているので、ExceptionもErrorもcatchしたいという場合はThrowableをcatchすることができます(が、推奨されません)。\n\nなお、safeコードの中では、ErrorやThrowableをcatchすることはできません。\n",
-    "line" : 570,
+    "line" : 572,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 614,
+    "endline" : 616,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L614_C9",
+    "name" : "__unittest_L616_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# nothrow\n例外を投げない関数はnothrowをつけることができます。\nただし、nothrowとついていても、Errorは投げることができるので注意が必要です。\n",
-    "line" : 614,
+    "line" : 616,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 650,
+    "endline" : 652,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L650_C7",
+    "name" : "__unittest_L652_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外の自作\n例外クラスはExceptionを継承したクラスを自分で定義することができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#basicExceptionCtors\n",
-    "line" : 650,
+    "line" : 652,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 683,
+    "endline" : 685,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L683_C7",
+    "name" : "__unittest_L685_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.enforce\n",
-    "line" : 683,
+    "line" : 685,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 691,
+    "endline" : 693,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L691_C7",
+    "name" : "__unittest_L693_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.collectException\n",
-    "line" : 691,
+    "line" : 693,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 699,
+    "endline" : 701,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L699_C7",
+    "name" : "__unittest_L701_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.ifThrown\n",
-    "line" : 699,
+    "line" : 701,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 707,
+    "endline" : 709,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L707_C7",
+    "name" : "__unittest_L709_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.assertThrown / std.exception.assertNotThrown\n",
-    "line" : 707,
+    "line" : 709,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 715,
+    "endline" : 717,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L715_C7",
+    "name" : "__unittest_L717_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# std.exception.handle\n",
-    "line" : 715,
+    "line" : 717,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 720,
+    "endline" : 722,
     "endchar" : 1
    }
   ]
@@ -774,86 +774,86 @@
   "name" : "file_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/file_example.d",
-  "comment" : "ファイルシステム\n\nファイル・パス操作についてまとめます。\n\n",
+  "comment" : "ファイルシステム\n\nファイル・パス操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_file_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L12_C1",
+    "name" : "__unittest_L13_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "テキストファイル操作の例です。\n",
-    "line" : 12,
+    "line" : 13,
     "char" : 1,
-    "endline" : 52,
+    "endline" : 53,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L52_C1",
+    "name" : "__unittest_L53_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ディレクトリ操作の例です。\n",
-    "line" : 52,
+    "line" : 53,
     "char" : 1,
-    "endline" : 99,
+    "endline" : 100,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L99_C1",
+    "name" : "__unittest_L100_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "基本的なパスに操作の例です。\n\n`baseName` 関数でファイル名の取得、`dirName` 関数でディレクトリパスを取得します。\n",
-    "line" : 99,
+    "line" : 100,
     "char" : 1,
-    "endline" : 119,
+    "endline" : 120,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L119_C1",
+    "name" : "__unittest_L120_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ファイルパスの拡張子を操作する例です。\n\n取得、変更、取り除く、といった操作ができます。\n",
-    "line" : 119,
+    "line" : 120,
     "char" : 1,
-    "endline" : 151,
+    "endline" : 152,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L151_C1",
+    "name" : "__unittest_L152_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ファイル移動の例です。\n\n`rename` を使い、ファイル名はそのままでディレクトリパスを変更することで移動が実現できます。\n",
-    "line" : 151,
+    "line" : 152,
     "char" : 1,
-    "endline" : 183,
+    "endline" : 184,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L183_C1",
+    "name" : "__unittest_L184_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ディレクトリ内のファイル一覧のうち、パターンに合致するものだけを列挙する例です。\n\n`dirEntries` に対して対象とするファイル名の glob パターンを指定します。\n\nSee_Also: https://dlang.org/phobos/std_file.html#dirEntries\nSee_Also: https://dlang.org/phobos/std_path.html#.globMatch\n",
-    "line" : 183,
+    "line" : 184,
     "char" : 1,
-    "endline" : 263,
+    "endline" : 264,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L263_C1",
+    "name" : "__unittest_L264_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ディレクトリ階層をまとめて作成および削除する例です\n",
-    "line" : 263,
+    "line" : 264,
     "char" : 1,
-    "endline" : 281,
+    "endline" : 282,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L281_C1",
+    "name" : "__unittest_L282_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ディレクトリに含まれるファイルを別のディレクトリへ移動、コピーする例です。\nこの例では階層構造を考慮せず、ディレクトリ直下のファイルのみを処理します。\n",
-    "line" : 281,
+    "line" : 282,
     "char" : 1,
-    "endline" : 320,
+    "endline" : 321,
     "endchar" : 1
    }
   ]
@@ -862,26 +862,26 @@
   "name" : "getopt_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/getopt_example.d",
-  "comment" : "コマンドライン解析\n\n`std.getopt` の使い方についてまとめます。\n\n実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。\n",
+  "comment" : "コマンドライン解析\n\n`std.getopt` の使い方についてまとめます。\n\n実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。\n\nSource: $(LINK_TO_SRC source/_getopt_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L13_C1",
+    "name" : "__unittest_L15_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "基本的な引数解析の例です\n",
-    "line" : 13,
+    "line" : 15,
     "char" : 1,
-    "endline" : 42,
+    "endline" : 44,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L42_C1",
+    "name" : "__unittest_L44_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "適度な折り返しを入れてコードフォーマッターでも可読性を保つ例です。\n",
-    "line" : 42,
+    "line" : 44,
     "char" : 1,
-    "endline" : 69,
+    "endline" : 71,
     "endchar" : 1
    }
   ]
@@ -890,87 +890,27 @@
   "name" : "is_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/is_example.d",
-  "comment" : "is式\n\nis式についてまとめます。\n",
-  "members" : [
-   {
-    "name" : "__unittest_L11_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 正当性の検証\n",
-    "line" : 11,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 59,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L59_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 暗黙の型変換可能かどうかの検証\n",
-    "line" : 59,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 105,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L105_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 型の分類\n",
-    "line" : 105,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 216,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "meta_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/meta_example.d",
-  "comment" : "メタプログラミング\n\nメタプログラミングに出てくるイディオム等についてまとめます。\n",
+  "comment" : "is式\n\nis式についてまとめます。\n\nSource: $(LINK_TO_SRC source/_is_example.d)\n",
   "members" : [
    {
     "name" : "__unittest_L13_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "モジュールの定義一覧を取得する例です。\n\n`__traits(allMembers, モジュール名)`と書きます。\n",
+    "comment" : "# 正当性の検証\n",
     "line" : 13,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 27,
+    "endline" : 61,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L27_C7",
+    "name" : "__unittest_L61_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "任意のモジュール名から定義一覧を取得するイディオムです。\n\nモジュールの参照を`mixin`と`std.meta.Alias`を使って取得します。\n",
-    "line" : 27,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 56,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L56_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "実際にコンパイルできるかどうか確認するイディオムです。\n\nD言語のコード片が実際にコンパイルできる場合にはtrueに、そうでない場合はfalseに評価されます。\nこの強力なイディオムのやり方は2種類あって、`is(typeof(...))`を使用する方法と、`__traits(compiles, ...)`を使用する方法があります。\nどちらでも効果はほぼ同じですが、やや`is(typeof(...))`のほうがチェックが緩いです。過去dmdへ多大な貢献をされた[9rnsrさんの記事](https://qiita.com/9rnsr/items/5e3e434ea8719fbeea82)で解説されています。\n\nなお、このイディオムはきわめて強力な一方、実際にコンパイルできるかどうか、コンパイラが実際にコンパイルを試行して確かめる必要があるため、コンパイル速度的にはやや不利です。\nそのためかどうなのか、std.rangeのisInputRangeなどは、[過去この方法で実装されていた](https://github.com/dlang/phobos/blob/c4f1c43366c79f4ff9ddfadbc0a8c943e0cb5c94/std/range.d#L528)こともありますが、[今は違います](https://github.com/dlang/phobos/blob/d29ebfe6ec0fd3879513e0f8a533b234f3d101e1/std/range/primitives.d#L171)。\n",
-    "line" : 56,
+    "comment" : "# 暗黙の型変換可能かどうかの検証\n",
+    "line" : 61,
     "char" : 7,
     "storageClass" : [
      "@safe"
@@ -979,43 +919,103 @@
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L107_C1",
+    "name" : "__unittest_L107_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 型の分類\n",
+    "line" : 107,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 218,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "meta_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/meta_example.d",
+  "comment" : "メタプログラミング\n\nメタプログラミングに出てくるイディオム等についてまとめます。\n\nSource: $(LINK_TO_SRC source/_meta_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "モジュールの定義一覧を取得する例です。\n\n`__traits(allMembers, モジュール名)`と書きます。\n",
+    "line" : 15,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 29,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L29_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "任意のモジュール名から定義一覧を取得するイディオムです。\n\nモジュールの参照を`mixin`と`std.meta.Alias`を使って取得します。\n",
+    "line" : 29,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 58,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L58_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "実際にコンパイルできるかどうか確認するイディオムです。\n\nD言語のコード片が実際にコンパイルできる場合にはtrueに、そうでない場合はfalseに評価されます。\nこの強力なイディオムのやり方は2種類あって、`is(typeof(...))`を使用する方法と、`__traits(compiles, ...)`を使用する方法があります。\nどちらでも効果はほぼ同じですが、やや`is(typeof(...))`のほうがチェックが緩いです。過去dmdへ多大な貢献をされた[9rnsrさんの記事](https://qiita.com/9rnsr/items/5e3e434ea8719fbeea82)で解説されています。\n\nなお、このイディオムはきわめて強力な一方、実際にコンパイルできるかどうか、コンパイラが実際にコンパイルを試行して確かめる必要があるため、コンパイル速度的にはやや不利です。\nそのためかどうなのか、std.rangeのisInputRangeなどは、[過去この方法で実装されていた](https://github.com/dlang/phobos/blob/c4f1c43366c79f4ff9ddfadbc0a8c943e0cb5c94/std/range.d#L528)こともありますが、[今は違います](https://github.com/dlang/phobos/blob/d29ebfe6ec0fd3879513e0f8a533b234f3d101e1/std/range/primitives.d#L171)。\n",
+    "line" : 58,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 109,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L109_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。\n",
-    "line" : 107,
+    "line" : 109,
     "char" : 1,
-    "endline" : 134,
+    "endline" : 136,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L134_C1",
+    "name" : "__unittest_L136_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。\n",
-    "line" : 134,
+    "line" : 136,
     "char" : 1,
-    "endline" : 159,
+    "endline" : 161,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L159_C1",
+    "name" : "__unittest_L161_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "関数が右辺値/左辺値で呼ぶことができるか確認する方法\n",
-    "line" : 159,
+    "line" : 161,
     "char" : 1,
-    "endline" : 182,
+    "endline" : 184,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L182_C1",
+    "name" : "__unittest_L184_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "要素の型を得る\n\nElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。\nSee_Also:\n    - https://dlang.org/phobos/std_range_primitives.html#ElementType\n    - https://dlang.org/phobos/std_traits.html#ForeachType\n",
-    "line" : 182,
+    "line" : 184,
     "char" : 1,
-    "endline" : 238,
+    "endline" : 240,
     "endchar" : 1
    }
   ]
@@ -1024,58 +1024,58 @@
   "name" : "network_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/network_example.d",
-  "comment" : "ネットワーク(cURL)\n\nネットワークモジュール、特に `std.net.curl` の使い方についてまとめます。\n\nHTTP通信などができます。\n",
+  "comment" : "ネットワーク(cURL)\n\nネットワークモジュール、特に `std.net.curl` の使い方についてまとめます。\n\nHTTP通信などができます。\n\nSource: $(LINK_TO_SRC source/_network_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L13_C9",
+    "name" : "__unittest_L15_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "HTTPでGET\n",
-    "line" : 13,
+    "line" : 15,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 62,
+    "endline" : 64,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L62_C9",
+    "name" : "__unittest_L64_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字コードの話\n",
-    "line" : 62,
+    "line" : 64,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 106,
+    "endline" : 108,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L106_C9",
+    "name" : "__unittest_L108_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "認証付きProxyを通す\n",
-    "line" : 106,
+    "line" : 108,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 143,
+    "endline" : 145,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L143_C9",
+    "name" : "__unittest_L145_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "クライアント認証する\n\nCurlOption.sslcertなどのオプションを使用します。\n\n-  WindowsではDMDやLDCにOpenSSLがリンクされていないlibcurl.dllが使われているようですが\n   クライアント認証にはOpenSSLが必要となりますので、OpenSSLがリンクされたlibcurl.dllを使用する必要があります。$(BR)\n-  さらに、cURLの公式で配布している64bitのDLLは libcurl-x64.dll という名称ですが、`std.net.curl`が使用するDLLの名称は`libcurl.dll`または`curl.dll`固定です。\n   このため、ファイル名を変更する必要があります。\n-  また、OpenSSLのDLL`libcrypto-1_1-x64.dll`、`libssl-1_1-x64.dll`なども用意します。\n\nなお、CA証明書、クライアント証明書や秘密鍵の生成方法・変換方法はここでは解説いたしません。\n",
-    "line" : 143,
+    "line" : 145,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 198,
+    "endline" : 200,
     "endchar" : 1
    }
   ]
@@ -1084,46 +1084,46 @@
   "name" : "numeric_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/numeric_example.d",
-  "comment" : "数値計算\n\n標準ライブラリで提供される数値計算の関数などについてまとめます。\n\n主に `std.math` や `std.mathspecial`、 `std.numeric` を使った例を対象とします。\n",
+  "comment" : "数値計算\n\n標準ライブラリで提供される数値計算の関数などについてまとめます。\n\n主に `std.math` や `std.mathspecial`、 `std.numeric` を使った例を対象とします。\n\nSource: $(LINK_TO_SRC source/_numeric_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L19_C1",
+    "name" : "__unittest_L21_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "浮動小数点数の同値判定の例です。\n\n浮動小数点数は計算の過程で誤差が出るため、相対誤差や絶対誤差を考慮して比較します。\n\n`std.math` の `isClose` を利用します。\n\nstd.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)\n",
-    "line" : 19,
+    "line" : 21,
     "char" : 1,
-    "endline" : 38,
+    "endline" : 40,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L38_C1",
+    "name" : "__unittest_L40_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "内積を計算する例です。\n\n`std.numeric` の `dotProduct` を利用します。\n",
-    "line" : 38,
+    "line" : 40,
     "char" : 1,
-    "endline" : 54,
+    "endline" : 56,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L54_C1",
+    "name" : "__unittest_L56_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "コサイン類似度を計算する例です。\n\n2つのレンジを受け取って、その類似度を0-1で返します。\n",
-    "line" : 54,
+    "line" : 56,
     "char" : 1,
-    "endline" : 75,
+    "endline" : 77,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L75_C1",
+    "name" : "__unittest_L77_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "標準正規分布の累積分布関数とその逆関数を計算する例です。\n\nそれぞれ `std.mathspecial` モジュールの `normalDistribution` と `normalDistributionInverse` という関数で提供されます。\n\n正規分布 : $(LINK https://ja.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83)\n\n累積分布関数 : $(LINK https://ja.wikipedia.org/wiki/%E7%B4%AF%E7%A9%8D%E5%88%86%E5%B8%83%E9%96%A2%E6%95%B0)\n",
-    "line" : 75,
+    "line" : 77,
     "char" : 1,
-    "endline" : 92,
+    "endline" : 94,
     "endchar" : 1
    }
   ]
@@ -1132,14 +1132,203 @@
   "name" : "opovl_excample",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/opovl_excample.d",
-  "comment" : "演算子オーバーロード\n\nD言語では演算子オーバーロードを定義することができます。\n\n例えばstd.bigintでは、BigIntに対して、整数型のような特徴を持たせるため、四則演算などの演算子オーバーロードを実装しています。\n\nD言語では、演算子オーバーロードを定義する際には、もともとの演算子の意味を損なうような利用方法は非推奨としています。\n例えばC++であるように、`std::cout << hogehoge << std::endl;`のような、ビットシフトのための演算子`<<`をストリーム操作のために使用するような利用方法は非推奨です。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html\n    - https://dlang.org/dstyle.html#operator_overloading\n",
+  "comment" : "演算子オーバーロード\n\nD言語では演算子オーバーロードを定義することができます。\n\n例えばstd.bigintでは、BigIntに対して、整数型のような特徴を持たせるため、四則演算などの演算子オーバーロードを実装しています。\n\nD言語では、演算子オーバーロードを定義する際には、もともとの演算子の意味を損なうような利用方法は非推奨としています。\n例えばC++であるように、`std::cout << hogehoge << std::endl;`のような、ビットシフトのための演算子`<<`をストリーム操作のために使用するような利用方法は非推奨です。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html\n    - https://dlang.org/dstyle.html#operator_overloading\n\nSource: $(LINK_TO_SRC source/_opovl_excample.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L20_C7",
+    "name" : "__unittest_L22_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "演算子オーバーロードの活用例: BigInt\n",
-    "line" : 20,
+    "line" : 22,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 46,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L46_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "opBinary: 二項演算子のオーバーロード\n\n先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。\nここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。\nopBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。\n\nopBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や & 等の演算子でも利用できます。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#binary\n",
+    "line" : 46,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 96,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L96_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "opUnary: 単項演算子のオーバーロード\n\n` auto b = -a; ` の `-a` (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。\nたとえば、`-`に加えて'+'、`*`(ポインタ外し), `~`(ビット反転), `!`(否定), `++`(インクリメント), `--`(デクリメント)が相当します。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#unary\n",
+    "line" : 96,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 111,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "parallelism_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/parallelism_example.d",
+  "comment" : "並列処理\n\n`std.parallelism` を使った並列処理の例をまとめます。\n\nSource: $(LINK_TO_SRC source/_parallelism_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列データなどを元に、値毎の処理を並列で行い高速化する例です。\n\nこれは「データ並列」と呼ばれ、 `parallel` 関数を使うことで簡単に行えます。\n",
+    "line" : 15,
+    "char" : 1,
+    "endline" : 39,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L39_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "`parallel` で実行する処理で一部同期が必要となる場合の例です。\n\nいくつか実現方法はありますが、ここでは組み込みの `synchronized` 文を使い、複数のスレッドが同時に処理できない区間（クリティカルセクション）を定義します。\nこれは排他処理とも呼ばれます。\n",
+    "line" : 39,
+    "char" : 1,
+    "endline" : 71,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L71_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "並列処理の基本となる `task` の使い方をまとめます。\n\nこれは何らかの「処理」を抽象化したオブジェクトであり、指定した処理を別スレッドで処理させることができます。\n\n- 新しくスレッドを起動して実行する\n- TaskPoolとして用意しておいたスレッドで実行する\n\n以下は、処理を定義して新しいスレッドで実行、完了を待機する例です。\n",
+    "line" : 71,
+    "char" : 1,
+    "endline" : 100,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L100_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ランタイムが用意したスレッドを使って `task` を実行する例です。\n\n実行の際に `taskPool` を使うことでスレッドを使いまわし、実行の度に新しくスレッドを起動するコストが削減できます。\n\n処理の実行は、`taskPool` に `task` を `put` することにより行えます。\n\nなお、`taskPool` が起動するスレッド数は環境によって異なり、`CPU数 - 1` として計算されます。\nこの `CPU数` は `totalCPUs` という定数によって得ることができます。\n",
+    "line" : 100,
+    "char" : 1,
+    "endline" : 131,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L131_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "戻り値を持つ `task` の使用例です。\n\n`task` で実行する処理は戻り値を持つことができ、処理の結果は `yieldForce` の戻り値として得られます。\n\nこれを `executeInNewThread` と組み合わせると、簡便な「戻り値を持つスレッド」として使うことができます。\n",
+    "line" : 131,
+    "char" : 1,
+    "endline" : 156,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L156_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "スレッド数を指定した独自の TaskPool を作る例です。\n\n処理が通信などCPUを使わない処理を含む場合、CPUより多くのスレッドを起動しておくことで処理の高速化が期待できます。\n",
+    "line" : 156,
+    "char" : 1,
+    "endline" : 194,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "process_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/process_example.d",
+  "comment" : "プロセス\n\nプロセス操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_process_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L15_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "基本的なプロセス起動を行う操作の例です。\n",
+    "line" : 15,
+    "char" : 1,
+    "endline" : 40,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L40_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "パイプでコマンドをつなげる例です。\n",
+    "line" : 40,
+    "char" : 1,
+    "endline" : 112,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L112_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。\n\nWindows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。\nこれを抑止するため、実行時に `Config.suppressConsole` を指定することで、コンソール画面の表示を行わないようにすることができます。\n\nSee_Also: https://dlang.org/phobos/std_process.html#.Config.suppressConsole\n",
+    "line" : 112,
+    "char" : 1,
+    "endline" : 145,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L145_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "たくさんパイプしながら、データを小分けにして渡していく場合\n",
+    "line" : 145,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 239,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L239_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "標準出力をファイルにリダイレクトする例です\n",
+    "line" : 239,
+    "char" : 1,
+    "endline" : 265,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L265_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "環境変数を扱う例です。\n",
+    "line" : 265,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 293,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "random_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/random_example.d",
+  "comment" : "乱数\n\n乱数操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_random_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "基本的な乱数を生成する例です。\n",
+    "line" : 13,
     "char" : 7,
     "storageClass" : [
      "@safe"
@@ -1151,325 +1340,8 @@
     "name" : "__unittest_L44_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "opBinary: 二項演算子のオーバーロード\n\n先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。\nここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。\nopBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。\n\nopBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や & 等の演算子でも利用できます。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#binary\n",
-    "line" : 44,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 94,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L94_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "opUnary: 単項演算子のオーバーロード\n\n` auto b = -a; ` の `-a` (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。\nたとえば、`-`に加えて'+'、`*`(ポインタ外し), `~`(ビット反転), `!`(否定), `++`(インクリメント), `--`(デクリメント)が相当します。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#unary\n",
-    "line" : 94,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 109,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "parallelism_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/parallelism_example.d",
-  "comment" : "並列処理\n\n`std.parallelism` を使った並列処理の例をまとめます。\n",
-  "members" : [
-   {
-    "name" : "__unittest_L13_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "配列データなどを元に、値毎の処理を並列で行い高速化する例です。\n\nこれは「データ並列」と呼ばれ、 `parallel` 関数を使うことで簡単に行えます。\n",
-    "line" : 13,
-    "char" : 1,
-    "endline" : 37,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L37_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "`parallel` で実行する処理で一部同期が必要となる場合の例です。\n\nいくつか実現方法はありますが、ここでは組み込みの `synchronized` 文を使い、複数のスレッドが同時に処理できない区間（クリティカルセクション）を定義します。\nこれは排他処理とも呼ばれます。\n",
-    "line" : 37,
-    "char" : 1,
-    "endline" : 69,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L69_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "並列処理の基本となる `task` の使い方をまとめます。\n\nこれは何らかの「処理」を抽象化したオブジェクトであり、指定した処理を別スレッドで処理させることができます。\n\n- 新しくスレッドを起動して実行する\n- TaskPoolとして用意しておいたスレッドで実行する\n\n以下は、処理を定義して新しいスレッドで実行、完了を待機する例です。\n",
-    "line" : 69,
-    "char" : 1,
-    "endline" : 98,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L98_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "ランタイムが用意したスレッドを使って `task` を実行する例です。\n\n実行の際に `taskPool` を使うことでスレッドを使いまわし、実行の度に新しくスレッドを起動するコストが削減できます。\n\n処理の実行は、`taskPool` に `task` を `put` することにより行えます。\n\nなお、`taskPool` が起動するスレッド数は環境によって異なり、`CPU数 - 1` として計算されます。\nこの `CPU数` は `totalCPUs` という定数によって得ることができます。\n",
-    "line" : 98,
-    "char" : 1,
-    "endline" : 129,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L129_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "戻り値を持つ `task` の使用例です。\n\n`task` で実行する処理は戻り値を持つことができ、処理の結果は `yieldForce` の戻り値として得られます。\n\nこれを `executeInNewThread` と組み合わせると、簡便な「戻り値を持つスレッド」として使うことができます。\n",
-    "line" : 129,
-    "char" : 1,
-    "endline" : 154,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L154_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "スレッド数を指定した独自の TaskPool を作る例です。\n\n処理が通信などCPUを使わない処理を含む場合、CPUより多くのスレッドを起動しておくことで処理の高速化が期待できます。\n",
-    "line" : 154,
-    "char" : 1,
-    "endline" : 192,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "process_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/process_example.d",
-  "comment" : "プロセス\n\nプロセス操作についてまとめます。\n",
-  "members" : [
-   {
-    "name" : "__unittest_L13_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "基本的なプロセス起動を行う操作の例です。\n",
-    "line" : 13,
-    "char" : 1,
-    "endline" : 38,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L38_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "パイプでコマンドをつなげる例です。\n",
-    "line" : 38,
-    "char" : 1,
-    "endline" : 110,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L110_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。\n\nWindows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。\nこれを抑止するため、実行時に `Config.suppressConsole` を指定することで、コンソール画面の表示を行わないようにすることができます。\n\nSee_Also: https://dlang.org/phobos/std_process.html#.Config.suppressConsole\n",
-    "line" : 110,
-    "char" : 1,
-    "endline" : 143,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L143_C9",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "たくさんパイプしながら、データを小分けにして渡していく場合\n",
-    "line" : 143,
-    "char" : 9,
-    "storageClass" : [
-     "@system"
-    ],
-    "endline" : 237,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L237_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "標準出力をファイルにリダイレクトする例です\n",
-    "line" : 237,
-    "char" : 1,
-    "endline" : 263,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L263_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "環境変数を扱う例です。\n",
-    "line" : 263,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 291,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "random_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/random_example.d",
-  "comment" : "乱数\n\n乱数操作についてまとめます。\n",
-  "members" : [
-   {
-    "name" : "__unittest_L11_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "基本的な乱数を生成する例です。\n",
-    "line" : 11,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 42,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L42_C7",
-    "kind" : "function",
-    "protection" : "public",
     "comment" : "配列を乱数で初期化する例です。\n",
-    "line" : 42,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 62,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L62_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "シミュレーション用途など、再現可能な乱数を作るためにシードを指定する例です。\n\n実行時に毎回異なるシードを使う場合は、 unpredictableSeed を使用します。\n",
-    "line" : 62,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 99,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L99_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "標準正規分布に基づく乱数を生成する例です。\n\nstd.mathspecial にある normalDistributionInverse を使うことで確率変数から逆変換できます。\n\n`normalDistributionInverse` : $(LINK https://dlang.org/phobos/std_mathspecial.html#normalDistributionInverse)\n",
-    "line" : 99,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 108,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "range_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/range_example.d",
-  "comment" : "レンジ\n\nレンジの操作についてまとめます。\n\n## レンジ(Range)とは\n\nレンジ(Range)とは、配列やリストといった要素を順次アクセスできるものを一般化した概念です。\n\nD言語では、データ構造やアルゴリズムをレンジの仕様に合わせて実装することで、さまざまなメリットが得られます。\n\n* レンジの仕様に合ったデータ構造であれば、`std.algorithm`などの既存ライブラリのアルゴリズムをそのまま適用できます。\n* レンジを扱えるようアルゴリズムや関数を実装することで、配列や`std.container`などの既存のデータ構造に対してそのまま使用できます。\n* レンジの概念はD言語プログラマーの間に広く浸透しています。\n  そのため、自作のデータ構造や関数をレンジの仕様に合わせてあれば、他のD言語プログラマーにも使い方がすぐに伝わります。\n\n## 参考\n\n* `std.range` : https://dlang.org/phobos/std_range.html\n* `std.algorithm` : https://dlang.org/phobos/std_algorithm.html\n\nTODO:\n* 配列・文字列をレンジとして利用する。\n* レンジの種類の紹介\n* std.rangeの各関数の紹介\n\n",
-  "members" : [
-   {
-    "name" : "__unittest_L33_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "最小のレンジ(InputRange)を作る\n",
-    "line" : 33,
-    "char" : 1,
-    "endline" : 145,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L145_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "連番のレンジを作る`iota`の例です。\n",
-    "line" : 145,
-    "char" : 1,
-    "endline" : 163,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L163_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "引数に指定した要素だけのレンジを作る`only`の例です。\n",
-    "line" : 163,
-    "char" : 1,
-    "endline" : 183,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L183_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "引数に指定した要素を無限に繰り返す`repeat`の例です。\n",
-    "line" : 183,
-    "char" : 1,
-    "endline" : 208,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L208_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "指定された関数を使ってレンジを生成する`generate`の例です。\n",
-    "line" : 208,
-    "char" : 1,
-    "endline" : 231,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L231_C1",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "漸化式のレンジを生成する`recurrence`の例です。\n",
-    "line" : 231,
-    "char" : 1,
-    "endline" : 261,
-    "endchar" : 1
-   }
-  ]
- },
- {
-  "name" : "regex_example",
-  "kind" : "module",
-  "file" : "/home/runner/work/Cookbook/Cookbook/source/regex_example.d",
-  "comment" : "正規表現\n\n正規表現の操作についてまとめます。\n",
-  "members" : [
-   {
-    "name" : "__unittest_L11_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 正規表現オブジェクトの生成\n",
-    "line" : 11,
-    "char" : 7,
-    "storageClass" : [
-     "@safe"
-    ],
-    "endline" : 25,
-    "endchar" : 1
-   },
-   {
-    "name" : "__unittest_L25_C7",
-    "kind" : "function",
-    "protection" : "public",
-    "comment" : "# 正規表現用の文字列\n",
-    "line" : 25,
+    "line" : 44,
     "char" : 7,
     "storageClass" : [
      "@safe"
@@ -1481,91 +1353,219 @@
     "name" : "__unittest_L64_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# 部分文字列の検索\n",
+    "comment" : "シミュレーション用途など、再現可能な乱数を作るためにシードを指定する例です。\n\n実行時に毎回異なるシードを使う場合は、 unpredictableSeed を使用します。\n",
     "line" : 64,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 73,
+    "endline" : 101,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L73_C7",
+    "name" : "__unittest_L101_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "標準正規分布に基づく乱数を生成する例です。\n\nstd.mathspecial にある normalDistributionInverse を使うことで確率変数から逆変換できます。\n\n`normalDistributionInverse` : $(LINK https://dlang.org/phobos/std_mathspecial.html#normalDistributionInverse)\n",
+    "line" : 101,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 110,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "range_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/range_example.d",
+  "comment" : "レンジ\n\nレンジの操作についてまとめます。\n\n## レンジ(Range)とは\n\nレンジ(Range)とは、配列やリストといった要素を順次アクセスできるものを一般化した概念です。\n\nD言語では、データ構造やアルゴリズムをレンジの仕様に合わせて実装することで、さまざまなメリットが得られます。\n\n* レンジの仕様に合ったデータ構造であれば、`std.algorithm`などの既存ライブラリのアルゴリズムをそのまま適用できます。\n* レンジを扱えるようアルゴリズムや関数を実装することで、配列や`std.container`などの既存のデータ構造に対してそのまま使用できます。\n* レンジの概念はD言語プログラマーの間に広く浸透しています。\n  そのため、自作のデータ構造や関数をレンジの仕様に合わせてあれば、他のD言語プログラマーにも使い方がすぐに伝わります。\n\n## 参考\n\n* `std.range` : https://dlang.org/phobos/std_range.html\n* `std.algorithm` : https://dlang.org/phobos/std_algorithm.html\n\nTODO:\n* 配列・文字列をレンジとして利用する。\n* レンジの種類の紹介\n* std.rangeの各関数の紹介\n\n\nSource: $(LINK_TO_SRC source/_range_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L35_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "最小のレンジ(InputRange)を作る\n",
+    "line" : 35,
+    "char" : 1,
+    "endline" : 147,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L147_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "連番のレンジを作る`iota`の例です。\n",
+    "line" : 147,
+    "char" : 1,
+    "endline" : 165,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L165_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "引数に指定した要素だけのレンジを作る`only`の例です。\n",
+    "line" : 165,
+    "char" : 1,
+    "endline" : 185,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L185_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "引数に指定した要素を無限に繰り返す`repeat`の例です。\n",
+    "line" : 185,
+    "char" : 1,
+    "endline" : 210,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L210_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "指定された関数を使ってレンジを生成する`generate`の例です。\n",
+    "line" : 210,
+    "char" : 1,
+    "endline" : 233,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L233_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "漸化式のレンジを生成する`recurrence`の例です。\n",
+    "line" : 233,
+    "char" : 1,
+    "endline" : 263,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "regex_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/regex_example.d",
+  "comment" : "正規表現\n\n正規表現の操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_regex_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L13_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 正規表現オブジェクトの生成\n",
+    "line" : 13,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 27,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L27_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 正規表現用の文字列\n",
+    "line" : 27,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 66,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L66_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 部分文字列の検索\n",
+    "line" : 66,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 75,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L75_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 部分文字列の検索 (matchFirst)\n",
-    "line" : 73,
+    "line" : 75,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 137,
+    "endline" : 139,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L137_C7",
+    "name" : "__unittest_L139_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 部分文字列の検索 (matchAll)\n",
-    "line" : 137,
+    "line" : 139,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 184,
+    "endline" : 186,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L184_C7",
+    "name" : "__unittest_L186_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 文字列の置換\n",
-    "line" : 184,
+    "line" : 186,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 207,
+    "endline" : 209,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L207_C7",
+    "name" : "__unittest_L209_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 文字列の分割\n",
-    "line" : 207,
+    "line" : 209,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 224,
+    "endline" : 226,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L224_C7",
+    "name" : "__unittest_L226_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# Unicodeプロパティ\n",
-    "line" : 224,
+    "line" : 226,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 236,
+    "endline" : 238,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L236_C7",
+    "name" : "__unittest_L238_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 先読み・後読み\n",
-    "line" : 236,
+    "line" : 238,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 312,
+    "endline" : 314,
     "endchar" : 1
    }
   ]
@@ -1574,119 +1574,119 @@
   "name" : "string_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/string_example.d",
-  "comment" : "文字列\n\n文字列操作についてまとめます。\n\nTODO: 置換(replace), 削除(remove), 分割(split)\n",
+  "comment" : "文字列\n\n文字列操作についてまとめます。\n\nTODO: 置換(replace), 削除(remove), 分割(split)\n\nSource: $(LINK_TO_SRC source/_string_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L35_C1",
+    "name" : "__unittest_L37_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "D言語の文字列の種類\n\nD言語の文字列は、基本的に文字の配列で、特別な型やクラスがあるわけではありません。ただし、文字型はchar(UTF-8), wchar(UTF-16), dchar(UTF-32)があり、それぞれ修飾子がありますので、種類は多いです。\nまた、UTF-8, UTF-16, UTF-32 以外の文字コードは「バイト列(符号なし8bit整数の配列)」という扱いです。ただし、一部のライブラリや、C言語との受け渡しインターフェースなどには便宜上char型を使うことがあります。\n\n| 型修飾               | UTF-8                      | UTF-16                      | UTF-32                      | それ以外                    |\n|:--------------------:|:--------------------------:|:---------------------------:|:---------------------------:|:---------------------------:|\n| (none)               | char[]                     | wchar[]                     | dchar[]                     | ubyte[]                     |\n| const型              | const(char)[]              | const(wchar)[]              | const(dchar)[]              | const(ubyte)[]              |\n| inout型              | inout(char)[]              | inout(wchar)[]              | inout(dchar)[]              | inout(ubyte)[]              |\n| shared型             | shared(char)[]             | shared(wchar)[]             | shared(dchar)[]             | shared(ubyte)[]             |\n| const shared型       | const shared(char)[]       | const shared(wchar)[]       | const shared(dchar)[]       | const shared(ubyte)[]       |\n| inout shared型       | inout shared(char)[]       | inout shared(wchar)[]       | inout shared(dchar)[]       | inout shared(ubyte)[]       |\n| const inout型        | const inout(char)[]        | const inout(wchar)[]        | const inout(dchar)[]        | const inout(ubyte)[]        |\n| const inout shared型 | const inout(shared char)[] | const inout shared(wchar)[] | const inout shared(dchar)[] | const inout shared(ubyte)[] |\n| immutable型          | immutable(char)[]          | immutable(wchar)[]          | immutable(dchar)[]          | immutable(ubyte)[]          |\n\nこの中でも、特に利用頻度が高いのが`immutable(char)[]`型で、これは文字列リテラルの型であり、特別に`string`という別名が利用できます。\n同様に、`immutable(wchar)[]`には`wstring`という別名が、`immutable(dchar)[]`には`dstring`という別名が、それぞれ利用できます。\n\nimmutableはマルチスレッド間でクリティカルセクションなしに同時アクセスできたり、寿命を考えなくてもよい点、const型への暗黙変換ができる点などが便利です。\n\n以下のサンプルでは文字コード(UTF-8, UTF-16, UTF-32)のそれぞれの変換について説明します\n",
-    "line" : 35,
+    "line" : 37,
     "char" : 1,
-    "endline" : 88,
+    "endline" : 90,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L88_C1",
+    "name" : "__unittest_L90_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列型の使い分け\n\n文字列の型は、おおむね次のような使い分けをします。\n\n- 普段使いは`string`\n- 関数引数で、関数が終わった後はメモリが破壊されてもいいなら`const(char)[]`\n- 関数引数で、関数が終わった後にメモリが破壊されて困るなら`string`\n- 1文字が1要素であってほしい場合は`dchar[]`や`dstring`\n- N文字目を書き換えたい場合は`dchar[]`\n- Windows APIに渡すなら`wchar[]`や`const(wchar)[]`\n\nさらに、D言語では、スライスの型はありません。`string`のスライスは`string`だし、`const(char)[]`のスライスは`const(char)[]`です。\n",
-    "line" : 88,
+    "line" : 90,
     "char" : 1,
-    "endline" : 170,
+    "endline" : 172,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L170_C1",
+    "name" : "__unittest_L172_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列の連結➀\n\n文字列は単純な文字の配列なので、`~`演算子で連結できます。\n",
-    "line" : 170,
+    "line" : 172,
     "char" : 1,
-    "endline" : 212,
+    "endline" : 214,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L212_C1",
+    "name" : "__unittest_L214_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列の連結➁\n\n事前に長さの分からない文字列を構築する場合、`std.array` の `appender` を使います。\n\n`appender` : https://dlang.org/phobos/std_array.html#appender\n",
-    "line" : 212,
+    "line" : 214,
     "char" : 1,
-    "endline" : 234,
+    "endline" : 236,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L234_C1",
+    "name" : "__unittest_L236_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "書式化文字列\n\n`std.format` の `format` を使います。\n\nhttps://dlang.org/phobos/std_format.html#.format\n",
-    "line" : 234,
+    "line" : 236,
     "char" : 1,
-    "endline" : 250,
+    "endline" : 252,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L250_C1",
+    "name" : "__unittest_L252_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "完全一致、辞書順での比較\n",
-    "line" : 250,
+    "line" : 252,
     "char" : 1,
-    "endline" : 264,
+    "endline" : 266,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L264_C1",
+    "name" : "__unittest_L266_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "大文字小文字を無視して比較\n\n`std.uni` の `icmp` を使います\n\n`icmp` : https://dlang.org/phobos/std_uni.html#icmp\n",
-    "line" : 264,
+    "line" : 266,
     "char" : 1,
-    "endline" : 289,
+    "endline" : 291,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L289_C1",
+    "name" : "__unittest_L291_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "「で始まる」「で終わる」の例\n\n`std.algorithm` の `startsWith`, `endsWith` を使います。\n\n`startsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.startsWith)$(BR)\n`endsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.endsWith)\n",
-    "line" : 289,
+    "line" : 291,
     "char" : 1,
-    "endline" : 311,
+    "endline" : 313,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L311_C1",
+    "name" : "__unittest_L313_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
-    "line" : 311,
+    "line" : 313,
     "char" : 1,
-    "endline" : 342,
+    "endline" : 344,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L342_C1",
+    "name" : "__unittest_L344_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
-    "line" : 342,
+    "line" : 344,
     "char" : 1,
-    "endline" : 421,
+    "endline" : 423,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L421_C7",
+    "name" : "__unittest_L423_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n",
-    "line" : 421,
+    "line" : 423,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 455,
+    "endline" : 457,
     "endchar" : 1
    }
   ]
@@ -1716,65 +1716,65 @@
   "name" : "sync_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/sync_example.d",
-  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Barrier`\n- `Condition`\n- `Semaphore` (TODO)\n- `Event` (TODO)\n",
+  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Barrier`\n- `Condition`\n- `Semaphore` (TODO)\n- `Event` (TODO)\n\nSource: $(LINK_TO_SRC source/_sync_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L26_C1",
+    "name" : "__unittest_L28_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "`synchronized` 文を用いて単独のクリティカルセクションを構成する例です。\n\n主に `std.parallelism` の `parallel` など、複数スレッドから1つの処理が同時に呼び出されるときに利用します。\n\nSee_Also: $(LINK https://dlang.org/spec/statement.html#synchronized-statement)\n",
-    "line" : 26,
+    "line" : 28,
     "char" : 1,
-    "endline" : 48,
+    "endline" : 50,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L48_C1",
+    "name" : "__unittest_L50_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "`Mutex` クラスを用いて複数のクリティカルセクションをグループ化し、同期させる例です。\n\nSee_Also: https://dlang.org/phobos/core_sync_mutex.html\n",
-    "line" : 48,
+    "line" : 50,
     "char" : 1,
-    "endline" : 91,
+    "endline" : 93,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L91_C1",
+    "name" : "__unittest_L93_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "`ReadWriteMutex` クラスを使い、書き込みと読み取りの排他を分けることで効率化する例です。\n\n読み取り同士では排他せず、読み取りと書き込み、書き込み同士のときに排他することで、\n単純な `Mutex` による排他よりもスループットが向上することが期待できます。\n\n|          | 読み取り | 書き込み |\n|:---------|:--------:|:--------:|\n| 読み取り | 排他なし | 排他あり |\n| 書き込み | 排他あり | 排他あり |\n\nSee_Also: $(LINK https://dlang.org/phobos/core_sync_rwmutex.html)\n",
-    "line" : 91,
+    "line" : 93,
     "char" : 1,
-    "endline" : 138,
+    "endline" : 140,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L138_C1",
+    "name" : "__unittest_L140_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 138,
+    "line" : 140,
     "char" : 1,
-    "endline" : 157,
+    "endline" : 159,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L157_C1",
+    "name" : "__unittest_L159_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_barrier.html\n",
-    "line" : 157,
+    "line" : 159,
     "char" : 1,
-    "endline" : 196,
+    "endline" : 198,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L196_C1",
+    "name" : "__unittest_L198_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "Conditionで、通知による同期を行う例です。\n\nConditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。\nその後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。\n\n逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。\n\n使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。\n- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_condition.html\n",
-    "line" : 196,
+    "line" : 198,
     "char" : 1,
-    "endline" : 246,
+    "endline" : 248,
     "endchar" : 1
    }
   ]
@@ -1783,46 +1783,46 @@
   "name" : "template_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/template_example.d",
-  "comment" : "テンプレート\n\nテンプレートについてまとめます。\n- テンプレート\n- テンプレート関数\n- テンプレートクラス・構造体\n- mixinテンプレート(TODO)\n- enum, aliasのテンプレート(TODO)\n\nSee_Also:\n    - https://dlang.org/spec/template.html\n",
+  "comment" : "テンプレート\n\nテンプレートについてまとめます。\n- テンプレート\n- テンプレート関数\n- テンプレートクラス・構造体\n- mixinテンプレート(TODO)\n- enum, aliasのテンプレート(TODO)\n\nSee_Also:\n    - https://dlang.org/spec/template.html\n\nSource: $(LINK_TO_SRC source/_template_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L19_C1",
+    "name" : "__unittest_L21_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "テンプレートの例です\n",
-    "line" : 19,
+    "line" : 21,
     "char" : 1,
-    "endline" : 48,
+    "endline" : 50,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L48_C1",
+    "name" : "__unittest_L50_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "テンプレート関数の例です\n\nテンプレートを使った関数の定義・使い方の例です。\n構文糖によって通常のテンプレートを使うよりも見やすく、書きやすく使用することができます。\n",
-    "line" : 48,
+    "line" : 50,
     "char" : 1,
-    "endline" : 73,
+    "endline" : 75,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L73_C1",
+    "name" : "__unittest_L75_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ditto\n",
-    "line" : 73,
+    "line" : 75,
     "char" : 1,
-    "endline" : 99,
+    "endline" : 101,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L99_C1",
+    "name" : "__unittest_L101_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "テンプレートクラス・構造体の例です\n",
-    "line" : 99,
+    "line" : 101,
     "char" : 1,
-    "endline" : 126,
+    "endline" : 128,
     "endchar" : 1
    }
   ]
@@ -1831,69 +1831,69 @@
   "name" : "typecons_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/typecons_example.d",
-  "comment" : "型を作るユーティリティ\n\n様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。\n",
+  "comment" : "型を作るユーティリティ\n\n様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。\n\nSource: $(LINK_TO_SRC source/_typecons_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L14_C1",
+    "name" : "__unittest_L16_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "nullになる可能性のある値を表現するNullableの例です\n\nNullableを利用することで、値が存在しない可能性のある型を表現できます。\nint等の組み込み型やstructについても、nullとなることを明確に示せます。\n",
-    "line" : 14,
+    "line" : 16,
     "char" : 1,
-    "endline" : 63,
+    "endline" : 65,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L63_C1",
+    "name" : "__unittest_L65_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ポインタを格納するためのNullableであるNullableRefの例です\n\nポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。\n",
-    "line" : 63,
+    "line" : 65,
     "char" : 1,
-    "endline" : 97,
+    "endline" : 99,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L97_C1",
+    "name" : "__unittest_L99_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "constやimmutableの参照型の変数でも再代入可能とするRebindableの例です\n\nconstやimmutableの参照型の変数はそのままでは再代入できませんが、Rebindableでラップした変数は再代入可能になります。\n",
-    "line" : 97,
+    "line" : 99,
     "char" : 1,
-    "endline" : 132,
+    "endline" : 134,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L132_C7",
+    "name" : "__unittest_L134_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。\n\nポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために `RefCounted` を使う方法があります。\n内部的には参照カウンタで管理されます。\n",
-    "line" : 132,
+    "line" : 134,
     "char" : 7,
     "storageClass" : [
      "@nogc"
     ],
-    "endline" : 209,
+    "endline" : 211,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L209_C1",
+    "name" : "__unittest_L211_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "classのインスタンスをスタック上に確保するscopedの例です\n\nscopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。\nその代わり、インスタンスをスコープの外に移動させることはできません。\n",
-    "line" : 209,
+    "line" : 211,
     "char" : 1,
-    "endline" : 263,
+    "endline" : 265,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L263_C1",
+    "name" : "__unittest_L265_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "複数の値の組を作れる`Tuple`の例です。\n\n複数の異なる型の値をまとめて扱いたい時や、関数から複数の値を返したい場合などに利用できます。\n",
-    "line" : 263,
+    "line" : 265,
     "char" : 1,
-    "endline" : 341,
+    "endline" : 343,
     "endchar" : 1
    }
   ]
@@ -1902,46 +1902,46 @@
   "name" : "uda_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/uda_example.d",
-  "comment" : "UDA(User Defined Attribute)\n\nUDAの使用例についてまとめます。\n",
+  "comment" : "UDA(User Defined Attribute)\n\nUDAの使用例についてまとめます。\n\nSource: $(LINK_TO_SRC source/_uda_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L11_C1",
+    "name" : "__unittest_L13_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "UDA取得の例です\n",
-    "line" : 11,
+    "line" : 13,
     "char" : 1,
-    "endline" : 31,
+    "endline" : 33,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L31_C1",
+    "name" : "__unittest_L33_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "特定のUDAを持ったメンバー抽出の例です\n",
-    "line" : 31,
+    "line" : 33,
     "char" : 1,
-    "endline" : 64,
+    "endline" : 66,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L64_C1",
+    "name" : "__unittest_L66_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "toStringの自動生成の例です\n",
-    "line" : 64,
+    "line" : 66,
     "char" : 1,
-    "endline" : 112,
+    "endline" : 114,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L112_C1",
+    "name" : "__unittest_L114_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "関数の引数に付与されたUDAを取得する例です\n",
-    "line" : 112,
+    "line" : 114,
     "char" : 1,
-    "endline" : 129,
+    "endline" : 131,
     "endchar" : 1
    }
   ]
@@ -1950,82 +1950,82 @@
   "name" : "unittests_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/unittests_example.d",
-  "comment" : "単体テスト\n\n様々な単体テストの記法についてまとめます。\n",
+  "comment" : "単体テスト\n\n様々な単体テストの記法についてまとめます。\n\nSource: $(LINK_TO_SRC source/_unittests_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L15_C1",
+    "name" : "__unittest_L17_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "unittestとassert\n\n実行時ロジックについては、`assert` を使ってテストを記述します。\n\nunittestとassertは両方共debugビルドのときにのみ使われ、releaseビルドのときには除去されます。\n",
-    "line" : 15,
+    "line" : 17,
     "char" : 1,
-    "endline" : 37,
+    "endline" : 39,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L37_C1",
+    "name" : "__unittest_L39_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "unittestとstatic assert\n\nコンパイル時に確定する内容については、`static assert`を使ってテストを記述します。\n\nこのテストに失敗するとコンパイルエラーになります。\n",
-    "line" : 37,
+    "line" : 39,
     "char" : 1,
-    "endline" : 56,
+    "endline" : 58,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L56_C1",
+    "name" : "__unittest_L58_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "例外が発生することをテストする方法\n\n`assertThrown` 関数を使い、対象の関数が例外を発生させることを確認します。\nここでは関数の事前条件チェックでAssertErrorが起きることを確認します。\n\ncore.exception : $(LINK https://dlang.org/phobos/core_exception.html)$(BR)\nstd.exception : $(LINK https://dlang.org/phobos/std_exception.html)$(BR)\n",
-    "line" : 56,
+    "line" : 58,
     "char" : 1,
-    "endline" : 96,
+    "endline" : 98,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L96_C9",
+    "name" : "__unittest_L98_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "@safe や @nogc 、nothrowであることを保証する方法\n\n属性をテストするには unittest自体を当該属性で修飾する方法が多く使われます。\nこのテストサンプルは `nothrow` 属性で修飾されています。\n\n`std.traits` の機能で関数属性を取り出すことも可能ですが、ブロック全体を修飾することで漏れがなくなります。\n",
-    "line" : 96,
+    "line" : 98,
     "char" : 9,
     "storageClass" : [
      "nothrow"
     ],
-    "endline" : 117,
+    "endline" : 119,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L117_C1",
+    "name" : "__unittest_L119_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "浮動小数点数をテストする方法\n\n数値計算の結果は厳密なテストが難しいため `isClose` を使い相対誤差などを利用した比較を行います。\n\nstd.math.isClose : $(LINK https://dlang.org/phobos/std_math.html#.isClose)$(BR)\n\n類似の `approxEqual` はDMDのバージョンで非推奨となったため、 `isClose` を使うことが推奨されています。\n",
-    "line" : 117,
+    "line" : 119,
     "char" : 1,
-    "endline" : 152,
+    "endline" : 154,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L152_C1",
+    "name" : "__unittest_L154_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "一般的なRangeの内容をテストする方法\n\nstd.algorithm 内の equal 関数を使ってRange同士を比較します。\n\nstd.algorithm : $(LINK https://dlang.org/phobos/std_algorithm_comparison.html)\n",
-    "line" : 152,
+    "line" : 154,
     "char" : 1,
-    "endline" : 177,
+    "endline" : 179,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L177_C9",
+    "name" : "__unittest_L179_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "ファイルの生成などを確認する方法\n\n単体テストはそれぞれが独立し、順不同および繰り返し実行できることが重要です。\n\n最初と `scope(exit)` でファイルの破棄を行うとテストの再現性や独立性が高まります。\n",
-    "line" : 177,
+    "line" : 179,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 192,
+    "endline" : 194,
     "endchar" : 1
    }
   ]
