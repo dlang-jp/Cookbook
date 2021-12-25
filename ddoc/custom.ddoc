@@ -1,4 +1,5 @@
 _=Macros for customizing the output for a particular project
 
-PROJECT_SRC_ROOT=https://github.com/dlang-jp/Cookbook/tree/master
+PROJECT_ROOT=https://github.com/dlang-jp/Cookbook
+PROJECT_SRC_ROOT=$(PROJECT_ROOT)/tree/master
 _=

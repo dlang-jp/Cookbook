@@ -5,6 +5,8 @@ Base64のエンコードとデコードを行うサンプルです
 
 See_Also:
     - https://dlang.org/phobos/std_base64.html
+
+Source: $(LINK_TO_SRC source/data/_base64_example.d)
 +/
 module data.base64_example;
 

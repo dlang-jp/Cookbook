@@ -2,6 +2,8 @@
 型を作るユーティリティ
 
 様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。
+
+Source: $(LINK_TO_SRC source/_typecons_example.d)
 +/
 module typecons_example;
 
@@ -168,7 +170,7 @@ unittest
 
     // 新しいリソースを保持するRefCounted!Payloadを、refCounted関数で生成します。
     auto rc1 = refCounted(Payload(1234));
-    
+
     // 現在の参照カウントは1です。
     assert(rc1.refCountedStore.refCount == 1);
 

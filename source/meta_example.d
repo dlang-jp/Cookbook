@@ -2,6 +2,8 @@
 メタプログラミング
 
 メタプログラミングに出てくるイディオム等についてまとめます。
+
+Source: $(LINK_TO_SRC source/_meta_example.d)
 +/
 module meta_example;
 

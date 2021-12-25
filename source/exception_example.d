@@ -6,6 +6,8 @@ D言語は「例外機構」をもつ言語です。
 例外を捕まえるまで関数呼び出し元をたどっていってスタックをロールバックして…
 といった、いわゆる大域ジャンプを伴う、プログラムの特殊なフローのことです。
 ここでは例外の使い方についてまとめます。
+
+Source: $(LINK_TO_SRC source/_exception_example.d)
 +/
 module exception_example;
 

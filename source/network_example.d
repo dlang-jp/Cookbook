@@ -4,6 +4,8 @@
 ネットワークモジュール、特に `std.net.curl` の使い方についてまとめます。
 
 HTTP通信などができます。
+
+Source: $(LINK_TO_SRC source/_network_example.d)
 +/
 module network_example;
 

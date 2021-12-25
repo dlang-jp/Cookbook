@@ -4,6 +4,8 @@
 文字列操作についてまとめます。
 
 TODO: 置換(replace), 削除(remove), 分割(split)
+
+Source: $(LINK_TO_SRC source/_string_example.d)
 +/
 module string_example;
 

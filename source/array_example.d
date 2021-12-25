@@ -4,6 +4,8 @@
 動的配列と静的配列の操作についてまとめます。
 
 要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)
+
+Source: $(LINK_TO_SRC source/_array_example.d)
 +/
 module array_example;
 
