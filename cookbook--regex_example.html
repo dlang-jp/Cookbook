@@ -394,6 +394,11 @@ string s5 = text(<span class="d_string">"^"</span>, escaper(<span class="d_strin
     <span class="d_keyword">assert</span>(capt[3] == <span class="d_string">"1"</span>);
     <span class="d_keyword">assert</span>(capt[4] == <span class="d_string">"255"</span>);
 }
+
+<span class="d_comment">// 繰り返しの最小量指定子もサポートしています。
+</span><span class="d_keyword">auto</span> s = <span class="d_string">"Ubuntu(Linux)/Debian(Linux)/FreeBSD(BSD)"</span>;
+<span class="d_keyword">assert</span>(s.matchFirst(regex(<span class="d_string">`\w+\(.*\)`</span>)).hit == s);
+<span class="d_keyword">assert</span>(s.matchFirst(regex(<span class="d_string">`\w+\(.*?\)`</span>)).hit == <span class="d_string">"Ubuntu(Linux)"</span>);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>

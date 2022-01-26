@@ -1500,72 +1500,72 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 139,
+    "endline" : 144,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L139_C7",
+    "name" : "__unittest_L144_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 部分文字列の検索 (matchAll)\n",
-    "line" : 139,
+    "line" : 144,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 186,
+    "endline" : 191,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L186_C7",
+    "name" : "__unittest_L191_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 文字列の置換\n",
-    "line" : 186,
+    "line" : 191,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 209,
+    "endline" : 214,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L209_C7",
+    "name" : "__unittest_L214_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 文字列の分割\n",
-    "line" : 209,
+    "line" : 214,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 226,
+    "endline" : 231,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L226_C7",
+    "name" : "__unittest_L231_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# Unicodeプロパティ\n",
-    "line" : 226,
+    "line" : 231,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 238,
+    "endline" : 243,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L238_C7",
+    "name" : "__unittest_L243_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 先読み・後読み\n",
-    "line" : 238,
+    "line" : 243,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 314,
+    "endline" : 319,
     "endchar" : 1
    }
   ]
