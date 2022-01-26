@@ -131,6 +131,11 @@ module regex_example;
         assert(capt[3] == "1");
         assert(capt[4] == "255");
     }
+
+    // 繰り返しの最小量指定子もサポートしています。
+    auto s = "Ubuntu(Linux)/Debian(Linux)/FreeBSD(BSD)";
+    assert(s.matchFirst(regex(`\w+\(.*\)`)).hit == s);
+    assert(s.matchFirst(regex(`\w+\(.*?\)`)).hit == "Ubuntu(Linux)");
 }
 
 /++
