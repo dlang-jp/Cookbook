@@ -82,7 +82,7 @@ unittest
 }
 
 
-/+
+/++
 ダイジェスト認証
 
 HTTPSが使えない場合や、パスワードをなんとしても通信に乗せたくないしサーバーに教えたくないって場合に有効な認証方式です。
@@ -95,10 +95,6 @@ vibe.dでのダイジェスト認証で利用されるMD5はセキュリティ�
 See_Also:
 - https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth
 - https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d
-
-Bug:
-現在バグのためダイジェスト認証はうまく動作しない。
-- https://github.com/vibe-d/vibe.d/issues/2597
 +/
 unittest
 {
