@@ -449,6 +449,6 @@ Unix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となりま
     auto ut1 = SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC()).toUnixTime();
     assert(ut1 == 0);
     // 元のSysTimeがローカル時刻でもUnix timeはUTC基準です
-    auto ut2 = SysTime(DateTime(2021, 12, 31, 23, 59, 59), LocalTime()).toUnixTime();
+    auto ut2 = SysTime(DateTime(2021, 12, 31, 23, 59, 59), localTZ).toUnixTime();
     assert(ut2 == 1640962799);
 }
