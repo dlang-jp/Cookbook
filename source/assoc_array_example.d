@@ -2,6 +2,8 @@
 連想配列
 
 連想配列の操作についてまとめます。
+
+Source: $(LINK_TO_SRC source/_assoc_array_example.d)
 +/
 module assoc_array_example;
 

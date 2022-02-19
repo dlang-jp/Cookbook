@@ -14,6 +14,8 @@ https://libdparse.dlang.io/
 - [dcd](https://code.dlang.org/packages/dcd) : このライブラリでシンボル等を抽出してIDEでオートコンプリートを行うために使われます
 - [dfmt](https://code.dlang.org/packages/dfmt) : このライブラリで構文を分解・再構築することでコードスタイルの俗人性を排除します
 - [dscanner](https://code.dlang.org/packages/dscanner) : このライブラリで構文を読み取り、静的解析することで、バグを生みやすいコードを警告してくれます
+
+Source: $(LINK_TO_SRC thirdparty/libdparse/source/libdparse_usage/_example.d)
 +/
 module libdparse_usage.example;
 

@@ -2,6 +2,8 @@
 並行処理
 
 `std.concurrency` を使った並行処理の例をまとめます。
+
+Source: $(LINK_TO_SRC source/_concurrency_example.d)
 +/
 module concurrency_example;
 

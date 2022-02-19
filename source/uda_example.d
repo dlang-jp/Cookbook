@@ -2,6 +2,8 @@
 UDA(User Defined Attribute)
 
 UDAの使用例についてまとめます。
+
+Source: $(LINK_TO_SRC source/_uda_example.d)
 +/
 module uda_example;
 

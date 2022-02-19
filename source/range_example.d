@@ -24,6 +24,8 @@ TODO:
 * レンジの種類の紹介
 * std.rangeの各関数の紹介
 
+
+Source: $(LINK_TO_SRC source/_range_example.d)
 +/
 module range_example;
 
