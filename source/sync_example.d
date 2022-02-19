@@ -11,8 +11,8 @@
 - `ReadWriteMutex`
 - `Barrier`
 - `Condition`
-- `Semaphore` (TODO)
-- `Event` (TODO)
+- `Semaphore`
+- `Event`
 
 Source: $(LINK_TO_SRC source/_sync_example.d)
 +/
@@ -244,4 +244,97 @@ unittest
             assert(test == 2);
     });
     tg.joinAll(true);
+}
+
+/++
+Semaphoreで、通知による同期を行う例です。
+
+Conditionよりも単純で、Mutexとの関係を気にする必要はありません。
+Semaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。
+waitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。
+
+共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Semaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+
+See_Also:
+    - https://dlang.org/phobos/core_sync_semaphore.html
++/
+unittest
+{
+    import core.thread: ThreadGroup;
+    import core.sync.semaphore: Semaphore;
+
+    auto s = new Semaphore(0);
+    int test;
+
+    auto tg = new ThreadGroup;
+    // スレッド1
+    tg.create({
+        // 長い処理のあと終わったことを通知
+        test = 1;
+        s.notify();
+    });
+    // スレッド2
+    tg.create({
+        // スレッド1の処理が終わるまで待つ
+        s.wait();
+        assert(test == 1);
+    });
+    tg.joinAll(true);
+}
+
+
+/++
+Eventで、通知による同期を行う例です。
+
+ConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。
+Eventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。
+waitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する `manualReset` がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。
+Eventのコンストラクタの `initialState` は、このフラグの初期状態を表します。
+
+共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Eventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+
+See_Also:
+    - https://dlang.org/phobos/core_sync_event.html
++/
+unittest
+{
+    import core.thread: ThreadGroup;
+    import core.sync.event: Event;
+    import std.random: uniform;
+
+    // マニュアルリセットなので、勝手に非シグナル状態に戻らない。
+    // 初期状態は非シグナル状態なので、setするまでwaitは制御をブロックする。
+    auto ev = Event(true, false);
+    int testA;
+    int testB;
+    int testC;
+
+    // ここではスレッドを3つ立ち上げる
+    // Semaphoreだとスレッド1で2回notifyが必要だが、Eventなら1回でOK
+    auto tg = new ThreadGroup;
+    // スレッド1
+    tg.create({
+        // 長い処理のあと終わったことを通知
+        testA = uniform(1, 10);
+        ev.set();
+    });
+    // スレッド2
+    tg.create({
+        // スレッド1の処理が終わるまで待つ
+        ev.wait();
+        assert(testA > 0);
+        testB = testA + 1;
+    });
+    // スレッド3
+    tg.create({
+        // スレッド1の処理が終わるまで待つ
+        ev.wait();
+        assert(testA > 0);
+        testC = testA + 2;
+    });
+    tg.joinAll(true);
+    assert(testA + 1 == testB);
+    assert(testA + 2 == testC);
 }
