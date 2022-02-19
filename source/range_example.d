@@ -262,44 +262,11 @@ unittest
 }
 
 /++
-配列をRangeとして扱う場合の例です。
+動的配列とRangeのどちらにも使用できる関数を定義する例です。
 +/
 unittest
 {
     import std.range : isInputRange, isRandomAccessRange, only;
-
-    // 動的配列はstd.rangeやstd.algorithmの内部ではRangeと見なされます。
-    static assert(isRandomAccessRange!(int[]));
-
-    // ただし、そのままではRangeに備わっているメンバーを利用できません。
-    int[] values = [1, 2, 3, 4];
-    static assert(!__traits(compiles, {
-        values.empty;
-        values.popFront;
-        values.front;
-        values.save;
-        values.back;
-        values.popBack;
-    }));
-
-    // 動的配列に対してRangeのメンバーを利用するには
-    // std.rangeの関数をimportする必要があります。
-    {
-        import std.range : empty, front, popFront, save, back, popBack;
-
-        assert(!values.empty);
-        assert(values.front == 1);
-        assert(values.back == 4);
-
-        auto saved = values.save;
-
-        values.popFront;
-        assert(values == [2, 3, 4]);
-        values.popBack;
-        assert(values == [2, 3]);
-
-        assert(saved == [1, 2, 3, 4]);
-    }
 
     // 配列向けの関数をimportしておくことで、
     // 動的配列とRangeのどちらにも使用できる関数が定義できます。
@@ -328,5 +295,39 @@ unittest
     // 動的配列ではないRangeに対しても利用可能
     assert(myAny(only(1), 1));
     assert(!myAny(only(1), 100));
+
+    // 動的配列はstd.rangeやstd.algorithmの内部ではRangeと見なされます。
+    static assert(isRandomAccessRange!(int[]));
+
+    // しかし、動的配列用のRangeのメンバーをstd.rangeからimportしないと、
+    // 動的配列の各メンバーを利用することはできません。
+    int[] values = [1, 2, 3, 4];
+    static assert(!__traits(compiles, {
+        values.empty;
+        values.popFront;
+        values.front;
+        values.save;
+        values.back;
+        values.popBack;
+    }));
+
+    // std.rangeから各メンバーをimportすることで
+    // 動的配列をRangeとして扱えるようになります。
+    {
+        import std.range : empty, front, popFront, save, back, popBack;
+
+        assert(!values.empty);
+        assert(values.front == 1);
+        assert(values.back == 4);
+
+        auto saved = values.save;
+
+        values.popFront;
+        assert(values == [2, 3, 4]);
+        values.popBack;
+        assert(values == [2, 3]);
+
+        assert(saved == [1, 2, 3, 4]);
+    }
 }
 
