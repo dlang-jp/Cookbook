@@ -1,5 +1,7 @@
 /++
 Webインターフェースの利用
+
+Source: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_web.d)
 +/
 module vibed_usage.web;
 

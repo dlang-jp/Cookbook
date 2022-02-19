@@ -4,6 +4,8 @@ CSV操作
 CSVファイル/CSVデータの読み書き等操作を扱います。
 ここでは、標準で備えているstd.csvモジュールを用いたCSVファイルの読み込みと、
 CSVファイルへの書き出しについて説明します。
+
+Source: $(LINK_TO_SRC source/data/_csv_example.d)
 +/
 module data.csv_example;
 

@@ -13,6 +13,8 @@
 - `Condition`
 - `Semaphore` (TODO)
 - `Event` (TODO)
+
+Source: $(LINK_TO_SRC source/_sync_example.d)
 +/
 module sync_example;
 

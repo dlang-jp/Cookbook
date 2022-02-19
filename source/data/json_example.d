@@ -5,6 +5,8 @@ JSONファイル/JSONデータの読み書き等操作を扱います。
 ここでは、標準で備えているstd.jsonモジュールと、その中のJSONValueについて説明します。
 このモジュールは、あくまでもJSONが最低限取り扱える程度の機能があって、速度や利便性は二の次です。
 ほかにもサードパーティのライブラリとして、asdfを代表として、より高度な取り扱いができるライブラリがあります。
+
+Source: $(LINK_TO_SRC source/data/_json_example.d)
 +/
 module data.json_example;
 
