@@ -1,5 +1,7 @@
 /++
 HTTPSサーバー
+
+Source: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_https.d)
 +/
 module vibed_usage.https;
 

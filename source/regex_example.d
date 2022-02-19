@@ -2,6 +2,8 @@
 正規表現
 
 正規表現の操作についてまとめます。
+
+Source: $(LINK_TO_SRC source/_regex_example.d)
 +/
 module regex_example;
 
@@ -51,7 +53,7 @@ module regex_example;
     // `escaper`の戻り値は、`Escaper`という遅延評価を行うレンジになります。
     // 実行時にstringと連結して新たなパターン文字列を作るような場合、`std.conv.to`や`std.conv.text`を使うと効率的です。
     import std.conv : to, text;
-    
+
     string s4 = "^" ~ escaper("https://dlang.org").to!string() ~ "$";
     string s5 = text("^", escaper("https://dlang.org"), "$");
     assert(s4 == `^https\:\/\/dlang\.org$`);
@@ -129,6 +131,11 @@ module regex_example;
         assert(capt[3] == "1");
         assert(capt[4] == "255");
     }
+
+    // 繰り返しの最小量指定子もサポートしています。
+    auto s = "Ubuntu(Linux)/Debian(Linux)/FreeBSD(BSD)";
+    assert(s.matchFirst(regex(`\w+\(.*\)`)).hit == s);
+    assert(s.matchFirst(regex(`\w+\(.*?\)`)).hit == "Ubuntu(Linux)");
 }
 
 /++

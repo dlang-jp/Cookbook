@@ -2,6 +2,8 @@
 乱数
 
 乱数操作についてまとめます。
+
+Source: $(LINK_TO_SRC source/_random_example.d)
 +/
 module random_example;
 

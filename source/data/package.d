@@ -25,6 +25,7 @@ $(DL
     )
 )
 
+Source: $(LINK_TO_SRC source/_data/package.d)
 +/
 module data;
 

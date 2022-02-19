@@ -2,6 +2,8 @@
 並列処理
 
 `std.parallelism` を使った並列処理の例をまとめます。
+
+Source: $(LINK_TO_SRC source/_parallelism_example.d)
 +/
 module parallelism_example;
 
