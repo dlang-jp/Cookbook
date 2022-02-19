@@ -421,13 +421,17 @@ Unix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となりま
     // ローカル時刻を想定したUnix時間をSysTimeへ変換
     long unixtime = 1640913630; // 2021-12-31 01:20:30 + 00:00
 
-    // fromUnixTimeにタイムゾーンを指定するとSysTimeに反映される
-    auto stLocal = SysTime.fromUnixTime(unixtime);       // 2021-12-31 10:20:30 + 09:00
-    auto stUTC = SysTime.fromUnixTime(unixtime, UTC());  // 2021-12-31 01:20:30 + 00:00
+    // テスト環境が不定のためタイムゾーンを固定します
+    immutable localTZ = new SimpleTimeZone(9.hours, "JST");
+
+    // fromUnixTimeにタイムゾーンを指定するとSysTimeに反映されます。
+    // Localのタイムゾーンは省略するとローカルタイムゾーン（日本ならJSTで同じく+09:00）です。
+    auto stLocal = SysTime.fromUnixTime(unixtime, localTZ); // 2021-12-31 10:20:30 + 09:00
+    auto stUTC = SysTime.fromUnixTime(unixtime, UTC());     // 2021-12-31 01:20:30 + 00:00
 
     assert(cast(Date) stLocal == Date(2021, 12, 31));
     assert(cast(TimeOfDay) stLocal == TimeOfDay(10, 20, 30));
-    assert(stLocal.timezone is LocalTime());
+    assert(stLocal.timezone !is LocalTime()); // 構築時にタイムゾーンを省略した場合はLocalTimeになります
     assert(cast(Date) stUTC == Date(2021, 12, 31));
     assert(cast(TimeOfDay) stUTC == TimeOfDay(1, 20, 30));
     assert(stUTC.timezone is UTC());
