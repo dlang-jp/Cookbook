@@ -288,7 +288,7 @@ unittest
     }
 
     // 自作関数を動的配列に対して使用
-    values = [1, 2, 3];
+    int[] values = [1, 2, 3, 4];
     assert(myAny(values, 1));
     assert(!myAny(values, 100));
 
@@ -301,7 +301,6 @@ unittest
 
     // しかし、動的配列用のRangeのメンバーをstd.rangeからimportしないと、
     // 動的配列の各メンバーを利用することはできません。
-    int[] values = [1, 2, 3, 4];
     static assert(!__traits(compiles, {
         values.empty;
         values.popFront;
