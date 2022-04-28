@@ -918,13 +918,97 @@ See_Also:
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>std.exception.enforce</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+もしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。
+<div class="ddoc_blankline"></div>
+
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> res = foo();
+<span class="d_keyword">if</span> (!res)
+    <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"hogehoge"</span>);
+</pre>
+を、
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> res = enforce(foo(), <span class="d_string">"hogehoge"</span>);
+</pre>
+と書くことのできる関数です。さらに、UFCSを使うと <span class="d_inlinecode donthyphenate notranslate">auto res = foo().enforce("hogehoge");</span> と書くこともできます。
+<div class="ddoc_blankline"></div>
+
+エラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために
+<span class="d_inlinecode donthyphenate notranslate">if (!res) throw new Exception(....)</span>
+等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。
+<div class="ddoc_blankline"></div>
+
+特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。
+<div class="ddoc_blankline"></div>
+
+使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。
+おおむね <span class="d_inlinecode donthyphenate notranslate">assert()</span> と同じです。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">assert()</span> は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、
+<span class="d_inlinecode donthyphenate notranslate">enforce()</span> は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#enforce">https://dlang.org/phobos/std_exception.html#enforce</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception: enforce;
+<span class="d_keyword">import</span> core.stdc.stdlib: malloc, free;
+<span class="d_comment">// mallocはnullチェックしないといけない。
+</span><span class="d_comment">// nullだったら読み書きできないし、freeに渡してもダメなので、
+</span><span class="d_comment">// 戻り値はnullじゃないことを強制したい。
+</span><span class="d_comment">// そんな時にenforceを使います。
+</span><span class="d_keyword">auto</span> ptr = malloc(1024).enforce(<span class="d_string">"Memory allocation error."</span>);
+<span class="d_comment">// 以降、enforceでnullじゃないことを「強制」しているので、
+</span><span class="d_comment">// ptrがnullかどうかは考えなくていい。
+</span><span class="d_keyword">scope</span> (exit)
+    free(ptr);
+
+<span class="d_keyword">import</span> std.socket: Socket;
+<span class="d_comment">// TcpSocketはstd.socketで多分定義されているよね
+</span><span class="d_keyword">auto</span> tcpsock = Object.factory(<span class="d_string">"std.socket.TcpSocket"</span>).enforce(<span class="d_string">"TcpSocket is not declared."</span>);
+
+<span class="d_comment">// TcpSocketがうまく取れてれば Socket にキャストできるはずだよね
+</span><span class="d_keyword">auto</span> sock = enforce(<span class="d_keyword">cast</span>(Socket)tcpsock, <span class="d_string">"TcpSocket is not deriving from the Socket."</span>);
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>std.exception.collectException</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+
+もし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。
+<div class="ddoc_blankline"></div>
+
+<pre class="d_code notranslate"><span class="d_keyword">try</span>
+{
+    foo();
+}
+<span class="d_keyword">catch</span> (Exception e)
+{
+    <span class="d_comment">// エラー処理
+</span>}
+</pre>
+を、
+<pre class="d_code notranslate"><span class="d_keyword">if</span> (<span class="d_keyword">auto</span> e = collectException(foo()))
+{
+    <span class="d_comment">// エラー処理
+</span>}
+</pre>
+と書くことのできる関数です。
+<div class="ddoc_blankline"></div>
+
+1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、
+例外に対して何もしなくてよい時に握りつぶしたい場合、
+例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#collectException">https://dlang.org/phobos/std_exception.html#collectException</a>
+</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.exception: collectException, enforce;
+<span class="d_comment">// std.file.removeはダメだったら例外投げる。投げたら、存在チェックする。
+</span><span class="d_keyword">if</span> (<span class="d_keyword">auto</span> e = std.file.remove(<span class="d_string">"test.txt"</span>).collectException)
+    enforce(!std.file.exists(<span class="d_string">"test.txt"</span>));
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>std.exception.ifThrown</h1>
