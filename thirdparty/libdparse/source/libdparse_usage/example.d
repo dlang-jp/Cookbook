@@ -36,7 +36,7 @@ unittest
     // DLexer構造体を作成します。
     LexerConfig config;
     auto cache = StringCache(StringCache.defaultBucketCount);
-    auto lexer = DLexer(sourceCode, config, &cache, false);
+    auto lexer = DLexer(sourceCode, config, &cache);
 
     // lexerはinput rangeとして振る舞います。
     static assert(isInputRange!DLexer);
@@ -71,8 +71,6 @@ unittest
     lexer.popFront();
 }
 
-version(none)
-{
 /++
 `dparse.parser`モジュールを用いてトークン列をASTに変換する例です。
 ASTを全てtraverseする場合にはここで得られたASTを直接利用してもよいかもしれません。
@@ -167,5 +165,4 @@ unittest
     extractor.visit(m);
 
     assert(extractor.varNames == ["x", "y", "z", "a"]);
-}
 }
