@@ -292,7 +292,7 @@ string sourceCode = <span class="d_string">q{
 <span class="d_comment">// DLexer構造体を作成します。
 </span>LexerConfig config;
 <span class="d_keyword">auto</span> cache = StringCache(StringCache.defaultBucketCount);
-<span class="d_keyword">auto</span> lexer = DLexer(sourceCode, config, &amp;cache, <span class="d_keyword">false</span>);
+<span class="d_keyword">auto</span> lexer = DLexer(sourceCode, config, &amp;cache);
 
 <span class="d_comment">// lexerはinput rangeとして振る舞います。
 </span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInputRange!DLexer);
