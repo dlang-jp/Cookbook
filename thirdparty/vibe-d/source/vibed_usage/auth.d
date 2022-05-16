@@ -58,6 +58,7 @@ unittest
             auto res = requestHTTP("http://".text(serverAddr), (scope req) {});
             assert(res.statusCode == 401, res.toString);
             res.dropBody();
+            res.disconnect();
 
             // Basic認証ありで"/"をGETする
             import std.base64: Base64;
@@ -71,6 +72,7 @@ unittest
             assert(res.contentType == "text/html");
             assert(res.bodyReader.readAllUTF8() == "<html><body>Hello, World</body></html>");
             res.dropBody();
+            res.disconnect();
         }
         catch (Throwable e)
             thrown = e;
@@ -150,6 +152,7 @@ unittest
             auto r = regex(`Digest realm="(.+?)", nonce="(.+?)",`);
             auto m = matchFirst(res.headers["WWW-Authenticate"], r);
             res.dropBody();
+            res.disconnect();
 
             // Digest認証ありで"/"をGETする
             import std.digest.md: md5Of, toHexString, LetterCase;
@@ -173,6 +176,7 @@ unittest
             assert(res.contentType == "text/html");
             assert(res.bodyReader.readAllUTF8() == "<html><body>Hello, World</body></html>");
             res.dropBody();
+            res.disconnect();
         }
         catch (Throwable e)
             thrown = e;
@@ -278,6 +282,7 @@ unittest
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "Please login.");
             res.dropBody();
+            res.disconnect();
 
             // ログインする
             res = requestHTTP("http://".text(serverAddr, "/login"), (scope req) {
@@ -288,6 +293,7 @@ unittest
             // セッション情報のあるCookieを保存
             saveCookie(res.cookies);
             res.dropBody();
+            res.disconnect();
 
             // ログイン後に"/"をGETする
             res = requestHTTP("http://".text(serverAddr, "/"), (scope req) {
@@ -298,6 +304,7 @@ unittest
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "Hello, Alice.");
             res.dropBody();
+            res.disconnect();
         }
         catch (Throwable e)
             thrown = e;
@@ -449,11 +456,13 @@ unittest
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "Index");
             res.dropBody();
+            res.disconnect();
 
             // 認証なしでuser権限が必要なところを閲覧
             res = requestHTTP("http://".text(serverAddr, "/entrance"), (scope req) {});
             assert(res.statusCode == 403, res.toString);
             res.dropBody();
+            res.disconnect();
 
             // guest権限のユーザーでログインする
             res = requestHTTP("http://".text(serverAddr, "/login"), (scope req) {
@@ -463,6 +472,7 @@ unittest
             assert(res.statusCode == 302, res.toString);
             saveCookie(res.cookies);
             res.dropBody();
+            res.disconnect();
 
             // guest権限で誰でも見れるところを閲覧
             res = requestHTTP("http://".text(serverAddr, "/overview"), (scope req) {
@@ -472,6 +482,7 @@ unittest
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "Overview");
             res.dropBody();
+            res.disconnect();
 
             // guest権限でadmin権限でしか見れないところを閲覧
             res = requestHTTP("http://".text(serverAddr, "/control_room"), (scope req) {
@@ -479,6 +490,7 @@ unittest
             });
             assert(res.statusCode == 403, res.toString);
             res.dropBody();
+            res.disconnect();
 
             // admin権限のユーザーでログインする
             res = requestHTTP("http://".text(serverAddr, "/login"), (scope req) {
@@ -488,6 +500,7 @@ unittest
             assert(res.statusCode == 302, res.toString);
             saveCookie(res.cookies);
             res.dropBody();
+            res.disconnect();
 
             // admin権限でuser以上なら見れるところを閲覧
             res = requestHTTP("http://".text(serverAddr, "/entrance"), (scope req) {
@@ -497,6 +510,7 @@ unittest
             assert(res.contentType == "text/plain");
             assert(res.bodyReader.readAllUTF8() == "Entrance");
             res.dropBody();
+            res.disconnect();
 
             // admin権限でadmin権限でしか見れないところを閲覧
             res = requestHTTP("http://".text(serverAddr, "/control_room"), (scope req) {
@@ -507,6 +521,7 @@ unittest
             assert(res.bodyReader.readAllUTF8() == "ControlRoom");
             saveCookie(res.cookies);
             res.dropBody();
+            res.disconnect();
         }
         catch (Throwable e)
             thrown = e;
@@ -813,6 +828,7 @@ unittest
             });
             saveCookie(res.cookies);
             res.dropBody();
+            res.disconnect();
 
             // ➂ ログイン済みのユーザーでリクエストトークンからPINの作成
             res = requestHTTP("http://".text(serverAddr, "/create_pin"), (scope req) {
@@ -823,6 +839,7 @@ unittest
             saveCookie(res.cookies);
             auto pin = res.bodyReader.readAllUTF8();
             res.dropBody();
+            res.disconnect();
 
             // ➃ リクエストトークンとPINからアクセストークンの作成
             auto sign = calcSignature("GET", "/api/create_access_token", requestToken,
