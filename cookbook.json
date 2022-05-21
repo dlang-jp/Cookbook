@@ -1440,7 +1440,17 @@
     "comment" : "漸化式のレンジを生成する`recurrence`の例です。\n",
     "line" : 233,
     "char" : 1,
-    "endline" : 263,
+    "endline" : 267,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L267_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "動的配列とRangeのどちらにも使用できる関数を定義する例です。\n",
+    "line" : 267,
+    "char" : 1,
+    "endline" : 333,
     "endchar" : 1
    }
   ]

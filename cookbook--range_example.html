@@ -507,6 +507,72 @@ r.popFront();
 <span class="d_keyword">assert</span>(fib.take(7).equal([1, 1, 2, 3, 5, 8, 13]));
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 動的配列とRangeのどちらにも使用できる関数を定義する例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : isInputRange, isRandomAccessRange, only;
+
+<span class="d_comment">// 配列向けの関数をimportしておくことで、
+</span><span class="d_comment">// 動的配列とRangeのどちらにも使用できる関数が定義できます。
+</span><span class="d_comment">// ただし、パフォーマンスが重要になる場合は、
+</span><span class="d_comment">// 動的配列向けに最適化した実装を別途用意することも検討してください。
+</span><span class="d_keyword">bool</span> myAny(InputRange, Element)(InputRange range, Element needle)
+    <span class="d_keyword">if</span> (isInputRange!InputRange)
+{
+    <span class="d_keyword">import</span> std.range : empty, front, popFront;
+    <span class="d_keyword">for</span> (; !range.empty; range.popFront())
+    {
+        <span class="d_keyword">if</span> (range.front == needle)
+        {
+            <span class="d_keyword">return</span> <span class="d_keyword">true</span>;
+        }
+    }
+
+    <span class="d_keyword">return</span> <span class="d_keyword">false</span>;
+}
+
+<span class="d_comment">// 自作関数を動的配列に対して使用
+</span><span class="d_keyword">int</span>[] values = [1, 2, 3, 4];
+<span class="d_keyword">assert</span>(myAny(values, 1));
+<span class="d_keyword">assert</span>(!myAny(values, 100));
+
+<span class="d_comment">// 動的配列ではないRangeに対しても利用可能
+</span><span class="d_keyword">assert</span>(myAny(only(1), 1));
+<span class="d_keyword">assert</span>(!myAny(only(1), 100));
+
+<span class="d_comment">// 動的配列はstd.rangeやstd.algorithmの内部ではRangeと見なされます。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isRandomAccessRange!(<span class="d_keyword">int</span>[]));
+
+<span class="d_comment">// しかし、動的配列用のRangeのメンバーをstd.rangeからimportしないと、
+</span><span class="d_comment">// 動的配列の各メンバーを利用することはできません。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, {
+    values.empty;
+    values.popFront;
+    values.front;
+    values.save;
+    values.back;
+    values.popBack;
+}));
+
+<span class="d_comment">// std.rangeから各メンバーをimportすることで
+</span><span class="d_comment">// 動的配列をRangeとして扱えるようになります。
+</span>{
+    <span class="d_keyword">import</span> std.range : empty, front, popFront, save, back, popBack;
+
+    <span class="d_keyword">assert</span>(!values.empty);
+    <span class="d_keyword">assert</span>(values.front == 1);
+    <span class="d_keyword">assert</span>(values.back == 4);
+
+    <span class="d_keyword">auto</span> saved = values.save;
+
+    values.popFront;
+    <span class="d_keyword">assert</span>(values == [2, 3, 4]);
+    values.popBack;
+    <span class="d_keyword">assert</span>(values == [2, 3]);
+
+    <span class="d_keyword">assert</span>(saved == [1, 2, 3, 4]);
+}
+</pre>
+</div>
 
                 
             </div>
