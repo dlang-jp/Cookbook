@@ -61,7 +61,7 @@ unittest
         return encrypted[0 .. encryptedLen + padLen].assumeUnique();
     }
 
-    // 複合
+    // 復号
     immutable(ubyte)[] decryptAES128(in ubyte[] src, in ubyte[128/8] key, in ubyte[16] iv)
     {
         // 暗号化のコンテキスト作成・破棄
@@ -73,18 +73,18 @@ unittest
         decctx.EVP_DecryptInit_ex(EVP_aes_128_cbc(), null, key.ptr, iv.ptr)
             .enforce("Cannot initialize OpenSSL cipher context.");
 
-        // 複合されたデータの格納先として、十分な量のバッファを用意。
+        // 復号されたデータの格納先として、十分な量のバッファを用意。
         // 暗号化のロジックによって異なる。
         // AES128だったら元のデータよりブロックサイズ分の16バイト大きければ十分格納できる。
         ubyte[] decrypted = new ubyte[src.length + 16];
 
-        // 複合
-        // ここでは一回で複合を行っているが、分割することもできる。
+        // 復号
+        // ここでは一回で復号を行っているが、分割することもできる。
         int decryptedLen;
         int padLen;
         decctx.EVP_DecryptUpdate(decrypted.ptr, &decryptedLen, src.ptr, cast(int)src.length)
             .enforce("Cannot encrypt update OpenSSL cipher context.");
-        // 複合完了
+        // 復号完了
         decctx.EVP_DecryptFinal_ex(decrypted.ptr + decryptedLen, &padLen)
             .enforce("Cannot finalize OpenSSL cipher context.");
 
@@ -93,7 +93,7 @@ unittest
 
     import std.conv: hexString;
     import std.string: representation;
-    // ここでは以下のデータを暗号化して、複合します。
+    // ここでは以下のデータを暗号化して、復号します。
     static immutable ubyte[] sourceData = "あいうえお"c.representation;
     // 鍵とIVには以下を使用。
     // 鍵は128bit(16バイト), IVはブロックサイズの16バイト
@@ -101,7 +101,7 @@ unittest
     static immutable ubyte[16]    iv  = cast(ubyte[16])hexString!"A3BF4F1B2B0B822CD15D6C15B0F00A08";
     // 暗号化
     auto encryptedData = encryptAES128(sourceData, key, iv);
-    // 複合
+    // 復号
     auto decryptedData = decryptAES128(encryptedData, key, iv);
     // 確認
     assert(decryptedData == sourceData);
