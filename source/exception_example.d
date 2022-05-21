@@ -681,18 +681,96 @@ See_Also:
 
 /++
 # std.exception.enforce
+もしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。
+
+```d
+auto res = foo();
+if (!res)
+    throw new Exception("hogehoge");
+```
+を、
+```d
+auto res = enforce(foo(), "hogehoge");
+```
+と書くことのできる関数です。さらに、UFCSを使うと `auto res = foo().enforce("hogehoge");` と書くこともできます。
+
+エラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために
+`if (!res) throw new Exception(....)`
+等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。
+
+特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。
+
+使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。
+おおむね `assert()` と同じです。
+
+`assert()` は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、
+`enforce()` は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。
+
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#enforce
 +/
-@safe unittest
+@system unittest
 {
-    // todo
+    import std.exception: enforce;
+    import core.stdc.stdlib: malloc, free;
+    // mallocはnullチェックしないといけない。
+    // nullだったら読み書きできないし、freeに渡してもダメなので、
+    // 戻り値はnullじゃないことを強制したい。
+    // そんな時にenforceを使います。
+    auto ptr = malloc(1024).enforce("Memory allocation error.");
+    // 以降、enforceでnullじゃないことを「強制」しているので、
+    // ptrがnullかどうかは考えなくていい。
+    scope (exit)
+        free(ptr);
+
+    import std.socket: Socket;
+    // TcpSocketはstd.socketで多分定義されているよね
+    auto tcpsock = Object.factory("std.socket.TcpSocket").enforce("TcpSocket is not declared.");
+
+    // TcpSocketがうまく取れてれば Socket にキャストできるはずだよね
+    auto sock = enforce(cast(Socket)tcpsock, "TcpSocket is not deriving from the Socket.");
 }
 
 /++
 # std.exception.collectException
-+/
-@safe unittest
+
+もし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。
+
+```d
+try
 {
-    // todo
+    foo();
+}
+catch (Exception e)
+{
+    // エラー処理
+}
+```
+を、
+```d
+if (auto e = collectException(foo()))
+{
+    // エラー処理
+}
+```
+と書くことのできる関数です。
+
+1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、
+例外に対して何もしなくてよい時に握りつぶしたい場合、
+例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。
+
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#collectException
+
++/
+@system unittest
+{
+    import std.file;
+    import std.exception: collectException, enforce;
+    // std.file.removeはダメだったら例外投げる。投げたら、存在チェックする。
+    if (auto e = std.file.remove("test.txt").collectException)
+        enforce(!std.file.exists("test.txt"));
+
 }
 
 /++
