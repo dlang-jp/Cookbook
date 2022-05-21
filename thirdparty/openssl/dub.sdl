@@ -1,0 +1,9 @@
+name "openssl_usage"
+description "A minimal D application."
+authors "SHOO"
+copyright "Copyright © 2021, SHOO"
+license "public domain"
+# WindowsでOpenSSLを使うにはコンパイル済みのバイナリ(DLL+lib)が必要
+# 自前で用意するのは手間なので、vibe.dで用意されているものを使用する
+dependency "vibe-d" version="~>0.9.4"
+dependency "openssl" version="~>1.1.6+1.0.1g"
