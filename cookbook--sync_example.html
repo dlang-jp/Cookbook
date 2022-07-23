@@ -274,8 +274,8 @@
 <li><span class="d_inlinecode donthyphenate notranslate">ReadWriteMutex</span></li>
 <li><span class="d_inlinecode donthyphenate notranslate">Barrier</span></li>
 <li><span class="d_inlinecode donthyphenate notranslate">Condition</span></li>
-<li><span class="d_inlinecode donthyphenate notranslate">Semaphore</span> (TODO)</li>
-<li><span class="d_inlinecode donthyphenate notranslate">Event</span> (TODO)
+<li><span class="d_inlinecode donthyphenate notranslate">Semaphore</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Event</span>
 </li>
 </ul>
 </div>
@@ -478,6 +478,100 @@ See_Also:
         <span class="d_keyword">assert</span>(test == 2);
 });
 tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Semaphoreで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+Conditionよりも単純で、Mutexとの関係を気にする必要はありません。
+Semaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。
+waitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。
+<div class="ddoc_blankline"></div>
+
+共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Semaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_semaphore.html">https://dlang.org/phobos/core_sync_semaphore.html</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.semaphore: Semaphore;
+
+<span class="d_keyword">auto</span> s = <span class="d_keyword">new</span> Semaphore(0);
+<span class="d_keyword">int</span> test;
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// 長い処理のあと終わったことを通知
+</span>    test = 1;
+    s.notify();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    s.wait();
+    <span class="d_keyword">assert</span>(test == 1);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Eventで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+ConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。
+Eventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。
+waitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する <span class="d_inlinecode donthyphenate notranslate">manualReset</span> がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。
+Eventのコンストラクタの <span class="d_inlinecode donthyphenate notranslate">initialState</span> は、このフラグの初期状態を表します。
+<div class="ddoc_blankline"></div>
+
+共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Eventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_event.html">https://dlang.org/phobos/core_sync_event.html</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.event: Event;
+<span class="d_keyword">import</span> std.random: uniform;
+
+<span class="d_comment">// マニュアルリセットなので、勝手に非シグナル状態に戻らない。
+</span><span class="d_comment">// 初期状態は非シグナル状態なので、setするまでwaitは制御をブロックする。
+</span><span class="d_keyword">auto</span> ev = Event(<span class="d_keyword">true</span>, <span class="d_keyword">false</span>);
+<span class="d_keyword">int</span> testA;
+<span class="d_keyword">int</span> testB;
+<span class="d_keyword">int</span> testC;
+
+<span class="d_comment">// ここではスレッドを3つ立ち上げる
+</span><span class="d_comment">// Semaphoreだとスレッド1で2回notifyが必要だが、Eventなら1回でOK
+</span><span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// 長い処理のあと終わったことを通知
+</span>    testA = uniform(1, 10);
+    ev.set();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    ev.wait();
+    <span class="d_keyword">assert</span>(testA &gt; 0);
+    testB = testA + 1;
+});
+<span class="d_comment">// スレッド3
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    ev.wait();
+    <span class="d_keyword">assert</span>(testA &gt; 0);
+    testC = testA + 2;
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+<span class="d_keyword">assert</span>(testA + 1 == testB);
+<span class="d_keyword">assert</span>(testA + 2 == testC);
 </pre>
 </div>
 

@@ -1817,7 +1817,7 @@
   "name" : "sync_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/sync_example.d",
-  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Barrier`\n- `Condition`\n- `Semaphore` (TODO)\n- `Event` (TODO)\n\nSource: $(LINK_TO_SRC source/_sync_example.d)\n",
+  "comment" : "同期機構/排他処理\n\nマルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。\nこれを適切に管理・実現するため、様々な同期処理が必要になる場合があります。\n\n手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。\n\n- 単独の `synchronized` 文\n- `Mutex`\n- `ReadWriteMutex`\n- `Barrier`\n- `Condition`\n- `Semaphore`\n- `Event`\n\nSource: $(LINK_TO_SRC source/_sync_example.d)\n",
   "members" : [
    {
     "name" : "__unittest_L28_C1",
@@ -1875,7 +1875,27 @@
     "comment" : "Conditionで、通知による同期を行う例です。\n\nConditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。\nその後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。\n\n逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。\n\n使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。\n- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_condition.html\n",
     "line" : 198,
     "char" : 1,
-    "endline" : 248,
+    "endline" : 262,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L262_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Semaphoreで、通知による同期を行う例です。\n\nConditionよりも単純で、Mutexとの関係を気にする必要はありません。\nSemaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。\nwaitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。\n\n共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nSemaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_semaphore.html\n",
+    "line" : 262,
+    "char" : 1,
+    "endline" : 301,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L301_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Eventで、通知による同期を行う例です。\n\nConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。\nEventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。\nwaitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する `manualReset` がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。\nEventのコンストラクタの `initialState` は、このフラグの初期状態を表します。\n\n共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nEventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_event.html\n",
+    "line" : 301,
+    "char" : 1,
+    "endline" : 341,
     "endchar" : 1
    }
   ]
