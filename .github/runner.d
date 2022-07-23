@@ -19,9 +19,10 @@ static:
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = [
-        PackageInfo("windows"),
+        PackageInfo("asdf_usage"),
         PackageInfo("libdparse_usage"),
-        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"])
+        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+        PackageInfo("windows"),
     ];
 }
 
