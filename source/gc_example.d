@@ -151,10 +151,7 @@ rt_argsから参照することができます。
 
     // --DRT-xxxも含むコマンドライン引数は、rt_args関数により取得できます。
     // (実際はグローバルスコープでextern宣言が必要です)
-    extern extern(C) string[] rt_args() @nogc nothrow @system;
-    foreach (a; rt_args)
-    {
-    }
+    // extern extern(C) string[] rt_args() @nogc nothrow @system;
 
     // コマンドライン引数・環境変数によるパラメーター指定は、
     // 以下のグローバル変数を定義することで有効・無効を切り替えられます。
