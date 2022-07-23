@@ -775,25 +775,89 @@ See_Also:
 
 /++
 # std.exception.ifThrown
+
+もしかしたら例外が発生するかもしれない場合に、例外が発生した際の代替値を指定するために使用します。
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#ifThrown
 +/
 @safe unittest
 {
-    // todo
+    import std.conv: to;
+    import std.exception: ifThrown;
+    enum teststr1 = "hogehoge";
+    enum teststr2 = "42";
+    // (ここではすぐ上に見えるけれども)もしかしたら数値以外が
+    // 入っているかもしれない文字列を数値に変換する場合、
+    // ここで数値変換時に例外を発生させず、もし例外が出た場合は
+    // 0を代替として使用するようにします。
+    auto num1 = teststr1.to!int.ifThrown(0);
+    auto num2 = teststr2.to!int.ifThrown(0);
+    assert(num1 == 0);
+    assert(num2 == 42);
 }
 
 /++
 # std.exception.assertThrown / std.exception.assertNotThrown
+この関数をこの条件で呼び出すと必ず例外を発生させるはずだ、という状況をテストで検証する場合、通常ならば以下のようにcatchしてassert文で検証します。
+
+```d
+bool exthrown;
+try
+{
+    auto num = "hogehoge".to!int();
+}
+catch (ConvException e)
+{
+    exthrown = true;
+}
+assert(exthrown, "hogehoge is not a number, but exception is not caught.");
+```
+
+毎回これをやるのは手間なので、 assertThrown や assertNotThrown を使って楽をすることができます。
+assertThrown や assertNotThrownは、例外の型をテンプレート引数で指定することもできます。
+(指定しなければExceptionがキャッチされるかどうかを確認します)
+
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#assertThrown
+    - https://dlang.org/phobos/std_exception.html#assertNotThrown
+
 +/
 @safe unittest
 {
-    // todo
+    import std.conv: to, ConvException;
+    import std.exception: assertThrown, assertNotThrown;
+    // 「数値以外入っているならこの関数は絶対失敗するはずだ」
+    assertThrown!ConvException("hogehoge".to!int());
+    // 「数値が入っているならこの関数は絶対失敗しないはずだ」
+    assertNotThrown!ConvException("42".to!int());
 }
 
 /++
 # std.exception.handle
+
+Rangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。
+handle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。
+
+See_Also:
+    - https://dlang.org/phobos/std_exception.html#handle
 +/
 @safe unittest
 {
-    // todo
-}
+    import std.algorithm: equal, map, splitter;
+    import std.conv: to, ConvException;
+    import std.exception: handle, RangePrimitive;
 
+    // 以下のようなCSVの中の1行を入力
+    auto csvLine = "1,1,2,3,NaN,8,13,21";
+    // カンマ区切りで、intに変換するが…NaNで例外が発生する。
+    // このようなデータ化けはロガーなど計測器から出力されたCSVなんかで往々にして起こる…
+    auto res = csvLine.splitter(',').map!(a => to!int(a));
+
+    // handle関数で、ConvExceptionが発生した時に
+    // 例外exと例外発生時のRangeのfrontを使って
+    // (使えるけれどそれを無視して) -1 を結果とする
+    auto handled = res.handle!(ConvException, RangePrimitive.front,
+        (ex, frontValue) => -1);
+
+    assert(handled.equal([1,1,2,3,-1,8,13,21]));
+}
