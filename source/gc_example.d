@@ -101,7 +101,7 @@ $ DRT_GCOPT="profile:1 minPoolSize:16" app arguments to app
 GC関連パラメーターの一覧は以下で定義されています。
 https://dlang.org/spec/garbage.html#gc_config
 
-また、実行ファイルで下記パラメーターを指定して起動する事で、
+また、実行ファイルで--DRT-gcopt=helpパラメーターを指定して起動すると、
 現在の設定内容とデフォルト値を確認できます。
 
 Examples:
