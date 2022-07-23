@@ -271,7 +271,10 @@
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  <h1>時間を表す7つの型</h1>
 
-以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。
+Dには日時に関する型が複数定義されており、その性質によって役割が異なります。
+<div class="ddoc_blankline"></div>
+
+以下の説明では、「システムタイム(日時)」「日時」「日付」「時刻」「時間」「モノトニックタイム(時間)」「期間」を明確に使い分けます。
 <pre class="d_code notranslate"><span class="d_comment">// それぞれの型は以下のモジュールでimportできます
 </span><span class="d_keyword">import</span> core.time: Duration, MonoTime;
 <span class="d_keyword">import</span> std.datetime: SysTime, Date, TimeOfDay, DateTime, Interval;
@@ -295,22 +298,23 @@ Durationは「時間」を表す型です。
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h2>2. 「時刻」 <span class="d_inlinecode donthyphenate notranslate">SysTime</span></h2>
+ <h2>2. 「システムタイム(日時)」 <span class="d_inlinecode donthyphenate notranslate">SysTime</span></h2>
 
-SysTimeは「時刻」を表す型です。
-現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。
+SysTimeは「時差を考慮した日時」を表す型です。
+現在日時を取得するには、 std.datetime でimportできるClockのメソッドを使用します。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: Clock, SysTime;
-<span class="d_keyword">auto</span> tim = Clock.currTime();
+
+<span class="d_comment">// Clock.currTimeでは、OSで設定されたタイムゾーンに基づく時差を持った「ローカル日時」が得られます。
+</span><span class="d_keyword">auto</span> localTime = Clock.currTime();
 
 <span class="d_comment">// 時計から得た「時刻」の型は SysTime です
-</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(tim) == SysTime));
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(localTime) == SysTime));
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h2>3. 「時刻」 <span class="d_inlinecode donthyphenate notranslate">DateTime</span></h2>
+ <h2>3. 「日時」 <span class="d_inlinecode donthyphenate notranslate">DateTime</span></h2>
 
-DateTimeは「時刻」を表す型です。
-ただし、SysTimeとは内部表現が違います。
+DateTimeは「時差を考慮しない日時」を表す型です。
 SysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ
 何年何月何日の何時何分何秒という情報だけを持っています。
 ミリ秒以下の情報も持ちません。
@@ -358,7 +362,7 @@ Dateは、DateTimeのうち、何年何月何日(つまり日付)の部分です
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h2>5. <span class="d_inlinecode donthyphenate notranslate">TimeOfDay</span></h2>
+ <h2>5. 「時刻」<span class="d_inlinecode donthyphenate notranslate">TimeOfDay</span></h2>
 
 TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime: TimeOfDay, Date, DateTime;
@@ -378,7 +382,7 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h2>7. 「時間」 <span class="d_inlinecode donthyphenate notranslate">MonoTime</span></h2>
+ <h2>7. 「モノトニックタイム(時間)」 <span class="d_inlinecode donthyphenate notranslate">MonoTime</span></h2>
 
 2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、
 高精度な時間単位を扱います。
@@ -448,7 +452,7 @@ TimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。
 </span><span class="d_keyword">auto</span> timA = SysTime(DateTime(1989, 1, 8, 10, 0, 0));
 <span class="d_comment">// 令和元年 5/1 10時
 </span><span class="d_keyword">auto</span> timB = SysTime(DateTime(2020, 5, 1, 10, 0, 0));
-<span class="d_comment">// 2つの「時刻」から「時間」を得る
+<span class="d_comment">// 2つの「日時」から「時間」を得る
 </span><span class="d_keyword">auto</span> dur = timB - timA;
 
 <span class="d_comment">// 平成の秒数
@@ -533,10 +537,129 @@ wait();
 </span><span class="d_keyword">auto</span> tim2 = SysTime(DateTime(2019, 5, 1, 10, 0, 0), UTC());
 <span class="d_keyword">assert</span>(tim2.toSimpleString() == <span class="d_string">"2019-May-01 10:00:00Z"</span>);
 
+<span class="d_comment">// ローカル日時は toUTC でUTC基準に変更できる
+</span><span class="d_keyword">auto</span> utc = tim1.toUTC();
+<span class="d_keyword">assert</span>(utc.timezone <span class="d_keyword">is</span> UTC());
+<span class="d_keyword">assert</span>(utc.toUTC() == utc); <span class="d_comment">// 複数回実行しても変化しない
+</span>
+<span class="d_comment">// UTC日時は toLocalTime でローカル日時に変換できる
+</span><span class="d_keyword">auto</span> local = tim2.toLocalTime();
+<span class="d_keyword">assert</span>(local.timezone <span class="d_keyword">is</span> LocalTime());
+<span class="d_keyword">assert</span>(local.toLocalTime() == local); <span class="d_comment">// 複数回実行しても変化しない
+</span>
 <span class="d_comment">// UTCから任意のタイムゾーンに変換する。
 </span><span class="d_keyword">auto</span> JST = <span class="d_keyword">new</span> <span class="d_keyword">immutable</span> SimpleTimeZone(9.hours);
 <span class="d_keyword">auto</span> tim3 = tim2.toOtherTZ(JST);
 <span class="d_keyword">assert</span>(tim3.toSimpleString() == <span class="d_string">"2019-May-01 19:00:00+09:00"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>「今日」の日付を得る</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime : Clock, Date;
+
+<span class="d_comment">// 現在のシステム日時（ローカル）を得て、日付部分を取り出すことで今日の日付を得ます。
+</span>Date today = <span class="d_keyword">cast</span>(Date) Clock.currTime();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>値の構築方法に関するパターン</h1>
+
+std.datetimeの各型は、値の直接指定か、ベースとなる型＋付加情報、というパターンでコンストラクタを使って構築します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime;
+
+<span class="d_comment">// 直接値を指定できるタイプの型
+</span><span class="d_comment">//     Date, TimeOfDay, DateTime
+</span><span class="d_keyword">auto</span> date = Date(2020, 10, 20);
+<span class="d_keyword">auto</span> time = TimeOfDay(12, 34, 56);
+<span class="d_keyword">auto</span> dt1 = DateTime(2021, 12, 31, 10, 20, 30);
+
+<span class="d_comment">// 他の値から合成するタイプの型
+</span><span class="d_comment">//     DateTime, SysTime, Interval
+</span>
+<span class="d_comment">// 日時（DateTime） = 日付（Date） + 時刻（TimeOfDay、未指定の場合は 0時0分0秒）
+</span><span class="d_keyword">auto</span> dt2 = DateTime(date); <span class="d_comment">// 0時0分0秒の日時を得るにはこれが簡単です
+</span><span class="d_keyword">auto</span> dt3 = DateTime(date, time);
+
+<span class="d_comment">// 日時（SysTime）  = 日時（DateTime） + タイムゾーン（TimeZone、未指定の場合は OSのタイムゾーンに基づく時差）
+</span><span class="d_keyword">auto</span> st1 = SysTime(dt1); <span class="d_comment">// ローカル日時として、OSのタイムゾーンから時差が設定されます
+</span><span class="d_keyword">auto</span> st2 = SysTime(dt2, UTC());
+
+<span class="d_comment">// 期間 = 開始時点 + 終了時点
+</span><span class="d_keyword">auto</span> interval = Interval!DateTime(dt2, dt1);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>DateTimeからDateを得るなど、上位の複合型から一部を取り出す方法</h1>
+
+多くの場合、目的の部分型を得るためのプロパティがあります。
+DateTime型の場合は <span class="d_inlinecode donthyphenate notranslate">date</span> と <span class="d_inlinecode donthyphenate notranslate">timeOfDay</span> プロパティで取り出します。
+Interval型の場合は <span class="d_inlinecode donthyphenate notranslate">begin</span> と <span class="d_inlinecode donthyphenate notranslate">end</span> プロパティで取り出します。
+<div class="ddoc_blankline"></div>
+
+SysTime型の場合は、DateTime型やDate型へ直接キャストすることで部分型を得ることができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime;
+
+<span class="d_comment">// 直接構築したあと、日付や時刻部分を取り出す
+</span><span class="d_keyword">auto</span> dt = DateTime(2021, 12, 31, 10, 20, 30);
+<span class="d_keyword">auto</span> date = dt.date;
+<span class="d_keyword">auto</span> time = dt.timeOfDay;
+<span class="d_keyword">assert</span>(date.year == 2021 &amp;&amp; date.month == 12 &amp;&amp; date.day == 31);
+<span class="d_keyword">assert</span>(time.hour == 10 &amp;&amp; time.minute == 20 &amp;&amp; time.second == 30);
+
+<span class="d_keyword">auto</span> interval = Interval!Date(Date(2020, 1, 1), Date(2021, 12, 31));
+<span class="d_keyword">assert</span>(interval.begin == Date(2020, 1, 1));
+<span class="d_keyword">assert</span>(interval.end == Date(2021, 12, 31));
+
+<span class="d_keyword">auto</span> st = Clock.currTime();
+Date date2 = <span class="d_keyword">cast</span>(Date) st;
+TimeOfDay time2 = <span class="d_keyword">cast</span>(TimeOfDay) st;
+DateTime dt2 = <span class="d_keyword">cast</span>(DateTime) st;
+
+<span class="d_keyword">assert</span>(date2.year == st.year &amp;&amp; date2.month == st.month &amp;&amp; date2.day == st.day);
+<span class="d_keyword">assert</span>(time2.hour == st.hour &amp;&amp; time2.minute == st.minute &amp;&amp; time2.second == st.second);
+<span class="d_keyword">assert</span>(dt2.year == st.year &amp;&amp; dt2.month == st.month &amp;&amp; dt2.day == st.day);
+<span class="d_keyword">assert</span>(dt2.hour == st.hour &amp;&amp; dt2.minute == st.minute &amp;&amp; dt2.second == st.second);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>Unix timeとSysTimeの相互変換方法、Unix timeの作成方法</h1>
+
+Unix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となります。
+これはタイムゾーンがUTC基準と定められていることから、
+タイムゾーン情報を持つ SysTimeのみ が相互変換の方法を提供しています。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime;
+
+<span class="d_comment">// ローカル時刻を想定したUnix時間をSysTimeへ変換
+</span><span class="d_keyword">long</span> unixtime = 1640913630; <span class="d_comment">// 2021-12-31 01:20:30 + 00:00
+</span>
+<span class="d_comment">// テスト環境が不定のためタイムゾーンを固定します
+</span><span class="d_keyword">immutable</span> localTZ = <span class="d_keyword">new</span> SimpleTimeZone(9.hours, <span class="d_string">"JST"</span>);
+
+<span class="d_comment">// fromUnixTimeにタイムゾーンを指定するとSysTimeに反映されます。
+</span><span class="d_comment">// Localのタイムゾーンは省略するとローカルタイムゾーン（日本ならJSTで同じく+09:00）です。
+</span><span class="d_keyword">auto</span> stLocal = SysTime.fromUnixTime(unixtime, localTZ); <span class="d_comment">// 2021-12-31 10:20:30 + 09:00
+</span><span class="d_keyword">auto</span> stUTC = SysTime.fromUnixTime(unixtime, UTC());     <span class="d_comment">// 2021-12-31 01:20:30 + 00:00
+</span>
+<span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(Date) stLocal == Date(2021, 12, 31));
+<span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(TimeOfDay) stLocal == TimeOfDay(10, 20, 30));
+<span class="d_keyword">assert</span>(stLocal.timezone !<span class="d_keyword">is</span> LocalTime()); <span class="d_comment">// 構築時にタイムゾーンを省略した場合はLocalTimeになります
+</span><span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(Date) stUTC == Date(2021, 12, 31));
+<span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(TimeOfDay) stUTC == TimeOfDay(1, 20, 30));
+<span class="d_keyword">assert</span>(stUTC.timezone <span class="d_keyword">is</span> UTC());
+
+<span class="d_comment">// Unix時間にする場合
+</span><span class="d_keyword">auto</span> utFromLocal = stLocal.toUnixTime();
+<span class="d_keyword">auto</span> utFromUTC = stUTC.toUnixTime();
+
+<span class="d_keyword">assert</span>(utFromLocal == unixtime);
+<span class="d_keyword">assert</span>(utFromUTC == unixtime);
+
+<span class="d_comment">// 日時を指定して Unix time を作成する
+</span><span class="d_keyword">auto</span> ut1 = SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC()).toUnixTime();
+<span class="d_keyword">assert</span>(ut1 == 0);
+<span class="d_comment">// 元のSysTimeがローカル時刻でもUnix timeはUTC基準です
+</span><span class="d_keyword">auto</span> ut2 = SysTime(DateTime(2021, 12, 31, 23, 59, 59), localTZ).toUnixTime();
+<span class="d_keyword">assert</span>(ut2 == 1640962799);
 </pre>
 </div>
 

@@ -423,159 +423,211 @@
   "comment" : "時刻・日付\n\n時刻・日付の操作についてまとめます。\n\nSource: $(LINK_TO_SRC source/_datetime_example.d)\n",
   "members" : [
    {
-    "name" : "__unittest_L15_C7",
+    "name" : "__unittest_L17_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# 時間を表す7つの型\n\n以下の説明では、「時刻」「時間」「期間」を明確に使い分けます。\n",
-    "line" : 15,
+    "comment" : "# 時間を表す7つの型\n\nDには日時に関する型が複数定義されており、その性質によって役割が異なります。\n\n以下の説明では、「システムタイム(日時)」「日時」「日付」「時刻」「時間」「モノトニックタイム(時間)」「期間」を明確に使い分けます。\n",
+    "line" : 17,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 29,
+    "endline" : 31,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L29_C7",
+    "name" : "__unittest_L31_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "\n## 1. 「時間」 $(D Duration)\nDurationは「時間」を表す型です。\nここでの「時間」とは、10秒間とか、3時間、のような、時間的な長さを表す表現です。\n各種単位の「時間」を得るには、hours関数や、seconds関数のようなものを core.time からimportして使います。\n",
-    "line" : 29,
+    "line" : 31,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 50,
+    "endline" : 52,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L50_C7",
+    "name" : "__unittest_L52_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "## 2. 「時刻」 $(D SysTime)\n\nSysTimeは「時刻」を表す型です。\n現在時刻を取得するには、 std.datetime でimportできるClockのメソッドを使用します。\n",
-    "line" : 50,
+    "comment" : "## 2. 「システムタイム(日時)」 $(D SysTime)\n\nSysTimeは「時差を考慮した日時」を表す型です。\n現在日時を取得するには、 std.datetime でimportできるClockのメソッドを使用します。\n",
+    "line" : 52,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 68,
+    "endline" : 71,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L68_C7",
+    "name" : "__unittest_L71_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "## 3. 「時刻」 $(D DateTime)\n\nDateTimeは「時刻」を表す型です。\nただし、SysTimeとは内部表現が違います。\nSysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ\n何年何月何日の何時何分何秒という情報だけを持っています。\nミリ秒以下の情報も持ちません。\n",
-    "line" : 68,
+    "comment" : "## 3. 「日時」 $(D DateTime)\n\nDateTimeは「時差を考慮しない日時」を表す型です。\nSysTimeは時差を考慮しますが、DateTimeは考慮せず、ただ\n何年何月何日の何時何分何秒という情報だけを持っています。\nミリ秒以下の情報も持ちません。\n",
+    "line" : 71,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 87,
+    "endline" : 90,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L87_C7",
+    "name" : "__unittest_L90_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 4. 「日付」 $(D Date)\n\nDateは、DateTimeのうち、何年何月何日(つまり日付)の部分です。\n",
-    "line" : 87,
+    "line" : 90,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 122,
+    "endline" : 125,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L122_C7",
+    "name" : "__unittest_L125_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "## 5. $(D TimeOfDay)\n\nTimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。\n",
-    "line" : 122,
+    "comment" : "## 5. 「時刻」$(D TimeOfDay)\n\nTimeOfDayは、DateTimeのうち、「何時何分何秒」の部分です。\n",
+    "line" : 125,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 136,
+    "endline" : 139,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L136_C7",
+    "name" : "__unittest_L139_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "## 6. 「期間」 $(D Interval)\n\n2つの「時刻」の間の時間を「期間」とすることができます。\n",
-    "line" : 136,
+    "line" : 139,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 153,
+    "endline" : 156,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L153_C7",
+    "name" : "__unittest_L156_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "## 7. 「時間」 $(D MonoTime)\n\n2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、\n高精度な時間単位を扱います。\nまた、NTPによる巻き戻しがおこらず、単調増加(monotonic)であることが特徴です。\n「時間」を測定するストップウォッチで得られます。\n",
-    "line" : 153,
+    "comment" : "## 7. 「モノトニックタイム(時間)」 $(D MonoTime)\n\n2つ目の「時間」 MonoTime は、ベンチマークやゲームのFPSの計算などで使用される、\n高精度な時間単位を扱います。\nまた、NTPによる巻き戻しがおこらず、単調増加(monotonic)であることが特徴です。\n「時間」を測定するストップウォッチで得られます。\n",
+    "line" : 156,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 173,
+    "endline" : 176,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L173_C7",
+    "name" : "__unittest_L176_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# SysTimeと文字列の変換\n",
-    "line" : 173,
+    "line" : 176,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 216,
+    "endline" : 219,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L216_C7",
+    "name" : "__unittest_L219_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# Durationの使い方\n",
-    "line" : 216,
+    "line" : 219,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 244,
+    "endline" : 247,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L244_C7",
+    "name" : "__unittest_L247_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# StopWatchの使い方\n",
-    "line" : 244,
+    "line" : 247,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 300,
+    "endline" : 303,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L300_C7",
+    "name" : "__unittest_L303_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# タイムゾーンの扱い\n",
-    "line" : 300,
+    "line" : 303,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 322,
+    "endline" : 339,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L339_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 「今日」の日付を得る\n",
+    "line" : 339,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 352,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L352_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# 値の構築方法に関するパターン\n\nstd.datetimeの各型は、値の直接指定か、ベースとなる型＋付加情報、というパターンでコンストラクタを使って構築します。\n",
+    "line" : 352,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 386,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L386_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# DateTimeからDateを得るなど、上位の複合型から一部を取り出す方法\n\n多くの場合、目的の部分型を得るためのプロパティがあります。\nDateTime型の場合は `date` と `timeOfDay` プロパティで取り出します。\nInterval型の場合は `begin` と `end` プロパティで取り出します。\n\nSysTime型の場合は、DateTime型やDate型へ直接キャストすることで部分型を得ることができます。\n",
+    "line" : 386,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 419,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L419_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "# Unix timeとSysTimeの相互変換方法、Unix timeの作成方法\n\nUnix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となります。\nこれはタイムゾーンがUTC基準と定められていることから、\nタイムゾーン情報を持つ SysTimeのみ が相互変換の方法を提供しています。\n",
+    "line" : 419,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 455,
     "endchar" : 1
    }
   ]
