@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test
 
 jobs:
   # 各テストのジョブは以下の表に従って作成しています。
