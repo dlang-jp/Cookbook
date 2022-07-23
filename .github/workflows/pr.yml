@@ -243,10 +243,7 @@ jobs:
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
-          # 現在dmd-masterは機能していない(2020-03-10以降更新が停止)
-          #compiler: dmd-master
-          # 暫定的に dmd-beta を使用する
-          compiler: dmd-beta
+          compiler: dmd-master
       - name: Run unit tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
 
