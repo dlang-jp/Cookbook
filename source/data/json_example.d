@@ -38,6 +38,7 @@ module data.json_example;
 {
     import std.json;
     import std.exception: assertThrown;
+    import std.math: isClose;
 
     // 数値(符号あり・符号なし)からJSONValueを作成します。
     int  x = -128;
@@ -65,7 +66,7 @@ module data.json_example;
     // `.integer`/`.uinteger`/`.floating`プロパティを使用します。
     assert(jvx.integer == -128);
     assert(jvy.uinteger == 255);
-    assert(jvz.floating == 1.25);
+    assert(isClose(jvz.floating, 1.25)); // 浮動小数点数はisCloseで比較します
 
     // ちなみに、型を符号ありとなしで間違ってしまうと例外が投げられます
     assertThrown(jvx.uinteger == cast(uint)-128);
