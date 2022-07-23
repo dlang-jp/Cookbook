@@ -26,8 +26,18 @@
 
 ## 実行方法
 
+__ルート__
+
 ```console
 dub test
+```
+
+__サブパッケージ__
+
+個々のサブパッケージに配置された `dub.sdl` の `name` の値を指定します
+
+```console
+dub test :vibe-d_usage
 ```
 
 # 運用方針
