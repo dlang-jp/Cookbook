@@ -325,59 +325,59 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 76,
+    "endline" : 86,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L76_C7",
+    "name" : "__unittest_L86_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 真偽値・null⇔JSON\n\n真偽値(true / false)とnullの状態は、上記文字列や数値とは異なり、\nそれぞれ個別にJSONTypeが存在します。\n",
-    "line" : 76,
+    "line" : 86,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 113,
+    "endline" : 123,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L113_C7",
+    "name" : "__unittest_L123_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 配列⇔JSON\n",
-    "line" : 113,
+    "line" : 123,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 155,
+    "endline" : 165,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L155_C7",
+    "name" : "__unittest_L165_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 連想配列⇔JSON\n",
-    "line" : 155,
+    "line" : 165,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 216,
+    "endline" : 226,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L216_C7",
+    "name" : "__unittest_L226_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# JSONファイルの書き込み・読み込み\n",
-    "line" : 216,
+    "line" : 226,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 259,
+    "endline" : 269,
     "endchar" : 1
    }
   ]
