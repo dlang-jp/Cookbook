@@ -1036,46 +1036,85 @@
     "storageClass" : [
      "@system"
     ],
-    "endline" : 64,
+    "endline" : 65,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L64_C9",
+    "name" : "__unittest_L65_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "独自のHeaderを付けてGETリクエストを送る方法\n\n外部APIを呼ぶ場合など、AuthorizationヘッダーでBearerトークンを渡す例です。\n",
+    "line" : 65,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 88,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L88_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "www-form-urlencoding 形式でデータをPOSTする方法\n",
+    "line" : 88,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 114,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L114_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "JSON 形式のデータをPOSTする方法\n",
+    "line" : 114,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 149,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L149_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字コードの話\n",
-    "line" : 64,
+    "line" : 149,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 108,
+    "endline" : 193,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L108_C9",
+    "name" : "__unittest_L193_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "認証付きProxyを通す\n",
-    "line" : 108,
+    "line" : 193,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 145,
+    "endline" : 230,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L145_C9",
+    "name" : "__unittest_L230_C9",
     "kind" : "function",
     "protection" : "public",
     "comment" : "クライアント認証する\n\nCurlOption.sslcertなどのオプションを使用します。\n\n-  WindowsではDMDやLDCにOpenSSLがリンクされていないlibcurl.dllが使われているようですが\n   クライアント認証にはOpenSSLが必要となりますので、OpenSSLがリンクされたlibcurl.dllを使用する必要があります。$(BR)\n-  さらに、cURLの公式で配布している64bitのDLLは libcurl-x64.dll という名称ですが、`std.net.curl`が使用するDLLの名称は`libcurl.dll`または`curl.dll`固定です。\n   このため、ファイル名を変更する必要があります。\n-  また、OpenSSLのDLL`libcrypto-1_1-x64.dll`、`libssl-1_1-x64.dll`なども用意します。\n\nなお、CA証明書、クライアント証明書や秘密鍵の生成方法・変換方法はここでは解説いたしません。\n",
-    "line" : 145,
+    "line" : 230,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 200,
+    "endline" : 285,
     "endchar" : 1
    }
   ]

@@ -317,6 +317,84 @@ client.url = <span class="d_string">"https://dlang.org"</span>;
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 独自のHeaderを付けてGETリクエストを送る方法
+<div class="ddoc_blankline"></div>
+
+外部APIを呼ぶ場合など、AuthorizationヘッダーでBearerトークンを渡す例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.net.curl : get, HTTP;
+
+<span class="d_keyword">const</span> token = <span class="d_string">"0123456789"</span>;
+
+<span class="d_comment">// HTTPオブジェクトを作り、addRequestHeaderを呼ぶことで任意のヘッダーが付けられます
+</span><span class="d_keyword">auto</span> http = HTTP();
+http.addRequestHeader(<span class="d_string">"Authorization"</span>, <span class="d_string">"Bearer "</span> ~ token);
+
+<span class="d_keyword">auto</span> content = get(<span class="d_string">"http://httpbin.org/headers"</span>, http);
+
+<span class="d_comment">// 以下、応答からリクエスト内容を検証します。
+</span><span class="d_keyword">import</span> std.json : parseJSON;
+
+<span class="d_keyword">const</span> response = parseJSON(content).object();
+<span class="d_keyword">const</span> headers = response[<span class="d_string">"headers"</span>].object();
+<span class="d_keyword">assert</span>(headers[<span class="d_string">"Authorization"</span>].str == <span class="d_string">"Bearer "</span> ~ token);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ www-form-urlencoding 形式でデータをPOSTする方法
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.net.curl : post;
+
+<span class="d_comment">// post 関数と第2引数にデータを指定して呼び出します。
+</span><span class="d_comment">// 第2引数にはForm形式のデータとして連想配列を指定でき、連想配列のキーと値がそのままペアでエンコードされます
+</span><span class="d_keyword">auto</span> content = post(<span class="d_string">"http://httpbin.org/anything"</span>, [<span class="d_string">"username"</span> : <span class="d_string">"user"</span>, <span class="d_string">"password"</span> : <span class="d_string">"pass"</span>]);
+
+<span class="d_comment">// 以下、応答からリクエスト内容を検証します。
+</span><span class="d_keyword">import</span> std.json : parseJSON;
+
+<span class="d_keyword">const</span> response = parseJSON(content).object();
+
+<span class="d_keyword">assert</span>(response[<span class="d_string">"method"</span>].str == <span class="d_string">"POST"</span>);
+
+<span class="d_keyword">const</span> headers = response[<span class="d_string">"headers"</span>].object();
+<span class="d_keyword">assert</span>(headers[<span class="d_string">"Content-Type"</span>].str == <span class="d_string">"application/x-www-form-urlencoded"</span>);
+
+<span class="d_keyword">const</span> forms = response[<span class="d_string">"form"</span>].object();
+<span class="d_keyword">assert</span>(forms[<span class="d_string">"username"</span>].str == <span class="d_string">"user"</span>);
+<span class="d_keyword">assert</span>(forms[<span class="d_string">"password"</span>].str == <span class="d_string">"pass"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ JSON 形式のデータをPOSTする方法
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.net.curl : post, HTTP;
+<span class="d_keyword">import</span> std.json : JSONValue, toJSON;
+
+<span class="d_comment">// HTTPヘッダーに application/json を設定します。
+</span><span class="d_keyword">auto</span> http = HTTP();
+http.addRequestHeader(<span class="d_string">"Content-Type"</span>, <span class="d_string">"application/json"</span>);
+
+<span class="d_comment">// 送信内容は文字列とするため、オブジェクトは文字列に一度変換します。
+</span><span class="d_keyword">const</span> request = JSONValue([
+    <span class="d_string">"name"</span>: JSONValue(<span class="d_string">"Item"</span>),
+    <span class="d_string">"value"</span>: JSONValue(1.5)
+]);
+<span class="d_keyword">const</span> data = toJSON(request);
+
+<span class="d_comment">// あとは通常のPOST操作と同じく、URL、データ、ヘッダーなどの情報をつけて post 関数を呼び出します。
+</span><span class="d_keyword">auto</span> content = post(<span class="d_string">"http://httpbin.org/anything"</span>, data, http);
+
+<span class="d_comment">// 以下、応答からリクエスト内容を検証します。
+</span><span class="d_keyword">import</span> std.json : parseJSON;
+
+<span class="d_keyword">const</span> response = parseJSON(content).object();
+
+<span class="d_keyword">const</span> headers = response[<span class="d_string">"headers"</span>].object();
+<span class="d_keyword">assert</span>(headers[<span class="d_string">"Content-Type"</span>].str == <span class="d_string">"application/json"</span>);
+
+<span class="d_keyword">const</span> json = response[<span class="d_string">"json"</span>].object();
+<span class="d_keyword">assert</span>(json[<span class="d_string">"name"</span>].str == <span class="d_string">"Item"</span>);
+<span class="d_keyword">assert</span>(json[<span class="d_string">"value"</span>].floating == 1.5);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  文字コードの話
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.net.curl;
 <span class="d_keyword">import</span> std.array: appender;
