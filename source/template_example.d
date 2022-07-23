@@ -10,6 +10,8 @@
 
 See_Also:
     - https://dlang.org/spec/template.html
+
+Source: $(LINK_TO_SRC source/_template_example.d)
 +/
 module template_example;
 

@@ -3,6 +3,7 @@
 
 ファイル・パス操作についてまとめます。
 
+Source: $(LINK_TO_SRC source/_file_example.d)
 +/
 module file_example;
 
@@ -177,7 +178,7 @@ unittest
 
 `dirEntries` に対して対象とするファイル名の glob パターンを指定します。
 
-See_Also: https://dlang.org/phobos/std_file.html#dirEntries 
+See_Also: https://dlang.org/phobos/std_file.html#dirEntries
 See_Also: https://dlang.org/phobos/std_path.html#.globMatch
 +/
 unittest

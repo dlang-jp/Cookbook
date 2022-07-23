@@ -1,5 +1,7 @@
 /++
 HTTPサーバー
+
+Source: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_http.d)
 +/
 module vibed_usage.http;
 

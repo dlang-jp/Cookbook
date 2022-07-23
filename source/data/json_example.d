@@ -5,6 +5,8 @@ JSONファイル/JSONデータの読み書き等操作を扱います。
 ここでは、標準で備えているstd.jsonモジュールと、その中のJSONValueについて説明します。
 このモジュールは、あくまでもJSONが最低限取り扱える程度の機能があって、速度や利便性は二の次です。
 ほかにもサードパーティのライブラリとして、asdfを代表として、より高度な取り扱いができるライブラリがあります。
+
+Source: $(LINK_TO_SRC source/data/_json_example.d)
 +/
 module data.json_example;
 
@@ -36,32 +38,42 @@ module data.json_example;
 {
     import std.json;
     import std.exception: assertThrown;
+    import std.math: isClose;
+
     // 数値(符号あり・符号なし)からJSONValueを作成します。
     int  x = -128;
     uint y = 0xff;
     auto jvx = JSONValue(x);
     auto jvy = JSONValue(y);
 
+    // 浮動小数点数からJSONValueを作成します。JSONにおけるnumberはdouble相当です。
+    double z = 1.25;
+    auto jvz = JSONValue(z);
+
     // JSONValueからJSONの文字列表現を取得したい場合は
     // `.toString()`メソッドを使用します。
     assert(jvx.toString() == `-128`);
     assert(jvy.toString() == `255`);
+    assert(jvz.toString() == `1.25`);
 
     // JSONValueが数値であることを確認するには、`.type`プロパティを使用して、
-    // 以下のように`JSONType.integer`や`JSONType.uinteger`と比較します。
+    // 以下のように`JSONType.integer`や`JSONType.uinteger`、あるいは`JSONType.float_`と比較します。
     assert(jvx.type == JSONType.integer);
     assert(jvy.type == JSONType.uinteger);
+    assert(jvz.type == JSONType.float_);
+
     // JSONValueから数値を取り出す場合は、以下のように
-    // `.integer`/`.uinteger`プロパティを使用します。
+    // `.integer`/`.uinteger`/`.floating`プロパティを使用します。
     assert(jvx.integer == -128);
     assert(jvy.uinteger == 255);
+    assert(isClose(jvz.floating, 1.25)); // 浮動小数点数はisCloseで比較します
 
     // ちなみに、型を符号ありとなしで間違ってしまうと例外が投げられます
     assertThrown(jvx.uinteger == cast(uint)-128);
 
     // 符号ありのつもりなんだけど(十分格納可能な範囲の)符号なしも
     // 受け付けたい場合は以下のようにします (とても面倒)
-    long z = jvy.type == JSONType.integer  ? jvy.integer
+    long w = jvy.type == JSONType.integer  ? jvy.integer
            : jvy.type == JSONType.uinteger ? jvy.uinteger : 0;
 }
 

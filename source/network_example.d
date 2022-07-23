@@ -4,6 +4,8 @@
 ネットワークモジュール、特に `std.net.curl` の使い方についてまとめます。
 
 HTTP通信などができます。
+
+Source: $(LINK_TO_SRC source/_network_example.d)
 +/
 module network_example;
 
@@ -53,7 +55,92 @@ HTTPでGET
           ここではコンパイルできるかどうかだけチェックします */
     static assert(__traits(compiles,
         assert(contents1 == cast(const char[])contents3.data)));
+}
 
+/++
+独自のHeaderを付けてGETリクエストを送る方法
+
+外部APIを呼ぶ場合など、AuthorizationヘッダーでBearerトークンを渡す例です。
++/
+@system unittest
+{
+    import std.net.curl : get, HTTP;
+
+    const token = "0123456789";
+
+    // HTTPオブジェクトを作り、addRequestHeaderを呼ぶことで任意のヘッダーが付けられます
+    auto http = HTTP();
+    http.addRequestHeader("Authorization", "Bearer " ~ token);
+
+    auto content = get("http://httpbin.org/headers", http);
+
+    // 以下、応答からリクエスト内容を検証します。
+    import std.json : parseJSON;
+
+    const response = parseJSON(content).object();
+    const headers = response["headers"].object();
+    assert(headers["Authorization"].str == "Bearer " ~ token);
+}
+
+/++
+www-form-urlencoding 形式でデータをPOSTする方法
++/
+@system unittest
+{
+    import std.net.curl : post;
+
+    // post 関数と第2引数にデータを指定して呼び出します。
+    // 第2引数にはForm形式のデータとして連想配列を指定でき、連想配列のキーと値がそのままペアでエンコードされます
+    auto content = post("http://httpbin.org/anything", ["username" : "user", "password" : "pass"]);
+
+    // 以下、応答からリクエスト内容を検証します。
+    import std.json : parseJSON;
+
+    const response = parseJSON(content).object();
+
+    assert(response["method"].str == "POST");
+
+    const headers = response["headers"].object();
+    assert(headers["Content-Type"].str == "application/x-www-form-urlencoded");
+
+    const forms = response["form"].object();
+    assert(forms["username"].str == "user");
+    assert(forms["password"].str == "pass");
+}
+
+/++
+JSON 形式のデータをPOSTする方法
++/
+@system unittest
+{
+    import std.net.curl : post, HTTP;
+    import std.json : JSONValue, toJSON;
+
+    // HTTPヘッダーに application/json を設定します。
+    auto http = HTTP();
+    http.addRequestHeader("Content-Type", "application/json");
+
+    // 送信内容は文字列とするため、オブジェクトは文字列に一度変換します。
+    const request = JSONValue([
+        "name": JSONValue("Item"),
+        "value": JSONValue(1.5)
+    ]);
+    const data = toJSON(request);
+
+    // あとは通常のPOST操作と同じく、URL、データ、ヘッダーなどの情報をつけて post 関数を呼び出します。
+    auto content = post("http://httpbin.org/anything", data, http);
+
+    // 以下、応答からリクエスト内容を検証します。
+    import std.json : parseJSON;
+
+    const response = parseJSON(content).object();
+
+    const headers = response["headers"].object();
+    assert(headers["Content-Type"].str == "application/json");
+
+    const json = response["json"].object();
+    assert(json["name"].str == "Item");
+    assert(json["value"].floating == 1.5);
 }
 
 /++
