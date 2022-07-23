@@ -1,5 +1,70 @@
 [
  {
+  "name" : "vibed_usage.auth",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/auth.d",
+  "comment" : "認証・権限\n\n認証や権限といった、ユーザー情報を取り扱ったりアクセスを規制したりする方法について説明します。\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L23_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ベーシック認証\n\n平文でパスワードをやり取りする認証方式です。\n\nAttention:\nHTTP通信では使用すると重大なセキュリティリスクがあるので、必ずHTTPS通信と一緒に使いましょう。\n\nSee_Also:\n- https://vibed.org/docs#http-authentication\n- https://vibed.org/api/vibe.http.auth.basic_auth/performBasicAuth\n- https://github.com/vibe-d/vibe.d/blob/master/examples/auth_basic/source/app.d\n",
+    "line" : 23,
+    "char" : 1,
+    "endline" : 99,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L99_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ダイジェスト認証\n\nHTTPSが使えない場合や、パスワードをなんとしても通信に乗せたくないしサーバーに教えたくないって場合に有効な認証方式です。\n\nAttention:\nvibe.dでのダイジェスト認証で利用されるMD5はセキュリティリスクがある(頑張れば逆変換できる)ので、Basic認証と同程度か多少マシってくらいの方式です。\nまた、中間者攻撃に対しても脆弱です。この点から見てもBasic認証と同程度か多少マシってくらいの方式です。\nどちらにしろやはりHTTPS通信と一緒に使えという話になります。\n\nSee_Also:\n- https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth\n- https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d\n",
+    "line" : 99,
+    "char" : 1,
+    "endline" : 204,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L204_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "セッション\n\nログインなど、セッション情報を残してデータを管理したい場合の説明です。\n\nSee_Also:\n- https://vibed.org/docs#http-sessions\n- https://vibed.org/api/vibe.http.server/HTTPServerRequest.session\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse.startSession\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse.terminateSession\n- https://vibed.org/api/vibe.http.session/\n- https://vibed.org/api/vibe.http.session/Session\n- https://vibed.org/api/vibe.web.web/SessionVar\n- https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d\n\n",
+    "line" : 204,
+    "char" : 1,
+    "endline" : 323,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L323_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "権限\n\nユーザーによってアクセスできるページの範囲を変えたい、という場合のやり方について説明します。\n\nSee_Also:\n- https://vibed.org/api/vibe.web.auth/\n- https://github.com/vibe-d/vibe.d/blob/master/examples/web-auth/source/app.d\n\n",
+    "line" : 323,
+    "char" : 1,
+    "endline" : 543,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L543_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "RESTで認証\n\nTwitter等のOAuthのような、トークンを用いた認証を行う例です。\n\nRESTでは、セッション情報が使用できません。(そもそも原則としてRESTにはステートレスであることが求められます)\nそのため、REST APIとともにアクセス制限やユーザー情報等を扱う場合は、\nここでのアクセストークンのような固有の情報と、\nそのトークンの所有者であることを証明する秘密情報を使った認証を行うのがよいでしょう。\n\n今回のアクセストークンを用いたリソースアクセスは以下の手順で行います。\n\n1. リクエストトークンを作成\n2. ログイン\n3. ログイン済みのユーザーでリクエストトークンからPINの作成\n4. リクエストトークンとPINからアクセストークンの作成\n5. アクセストークンを用いてリソースにアクセス\n\nAttention:\nサンプルコードは適当に作成したものですので、セキュリティ的に十分優れているとは言えません。\nトークンの生成方法を工夫したり、nonceを加えてリプレイ攻撃耐性を上げたりと、工夫が必要です。\n",
+    "line" : 543,
+    "char" : 1,
+    "endline" : 847,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "vibed_usage.http",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/http.d",
