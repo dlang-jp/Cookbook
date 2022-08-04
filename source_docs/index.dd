@@ -4,4 +4,4 @@ $(H1 $(TITLE))
 $(MODULE_INDEX)
 
 Macros:
-    TITLE=Documentation for $(PROJECT_NAME)
+    TITLE=$(PROJECT_TITLE)
