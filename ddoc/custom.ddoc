@@ -2,4 +2,5 @@ _=Macros for customizing the output for a particular project
 
 PROJECT_ROOT=https://github.com/dlang-jp/Cookbook
 PROJECT_SRC_ROOT=$(PROJECT_ROOT)/tree/master
+PROJECT_TITLE=D言語クックブック
 _=

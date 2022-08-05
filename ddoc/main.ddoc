@@ -10,7 +10,7 @@ $(T html,
         $(SCRIPTLOAD https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js)
         $(SCRIPTLOAD js/sidebar.js)
         $(SCRIPTLOAD js/listanchors.js)
-        $(T title, $(TITLE))
+        $(T title, $(TITLE) - $(PROJECT_TITLE))
         $(EXTRA_HEADERS)
         $(EXTRA_HEADERS2)
     )
@@ -49,7 +49,7 @@ $(DIVC sidebar-underbar)
 $(DIVC sidebar,
     $(DIVC head,
         $(AC githublinkimg, $(PROJECT_ROOT), <img src="img/GitHub-Mark-32px.png" width="32" height="32" />)
-        $(H2 $(PROJECT_NAME))
+        $(H2 $(PROJECT_TITLE))
         $(P $(SPANC smallprint, $(B version:) $(PROJECT_VERSION) $(SPANC separator, $(BR))
             )
         )
