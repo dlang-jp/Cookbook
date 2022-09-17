@@ -4,6 +4,8 @@
 乱数操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_random_example.d)
+Macros:
+    TITLE=乱数操作の例
 +/
 module random_example;
 

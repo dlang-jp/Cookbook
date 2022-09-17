@@ -4,6 +4,8 @@
 様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。
 
 Source: $(LINK_TO_SRC source/_typecons_example.d)
+Macros:
+    TITLE=型を作るユーティリティ群の例
 +/
 module typecons_example;
 

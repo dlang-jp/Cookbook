@@ -6,6 +6,8 @@
 実行プログラムの引数を解析することができ、柔軟なプログラム作成を助けます。
 
 Source: $(LINK_TO_SRC source/_getopt_example.d)
+Macros:
+    TITLE=コマンドライン引数の解析例
 +/
 module getopt_example;
 

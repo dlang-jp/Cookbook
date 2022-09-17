@@ -6,6 +6,8 @@
 要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)
 
 Source: $(LINK_TO_SRC source/_array_example.d)
+Macros:
+    TITLE=配列を扱う例
 +/
 module array_example;
 

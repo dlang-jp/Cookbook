@@ -15,6 +15,8 @@
 - `Event`
 
 Source: $(LINK_TO_SRC source/_sync_example.d)
+Macros:
+    TITLE=同期処理と排他処理の例
 +/
 module sync_example;
 
