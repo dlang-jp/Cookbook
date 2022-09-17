@@ -35,7 +35,7 @@ unittest
         import core.sys.posix.netinet.in_;
 
         import std.algorithm : map;
-        import std.array : Appender;
+        import std.container : Array;
         import std.exception : enforce, errnoEnforce, ErrnoException;
         import std.range : cycle, take, array;
         import std.typecons : Nullable, nullable;
@@ -165,11 +165,11 @@ unittest
         ptrdiff_t clientSendPos;
 
         // サーバー側送受信バッファ
-        Appender!(ubyte[]) serverBuffer;
+        Array!ubyte serverBuffer;
         ptrdiff_t serverSendPos;
 
         // クライアント側送受信バッファ
-        Appender!(ubyte[]) clientBuffer;
+        Array!ubyte clientBuffer;
 
         // poll用のファイルディスクリプタ情報
         // 本来は別マシン・別プロセスでそれぞれ行われる処理だが
@@ -206,7 +206,7 @@ unittest
         {
             ubyte[16] buffer;
             immutable result = nonBlockingReceive(clientSocket, buffer[]);
-            clientBuffer.put(buffer[0 .. result.n]);
+            clientBuffer.insertBack(buffer[0 .. result.n]);
             return result;
         }
 
@@ -214,7 +214,7 @@ unittest
         void serverSend()
         {
             immutable result = nonBlockingSend(
-                fds[2].fd, serverBuffer[][serverSendPos .. $]);
+                fds[2].fd, serverBuffer.data[serverSendPos .. $]);
             serverSendPos += result.n;
 
             // 送信中にはcloseされない想定
@@ -226,7 +226,7 @@ unittest
         {
             ubyte[16] buffer;
             immutable result = nonBlockingReceive(fds[2].fd, buffer[]);
-            serverBuffer.put(buffer[0 .. result.n]);
+            serverBuffer.insertBack(buffer[0 .. result.n]);
             return result;
         }
 
@@ -318,6 +318,6 @@ unittest
         }
 
         // 最終的な送受信結果が正しいかチェック
-        assert(sendPacket == clientBuffer[]);
+        assert(sendPacket == clientBuffer.data);
     }
 }
