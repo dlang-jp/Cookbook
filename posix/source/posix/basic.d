@@ -48,6 +48,7 @@ unittest
         }
 
         // 成功またはIO待ちでなければエラーにする関数
+        // IO待ち発生時は結果がisNullになる
         Nullable!T ioEnforce(
             T, string file = __FILE__, ulong line = __LINE__)(T result)
         {
@@ -79,6 +80,7 @@ unittest
         // ノンブロッキング送信関数
         IOResult nonBlockingSend(int fd, const(void)[] data)
         {
+            // dataをすべて送信し切るか、接続先がshutdownされるまで送信実行
             IOResult result;
             while (result.n < data.length && !result.isClosed)
             {
@@ -86,9 +88,11 @@ unittest
                 immutable r = ioEnforce(send(fd, &data[result.n], rest, 0));
                 if (r.isNull)
                 {
+                    // IO待ちが発生したので中断
                     break;
                 }
 
+                // 送信バイト数を加算。0バイト送信時は接続先にshutdownされている
                 result.n += r.get;
                 result.isClosed = r.get == 0;
             }
@@ -98,6 +102,7 @@ unittest
         // ノンブロッキング受信関数
         IOResult nonBlockingReceive(int fd, void[] buffer)
         {
+            // bufferにすべて受信し切るか、接続先がshutdownされるまで受信実行
             IOResult result;
             while (result.n < buffer.length && !result.isClosed)
             {
@@ -105,9 +110,11 @@ unittest
                 immutable r = ioEnforce(recv(fd, &buffer[result.n], rest, 0));
                 if (r.isNull)
                 {
+                    // IO待ちが発生したので中断
                     break;
                 }
 
+                // 受信バイト数を加算。0バイト受信時は接続先にshutdownされている
                 result.n += r.get;
                 result.isClosed = r.get == 0;
             }
@@ -183,7 +190,8 @@ unittest
                 fd: clientSocket,
                 events: POLLIN | POLLOUT,
             },
-            // acceptしたソケット向け
+            // acceptしたソケット向けの要素
+            // fdが-1の間は無視される。acceptしたらfdを更新して監視対象にする。
             {
                 fd: -1,
                 events: POLLIN | POLLOUT,
@@ -234,10 +242,10 @@ unittest
         for (bool clientClosed = false, serverClosed = false;
                 !clientClosed || !serverClosed ;)
         {
-            // pollで待機。タイムアウト時は終了
+            // pollで待機。タイムアウト時はエラー
             errnoEnforce(poll(&fds[0], cast(nfds_t) fds.length, 1000) > 0);
 
-            // エラーがあったら終了
+            // いずれかのソケットにエラーがあったら終了
             foreach (ref const e; fds)
             {
                 enforce(!(e.revents & POLLERR), "POLLERR");
@@ -278,7 +286,7 @@ unittest
                 serverClosed = clientReceive().isClosed;
             }
 
-            // クライアントソケット切断時
+            // クライアントソケット切断時。想定外の切断はエラー
             if (fds[1].revents & POLLHUP)
             {
                 enforce(serverClosed, "unexpected server POLLHUP");
@@ -310,7 +318,7 @@ unittest
                 serverSend();
             }
 
-            // サーバー側のクライアントソケット切断時
+            // サーバー側のクライアントソケット切断時。想定外の切断はエラー
             if (fds[2].revents & POLLHUP)
             {
                 enforce(clientClosed, "unexpected client POLLHUP");
