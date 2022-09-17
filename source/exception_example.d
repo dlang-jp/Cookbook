@@ -680,7 +680,7 @@ See_Also:
 }
 
 /++
-# std.exception.enforce
+# エラー時に例外を投げる便利関数 [std.exception.enforce]
 もしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。
 
 ```d
@@ -732,7 +732,7 @@ See_Also:
 }
 
 /++
-# std.exception.collectException
+# 発生した例外を取得する便利関数 [std.exception.collectException]
 
 もし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。
 
@@ -774,7 +774,7 @@ See_Also:
 }
 
 /++
-# std.exception.ifThrown
+# 例外発生時にデフォルト値を返すようにする便利関数 [std.exception.ifThrown]
 
 もしかしたら例外が発生するかもしれない場合に、例外が発生した際の代替値を指定するために使用します。
 See_Also:
@@ -797,7 +797,7 @@ See_Also:
 }
 
 /++
-# std.exception.assertThrown / std.exception.assertNotThrown
+# 例外が起きることをテストする便利関数 [std.exception.assertThrown / std.exception.assertNotThrown]
 この関数をこの条件で呼び出すと必ず例外を発生させるはずだ、という状況をテストで検証する場合、通常ならば以下のようにcatchしてassert文で検証します。
 
 ```d
@@ -833,7 +833,7 @@ See_Also:
 }
 
 /++
-# std.exception.handle
+# Range操作中の例外発生要素のハンドリングをする便利関数 [std.exception.handle]
 
 Rangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。
 handle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。
