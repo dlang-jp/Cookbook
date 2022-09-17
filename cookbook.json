@@ -911,6 +911,66 @@
   ]
  },
  {
+  "name" : "gc_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/gc_example.d",
+  "comment" : "ガベージコレクション\n\nガベージコレクション(GC)の制御についてまとめます。\n\nSource: $(LINK_TO_SRC source/_gc_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L18_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "GCの有効化・無効化を行う例です。\n\nD言語のGCは、現状では保守的なマーク＆スイープ型GCとなっています。\nGCによるスキャンおよびメモリ回収は、動的メモリの要求が行われた時のみ実行されます。\n事前にGC.disableを呼び出しておくことで、自動的なGCの実行を抑制することができます。\nただし、不要メモリの回収が行われなくなることで、メモリ不足のエラー(Out of memory)が発生する可能性も高くなります。\n",
+    "line" : 18,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 43,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L43_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "明示的にGCを行う例です。\n\n大量のオブジェクトの利用が終了した後に呼び出す、\nGCを避けたい処理の前に呼び出しておく、等の用途が考えられます。\n",
+    "line" : 43,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 68,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L68_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "GCが確保しているメモリをOSに返却して最小化する例です。\n\nGC.minimizeにより、GCが確保している未使用の物理メモリをOSに返却することができます。\n",
+    "line" : 68,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 119,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L119_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Dの実行ファイルでは、 GC関連のパラメーターを\nコマンドラインオプション--DRT-gcoptまたは環境変数DRT_GCOPTにより設定できます。\n\nExamples:\n----\n# --DRT-gcoptパラメーターによる指定\n$ app \"--DRT-gcopt=profile:1 minPoolSize:16\" arguments to app\n\n# 環境変数による指定\n$ DRT_GCOPT=\"profile:1 minPoolSize:16\" app arguments to app\n----\n\nGC関連パラメーターの一覧は以下で定義されています。\nhttps://dlang.org/spec/garbage.html#gc_config\n\nまた、実行ファイルで--DRT-gcopt=helpパラメーターを指定して起動すると、\n現在の設定内容とデフォルト値を確認できます。\n\nExamples:\n----\n$ app --DRT-gcopt=help arguments to app\n----\n\n--DRT-gcoptパラメーターは、Dのmain関数の引数からは除外されます。\n元々のコマンドラインパラメーターは、 rt.configモジュールの\nrt_argsから参照することができます。\n\n--DRTのパラメーターは、ソースコード内でrt_optionsグローバル変数を定義する事によって\nデフォルト値を指定することが可能です。\n",
+    "line" : 119,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 167,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "getopt_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/getopt_example.d",
