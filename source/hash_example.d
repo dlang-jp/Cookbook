@@ -1,9 +1,9 @@
 /++
-ハッシュ値（ダイジェスト）の計算
+ハッシュ値の計算
 
 `std.digest` の使い方についてまとめます。
 
-文字列やバイナリデータに対してハッシュ値（ダイジェスト）を求めたり16進数の文字列に変換する手順を整理します。
+文字列やバイナリデータに対してハッシュ値（ダイジェスト、チェックサムとも呼ばれる）を求めたり16進数の文字列に変換する手順を整理します。
 
 Source: $(LINK_TO_SRC source/_hash_example.d)
 +/
@@ -11,7 +11,7 @@ Source: $(LINK_TO_SRC source/_hash_example.d)
 module hash_example;
 
 /++
-様々なデータから `ubyte[N]` なハッシュ値（ダイジェスト）を計算する方法
+様々なデータから `ubyte[N]` なハッシュ値を計算する方法
 
 アルゴリズム毎に提供される便利関数や `digest` 関数を使います。
 なおアルゴリズムによって生成されるハッシュ値のサイズは決まっているため、これに応じて戻り値の型も変わります。
@@ -19,20 +19,24 @@ module hash_example;
 unittest
 {
     import std.digest;
+    import std.digest.crc;
     import std.digest.md;
     import std.digest.sha;
     import std.digest.murmurhash;
     import std.digest.hmac;
 
     // 基礎的なアルゴリズムでは、`<アルゴリズム名>Of`という名前の簡便なテンプレート関数が利用できます
-    ubyte[16] result1 = md5Of("Hello");
-    ubyte[20] result2 = sha1Of("Hello", "world");
-    ubyte[32] result3 = sha256Of("Hello", "world", "!");
+    ubyte[4] result1 = crc32Of("Hello!");
+    ubyte[16] result2 = md5Of("Hello");
+    ubyte[20] result3 = sha1Of("Hello", "world");
+    ubyte[32] result4 = sha256Of("Hello", "world", "!");
 
     // murmurhashなど、用途に合わせてパラメータを変えるようなアルゴリズムでは`digest`関数を使います
-    ubyte[4] result4 = digest!(MurmurHash3!32)("Hello", ", world!");
+    ubyte[4] result5 = digest!(MurmurHash3!32)("Hello", ", world!");
 
     // HMACはシークレット値を持つ機構があり、独自に計算する必要があります。
+    // なおHMACは引数に受け付ける値がバイト列限定（`const(ubyte)[]`）であるため、文字列型は `representation` を通して変換します。
+    // これは単なる `cast(immutable(ubyte)[])`` と同等です。
     import std.string: representation;
 
     immutable(ubyte)[] data1 = "Hello".representation();
@@ -44,9 +48,10 @@ unittest
 }
 
 /++
-求めたハッシュ値から16進数の文字列(`string`)を取得する方法
+求めたハッシュ値(ubyteの静的配列、バイト列)から16進数の文字列(`string`)を取得する方法
 
 `toHexString` を利用します。
+その他 `format` を使って整形する例については文字列のサンプルを参照してください。
 
 `toHexString` : $(LINK https://dlang.org/phobos/std_digest.html#.toHexString)
 +/
