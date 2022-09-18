@@ -759,7 +759,7 @@
     "name" : "__unittest_L712_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# std.exception.enforce\nもしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。\n\n```d\nauto res = foo();\nif (!res)\n    throw new Exception(\"hogehoge\");\n```\nを、\n```d\nauto res = enforce(foo(), \"hogehoge\");\n```\nと書くことのできる関数です。さらに、UFCSを使うと `auto res = foo().enforce(\"hogehoge\");` と書くこともできます。\n\nエラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために\n`if (!res) throw new Exception(....)`\n等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。\n\n特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。\n\n使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。\nおおむね `assert()` と同じです。\n\n`assert()` は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、\n`enforce()` は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#enforce\n",
+    "comment" : "# エラー時に例外を投げる便利関数 [std.exception.enforce]\nもしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。\n\n```d\nauto res = foo();\nif (!res)\n    throw new Exception(\"hogehoge\");\n```\nを、\n```d\nauto res = enforce(foo(), \"hogehoge\");\n```\nと書くことのできる関数です。さらに、UFCSを使うと `auto res = foo().enforce(\"hogehoge\");` と書くこともできます。\n\nエラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために\n`if (!res) throw new Exception(....)`\n等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。\n\n特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。\n\n使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。\nおおむね `assert()` と同じです。\n\n`assert()` は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、\n`enforce()` は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#enforce\n",
     "line" : 712,
     "char" : 9,
     "storageClass" : [
@@ -772,52 +772,52 @@
     "name" : "__unittest_L766_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# std.exception.collectException\n\nもし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。\n\n```d\ntry\n{\n    foo();\n}\ncatch (Exception e)\n{\n    // エラー処理\n}\n```\nを、\n```d\nif (auto e = collectException(foo()))\n{\n    // エラー処理\n}\n```\nと書くことのできる関数です。\n\n1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、\n例外に対して何もしなくてよい時に握りつぶしたい場合、\n例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#collectException\n\n",
+    "comment" : "# 発生した例外を取得する便利関数 [std.exception.collectException]\n\nもし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。\n\n```d\ntry\n{\n    foo();\n}\ncatch (Exception e)\n{\n    // エラー処理\n}\n```\nを、\n```d\nif (auto e = collectException(foo()))\n{\n    // エラー処理\n}\n```\nと書くことのできる関数です。\n\n1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、\n例外に対して何もしなくてよい時に握りつぶしたい場合、\n例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#collectException\n\n",
     "line" : 766,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 779,
+    "endline" : 783,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L779_C7",
+    "name" : "__unittest_L783_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# std.exception.ifThrown\n",
-    "line" : 779,
+    "comment" : "# 例外発生時にデフォルト値を返すようにする便利関数 [std.exception.ifThrown]\n\nもしかしたら例外が発生するかもしれない場合に、例外が発生した際の代替値を指定するために使用します。\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#ifThrown\n",
+    "line" : 783,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 787,
+    "endline" : 825,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L787_C7",
+    "name" : "__unittest_L825_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# std.exception.assertThrown / std.exception.assertNotThrown\n",
-    "line" : 787,
+    "comment" : "# 例外が起きることをテストする便利関数 [std.exception.assertThrown / std.exception.assertNotThrown]\nこの関数をこの条件で呼び出すと必ず例外を発生させるはずだ、という状況をテストで検証する場合、通常ならば以下のようにcatchしてassert文で検証します。\n\n```d\nbool exthrown;\ntry\n{\n    auto num = \"hogehoge\".to!int();\n}\ncatch (ConvException e)\n{\n    exthrown = true;\n}\nassert(exthrown, \"hogehoge is not a number, but exception is not caught.\");\n```\n\n毎回これをやるのは手間なので、 assertThrown や assertNotThrown を使って楽をすることができます。\nassertThrown や assertNotThrownは、例外の型をテンプレート引数で指定することもできます。\n(指定しなければExceptionがキャッチされるかどうかを確認します)\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#assertThrown\n    - https://dlang.org/phobos/std_exception.html#assertNotThrown\n\n",
+    "line" : 825,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 795,
+    "endline" : 844,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L795_C7",
+    "name" : "__unittest_L844_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# std.exception.handle\n",
-    "line" : 795,
+    "comment" : "# Range操作中の例外発生要素のハンドリングをする便利関数 [std.exception.handle]\n\nRangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。\nhandle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#handle\n",
+    "line" : 844,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 800,
+    "endline" : 864,
     "endchar" : 1
    }
   ]

@@ -925,7 +925,7 @@ See_Also:
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>std.exception.enforce</h1>
+ <h1>エラー時に例外を投げる便利関数 [std.exception.enforce]</h1>
 もしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。
 <div class="ddoc_blankline"></div>
 
@@ -979,7 +979,7 @@ See_Also:
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>std.exception.collectException</h1>
+ <h1>発生した例外を取得する便利関数 [std.exception.collectException]</h1>
 
 もし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。
 <div class="ddoc_blankline"></div>
@@ -1019,19 +1019,90 @@ See_Also:
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>std.exception.ifThrown</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+ <h1>例外発生時にデフォルト値を返すようにする便利関数 [std.exception.ifThrown]</h1>
+
+もしかしたら例外が発生するかもしれない場合に、例外が発生した際の代替値を指定するために使用します。
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#ifThrown">https://dlang.org/phobos/std_exception.html#ifThrown</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv: to;
+<span class="d_keyword">import</span> std.exception: ifThrown;
+<span class="d_keyword">enum</span> teststr1 = <span class="d_string">"hogehoge"</span>;
+<span class="d_keyword">enum</span> teststr2 = <span class="d_string">"42"</span>;
+<span class="d_comment">// (ここではすぐ上に見えるけれども)もしかしたら数値以外が
+</span><span class="d_comment">// 入っているかもしれない文字列を数値に変換する場合、
+</span><span class="d_comment">// ここで数値変換時に例外を発生させず、もし例外が出た場合は
+</span><span class="d_comment">// 0を代替として使用するようにします。
+</span><span class="d_keyword">auto</span> num1 = teststr1.to!<span class="d_keyword">int</span>.ifThrown(0);
+<span class="d_keyword">auto</span> num2 = teststr2.to!<span class="d_keyword">int</span>.ifThrown(0);
+<span class="d_keyword">assert</span>(num1 == 0);
+<span class="d_keyword">assert</span>(num2 == 42);
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>std.exception.assertThrown / std.exception.assertNotThrown</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+ <h1>例外が起きることをテストする便利関数 [std.exception.assertThrown / std.exception.assertNotThrown]</h1>
+この関数をこの条件で呼び出すと必ず例外を発生させるはずだ、という状況をテストで検証する場合、通常ならば以下のようにcatchしてassert文で検証します。
+<div class="ddoc_blankline"></div>
+
+<pre class="d_code notranslate"><span class="d_keyword">bool</span> exthrown;
+<span class="d_keyword">try</span>
+{
+    <span class="d_keyword">auto</span> num = <span class="d_string">"hogehoge"</span>.to!<span class="d_keyword">int</span>();
+}
+<span class="d_keyword">catch</span> (ConvException e)
+{
+    exthrown = <span class="d_keyword">true</span>;
+}
+<span class="d_keyword">assert</span>(exthrown, <span class="d_string">"hogehoge is not a number, but exception is not caught."</span>);
+</pre>
+<div class="ddoc_blankline"></div>
+
+毎回これをやるのは手間なので、 assertThrown や assertNotThrown を使って楽をすることができます。
+assertThrown や assertNotThrownは、例外の型をテンプレート引数で指定することもできます。
+(指定しなければExceptionがキャッチされるかどうかを確認します)
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#assertThrown">https://dlang.org/phobos/std_exception.html#assertThrown</a></li>
+<li><a href="https://dlang.org/phobos/std_exception.html#assertNotThrown">https://dlang.org/phobos/std_exception.html#assertNotThrown</a>
+</li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv: to, ConvException;
+<span class="d_keyword">import</span> std.exception: assertThrown, assertNotThrown;
+<span class="d_comment">// 「数値以外入っているならこの関数は絶対失敗するはずだ」
+</span>assertThrown!ConvException(<span class="d_string">"hogehoge"</span>.to!<span class="d_keyword">int</span>());
+<span class="d_comment">// 「数値が入っているならこの関数は絶対失敗しないはずだ」
+</span>assertNotThrown!ConvException(<span class="d_string">"42"</span>.to!<span class="d_keyword">int</span>());
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- <h1>std.exception.handle</h1>
-<pre class="d_code notranslate"><span class="d_comment">// todo
-</span></pre>
+ <h1>Range操作中の例外発生要素のハンドリングをする便利関数 [std.exception.handle]</h1>
+
+Rangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。
+handle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#handle">https://dlang.org/phobos/std_exception.html#handle</a></li>
+</ul>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: equal, map, splitter;
+<span class="d_keyword">import</span> std.conv: to, ConvException;
+<span class="d_keyword">import</span> std.exception: handle, RangePrimitive;
+
+<span class="d_comment">// 以下のようなCSVの中の1行を入力
+</span><span class="d_keyword">auto</span> csvLine = <span class="d_string">"1,1,2,3,NaN,8,13,21"</span>;
+<span class="d_comment">// カンマ区切りで、intに変換するが…NaNで例外が発生する。
+</span><span class="d_comment">// このようなデータ化けはロガーなど計測器から出力されたCSVなんかで往々にして起こる…
+</span><span class="d_keyword">auto</span> res = csvLine.splitter(',').map!(a =&gt; to!<span class="d_keyword">int</span>(a));
+
+<span class="d_comment">// handle関数で、ConvExceptionが発生した時に
+</span><span class="d_comment">// 例外exと例外発生時のRangeのfrontを使って
+</span><span class="d_comment">// (使えるけれどそれを無視して) -1 を結果とする
+</span><span class="d_keyword">auto</span> handled = res.handle!(ConvException, RangePrimitive.front,
+    (ex, frontValue) =&gt; -1);
+
+<span class="d_keyword">assert</span>(handled.equal([1,1,2,3,-1,8,13,21]));
+</pre>
 </div>
 
                 
