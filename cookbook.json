@@ -1824,30 +1824,50 @@
     "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
     "line" : 313,
     "char" : 1,
-    "endline" : 344,
+    "endline" : 354,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L344_C1",
+    "name" : "__unittest_L354_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "文字列の置換\n\n`std.array` の `replace` あるいは `replaceFirst`, `replaceLast`, `replaceInPlace`, `replaceInto` を使用します。\nただし、 `replace`, `replaceInPlace` に関しては `std.string` の中にもaliasがあるため、どちらからimportしてもよいです。\n\nそれぞれの違いは以下。\n\n| 置換関数 | 特徴 |\n|:--------:|:-----|\n| replace        | 第1引数の文字列(配列)の中の、第2引数に完全一致する **すべての** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceFirst   | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最初の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceLast    | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最後の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceInto    | 第2引数の文字列(配列)の中の、第3引数に完全一致する **すべての** 部分を、第4引数の文字列(配列)で置き換えて **第1引数のOutputRangeにput** します。 |\n| replaceInPlace | 第1引数の文字列(配列)の中の、**第2引数～第3引数** までの部分を、第4引数の文字列(配列)で **上書きで置き換えて** 返します。 |\n\n`replace`, `replaceFirst`, `replaceLast` は元の文字列はそのままに、新しい文字列を作成します。これにはメモリ割り当てが発生します。\n\n`replaceInto` は、元の文字列はそのままに、新しい文字列を作成するというのは `replace` と同じですが、新しくできた文字列をOutputRangeの中に入れてくれるので、この関数の中で新しいメモリ割り当ては行われません。例えば数百MBある文字列を置換してファイルに書き出したい、とかのユースケースで役に立ちます。\n\n`replaceInPlace` は、元の文字列を上書きします。また、文字列の一致箇所という置換方法はできないため、第2引数と第3引数には `indexOf()` と文字列長を組み合わせて、添え字の範囲を指定する必要があります。$(BR)\n単に `text.replaceInPlace(text.indexOf(a), text.indexOf(a) + a.length, b)` は、 `text = text.replace(a, b)` と同じです。ただし、特殊な状況下(`dchar[]`を`dchar[]`で置換し、より短い文字列になる場合)では、メモリ割り当てが発生しません。\n",
+    "line" : 354,
+    "char" : 1,
+    "endline" : 387,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L387_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "文字列の置換(正規表現)\n\n`std.regex` の `replaceAll`, `replaceFirst` を使用します。\nちなみに、以下のサンプルでは紹介しませんが、 `replace` に対する `replaceInto` と同様にOutputRange用の `replaceAllInto`, `replaceFirstInto` もあります。\n",
+    "line" : 387,
+    "char" : 1,
+    "endline" : 410,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L410_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
-    "line" : 344,
+    "line" : 410,
     "char" : 1,
-    "endline" : 423,
+    "endline" : 489,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L423_C7",
+    "name" : "__unittest_L489_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n",
-    "line" : 423,
+    "line" : 489,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 457,
+    "endline" : 523,
     "endchar" : 1
    }
   ]

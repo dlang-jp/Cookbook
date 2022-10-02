@@ -580,6 +580,70 @@ string url = <span class="d_string">"https://github.com"</span>;
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列の置換
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.array</span> の <span class="d_inlinecode donthyphenate notranslate">replace</span> あるいは <span class="d_inlinecode donthyphenate notranslate">replaceFirst</span>, <span class="d_inlinecode donthyphenate notranslate">replaceLast</span>, <span class="d_inlinecode donthyphenate notranslate">replaceInPlace</span>, <span class="d_inlinecode donthyphenate notranslate">replaceInto</span> を使用します。
+ただし、 <span class="d_inlinecode donthyphenate notranslate">replace</span>, <span class="d_inlinecode donthyphenate notranslate">replaceInPlace</span> に関しては <span class="d_inlinecode donthyphenate notranslate">std.string</span> の中にもaliasがあるため、どちらからimportしてもよいです。
+<div class="ddoc_blankline"></div>
+
+それぞれの違いは以下。
+<div class="ddoc_blankline"></div>
+
+<table><tr><th><tr><th align="center">置換関数</th><th align="left">特徴</th></tr></th></tr><tbody><tr><td align="center">replace</td><td align="left">第1引数の文字列(配列)の中の、第2引数に完全一致する <strong>すべての</strong> 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。</td></tr>
+<tr><td align="center">replaceFirst</td><td align="left">第1引数の文字列(配列)の中の、第2引数に完全一致する <strong>最初の</strong> 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。</td></tr>
+<tr><td align="center">replaceLast</td><td align="left">第1引数の文字列(配列)の中の、第2引数に完全一致する <strong>最後の</strong> 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。</td></tr>
+<tr><td align="center">replaceInto</td><td align="left">第2引数の文字列(配列)の中の、第3引数に完全一致する <strong>すべての</strong> 部分を、第4引数の文字列(配列)で置き換えて <strong>第1引数のOutputRangeにput</strong> します。</td></tr>
+<tr><td align="center">replaceInPlace</td><td align="left">第1引数の文字列(配列)の中の、<strong>第2引数～第3引数</strong> までの部分を、第4引数の文字列(配列)で <strong>上書きで置き換えて</strong> 返します。</td></tr>
+</tbody></table>
+<span class="d_inlinecode donthyphenate notranslate">replace</span>, <span class="d_inlinecode donthyphenate notranslate">replaceFirst</span>, <span class="d_inlinecode donthyphenate notranslate">replaceLast</span> は元の文字列はそのままに、新しい文字列を作成します。これにはメモリ割り当てが発生します。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">replaceInto</span> は、元の文字列はそのままに、新しい文字列を作成するというのは <span class="d_inlinecode donthyphenate notranslate">replace</span> と同じですが、新しくできた文字列をOutputRangeの中に入れてくれるので、この関数の中で新しいメモリ割り当ては行われません。例えば数百MBある文字列を置換してファイルに書き出したい、とかのユースケースで役に立ちます。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">replaceInPlace</span> は、元の文字列を上書きします。また、文字列の一致箇所という置換方法はできないため、第2引数と第3引数には <span class="d_inlinecode donthyphenate notranslate">indexOf()</span> と文字列長を組み合わせて、添え字の範囲を指定する必要があります。<br>
+単に <span class="d_inlinecode donthyphenate notranslate">text.replaceInPlace(text.indexOf(a), text.indexOf(a) + a.length, b)</span> は、 <span class="d_inlinecode donthyphenate notranslate">text = text.replace(a, b)</span> と同じです。ただし、特殊な状況下(<span class="d_inlinecode donthyphenate notranslate">dchar[]</span>を<span class="d_inlinecode donthyphenate notranslate">dchar[]</span>で置換し、より短い文字列になる場合)では、メモリ割り当てが発生しません。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.string: replace;
+<span class="d_keyword">auto</span> text = <span class="d_string">"いっぱい"</span>;
+<span class="d_keyword">assert</span>(text.replace(<span class="d_string">"い"</span>, <span class="d_string">"お"</span>) == <span class="d_string">"おっぱお"</span>, <span class="d_string">"何考えてるのよ、変態！"</span>);
+<span class="d_keyword">assert</span>(text == <span class="d_string">"いっぱい"</span>);
+
+<span class="d_keyword">import</span> std.array: replaceFirst, replaceLast;
+<span class="d_keyword">auto</span> text2 = <span class="d_string">"abracadabra"</span>;
+<span class="d_keyword">assert</span>(text2.replaceFirst(<span class="d_string">"abra"</span>, <span class="d_string">"アブラ"</span>) == <span class="d_string">"アブラcadabra"</span>);
+<span class="d_keyword">assert</span>(text2 == <span class="d_string">"abracadabra"</span>);
+<span class="d_keyword">assert</span>(text2.replaceLast(<span class="d_string">"abra"</span>, <span class="d_string">"aブラ"</span>) == <span class="d_string">"abracadaブラ"</span>);
+
+<span class="d_keyword">import</span> std.array: replaceInto, appender;
+<span class="d_keyword">auto</span> text3 = <span class="d_string">"std.algorithm.mutation"</span>;
+<span class="d_keyword">auto</span> text3out = appender!string;
+text3out.replaceInto(text3, <span class="d_string">"mut"</span>, <span class="d_string">"iter"</span>);
+<span class="d_keyword">assert</span>(text3out.data == <span class="d_string">"std.algorithm.iteration"</span>);
+
+<span class="d_keyword">import</span> std.array: replaceInPlace;
+<span class="d_keyword">import</span> std.string: indexOf;
+string text4 = <span class="d_string">"std.algorithm.iteration"</span>;
+<span class="d_comment">// text4.replaceInPlace("iter", "mut") と書きたいところだが、できない。
+</span>text4.replaceInPlace(text4.indexOf(<span class="d_string">"iter"</span>), text4.indexOf(<span class="d_string">"iter"</span>) + <span class="d_string">"iter"</span>.length, <span class="d_string">"mut"</span>);
+<span class="d_keyword">assert</span>(text4 == <span class="d_string">"std.algorithm.mutation"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列の置換(正規表現)
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.regex</span> の <span class="d_inlinecode donthyphenate notranslate">replaceAll</span>, <span class="d_inlinecode donthyphenate notranslate">replaceFirst</span> を使用します。
+ちなみに、以下のサンプルでは紹介しませんが、 <span class="d_inlinecode donthyphenate notranslate">replace</span> に対する <span class="d_inlinecode donthyphenate notranslate">replaceInto</span> と同様にOutputRange用の <span class="d_inlinecode donthyphenate notranslate">replaceAllInto</span>, <span class="d_inlinecode donthyphenate notranslate">replaceFirstInto</span> もあります。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex: regex, replaceAll, replaceFirst;
+<span class="d_keyword">auto</span> text = <span class="d_string">"abracadabra"</span>;
+<span class="d_comment">// 正規表現でサブマッチ部分を置換後に使用するケース
+</span><span class="d_keyword">assert</span>(text.replaceAll(regex(<span class="d_string">"(.a)"</span>), <span class="d_string">"[$1]"</span>) == <span class="d_string">"ab[ra][ca][da]b[ra]"</span>);
+<span class="d_comment">// 肯定後読みとサブマッチ部分を置換後に使用するケース
+</span><span class="d_keyword">assert</span>(text.replaceFirst(regex(<span class="d_string">"(?&lt;=d)(.)bra"</span>), <span class="d_string">"$1ブラ"</span>) == <span class="d_string">"abracadaブラ"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  プログラムの整形文字列表現
 <div class="ddoc_blankline"></div>
 
