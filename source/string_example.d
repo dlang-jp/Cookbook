@@ -329,6 +329,72 @@ unittest
 }
 
 /++
+文字列の置換
+
+`std.array` の `replace` あるいは `replaceFirst`, `replaceLast`, `replaceInPlace`, `replaceInto` を使用します。
+ただし、 `replace`, `replaceInPlace` に関しては `std.string` の中にもaliasがあるため、どちらからimportしてもよいです。
+
+それぞれの違いは以下。
+
+| 置換関数 | 特徴 |
+|:--------:|:-----|
+| replace        | 第1引数の文字列(配列)の中の、第2引数に完全一致する **すべての** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |
+| replaceFirst   | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最初の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |
+| replaceLast    | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最後の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |
+| replaceInto    | 第2引数の文字列(配列)の中の、第3引数に完全一致する **すべての** 部分を、第4引数の文字列(配列)で置き換えて **第1引数のOutputRangeにput** します。 |
+| replaceInPlace | 第1引数の文字列(配列)の中の、**第2引数～第3引数** までの部分を、第4引数の文字列(配列)で **上書きで置き換えて** 返します。 |
+
+`replace`, `replaceFirst`, `replaceLast` は元の文字列はそのままに、新しい文字列を作成します。これにはメモリ割り当てが発生します。
+
+`replaceInto` は、元の文字列はそのままに、新しい文字列を作成するというのは `replace` と同じですが、新しくできた文字列をOutputRangeの中に入れてくれるので、この関数の中で新しいメモリ割り当ては行われません。例えば数百MBある文字列を置換してファイルに書き出したい、とかのユースケースで役に立ちます。
+
+`replaceInPlace` は、元の文字列を上書きします。また、文字列の一致箇所という置換方法はできないため、第2引数と第3引数には `indexOf()` と文字列長を組み合わせて、添え字の範囲を指定する必要があります。$(BR)
+単に `text.replaceInPlace(text.indexOf(a), text.indexOf(a) + a.length, b)` は、 `text = text.replace(a, b)` と同じです。ただし、特殊な状況下(`dchar[]`を`dchar[]`で置換し、より短い文字列になる場合)では、メモリ割り当てが発生しません。
++/
+unittest
+{
+    import std.string: replace;
+    auto text = "いっぱい";
+    assert(text.replace("い", "お") == "おっぱお", "何考えてるのよ、変態！");
+    assert(text == "いっぱい");
+
+    import std.array: replaceFirst, replaceLast;
+    auto text2 = "abracadabra";
+    assert(text2.replaceFirst("abra", "アブラ") == "アブラcadabra");
+    assert(text2 == "abracadabra");
+    assert(text2.replaceLast("abra", "aブラ") == "abracadaブラ");
+
+    import std.array: replaceInto, appender;
+    auto text3 = "std.algorithm.mutation";
+    auto text3out = appender!string;
+    text3out.replaceInto(text3, "mut", "iter");
+    assert(text3out.data == "std.algorithm.iteration");
+
+    import std.array: replaceInPlace;
+    import std.string: indexOf;
+    string text4 = "std.algorithm.iteration";
+    // text4.replaceInPlace("iter", "mut") と書きたいところだが、できない。
+    text4.replaceInPlace(text4.indexOf("iter"), text4.indexOf("iter") + "iter".length, "mut");
+    assert(text4 == "std.algorithm.mutation");
+}
+
+/++
+文字列の置換(正規表現)
+
+`std.regex` の `replaceAll`, `replaceFirst` を使用します。
+ちなみに、以下のサンプルでは紹介しませんが、 `replace` に対する `replaceInto` と同様にOutputRange用の `replaceAllInto`, `replaceFirstInto` もあります。
++/
+unittest
+{
+    import std.regex: regex, replaceAll, replaceFirst;
+    auto text = "abracadabra";
+    // 正規表現でサブマッチ部分を置換後に使用するケース
+    assert(text.replaceAll(regex("(.a)"), "[$1]") == "ab[ra][ca][da]b[ra]");
+    // 肯定後読みとサブマッチ部分を置換後に使用するケース
+    assert(text.replaceFirst(regex("(?<=d)(.)bra"), "$1ブラ") == "abracadaブラ");
+}
+
+/++
 プログラムの整形文字列表現
 
 chompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。
