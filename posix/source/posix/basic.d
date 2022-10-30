@@ -166,9 +166,9 @@ unittest
         // EINPROGRESSをクリア
         errno = 0;
 
-        // 送受信対象のデータ。4KB弱の適当なデータを生成
-        const(ubyte)[] sendPacket = [1, 2, 3, 4]
-            .cycle.take(1019).map!"cast(ubyte)a".array;
+        // 送受信対象のデータ。1000バイトの適当なデータを生成
+        const(ubyte)[] sendPacket = (cast(ubyte[])[1, 2, 3, 4])
+            .cycle.take(1000).array;
         ptrdiff_t clientSendPos;
 
         // サーバー側送受信バッファ
