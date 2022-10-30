@@ -296,7 +296,7 @@ unittest
             if (fds[2].revents & POLLOUT)
             {
                 // 送信データが残っていれば送信
-                if (serverSendPos < serverBuffer[].length)
+                if (serverSendPos < serverBuffer.length)
                 {
                     serverSend();
                 }
