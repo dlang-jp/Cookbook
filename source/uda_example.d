@@ -1,9 +1,11 @@
 /++
 UDA(User Defined Attribute)
 
-UDAの使用例についてまとめます。
+UDA(User Defined Attribute、ユーザー定義属性)の使用例についてまとめます。
 
 Source: $(LINK_TO_SRC source/_uda_example.d)
+Macros:
+    TITLE=ユーザー定義属性の例
 +/
 module uda_example;
 

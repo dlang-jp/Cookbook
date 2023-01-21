@@ -4,6 +4,8 @@
 時刻・日付の操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_datetime_example.d)
+Macros:
+    TITLE=時刻や日付操作の例
 +/
 module datetime_example;
 

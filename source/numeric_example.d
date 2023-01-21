@@ -6,6 +6,8 @@
 主に `std.math` や `std.mathspecial`、 `std.numeric` を使った例を対象とします。
 
 Source: $(LINK_TO_SRC source/_numeric_example.d)
+Macros:
+    TITLE=数値計算でよく利用される関数などの使用例
 +/
 module numeric_example;
 

@@ -4,6 +4,8 @@
 連想配列の操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_assoc_array_example.d)
+Macros:
+    TITLE=連想配列を扱う例
 +/
 module assoc_array_example;
 

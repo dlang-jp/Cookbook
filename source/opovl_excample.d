@@ -13,6 +13,8 @@ See_Also:
     - https://dlang.org/dstyle.html#operator_overloading
 
 Source: $(LINK_TO_SRC source/_opovl_excample.d)
+Macros:
+    TITLE=演算子オーバーロードの例
 +/
 module opovl_excample;
 

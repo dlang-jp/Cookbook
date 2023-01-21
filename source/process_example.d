@@ -4,6 +4,8 @@
 プロセス操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_process_example.d)
+Macros:
+    TITLE=プロセス操作の例
 +/
 module process_example;
 

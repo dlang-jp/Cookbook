@@ -4,6 +4,8 @@
 正規表現の操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_regex_example.d)
+Macros:
+    TITLE=正規表現の例
 +/
 module regex_example;
 

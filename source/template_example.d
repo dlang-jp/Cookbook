@@ -12,6 +12,8 @@ See_Also:
     - https://dlang.org/spec/template.html
 
 Source: $(LINK_TO_SRC source/_template_example.d)
+Macros:
+    TITLE=テンプレートの使用例
 +/
 module template_example;
 
