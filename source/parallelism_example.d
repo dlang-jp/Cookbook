@@ -4,6 +4,8 @@
 `std.parallelism` を使った並列処理の例をまとめます。
 
 Source: $(LINK_TO_SRC source/_parallelism_example.d)
+Macros:
+    TITLE=並列処理の例
 +/
 module parallelism_example;
 

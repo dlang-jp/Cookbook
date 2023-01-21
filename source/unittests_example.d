@@ -4,6 +4,8 @@
 様々な単体テストの記法についてまとめます。
 
 Source: $(LINK_TO_SRC source/_unittests_example.d)
+Macros:
+    TITLE=単体テストの例
 +/
 module unittests_example;
 

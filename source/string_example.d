@@ -6,6 +6,8 @@
 TODO: 置換(replace), 削除(remove), 分割(split)
 
 Source: $(LINK_TO_SRC source/_string_example.d)
+Macros:
+    TITLE=文字列操作の例
 +/
 module string_example;
 

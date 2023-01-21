@@ -4,6 +4,8 @@ is式
 is式についてまとめます。
 
 Source: $(LINK_TO_SRC source/_is_example.d)
+Macros:
+    TITLE=is式を使って様々な判定をする例
 +/
 module is_example;
 

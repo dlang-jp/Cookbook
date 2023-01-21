@@ -4,6 +4,8 @@
 ファイル・パス操作についてまとめます。
 
 Source: $(LINK_TO_SRC source/_file_example.d)
+Macros:
+    TITLE=ファイルとパス操作の例
 +/
 module file_example;
 
