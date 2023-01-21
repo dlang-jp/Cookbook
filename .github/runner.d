@@ -158,19 +158,6 @@ void generateDocument()
     env.addCurlPath();
     exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch,
         "--", "-a", config.arch, "-b=release", "--compiler", config.compiler], null, env);
-
-    // CircleCIでgh-pagesへのデプロイがビルドエラーになる件を回避
-    auto circleCiConfigDir = config.scriptDir.buildPath("../docs/.circleci");
-    if (!circleCiConfigDir.exists || !circleCiConfigDir.isDir)
-        mkdirRecurse(circleCiConfigDir);
-    std.file.write(circleCiConfigDir.buildPath("config.yml"),`
-        version: 2
-        jobs:
-          build:
-            branches:
-              ignore:
-                - gh-pages
-    `.chompPrefix("\n").outdent);
 }
 
 ///
