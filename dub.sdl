@@ -8,3 +8,5 @@ subPackage "windows"
 subPackage "thirdparty/libdparse"
 subPackage "thirdparty/json"
 subPackage "thirdparty/vibe-d"
+
+dependency "dateparser" version="~>3.0.4"

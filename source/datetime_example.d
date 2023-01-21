@@ -452,3 +452,25 @@ Unix timeは UTC時間の1970年1月1日 0時0分0秒からの秒数となりま
     auto ut2 = SysTime(DateTime(2021, 12, 31, 23, 59, 59), localTZ).toUnixTime();
     assert(ut2 == 1640962799);
 }
+
+/++
+# 日時文字列を組み込みの日時型（SysTime）に変換する簡便な方法
+
+外部ライブラリを利用できる場合、`dateparser` パッケージの `parse` 関数を利用する方法が簡単です。
+
+See_Also: https://code.dlang.org/packages/dateparser
++/
+unittest
+{
+    import dateparser;
+    import std.datetime;
+
+    // SysTime型が得られます
+    SysTime date1 = parse("2023-01-01");
+    SysTime date2 = parse("2023/01/01");
+    SysTime date3 = parse("2023/01/01 12:34:56"); // スペース区切りの時刻もOKです
+
+    assert(date1 == SysTime(DateTime(2023, 1, 1)));
+    assert(date2 == SysTime(DateTime(2023, 1, 1)));
+    assert(date3 == SysTime(DateTime(2023, 1, 1, 12, 34, 56)));
+}
