@@ -4,6 +4,8 @@
 メタプログラミングに出てくるイディオム等についてまとめます。
 
 Source: $(LINK_TO_SRC source/_meta_example.d)
+Macros:
+    TITLE=メタプログラミングおよび頻出イディオムの例
 +/
 module meta_example;
 

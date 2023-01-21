@@ -6,6 +6,8 @@ SumTypeを使用すると、複数の型を複合した型を形成すること�
 
 See_Also:
     - https://dlang.org/phobos/std_sumtype.html
+Macros:
+    TITLE=SumType（タグ付き共用体）の例
 +/
 module sumtype_example;
 

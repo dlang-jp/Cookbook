@@ -4,6 +4,8 @@
 様々な型を作れるtemplateを提供する`std.typecons`パッケージについて解説します。
 
 Source: $(LINK_TO_SRC source/_typecons_example.d)
+Macros:
+    TITLE=型を作るユーティリティ群の例
 +/
 module typecons_example;
 
@@ -289,12 +291,8 @@ unittest
 
     // Tupleはコンパイル時にも利用可能です。
     enum staticTuple = tuple("test", 123);
-
-    // foreachによりフィールドを順に取り出すことができます。
-    static foreach (i, e; staticTuple[])
-    {
-        assert(t1[i] == e);
-    }
+    static assert(staticTuple[0] == "test");
+    static assert(staticTuple[1] == 123);
 
     // フィールドに名前の付いているTupleも作ることができます。
     // テンプレート引数に型・フィールド名のペアを指定すると、名前付きメンバーになります。

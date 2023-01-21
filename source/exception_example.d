@@ -8,6 +8,8 @@ D言語は「例外機構」をもつ言語です。
 ここでは例外の使い方についてまとめます。
 
 Source: $(LINK_TO_SRC source/_exception_example.d)
+Macros:
+    TITLE=例外処理の例
 +/
 module exception_example;
 

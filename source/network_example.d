@@ -6,6 +6,8 @@
 HTTP通信などができます。
 
 Source: $(LINK_TO_SRC source/_network_example.d)
+Macros:
+    TITLE=cURLを使ったネットワーク処理の例
 +/
 module network_example;
 

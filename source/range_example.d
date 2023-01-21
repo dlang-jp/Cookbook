@@ -26,6 +26,8 @@ TODO:
 
 
 Source: $(LINK_TO_SRC source/_range_example.d)
+Macros:
+    TITLE=レンジを扱う処理の例
 +/
 module range_example;
 

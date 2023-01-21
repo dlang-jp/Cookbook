@@ -4,6 +4,8 @@
 スタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。
 
 Source: $(LINK_TO_SRC source/_container_example.d)
+Macros:
+    TITLE=コンテナ（データ構造）の例
 +/
 module container_example;
 
