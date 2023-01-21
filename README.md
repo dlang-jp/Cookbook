@@ -1,5 +1,4 @@
 # D言語クックブック
-[![CircleCI](https://circleci.com/gh/dlang-jp/Cookbook.svg?style=svg)](https://circleci.com/gh/dlang-jp/Cookbook)
 [![Actions Status](https://github.com/dlang-jp/Cookbook/workflows/master/badge.svg)](https://github.com/dlang-jp/Cookbook/actions)
 
 ドキュメント : [https://dlang-jp.github.io/Cookbook](https://dlang-jp.github.io/Cookbook)
