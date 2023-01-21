@@ -5,6 +5,7 @@ license "public domain"
 
 subPackage "subpkg"
 subPackage "windows"
+subPackage "posix"
 subPackage "thirdparty/libdparse"
 subPackage "thirdparty/json"
 subPackage "thirdparty/vibe-d"

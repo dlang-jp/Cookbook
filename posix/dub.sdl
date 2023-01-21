@@ -1,0 +1,5 @@
+name "posix"
+description "A minimal D application."
+authors "outlandkarasu"
+copyright "Copyright © 2022, outlandkarasu"
+license "public domain"
