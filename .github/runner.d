@@ -15,7 +15,7 @@ struct Defines
 static:
     /// ドキュメントジェネレータを指定します。
     /// gendocのバージョンが更新されたら変更してください。
-    immutable documentGenerator = "gendoc@0.0.6";
+    immutable documentGenerator = "gendoc@0.0.8";
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = [
