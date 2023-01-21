@@ -45,7 +45,7 @@ jobs:
   #  name: test-${OS}-${ARCH}-${COMPILER}
   #  runs-on: ${OS}
   #  steps:
-  #    - uses: actions/checkout@v2
+  #    - uses: actions/checkout@v3
   #    - name: Install D compiler
   #      uses: dlang-community/setup-dlang@v1
   #      with:
@@ -76,7 +76,7 @@ jobs:
     name: test-windows-x86-dmd-latest
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -102,7 +102,7 @@ jobs:
     name: test-windows-x86_64-dmd-latest
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -123,7 +123,7 @@ jobs:
     name: test-windows-x86_64-ldc-latest
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -141,7 +141,7 @@ jobs:
     name: test-windows-x86_64-ldc-master
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -160,7 +160,7 @@ jobs:
     name: test-linux-x86-ldc-latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -186,7 +186,7 @@ jobs:
     name: test-linux-x86_64-dmd-latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -200,7 +200,7 @@ jobs:
     name: test-linux-x86_64-ldc-latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -226,7 +226,7 @@ jobs:
     name: test-linux-x86_64-dmd-master
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -264,7 +264,7 @@ jobs:
     name: test-osx-x86_64-dmd-latest
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -278,7 +278,7 @@ jobs:
     name: test-osx-x86_64-ldc-latest
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -307,7 +307,7 @@ jobs:
     needs: [test-windows-x86-dmd-latest, test-windows-x86_64-dmd-latest, test-windows-x86_64-ldc-latest, test-windows-x86_64-ldc-master, test-linux-x86-ldc-latest, test-linux-x86_64-dmd-latest, test-linux-x86_64-ldc-latest, test-linux-x86_64-dmd-master, test-osx-x86_64-dmd-latest, test-osx-x86_64-ldc-latest]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download Windows coverage result
         uses: actions/download-artifact@v1
         with:

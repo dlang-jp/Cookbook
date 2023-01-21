@@ -7,10 +7,11 @@ module vibed_usage._common;
 
 /++
 利用していないポート番号を取得する
+
+単にポートに0を指定してlistenHTTPすることで、未使用のポートが割り当てられる。
+実際に割り当てられたポートはlistenHTTPの戻り値のbindAddressesを見ることで確認できる。
 +/
 ushort getUnusedPort() @safe
 {
-    import core.atomic;
-    shared static ushort _serial = 50_000;
-    return _serial.atomicOp!"+="(1);
+    return 0;
 }

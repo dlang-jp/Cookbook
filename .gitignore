@@ -25,6 +25,7 @@ __dummy.html
 
 # Generated Files
 docs
+*.pdb
 
 # Hidden files
 .*
