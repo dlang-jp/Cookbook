@@ -1,4 +1,6 @@
 /++
+行列関連操作
+
 mirパッケージのSlice操作のうち、2次元の行列に関する頻出の操作を整理します。
 +/
 module mir_usage.slice_matrix;

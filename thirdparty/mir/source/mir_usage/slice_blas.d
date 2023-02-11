@@ -1,6 +1,7 @@
 /**
-mirのSliceとBLASを合わせて使う方法を整理します
+BLAS利用
 
+mirのSliceとBLASを合わせて使う方法を整理します。
 BLASを利用するには、環境に合わせて適切なライブラリを用意する必要があります。
 
 Windowsでは既定で Intel MKL が使われます。
