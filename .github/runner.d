@@ -21,7 +21,8 @@ static:
     immutable subPkgs = [
         PackageInfo("windows"),
         PackageInfo("libdparse_usage"),
-        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"])
+        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+        PackageInfo("mir")
     ];
 }
 
