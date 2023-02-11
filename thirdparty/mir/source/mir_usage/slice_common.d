@@ -17,8 +17,8 @@ Slice型のインポート、型宣言の利用方法
 */
 unittest
 {
-    // 多次元配列を扱うには、`mir.ndslice` から `Slice`` という定義をインポートします。
-    // なお今後扱う操作は mirパッケージのモジュール構成上 `mir.ndslice.*`` として多数出てきますが、それらは `mir.ndslice` からもインポート可能です。
+    // 多次元配列を扱うには、`mir.ndslice` から `Slice` という定義をインポートします。
+    // なお今後扱う操作は mirパッケージのモジュール構成上 `mir.ndslice.*` として多数出てきますが、それらは `mir.ndslice` からもインポート可能です。
     // `Slice`を扱うだけであれば、import は基本的に `mir.ndslice` だけ覚えれば十分、ということです。
     import mir.ndslice : Slice;
 
