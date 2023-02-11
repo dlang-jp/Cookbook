@@ -6,6 +6,10 @@ BLASを利用するには、環境に合わせて適切なライブラリを用�
 
 Windowsでは既定で Intel MKL が使われます。
 Posixでは既定で Open BLAS が使われます。
+
+Source: $(LINK_TO_SRC thirdparty/mir/source/mir_usage/slice_blas.d)
+Macros:
+    TITLE=mirのSliceとBLASを組み合わせて使う例
 */
 module mir_usage.slice_blas;
 

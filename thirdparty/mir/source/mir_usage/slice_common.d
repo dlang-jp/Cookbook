@@ -9,6 +9,10 @@ mirでは多次元配列（いわゆるテンソル）を扱うための型と�
 - Sliceの変更
 - Sliceの変形
 - Slice同士の基本的な演算
+
+Source: $(LINK_TO_SRC thirdparty/mir/source/mir_usage/slice_common.d)
+Macros:
+    TITLE=mirのSlice基本操作
 +/
 module mir_usage.slice_common;
 

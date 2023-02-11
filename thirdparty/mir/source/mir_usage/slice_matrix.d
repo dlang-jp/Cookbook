@@ -2,6 +2,10 @@
 行列関連操作
 
 mirパッケージのSlice操作のうち、2次元の行列に関する頻出の操作を整理します。
+
+Source: $(LINK_TO_SRC thirdparty/mir/source/mir_usage/slice_matrix.d)
+Macros:
+    TITLE=mirのSliceにおける行列関連操作
 +/
 module mir_usage.slice_matrix;
 
