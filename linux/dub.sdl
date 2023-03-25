@@ -1,0 +1,5 @@
+name "linux"
+description "A minimal D application."
+authors "outlandkarasu"
+copyright "Copyright © 2023, outlandkarasu"
+license "public domain"
