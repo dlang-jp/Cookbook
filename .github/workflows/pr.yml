@@ -114,18 +114,6 @@ jobs:
           name: coverage-windows
           path: .cov
 
-  test-windows-x86_64-ldc-1_30:
-    name: test-windows-x86_64-ldc-1_30
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
-        with:
-          compiler: ldc-1.30.0
-      - name: Run unit tests
-        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
-
   test-windows-x86_64-ldc-1_31:
     name: test-windows-x86_64-ldc-1_31
     runs-on: windows-latest
@@ -138,31 +126,21 @@ jobs:
       - name: Run unit tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
 
-  test-windows-x86_64-ldc-1_32:
-    name: test-windows-x86_64-ldc-1_32
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
-        with:
-          compiler: ldc-1.32.0
-      - name: Run unit tests
-        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
-
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  6. Windows x86_64  ldc        o   x   x
-  test-windows-x86_64-ldc-latest:
-    name: test-windows-x86_64-ldc-latest
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
-        with:
-          compiler: ldc-latest
-      - name: Run unit tests
-        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+  # LDC1.32で動かなくなったので一旦停止します
+  # https://github.com/dlang-jp/Cookbook/issues/189
+  # test-windows-x86_64-ldc-latest:
+  #   name: test-windows-x86_64-ldc-latest
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Install D compiler
+  #       uses: dlang-community/setup-dlang@v1
+  #       with:
+  #         compiler: ldc-latest
+  #     - name: Run unit tests
+  #       run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  7. Windows x86_64  dmd-master x   x   x   x
@@ -170,18 +148,20 @@ jobs:
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  8. Windows x86_64  ldc-master o   x   x
-  test-windows-x86_64-ldc-master:
-    name: test-windows-x86_64-ldc-master
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
-        with:
-          compiler: ldc-master
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run unit tests
-        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+  # LDC1.32で動かなくなったので一旦停止します
+  # https://github.com/dlang-jp/Cookbook/issues/189
+  # test-windows-x86_64-ldc-master:
+  #   name: test-windows-x86_64-ldc-master
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Install D compiler
+  #       uses: dlang-community/setup-dlang@v1
+  #       with:
+  #         compiler: ldc-master
+  #         gh_token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Run unit tests
+  #       run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  9. Ubuntu  x86     dmd        x   x   x
@@ -337,7 +317,19 @@ jobs:
   # Upload coverage report to Codecov
   upload-codecov:
     name: upload-codecov
-    needs: [test-windows-x86-dmd-latest, test-windows-x86_64-dmd-latest, test-windows-x86_64-ldc-latest, test-windows-x86_64-ldc-master, test-linux-x86-ldc-latest, test-linux-x86_64-dmd-latest, test-linux-x86_64-ldc-latest, test-linux-x86_64-dmd-master, test-osx-x86_64-dmd-latest, test-osx-x86_64-ldc-latest]
+    needs: [
+      test-windows-x86-dmd-latest,
+      test-windows-x86_64-dmd-latest,
+      test-windows-x86_64-ldc-1_31,
+      # test-windows-x86_64-ldc-latest,
+      # test-windows-x86_64-ldc-master,
+      test-linux-x86-ldc-latest,
+      test-linux-x86_64-dmd-latest,
+      test-linux-x86_64-ldc-latest,
+      test-linux-x86_64-dmd-master,
+      test-osx-x86_64-dmd-latest,
+      test-osx-x86_64-ldc-latest
+      ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
