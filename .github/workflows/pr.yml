@@ -114,6 +114,42 @@ jobs:
           name: coverage-windows
           path: .cov
 
+  test-windows-x86_64-ldc-1_30:
+    name: test-windows-x86_64-ldc-1_30
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install D compiler
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ldc-1.30.0
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  test-windows-x86_64-ldc-1_31:
+    name: test-windows-x86_64-ldc-1_31
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install D compiler
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ldc-1.31.0
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
+  test-windows-x86_64-ldc-1_32:
+    name: test-windows-x86_64-ldc-1_32
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install D compiler
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ldc-1.32.0
+      - name: Run unit tests
+        run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
+
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  6. Windows x86_64  ldc        o   x   x
   test-windows-x86_64-ldc-latest:
