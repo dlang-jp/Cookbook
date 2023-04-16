@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>data - D言語クックブック</title>
+        <title>hash_example - D言語クックブック</title>
         
         
     </head>
@@ -288,30 +288,84 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">データ形式
-</div></h1><div class="ddoc_description">特定のデータ形式を取り扱う例をまとめました
+                <h1><div class="ddoc_summary">ハッシュ値の計算
+</div></h1><div class="ddoc_description"><span class="d_inlinecode donthyphenate notranslate">std.digest</span> の使い方についてまとめます。
 <div class="ddoc_blankline"></div>
 
-<dl>    <dt><a href="cookbook--data.base64_example.html">Base64</a></dt>
-    <dd>        <span class="d_inlinecode donthyphenate notranslate">std.base64</span>を用いてBase64形式でのデータのエンコード/デコードを取り扱います。
-    </dd>
-    <dt><a href="cookbook--data.csv_example.html">CSV</a></dt>
-    <dd>        <span class="d_inlinecode donthyphenate notranslate">std.csv</span>を用いてCSV形式のデータを取り扱います。 <br>
-        また、<span class="d_inlinecode donthyphenate notranslate">std.csv</span>ではサポートされていないCSVの書き出し方についても取り扱います。
-    </dd>
-    <dt><a href="cookbook--data.json_example.html">JSON</a></dt>
-    <dd>        <span class="d_inlinecode donthyphenate notranslate">std.json</span>を用いてJSON形式のデータを取り扱います。 <br>
-        数値型や文字列型、真偽値型、配列や連想配列と、JSONデータ型との相互変換やJSONファイルの読み書きを行います。
-    </dd>
-    <dt><a href="cookbook--data.zip_example.html">ZIP</a></dt>
-    <dd>        <span class="d_inlinecode donthyphenate notranslate">std.zip</span>を用いてZIP形式のデータの圧縮・解凍を取り扱います。 <br>
-        ディレクトリ階層の再現、日本語ファイル名の取り扱いについても取り扱います。
-    </dd>
-</dl>
+文字列やバイナリデータに対してハッシュ値（ダイジェスト、チェックサムとも呼ばれる）を求めたり16進数の文字列に変換する手順を整理します。
 
 </div>
 <div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
-<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/data/package.d">https://github.com/dlang-jp/Cookbook/tree/master/source/data/package.d</a></span></div>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/hash_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/hash_example.d</a></span></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 様々なデータから <span class="d_inlinecode donthyphenate notranslate">ubyte[N]</span> なハッシュ値を計算する方法
+<div class="ddoc_blankline"></div>
+
+アルゴリズム毎に提供される便利関数や <span class="d_inlinecode donthyphenate notranslate">digest</span> 関数を使います。
+なおアルゴリズムによって生成されるハッシュ値のサイズは決まっているため、これに応じて戻り値の型も変わります。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.digest;
+<span class="d_keyword">import</span> std.digest.crc;
+<span class="d_keyword">import</span> std.digest.md;
+<span class="d_keyword">import</span> std.digest.sha;
+<span class="d_keyword">import</span> std.digest.murmurhash;
+<span class="d_keyword">import</span> std.digest.hmac;
+
+<span class="d_comment">// 基礎的なアルゴリズムでは、`&lt;アルゴリズム名&gt;Of`という名前の簡便なテンプレート関数が利用できます
+</span><span class="d_keyword">ubyte</span>[4] result1 = crc32Of(<span class="d_string">"Hello!"</span>);
+<span class="d_keyword">ubyte</span>[16] result2 = md5Of(<span class="d_string">"Hello"</span>);
+<span class="d_keyword">ubyte</span>[20] result3 = sha1Of(<span class="d_string">"Hello"</span>, <span class="d_string">"world"</span>);
+<span class="d_keyword">ubyte</span>[32] result4 = sha256Of(<span class="d_string">"Hello"</span>, <span class="d_string">"world"</span>, <span class="d_string">"!"</span>);
+
+<span class="d_comment">// murmurhashなど、用途に合わせてパラメータを変えるようなアルゴリズムでは`digest`関数を使います
+</span><span class="d_keyword">ubyte</span>[4] result5 = digest!(MurmurHash3!32)(<span class="d_string">"Hello"</span>, <span class="d_string">", world!"</span>);
+
+<span class="d_comment">// HMACはシークレット値を持つ機構があり、独自に計算する必要があります。
+</span><span class="d_comment">// なおHMACは引数に受け付ける値がバイト列限定（`const(ubyte)[]`）であるため、文字列型は `representation` を通して変換します。
+</span><span class="d_comment">// これは単なる `cast(immutable(ubyte)[])`` と同等です。
+</span><span class="d_keyword">import</span> std.string: representation;
+
+<span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] data1 = <span class="d_string">"Hello"</span>.representation();
+<span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] data2 = <span class="d_string">", world!"</span>.representation();
+<span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] secret = <span class="d_string">"mysecret"</span>.representation();
+<span class="d_keyword">ubyte</span>[32] hmacResult1 = hmac!SHA256(data1, data2, secret);
+<span class="d_keyword">ubyte</span>[32] hmacResult2 = hmac!SHA256(<span class="d_string">"Hello, world!"</span>.representation(), secret);
+<span class="d_keyword">assert</span>(hmacResult1 == hmacResult2);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 求めたハッシュ値(ubyteの静的配列、バイト列)から16進数の文字列(<span class="d_inlinecode donthyphenate notranslate">string</span>)を取得する方法
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">toHexString</span> を利用します。
+その他 <span class="d_inlinecode donthyphenate notranslate">format</span> を使って整形する例については文字列のサンプルを参照してください。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">toHexString</span> : <a href="https://dlang.org/phobos/std_digest.html#.toHexString">https://dlang.org/phobos/std_digest.html#.toHexString</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.digest;
+<span class="d_keyword">import</span> std.digest.sha;
+<span class="d_keyword">import</span> std.digest.hmac;
+<span class="d_keyword">import</span> std.string: representation;
+
+<span class="d_comment">// toHexStringは、引数に ubyte[N] を受け取り char[N*2] を返すものと、 ubyte[] を受け取り string を返すものがあります。
+</span><span class="d_comment">// stringとするためには戻り値に対してidupプロパティを取るか、引数を可変長配列とするため1度スライスを取ってから渡します。
+</span><span class="d_comment">// なお静的に処理できる範囲が多い分、idupのほうが効率的になりやすいです。
+</span>string result1 = sha256Of(<span class="d_string">"Hello"</span>, <span class="d_string">"world"</span>, <span class="d_string">"!"</span>).toHexString().idup;
+string result2 = hmac!SHA256(<span class="d_string">"Hello, world!"</span>.representation(), <span class="d_string">"mysecret"</span>.representation())[].toHexString();
+
+<span class="d_comment">// toHexStringのテンプレート引数により、16進数の英字が大文字小文字を切り替えられます
+</span><span class="d_comment">// 指定しない場合は大文字となっています。
+</span><span class="d_comment">// 943a702d06f34599aee1f8da8ef9f7296031d699
+</span>string lowerText = sha1Of(<span class="d_string">"Hello, world!"</span>).toHexString!(LetterCase.lower)().idup;
+<span class="d_comment">// 943A702D06F34599AEE1F8DA8EF9F7296031D699
+</span>string upperText = sha1Of(<span class="d_string">"Hello, world!"</span>).toHexString!(LetterCase.upper)().idup;
+
+<span class="d_keyword">import</span> std.uni: isUpper, isLower;
+<span class="d_keyword">import</span> std.algorithm: all;
+
+<span class="d_keyword">assert</span>(lowerText.all!(c =&gt; !isUpper(c)));
+<span class="d_keyword">assert</span>(upperText.all!(c =&gt; !isLower(c)));
+</pre>
+</div>
 
                 
             </div>

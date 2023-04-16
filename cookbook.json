@@ -999,6 +999,34 @@
   ]
  },
  {
+  "name" : "hash_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/hash_example.d",
+  "comment" : "ハッシュ値の計算\n\n`std.digest` の使い方についてまとめます。\n\n文字列やバイナリデータに対してハッシュ値（ダイジェスト、チェックサムとも呼ばれる）を求めたり16進数の文字列に変換する手順を整理します。\n\nSource: $(LINK_TO_SRC source/_hash_example.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L19_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "様々なデータから `ubyte[N]` なハッシュ値を計算する方法\n\nアルゴリズム毎に提供される便利関数や `digest` 関数を使います。\nなおアルゴリズムによって生成されるハッシュ値のサイズは決まっているため、これに応じて戻り値の型も変わります。\n",
+    "line" : 19,
+    "char" : 1,
+    "endline" : 58,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L58_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "求めたハッシュ値(ubyteの静的配列、バイト列)から16進数の文字列(`string`)を取得する方法\n\n`toHexString` を利用します。\nその他 `format` を使って整形する例については文字列のサンプルを参照してください。\n\n`toHexString` : $(LINK https://dlang.org/phobos/std_digest.html#.toHexString)\n",
+    "line" : 58,
+    "char" : 1,
+    "endline" : 84,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
   "name" : "is_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/is_example.d",
@@ -1781,93 +1809,103 @@
     "name" : "__unittest_L238_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "書式化文字列\n\n`std.format` の `format` を使います。\n\nhttps://dlang.org/phobos/std_format.html#.format\n",
+    "comment" : "文字列の連結③\n\n数値などの様々な値を文字列化したうえで連結した結果を得るには、`std.conv` の `text` 関数を利用します。\n\n`text` : https://dlang.org/phobos/std_conv.html#text\n",
     "line" : 238,
     "char" : 1,
-    "endline" : 254,
+    "endline" : 262,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L254_C1",
+    "name" : "__unittest_L262_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "書式化文字列\n\n`std.format` の `format` を使います。\n\nhttps://dlang.org/phobos/std_format.html#.format\n",
+    "line" : 262,
+    "char" : 1,
+    "endline" : 278,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L278_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "完全一致、辞書順での比較\n",
-    "line" : 254,
+    "line" : 278,
     "char" : 1,
-    "endline" : 268,
+    "endline" : 292,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L268_C1",
+    "name" : "__unittest_L292_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "大文字小文字を無視して比較\n\n`std.uni` の `icmp` を使います\n\n`icmp` : https://dlang.org/phobos/std_uni.html#icmp\n",
-    "line" : 268,
+    "line" : 292,
     "char" : 1,
-    "endline" : 293,
+    "endline" : 317,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L293_C1",
+    "name" : "__unittest_L317_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "「で始まる」「で終わる」の例\n\n`std.algorithm` の `startsWith`, `endsWith` を使います。\n\n`startsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.startsWith)$(BR)\n`endsWith` : $(LINK https://dlang.org/phobos/std_algorithm_searching.html#.endsWith)\n",
-    "line" : 293,
+    "line" : 317,
     "char" : 1,
-    "endline" : 315,
+    "endline" : 339,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L315_C1",
+    "name" : "__unittest_L339_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列が出現する位置を検索します。\n\n`std.string` の `indexOf` を使用します。\n\n`indexOf` : https://dlang.org/phobos/std_string.html#.indexOf\n",
-    "line" : 315,
+    "line" : 339,
     "char" : 1,
-    "endline" : 356,
+    "endline" : 380,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L356_C1",
+    "name" : "__unittest_L380_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列の置換\n\n`std.array` の `replace` あるいは `replaceFirst`, `replaceLast`, `replaceInPlace`, `replaceInto` を使用します。\nただし、 `replace`, `replaceInPlace` に関しては `std.string` の中にもaliasがあるため、どちらからimportしてもよいです。\n\nそれぞれの違いは以下。\n\n| 置換関数 | 特徴 |\n|:--------:|:-----|\n| replace        | 第1引数の文字列(配列)の中の、第2引数に完全一致する **すべての** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceFirst   | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最初の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceLast    | 第1引数の文字列(配列)の中の、第2引数に完全一致する **最後の** 部分を、第3引数の文字列(配列)で置き換えた新しい文字列を返します。 |\n| replaceInto    | 第2引数の文字列(配列)の中の、第3引数に完全一致する **すべての** 部分を、第4引数の文字列(配列)で置き換えて **第1引数のOutputRangeにput** します。 |\n| replaceInPlace | 第1引数の文字列(配列)の中の、**第2引数～第3引数** までの部分を、第4引数の文字列(配列)で **上書きで置き換えて** 返します。 |\n\n`replace`, `replaceFirst`, `replaceLast` は元の文字列はそのままに、新しい文字列を作成します。これにはメモリ割り当てが発生します。\n\n`replaceInto` は、元の文字列はそのままに、新しい文字列を作成するというのは `replace` と同じですが、新しくできた文字列をOutputRangeの中に入れてくれるので、この関数の中で新しいメモリ割り当ては行われません。例えば数百MBある文字列を置換してファイルに書き出したい、とかのユースケースで役に立ちます。\n\n`replaceInPlace` は、元の文字列を上書きします。また、文字列の一致箇所という置換方法はできないため、第2引数と第3引数には `indexOf()` と文字列長を組み合わせて、添え字の範囲を指定する必要があります。$(BR)\n単に `text.replaceInPlace(text.indexOf(a), text.indexOf(a) + a.length, b)` は、 `text = text.replace(a, b)` と同じです。ただし、特殊な状況下(`dchar[]`を`dchar[]`で置換し、より短い文字列になる場合)では、メモリ割り当てが発生しません。\n",
-    "line" : 356,
+    "line" : 380,
     "char" : 1,
-    "endline" : 389,
+    "endline" : 413,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L389_C1",
+    "name" : "__unittest_L413_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "文字列の置換(正規表現)\n\n`std.regex` の `replaceAll`, `replaceFirst` を使用します。\nちなみに、以下のサンプルでは紹介しませんが、 `replace` に対する `replaceInto` と同様にOutputRange用の `replaceAllInto`, `replaceFirstInto` もあります。\n",
-    "line" : 389,
+    "line" : 413,
     "char" : 1,
-    "endline" : 412,
+    "endline" : 436,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L412_C1",
+    "name" : "__unittest_L436_C1",
     "kind" : "function",
     "protection" : "public",
     "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
-    "line" : 412,
+    "line" : 436,
     "char" : 1,
-    "endline" : 491,
+    "endline" : 515,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L491_C7",
+    "name" : "__unittest_L515_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n",
-    "line" : 491,
+    "line" : 515,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 525,
+    "endline" : 549,
     "endchar" : 1
    }
   ]

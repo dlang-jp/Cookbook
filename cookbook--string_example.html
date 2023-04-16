@@ -88,6 +88,10 @@
 
 
 
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
 	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
 
 
@@ -501,6 +505,29 @@ buffer.put(<span class="d_string">"github.com"</span>);
 buffer.put(<span class="d_string">"/dlang"</span>);
 
 <span class="d_keyword">assert</span>(buffer.data == <span class="d_string">"https://github.com/dlang"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 文字列の連結③
+<div class="ddoc_blankline"></div>
+
+数値などの様々な値を文字列化したうえで連結した結果を得るには、<span class="d_inlinecode donthyphenate notranslate">std.conv</span> の <span class="d_inlinecode donthyphenate notranslate">text</span> 関数を利用します。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">text</span> : <a href="https://dlang.org/phobos/std_conv.html#text">https://dlang.org/phobos/std_conv.html#text</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv : text, wtext, dtext;
+
+<span class="d_comment">// 引数に渡した内容をテキスト化して連結したものが得られます
+</span><span class="d_keyword">assert</span>(text(<span class="d_string">"out/"</span>, 10, <span class="d_string">".json"</span>) == <span class="d_string">"out/10.json"</span>);
+
+<span class="d_comment">// string, wstring, dstringの型に対し、対応する text, wtext, dtext関数があります
+</span>string s1 = text(<span class="d_string">"data/"</span>, 0, <span class="d_string">".json"</span>);
+wstring s2 = wtext(<span class="d_string">"data/"</span>, 1, <span class="d_string">".json"</span>);
+dstring s3 = dtext(<span class="d_string">"data/"</span>, 2, <span class="d_string">".json"</span>);
+
+<span class="d_keyword">assert</span>(s1 == <span class="d_string">"data/0.json"</span>);
+<span class="d_keyword">assert</span>(s2 == <span class="d_string">"data/1.json"w</span>);
+<span class="d_keyword">assert</span>(s3 == <span class="d_string">"data/2.json"d</span>);
 </pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
