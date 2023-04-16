@@ -138,7 +138,7 @@ void unitTest(string[] exDubOpts = null)
 {
     if (!".cov".exists)
         mkdir(".cov");
-    auto opt = ["-a", config.arch, "--compiler", config.compiler, "--coverage", "--main-file", ".github/ut.d"]
+    auto opt = ["-v", "-a", config.arch, "--compiler", config.compiler, "--coverage", "--main-file", ".github/ut.d"]
         ~ exDubOpts;
     string[string] env;
     env.addCurlPath();
@@ -156,7 +156,7 @@ void generateDocument()
     import std.file;
     string[string] env;
     env.addCurlPath();
-    exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch,
+    exec(["dub", "run", "-v", Defines.documentGenerator, "-y", "-a", config.arch,
         "--", "-a", config.arch, "-b=release", "--compiler", config.compiler], null, env);
 }
 
@@ -165,7 +165,7 @@ void createReleaseBuild(string[] exDubOpts = null)
 {
     string[string] env;
     env.addCurlPath();
-    exec(["dub", "build", "-a", config.arch, "-b=unittest-cov", "--compiler", config.compiler]
+    exec(["dub", "build", "-v", "-a", config.arch, "-b=unittest-cov", "--compiler", config.compiler]
         ~ exDubOpts, null, env);
 }
 
@@ -180,7 +180,7 @@ void integrationTest(string[] exDubOpts = null)
         mkdirRecurse(covdir);
 
     // build
-    exec(["dub", "build", "-a", config.arch, "-b=cov", "--compiler", config.compiler]
+    exec(["dub", "build", "-v", "-a", config.arch, "-b=cov", "--compiler", config.compiler]
         ~ exDubOpts, null, env);
 
     // do-nothiong
