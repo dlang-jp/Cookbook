@@ -156,8 +156,8 @@ void generateDocument()
     import std.file;
     string[string] env;
     env.addCurlPath();
-    exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch, "--cache=local",
-        "--", "-a", config.arch, "-b=release", "--compiler", config.compiler], null, env);
+    exec(["dub", "run", Defines.documentGenerator, "-y", "-a", config.arch,
+        "--", "-a", config.arch, "-b=release", "--compiler", config.compiler, "--cache=local"], null, env);
 }
 
 ///
