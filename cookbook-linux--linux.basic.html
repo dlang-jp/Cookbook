@@ -6,7 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/sidebar.js"></script>
         <script type="text/javascript" src="js/listanchors.js"></script>
-        <title>posix.basic - D言語クックブック</title>
+        <title>linux.basic - D言語クックブック</title>
         
         
     </head>
@@ -306,38 +306,38 @@
             <div class="content">                
                 <div class="quickindex" id="quickindex"></div>
                 
-                <h1><div class="ddoc_summary">POSIX
-</div></h1><div class="ddoc_description">POSIXの呼び出しについてまとめます。
+                <h1><div class="ddoc_summary">Linux
+</div></h1><div class="ddoc_description">LinuxのAPIの呼び出しについてまとめます。
 <div class="ddoc_blankline"></div>
 
 概要
-2022年現在の公式ドキュメントには記載がありませんが、<span class="d_inlinecode donthyphenate notranslate">core.sys.posix</span>パッケージにはPOSIXの関数宣言・構造体定義が存在し、
-<span class="d_inlinecode donthyphenate notranslate">import core.sys.posix.unistd;</span> のように<span class="d_inlinecode donthyphenate notranslate">import</span>を行うことで各関数を利用できます。
+2023年現在の公式ドキュメントには記載がありませんが、<span class="d_inlinecode donthyphenate notranslate">core.sys.linux</span>パッケージにはLinuxの関数宣言・構造体定義が存在し、
+<span class="d_inlinecode donthyphenate notranslate">import core.sys.linux.io_uring;</span> のように<span class="d_inlinecode donthyphenate notranslate">import</span>を行うことで各関数を利用できます。
 <div class="ddoc_blankline"></div>
 
-<span class="d_inlinecode donthyphenate notranslate">core.sys.posix</span>パッケージはPOSIX環境でのみ利用できるため、
-利用する場合は <span class="d_inlinecode donthyphenate notranslate">version (Posix) { } else { }</span> といった形で<span class="d_inlinecode donthyphenate notranslate">version</span>によるプラットフォームの明記を行うことをお勧めします。<br>
+<span class="d_inlinecode donthyphenate notranslate">core.sys.linux</span>パッケージはLinux環境でのみ利用できるため、
+利用する場合は <span class="d_inlinecode donthyphenate notranslate">version (linux) { } else { }</span> といった形で<span class="d_inlinecode donthyphenate notranslate">version</span>によるプラットフォームの明記を行うことをお勧めします。<br>
 以下の例ではWindows等の環境でもビルドできるようにするためversionで囲って表記しています。
 
 </div>
 <div class="ddoc_see_also"><span class="ddoc_see_also_header">See Also:</span>
  必要な関数・構造体が利用できるかは、DMDのソースコードを確認する必要があります。<br>
-    <a href="https://github.com/dlang/dmd/tree/master/druntime/src/core/sys/posix">https://github.com/dlang/dmd/tree/master/druntime/src/core/sys/posix</a>
+    <a href="https://github.com/dlang/dmd/tree/master/druntime/src/core/sys/linux">https://github.com/dlang/dmd/tree/master/druntime/src/core/sys/linux</a>
 
 </div>
 <div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
-<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/posix/source/posix/basic.d">https://github.com/dlang-jp/Cookbook/tree/master/posix/source/posix/basic.d</a></span></div>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/posix/source/linux/basic.d">https://github.com/dlang-jp/Cookbook/tree/master/posix/source/linux/basic.d</a></span></div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
- POSIXのAPIを直接利用したechoサーバー・クライアントの例です。
-<pre class="d_code notranslate"><span class="d_keyword">version</span> (Posix)
+ LinuxのAPIを直接利用したechoサーバー・クライアントの例です。
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (linux)
 {
-    <span class="d_comment">// 利用するPOSIXのモジュールをimportする
-</span>    <span class="d_keyword">import</span> core.sys.posix.unistd;
-    <span class="d_keyword">import</span> core.sys.posix.fcntl;
+    <span class="d_comment">// 利用するLinuxのモジュールをimportする
+</span>    <span class="d_keyword">import</span> core.sys.linux.unistd;
+    <span class="d_keyword">import</span> core.sys.linux.fcntl;
+    <span class="d_keyword">import</span> core.sys.linux.epoll;
     <span class="d_keyword">import</span> core.stdc.errno;
-    <span class="d_keyword">import</span> core.sys.posix.sys.socket;
-    <span class="d_keyword">import</span> core.sys.posix.poll;
-    <span class="d_keyword">import</span> core.sys.posix.netinet.in_;
+    <span class="d_keyword">import</span> core.sys.linux.sys.socket;
+    <span class="d_keyword">import</span> core.sys.linux.netinet.in_;
 
     <span class="d_keyword">import</span> std.algorithm : map;
     <span class="d_keyword">import</span> std.container : Array;
@@ -483,25 +483,8 @@
     <span class="d_comment">// クライアント側送受信バッファ
 </span>    Array!<span class="d_keyword">ubyte</span> clientBuffer;
 
-    <span class="d_comment">// poll用のファイルディスクリプタ情報
-</span>    <span class="d_comment">// 本来は別マシン・別プロセスでそれぞれ行われる処理だが
-</span>    <span class="d_comment">// 例示のため、ここでは変則的にサーバー・クライアントをまとめて扱う。
-</span>    pollfd[] fds = [
-        {
-            fd: listenerSocket,
-            events: POLLIN,
-        },
-        {
-            fd: clientSocket,
-            events: POLLIN | POLLOUT,
-        },
-        <span class="d_comment">// acceptしたソケット向けの要素
-</span>        <span class="d_comment">// fdが-1の間は無視される。acceptしたらfdを更新して監視対象にする。
-</span>        {
-            fd: -1,
-            events: POLLIN | POLLOUT,
-        }
-    ];
+    <span class="d_comment">// サーバー側のクライアントソケット
+</span>    <span class="d_keyword">int</span> acceptedSocket = -1;
 
     <span class="d_comment">// クライアント側送信処理
 </span>    <span class="d_keyword">void</span> clientSend()
@@ -527,7 +510,7 @@
 </span>    <span class="d_keyword">void</span> serverSend()
     {
         <span class="d_keyword">immutable</span> result = nonBlockingSend(
-            fds[2].fd, serverBuffer.data[serverSendPos .. $]);
+            acceptedSocket, serverBuffer.data[serverSendPos .. $]);
         serverSendPos += result.n;
 
         <span class="d_comment">// 送信中にはcloseされない想定
@@ -538,95 +521,134 @@
 </span>    IOResult serverReceive()
     {
         <span class="d_keyword">ubyte</span>[16] buffer;
-        <span class="d_keyword">immutable</span> result = nonBlockingReceive(fds[2].fd, buffer[]);
+        <span class="d_keyword">immutable</span> result = nonBlockingReceive(acceptedSocket, buffer[]);
         serverBuffer.insertBack(buffer[0 .. result.n]);
         <span class="d_keyword">return</span> result;
     }
 
+    <span class="d_comment">// epollインスタンス生成
+</span>    <span class="d_keyword">immutable</span> epollInstance = epoll_create1(0);
+    errnoEnforce(epollInstance &gt;= 0);
+    <span class="d_keyword">scope</span>(exit) close(epollInstance);
+
+    <span class="d_comment">// リスナーソケットをepollインスタンスに登録
+</span>    epoll_event listenerEvent = {
+        events: EPOLLIN,
+        data: { fd: listenerSocket }
+    };
+    errnoEnforce(epoll_ctl(
+        epollInstance, EPOLL_CTL_ADD, listenerSocket, &amp;listenerEvent) == 0);
+
+    <span class="d_comment">// クライアントソケットをepollインスタンスに登録
+</span>    epoll_event clientEvent = {
+        events: EPOLLIN | EPOLLOUT | EPOLLRDHUP,
+        data: { fd: clientSocket }
+    };
+    errnoEnforce(epoll_ctl(
+        epollInstance, EPOLL_CTL_ADD, clientSocket, &amp;clientEvent) == 0);
+
     <span class="d_comment">// クライアント・サーバーどちらも切断されるまで送受信実行
-</span>    <span class="d_keyword">for</span> (<span class="d_keyword">bool</span> clientClosed = <span class="d_keyword">false</span>, serverClosed = <span class="d_keyword">false</span>;
-            !clientClosed || !serverClosed ;)
-    {
-        <span class="d_comment">// pollで待機。タイムアウト時はエラー
-</span>        errnoEnforce(poll(&amp;fds[0], <span class="d_keyword">cast</span>(nfds_t) fds.length, 1000) &gt; 0);
+</span>    epoll_event[3] events;
+    epoll_event acceptedEvent;
+    <span class="d_keyword">for</span> (<span class="d_keyword">bool</span> clientClosed = <span class="d_keyword">false</span>, serverClosed = <span class="d_keyword">false</span>;
+            !clientClosed || !serverClosed ;) {
 
-        <span class="d_comment">// いずれかのソケットにエラーがあったら終了
-</span>        <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> <span class="d_keyword">const</span> e; fds)
-        {
-            enforce(!(e.revents &amp; POLLERR), <span class="d_string">"POLLERR"</span>);
-            enforce(!(e.revents &amp; POLLNVAL), <span class="d_string">"POLLNVAL"</span>);
-        }
+        <span class="d_comment">// epoll_waitで待機。タイムアウト時はエラー
+</span>        errnoEnforce(epoll_wait(epollInstance, &amp;events[0], events.length, 1000) &gt; 0);
 
-        <span class="d_comment">// リスナーソケットに接続要求があった場合。まだaccept前ならacceptする
-</span>        <span class="d_keyword">if</span> ((fds[0].revents &amp; POLLIN) &amp;&amp; (fds[2].fd == -1))
+        <span class="d_comment">// 発生した各イベントを処理する
+</span>        <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> <span class="d_keyword">const</span> e; events)
         {
-            <span class="d_keyword">immutable</span> accepted = ioEnforce(accept(listenerSocket, <span class="d_keyword">null</span>, <span class="d_keyword">null</span>));
-            <span class="d_keyword">if</span> (!accepted.isNull)
+            <span class="d_comment">// エラーがあったら終了
+</span>            enforce(!(e.events &amp; EPOLLERR), <span class="d_string">"EPOLLERR"</span>);
+
+            <span class="d_comment">// リスナーソケットの場合
+</span>            <span class="d_keyword">if</span> (e.data.fd == listenerSocket)
             {
-                fds[2].fd = accepted.get;
-                toNonBlock(fds[2].fd);
+                <span class="d_comment">// 接続要求があった場合、まだaccept前ならacceptする
+</span>                <span class="d_keyword">if</span> ((e.events &amp; EPOLLIN) &amp;&amp; acceptedSocket == -1)
+                {
+                    <span class="d_keyword">immutable</span> accepted = ioEnforce(accept(listenerSocket, <span class="d_keyword">null</span>, <span class="d_keyword">null</span>));
+                    <span class="d_keyword">if</span> (!accepted.isNull)
+                    {
+                        acceptedSocket = accepted.get;
+                        toNonBlock(acceptedSocket);
+                        acceptedEvent.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
+                        acceptedEvent.data.fd = acceptedSocket;
+                        errnoEnforce(epoll_ctl(
+                            epollInstance, EPOLL_CTL_ADD, acceptedSocket, &amp;acceptedEvent) == 0);
+                    }
+                }
             }
-        }
 
-        <span class="d_comment">// クライアントソケットで書き込み可能の場合
-</span>        <span class="d_keyword">if</span> (fds[1].revents &amp; POLLOUT)
-        {
-            <span class="d_comment">// 送信データが残っていれば送受信
-</span>            <span class="d_keyword">if</span> (clientSendPos &lt; sendPacket.length)
+            <span class="d_comment">// クライアントソケットの場合
+</span>            <span class="d_keyword">if</span> (e.data.fd == clientSocket)
             {
-                clientSend();
-                clientReceive();
+                <span class="d_comment">// 書き込み可能の場合
+</span>                <span class="d_keyword">if</span> (e.events &amp; EPOLLOUT)
+                {
+                    <span class="d_comment">// 送信データが残っていれば送受信
+</span>                    <span class="d_keyword">if</span> (clientSendPos &lt; sendPacket.length)
+                    {
+                        clientSend();
+                        clientReceive();
+                    }
+                    <span class="d_keyword">else</span>
+                    {
+                        <span class="d_comment">// 残データがなければ送信シャットダウン。以降はデータ受信のみ行う。
+</span>                        errnoEnforce(shutdown(clientSocket, SHUT_WR) == 0);
+                        clientEvent.events = EPOLLIN | EPOLLRDHUP;
+                        clientEvent.data.fd = clientSocket;
+                        errnoEnforce(epoll_ctl(
+                            epollInstance, EPOLL_CTL_MOD, clientSocket, &amp;clientEvent) == 0);
+                    }
+                }
+
+                <span class="d_comment">// 読み込み可能の場合、受信実行
+</span>                <span class="d_keyword">if</span> (e.events &amp; EPOLLIN)
+                {
+                    serverClosed = clientReceive().isClosed;
+                }
+
+                <span class="d_comment">// クライアントソケット切断時。想定外の切断はエラー
+</span>                <span class="d_keyword">if</span> (e.events &amp; EPOLLRDHUP)
+                {
+                    enforce(serverClosed, <span class="d_string">"unexpected server EPOLLRDHUP"</span>);
+                }
             }
-            <span class="d_keyword">else</span>
+
+            <span class="d_comment">// サーバー側のクライアントソケットの場合
+</span>            <span class="d_keyword">if</span> (acceptedSocket != -1 &amp;&amp; e.data.fd == acceptedSocket)
             {
-                <span class="d_comment">// 残データがなければ送信シャットダウン。以降はデータ受信のみ行う。
-</span>                errnoEnforce(shutdown(clientSocket, SHUT_WR) == 0);
-                fds[1].events = POLLIN;
+                <span class="d_comment">// 書き込み可能の場合
+</span>                <span class="d_keyword">if</span> (e.events &amp; EPOLLOUT)
+                {
+                    <span class="d_comment">// 送信データが残っていれば送信
+</span>                    <span class="d_keyword">if</span> (serverSendPos &lt; serverBuffer.length)
+                    {
+                        serverSend();
+                    }
+                    <span class="d_keyword">else</span> <span class="d_keyword">if</span>(clientClosed)
+                    {
+                        <span class="d_comment">// 残データが無く、クライアントも送信完了していればシャットダウン
+</span>                        <span class="d_comment">// 以降はデータ受信のみ行う
+</span>                        errnoEnforce(shutdown(acceptedSocket, SHUT_WR) == 0);
+                        acceptedEvent.events = EPOLLIN | EPOLLRDHUP;
+                        acceptedEvent.data.fd = acceptedSocket;
+                        errnoEnforce(epoll_ctl(
+                            epollInstance, EPOLL_CTL_MOD, acceptedSocket, &amp;acceptedEvent) == 0);
+                    }
+                }
+
+                <span class="d_comment">// 読み込み可能の場合、受信実行
+</span>                <span class="d_keyword">if</span> (e.events &amp; EPOLLIN)
+                {
+                    clientClosed = serverReceive().isClosed;
+
+                    <span class="d_comment">// 受信に応じてecho開始
+</span>                    serverSend();
+                }
             }
-        }
-
-        <span class="d_comment">// クライアントソケットで読み込み可能の場合、受信実行
-</span>        <span class="d_keyword">if</span> (fds[1].revents &amp; POLLIN)
-        {
-            serverClosed = clientReceive().isClosed;
-        }
-
-        <span class="d_comment">// クライアントソケット切断時。想定外の切断はエラー
-</span>        <span class="d_keyword">if</span> (fds[1].revents &amp; POLLHUP)
-        {
-            enforce(serverClosed, <span class="d_string">"unexpected server POLLHUP"</span>);
-        }
-
-        <span class="d_comment">// サーバー側のクライアントソケットで書き込み可能の場合
-</span>        <span class="d_keyword">if</span> (fds[2].revents &amp; POLLOUT)
-        {
-            <span class="d_comment">// 送信データが残っていれば送信
-</span>            <span class="d_keyword">if</span> (serverSendPos &lt; serverBuffer.length)
-            {
-                serverSend();
-            }
-            <span class="d_keyword">else</span> <span class="d_keyword">if</span>(clientClosed)
-            {
-                <span class="d_comment">// 残データが無く、クライアントも送信完了していればシャットダウン
-</span>                <span class="d_comment">// 以降はデータ受信のみ行う
-</span>                errnoEnforce(shutdown(fds[2].fd, SHUT_WR) == 0);
-                fds[2].events = POLLIN;
-            }
-        }
-
-        <span class="d_comment">// サーバー側のクライアントソケットで読み込み可能の場合、受信実行
-</span>        <span class="d_keyword">if</span> (fds[2].revents &amp; POLLIN)
-        {
-            clientClosed = serverReceive().isClosed;
-
-            <span class="d_comment">// 受信に応じてecho開始
-</span>            serverSend();
-        }
-
-        <span class="d_comment">// サーバー側のクライアントソケット切断時。想定外の切断はエラー
-</span>        <span class="d_keyword">if</span> (fds[2].revents &amp; POLLHUP)
-        {
-            enforce(clientClosed, <span class="d_string">"unexpected client POLLHUP"</span>);
         }
     }
 
