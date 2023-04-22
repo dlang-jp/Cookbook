@@ -376,6 +376,262 @@ buffer.put(20);
 <span class="d_keyword">assert</span>(data == [10, 20]);
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の一部の要素を置換します
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">replace</span> : <a href="https://dlang.org/phobos/std_array.html#replace">https://dlang.org/phobos/std_array.html#replace</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">replaceInPlace</span> : <a href="https://dlang.org/phobos/std_array.html#replaceInPlace">https://dlang.org/phobos/std_array.html#replaceInPlace</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">replaceInto</span> : <a href="https://dlang.org/phobos/std_array.html#replaceInto">https://dlang.org/phobos/std_array.html#replaceInto</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.array: replace, replaceInPlace, replaceInto;
+
+<span class="d_keyword">int</span>[] data1 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// replaceの場合：元データは書き変わらず、新しい配列が確保されます
+</span><span class="d_keyword">auto</span> data2 = data1.replace(40, 42);
+<span class="d_keyword">assert</span>(data1 == [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_comment">// 添え字で始まりから終わりの指定方法もあります。
+</span>data2 = data1.replace(3, 4, [42]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_comment">// replaceInPlaceの場合：元データも書き換えられます
+</span><span class="d_comment">// ※InPlace版は値を探して置換する指定方法はありません。
+</span>data2.replaceInPlace(9, 10, [123]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 123]);
+<span class="d_comment">// 値を探してInPlaceで置換する場合は以下のようにします。
+</span><span class="d_keyword">import</span> std.range: iota;
+<span class="d_keyword">import</span> std.algorithm: filter;
+<span class="d_keyword">foreach</span> (i; iota(0, data2.length).filter!(i =&gt; data2[i] == 90))
+    data2.replaceInPlace(i, i + 1, [95]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 95, 123]);
+
+<span class="d_comment">// replaceIntoだとは、置換結果をレンジに格納できます。
+</span><span class="d_comment">// ※Into版は添え字で始まりから終わりを指定する方法はありません。
+</span><span class="d_keyword">int</span>[10] buffer;
+buffer[].replaceInto(data1, 40, 42);
+<span class="d_keyword">assert</span>(buffer[] == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素をシャッフルします
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">randomShuffle</span> : <a href="https://dlang.org/phobos/std_random.html#randomShuffle">https://dlang.org/phobos/std_random.html#randomShuffle</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Random</span> : <a href="https://dlang.org/phobos/std_random.html#Random">https://dlang.org/phobos/std_random.html#Random</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">unpredictableSeed</span> : <a href="https://dlang.org/phobos/std_random.html#unpredictableSeed">https://dlang.org/phobos/std_random.html#unpredictableSeed</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random: randomShuffle, Random, Mt19937, unpredictableSeed;
+<span class="d_keyword">version</span> (<span class="d_keyword">unittest</span>)
+{
+    <span class="d_comment">// このサンプルでは結果を一定にするためシードを0に固定し、
+</span>    <span class="d_comment">// メルセンヌツイスターを使用した乱数を使う
+</span>    <span class="d_keyword">auto</span> rnd = Mt19937(0);
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_comment">// 実際にはお勧め乱数生成器のRandomを使用して、
+</span>    <span class="d_comment">// シードを unpredictableSeed で指定するなどすると良い
+</span>    <span class="d_keyword">auto</span> rnd = Random(unpredictableSeed);
+}
+
+<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// シャッフルしたデータにインプレースで更新される。
+</span>data.randomShuffle(rnd);
+
+<span class="d_comment">// 中身はランダムに変化している
+</span><span class="d_keyword">assert</span>(data != [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_keyword">version</span> (X86)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 32bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 32);
+    <span class="d_keyword">assert</span>(data == [50, 20, 80, 60, 40, 100, 10, 90, 70, 30]);
+}
+<span class="d_keyword">version</span> (X86_64)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 64bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 64);
+    <span class="d_keyword">assert</span>(data == [40, 70, 60, 100, 30, 80, 10, 50, 90, 20]);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかからランダムにピックアップします
+<div class="ddoc_blankline"></div>
+
+※シャッフルの応用です
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">randomShuffle</span> : <a href="https://dlang.org/phobos/std_random.html#randomShuffle">https://dlang.org/phobos/std_random.html#randomShuffle</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniform</span> : <a href="https://dlang.org/phobos/std_random.html#uniform">https://dlang.org/phobos/std_random.html#uniform</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Random</span> : <a href="https://dlang.org/phobos/std_random.html#Random">https://dlang.org/phobos/std_random.html#Random</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">unpredictableSeed</span> : <a href="https://dlang.org/phobos/std_random.html#unpredictableSeed">https://dlang.org/phobos/std_random.html#unpredictableSeed</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random: randomShuffle, Random, Mt19937, unpredictableSeed, uniform;
+<span class="d_keyword">version</span> (<span class="d_keyword">unittest</span>)
+{
+    <span class="d_comment">// このサンプルでは結果を一定にするためシードを0に固定し、
+</span>    <span class="d_comment">// メルセンヌツイスターを使用した乱数を使う
+</span>    <span class="d_keyword">auto</span> rnd = Mt19937(0);
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_comment">// 実際にはお勧め乱数生成器のRandomを使用して、
+</span>    <span class="d_comment">// シードを unpredictableSeed で指定するなどすると良い
+</span>    <span class="d_keyword">auto</span> rnd = Random(unpredictableSeed);
+}
+
+<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// シャッフルしたデータにインプレースで更新される。
+</span><span class="d_comment">// その中から0～(配列長)個取り出す。
+</span>data = data.randomShuffle(rnd)[0..uniform(0, data.length, rnd)];
+
+<span class="d_comment">// 中身はランダムに変化しているし、長さも変わる
+</span><span class="d_keyword">assert</span>(data.length != 10);
+<span class="d_keyword">assert</span>(data != [10, 20, 30, 40, 50, 60, 70, 80, 90, 100][0..data.length]);
+
+<span class="d_keyword">version</span> (X86)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 32bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 32);
+    <span class="d_keyword">assert</span>(data == [50]);
+}
+<span class="d_keyword">version</span> (X86_64)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 64bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 64);
+    <span class="d_keyword">assert</span>(data == [40, 70, 60, 100, 30]);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します①
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> の <span class="d_inlinecode donthyphenate notranslate">uniq</span> を使います。ただし、 <span class="d_inlinecode donthyphenate notranslate">uniq</span> を使うにはその前にソートが必要です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">sort</span> : <a href="https://dlang.org/phobos/std_algorithm_sorting.html#.sort">https://dlang.org/phobos/std_algorithm_sorting.html#.sort</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniq</span> : <a href="https://dlang.org/phobos/std_algorithm_iteration.html#.uniq">https://dlang.org/phobos/std_algorithm_iteration.html#.uniq</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: sort, uniq;
+<span class="d_keyword">import</span> std.array: array;
+
+<span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_comment">// まずソートして
+</span>data.sort();
+<span class="d_comment">// 重複を削除する
+</span>data = data.uniq().array;
+
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 4, 5, 7, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します②
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合にはuniqは使用できません。
+そのため、makeIndexでインデックスを一旦経由して重複削除し、mapでインデックスから要素を取り出します
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">sort</span> : <a href="https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex">https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniq</span> : <a href="https://dlang.org/phobos/std_algorithm_iteration.html#.uniq">https://dlang.org/phobos/std_algorithm_iteration.html#.uniq</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: makeIndex, sort, uniq, map;
+<span class="d_keyword">import</span> std.array: array;
+
+<span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_comment">// まずソートされたインデックス(ポインタ)の配列を作成し、
+</span><span class="d_comment">// そのインデックス(ポインタ)の配列を uniq で重複した要素を削除し、
+</span><span class="d_comment">// インデックス(ポインタ)で sort します
+</span><span class="d_comment">// そしてインデックス(ポインタ)から元の配列の要素を取り出します
+</span>data = data.makeIndex(<span class="d_keyword">new</span> <span class="d_keyword">int</span>*[data.length])
+    .uniq!((a, b) =&gt; *a == *b).array
+    .sort()
+    .map!(p =&gt; *p).array;
+
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します③
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合にはuniqは使用できません。
+先述のアルゴリズムの欠点は、ヒープを使ったり2回ソートしているあたりでしょうか。
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合、ということはきっとGCとか使いたくないしなるべく効率的なものが望ましいのでしょう。 <span class="d_inlinecode donthyphenate notranslate">@nogc</span> で成り立つ例を紹介します。
+以下のアルゴリズムは <span class="d_inlinecode donthyphenate notranslate">[a,b,c,d]</span> の配列では、 <span class="d_inlinecode donthyphenate notranslate">a == b, a == c, b == c, a == d, b == d, c == d</span> の順番で比較し、一致したら都度その要素を末尾に持っていってはじく処理を行っています。
+removeでなくbringToFrontを使用する理由は、無駄な要素削除を行わないようにするためです。(内部でswapが行われるので、要素の上書き更新が発生しない)
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">bringToFront</span>: <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront">https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_keyword">void</span> uniqWithoutSortInPlace(T)(<span class="d_keyword">ref</span> T[] ary) @nogc
+{
+    <span class="d_keyword">import</span> std.traits: hasElaborateDestructor;
+    <span class="d_keyword">import</span> std.algorithm: bringToFront, move;
+    <span class="d_keyword">import</span> std.array: back, popBack;
+    <span class="d_comment">//
+</span>    <span class="d_keyword">if</span> (ary.length == 0)
+        <span class="d_keyword">return</span>;
+    size_t i = 1;
+L_loop_i:
+    <span class="d_keyword">while</span> (i &lt; ary.length)
+    {
+        <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> e; ary[0..i])
+        {
+            <span class="d_keyword">if</span> (e == ary[i])
+            {
+                bringToFront(ary[i..i+1], ary[i+1..$]);
+                <span class="d_keyword">if</span> (hasElaborateDestructor!T)
+                    ary.back.move();
+                ary.popBack();
+                <span class="d_keyword">continue</span> L_loop_i;
+            }
+        }
+        ++i;
+    }
+}
+uniqWithoutSortInPlace(data);
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+</pre>
+</div>
 
                 
             </div>

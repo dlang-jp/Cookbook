@@ -52,7 +52,67 @@
     "comment" : "事前にサイズがわからない配列を構築する場合は `std.array` の `appender` を使用すると効率的です。\n\n要素の追加は `~=` または `put` で行います。\n\n`appender` : $(LINK https://dlang.org/phobos/std_array.html#appender)\n",
     "line" : 88,
     "char" : 1,
-    "endline" : 101,
+    "endline" : 113,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L113_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の一部の要素を置換します\n\nSee_Also:\n- `replace` : $(LINK https://dlang.org/phobos/std_array.html#replace)\n- `replaceInPlace` : $(LINK https://dlang.org/phobos/std_array.html#replaceInPlace)\n- `replaceInto` : $(LINK https://dlang.org/phobos/std_array.html#replaceInto)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 113,
+    "char" : 1,
+    "endline" : 156,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L156_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の要素をシャッフルします\n\nSee_Also:\n- `randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)\n- `Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)\n- `unpredictableSeed` : $(LINK https://dlang.org/phobos/std_random.html#unpredictableSeed)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 156,
+    "char" : 1,
+    "endline" : 210,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L210_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の要素のなかからランダムにピックアップします\n\n※シャッフルの応用です\n\nSee_Also:\n- `randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)\n- `uniform` : $(LINK https://dlang.org/phobos/std_random.html#uniform)\n- `Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)\n- `unpredictableSeed` : $(LINK https://dlang.org/phobos/std_random.html#unpredictableSeed)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 210,
+    "char" : 1,
+    "endline" : 265,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L265_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の要素のなかから重複している要素を削除します①\n\n`std.algorithm` の `uniq` を使います。ただし、 `uniq` を使うにはその前にソートが必要です。\n\nSee_Also:\n- `sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.sort)\n- `uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 265,
+    "char" : 1,
+    "endline" : 293,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L293_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の要素のなかから重複している要素を削除します②\n\nソートしたくない場合にはuniqは使用できません。\nそのため、makeIndexでインデックスを一旦経由して重複削除し、mapでインデックスから要素を取り出します\n\nSee_Also:\n- `sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex)\n- `uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 293,
+    "char" : 1,
+    "endline" : 328,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L328_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "配列の要素のなかから重複している要素を削除します③\n\nソートしたくない場合にはuniqは使用できません。\n先述のアルゴリズムの欠点は、ヒープを使ったり2回ソートしているあたりでしょうか。\n\nソートしたくない場合、ということはきっとGCとか使いたくないしなるべく効率的なものが望ましいのでしょう。 `@nogc` で成り立つ例を紹介します。\n以下のアルゴリズムは `[a,b,c,d]` の配列では、 `a == b, a == c, b == c, a == d, b == d, c == d` の順番で比較し、一致したら都度その要素を末尾に持っていってはじく処理を行っています。\nremoveでなくbringToFrontを使用する理由は、無駄な要素削除を行わないようにするためです。(内部でswapが行われるので、要素の上書き更新が発生しない)\n\nSee_Also:\n- `bringToFront`: $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 328,
+    "char" : 1,
+    "endline" : 362,
     "endchar" : 1
    }
   ]
