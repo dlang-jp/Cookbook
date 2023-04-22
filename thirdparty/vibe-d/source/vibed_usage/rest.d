@@ -36,6 +36,8 @@ See_Also:
 - https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)
 - https://vibed.org/api/vibe.web.rest/RestInterfaceClient
 - https://vibed.org/api/vibe.web.rest/serveRestJSClient
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {

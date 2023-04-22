@@ -34,6 +34,8 @@ See_Also:
 - https://vibed.org/api/vibe.core.core/runEventLoop
 - https://vibed.org/api/vibe.core.core/runApplication
 - https://vibed.org/api/vibe.core.core/exitEventLoop
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -95,6 +97,8 @@ See_Also:
 - https://vibed.org/api/vibe.http.server/render : dietテンプレートファイルをコンパイルしてレスポンスヘッダに設定する
 - https://vibed.org/api/diet.html/compileHTMLDietFileString : dietテンプレートファイルをコンパイルしてOutputRangeに入れる
 - https://vibed.org/api/diet.html/compileHTMLDietString : 文字列をコンパイルしてOutputRangeに入れる
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
