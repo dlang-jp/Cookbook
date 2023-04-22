@@ -511,6 +511,8 @@ See_Also:
     - https://dlang.org/phobos/std_array.html#.array
     - https://dlang.org/phobos/std_format.html#.format
     - https://dlang.org/phobos/std_digest.html#.toHexString
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {

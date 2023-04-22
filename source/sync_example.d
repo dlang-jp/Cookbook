@@ -138,6 +138,8 @@ unittest
     - Writerが処理をした後、Readerが待機していたらReaderを先に処理する
 - `Polocy.PREFER_WRITERS` (Writer優先、既定値)
     - Writerが処理をした後、Writerが待機していたらWriterを先に処理する
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -157,6 +159,8 @@ Barrierで、指定した数のスレッドが所定のポイントに達する�
 
 See_Also:
     - https://dlang.org/phobos/core_sync_barrier.html
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -196,6 +200,8 @@ Conditionのコンストラクタに渡したMutexをロックしているとき
 
 See_Also:
     - https://dlang.org/phobos/core_sync_condition.html
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -260,6 +266,8 @@ Semaphoreでは通知する側はnotifyより前に共有資源の編集を終�
 
 See_Also:
     - https://dlang.org/phobos/core_sync_semaphore.html
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -299,6 +307,8 @@ Eventでは通知する側はsetより前に共有資源の編集を終え、通
 
 See_Also:
     - https://dlang.org/phobos/core_sync_event.html
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
