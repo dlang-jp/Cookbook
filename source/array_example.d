@@ -98,3 +98,193 @@ unittest
 
     assert(data == [10, 20]);
 }
+
+
+/++
+配列の一部の要素を置換します
+
+`replace` : $(LINK https://dlang.org/phobos/std_array.html#replace)
+`replaceInPlace` : $(LINK https://dlang.org/phobos/std_array.html#replaceInPlace)
+`replaceInto` : $(LINK https://dlang.org/phobos/std_array.html#replaceInto)
++/
+unittest
+{
+    import std.array: replace, replaceInPlace, replaceInto;
+
+    int[] data1 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+    // replaceの場合：元データは書き変わらず、新しい配列が確保されます
+    auto data2 = data1.replace(40, 42);
+    assert(data1 == [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+    assert(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+    // 添え字で始まりから終わりの指定方法もあります。
+    data2 = data1.replace(3, 4, [42]);
+    assert(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+    // replaceInPlaceの場合：元データも書き換えられます
+    // ※InPlace版は値を探して置換する指定方法はありません。
+    data2.replaceInPlace(9, 10, [123]);
+    assert(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 123]);
+    // 値を探してInPlaceで置換する場合は以下のようにします。
+    import std.range: iota;
+    import std.algorithm: filter;
+    foreach (i; iota(0, data2.length).filter!(i => data2[i] == 90))
+        data2.replaceInPlace(i, i + 1, [95]);
+    assert(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 95, 123]);
+
+    // replaceIntoだとは、置換結果をレンジに格納できます。
+    // ※Into版は添え字で始まりから終わりを指定する方法はありません。
+    int[10] buffer;
+    buffer[].replaceInto(data1, 40, 42);
+    assert(buffer[] == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+}
+
+/++
+配列の要素をシャッフルします
+
+- `Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)
+- `randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)
+- `unpredictableSeed` : $(LINK https://dlang.org/phobos/std_random.html#unpredictableSeed)
++/
+unittest
+{
+    import std.random: randomShuffle, Random, unpredictableSeed;
+    // 個のサンプルでは結果を一定にするためシードを0に固定した乱数を使う
+    auto rnd = Random(0);
+    // 実際にはシードを unpredictableSeed で指定するなどすると良い
+    version (none)
+        rnd = Random(unpredictableSeed);
+
+    int[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+    // シャッフルしたデータにインプレースで更新される。
+    data.randomShuffle(rnd);
+
+    assert(data == [40, 70, 60, 100, 30, 80, 10, 50, 90, 20]);
+}
+
+
+/++
+配列の要素のなかからランダムにピックアップします
+
+※シャッフルの応用です
+
+`Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)
+`randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)
+`uniform` : $(LINK https://dlang.org/phobos/std_random.html#uniform)
++/
+unittest
+{
+    import std.random: randomShuffle, Random, uniform;
+    // シードを0に固定した乱数を使う
+    auto rnd = Random(0);
+
+    int[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+    // シャッフルしたデータにインプレースで更新される。
+    // その中から0～(配列長)個取り出す。
+    data = data.randomShuffle(rnd)[0..uniform(0, data.length, rnd)];
+
+    assert(data == [40, 70, 60, 100, 30]);
+}
+
+
+
+/++
+配列の要素のなかから重複している要素を削除します①
+
+`std.algorithm` の `uniq` を使います。ただし、 `uniq` を使うにはその前にソートが必要です。
+
+`sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.sort)
+`uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)
++/
+unittest
+{
+    import std.algorithm: sort, uniq;
+    import std.array: array;
+
+    int[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+    //    重複 ->                   ^  ^  ^        ^
+
+    // まずソートして
+    data.sort();
+    // 重複を削除する
+    data = data.uniq().array;
+
+    assert(data == [1, 2, 3, 4, 5, 7, 8, 9]);
+}
+
+/++
+配列の要素のなかから重複している要素を削除します②
+
+ソートしたくない場合にはuniqは使用できません。
+そのため、makeIndexでインデックスを一旦経由して重複削除し、mapでインデックスから要素を取り出します
+
+`sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex)
+`uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)
++/
+unittest
+{
+    import std.algorithm: makeIndex, sort, uniq, map;
+    import std.array: array;
+
+    int[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+    //    重複 ->                   ^  ^  ^        ^
+
+    // まずソートされたインデックス(ポインタ)の配列を作成し、
+    // そのインデックス(ポインタ)の配列を uniq で重複した要素を削除し、
+    // インデックス(ポインタ)で sort します
+    // そしてインデックス(ポインタ)から元の配列の要素を取り出します
+    data = data.makeIndex(new int*[data.length])
+        .uniq!((a, b) => *a == *b).array
+        .sort()
+        .map!(p => *p).array;
+
+    assert(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+}
+
+/++
+配列の要素のなかから重複している要素を削除します③
+
+ソートしたくない場合にはuniqは使用できません。
+先述のアルゴリズムの欠点は、ヒープを使ったり2回ソートしているあたりでしょうか。
+
+ソートしたくない場合、ということはきっとGCとか使いたくないしなるべく効率的なものが望ましいのでしょう。 `@nogc` で成り立つ例を紹介します。
+以下のアルゴリズムは `[a,b,c,d]` の配列では、 `a == b, a == c, b == c, a == d, b == d, c == d` の順番で比較し、一致したら都度その要素を末尾に持っていってはじく処理を行っています。
+removeでなくbringToFrontを使用する理由は、無駄な要素削除を行わないようにするためです。(内部でswapが行われるので、要素の上書き更新が発生しない)
++/
+unittest
+{
+    int[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+    //    重複 ->                   ^  ^  ^        ^
+
+    void uniqWithoutSortInPlace(T)(ref T[] ary) @nogc
+    {
+        import std.traits: hasElaborateDestructor;
+        import std.algorithm: bringToFront, move;
+        import std.array: back, popBack;
+        //
+        if (ary.length == 0)
+            return;
+        size_t i = 1;
+    L_loop_i:
+        while (i < ary.length)
+        {
+            foreach (ref e; ary[0..i])
+            {
+                if (e == ary[i])
+                {
+                    bringToFront(ary[i..i+1], ary[i+1..$]);
+                    if (hasElaborateDestructor!T)
+                        ary.back.move();
+                    ary.popBack();
+                    continue L_loop_i;
+                }
+            }
+            ++i;
+        }
+    }
+    uniqWithoutSortInPlace(data);
+    assert(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+}
