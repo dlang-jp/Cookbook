@@ -447,6 +447,130 @@ runTask({
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
 </pre>
 </div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ REST APIのレスポンス形式を変更する
+<div class="ddoc_blankline"></div>
+
+vibe.dでは、レスポンスのデータはJSONにシリアライズされて送信されます。JSON以外のデータを応答したい場合には、 <span class="d_inlinecode donthyphenate notranslate">resultSerializer</span> UDAを使用して変更が可能です。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://vibed.org/api/vibe.web.common/resultSerializer">https://vibed.org/api/vibe.web.common/resultSerializer</a>
+<div class="ddoc_blankline"></div>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv;
+<span class="d_keyword">import</span> vibe.vibe;
+
+<span class="d_comment">// 未使用ポート取得
+</span><span class="d_keyword">auto</span> port = getUnusedPort();
+
+<span class="d_comment">// API用のインターフェースを作る
+</span><span class="d_keyword">interface</span> MyApi
+{
+    <span class="d_comment">// GET "/hoge"
+</span>    <span class="d_comment">// レスポンスのボディは、数値の配列のJSON表現である以下のような形式になる。
+</span>    <span class="d_comment">// [1,2,3,4,5,6,7,8]
+</span>    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge() @safe;
+
+    <span class="d_keyword">private</span> <span class="d_keyword">static</span> <span class="d_keyword">void</span> serialize(<span class="d_keyword">alias</span> P, R)(<span class="d_keyword">ref</span> R output, <span class="d_keyword">const</span> <span class="d_keyword">ref</span> <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] value)
+    {
+        <span class="d_keyword">import</span> std.range: put;
+        put(output, value);
+    }
+    <span class="d_keyword">private</span> <span class="d_keyword">static</span> <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] deserialize(<span class="d_keyword">alias</span> P, R)(R input)
+    {
+        <span class="d_keyword">import</span> std.array: array;
+        <span class="d_keyword">return</span> <span class="d_keyword">cast</span>(<span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[])input.array;
+    }
+    <span class="d_comment">// GET "/hoge2"
+</span>    <span class="d_comment">// JSONではなく、バイナリを応答したい場合は以下のように、resultSerializerを指定することができる。
+</span>    @resultSerializer!(serialize, deserialize, <span class="d_string">"application/octet-stream"</span>)()
+    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge2() @safe;
+
+    <span class="d_keyword">private</span> <span class="d_keyword">static</span> <span class="d_keyword">void</span> serializeBase64(<span class="d_keyword">alias</span> P, R)(<span class="d_keyword">ref</span> R output, <span class="d_keyword">const</span> <span class="d_keyword">ref</span> <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] value)
+    {
+        <span class="d_keyword">import</span> std.range: put;
+        <span class="d_keyword">import</span> std.base64: Base64;
+        put(output, <span class="d_keyword">cast</span>(<span class="d_keyword">ubyte</span>[])Base64.encode(value));
+    }
+    <span class="d_keyword">private</span> <span class="d_keyword">static</span> <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] deserializeBase64(<span class="d_keyword">alias</span> P, R)(R input)
+    {
+        <span class="d_keyword">import</span> std.array: array;
+        <span class="d_keyword">import</span> std.base64: Base64;
+        <span class="d_keyword">return</span> Base64.decode(input.array).idup;
+    }
+    <span class="d_comment">// GET "/hoge3"
+</span>    <span class="d_comment">// Acceptリクエストヘッダによって応答を出し分けたい場合は以下のようにできる
+</span>    @resultSerializer!(serialize, deserialize, <span class="d_string">"application/octet-stream"</span>)()
+    @resultSerializer!(serializeBase64, deserializeBase64, <span class="d_string">"plain/text"</span>)()
+    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge3() @safe;
+}
+
+<span class="d_comment">// インターフェースを実装する
+</span><span class="d_keyword">class</span> MyApiImpliment: MyApi
+{
+    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge() @safe
+    {
+        <span class="d_keyword">return</span> [1,2,3,4,5,6,7,8];
+    }
+    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge2() @safe
+    {
+        <span class="d_keyword">return</span> [1,2,3,4,5,6,7,8];
+    }
+    <span class="d_keyword">immutable</span>(<span class="d_keyword">ubyte</span>)[] getHoge3() @safe
+    {
+        <span class="d_keyword">return</span> [1,2,3,4,5,6,7,8];
+    }
+}
+
+<span class="d_keyword">auto</span> router = <span class="d_keyword">new</span> URLRouter;
+<span class="d_comment">// 実装されたREST用のインターフェースを元に、URLRouterに自動的に登録してくれる
+</span>router.registerRestInterface(<span class="d_keyword">new</span> MyApiImpliment);
+<span class="d_comment">// serveRestJSClientはJavascript用のAPIを自動生成してくれる
+</span>router.get(<span class="d_string">"/myapi.js"</span>, serveRestJSClient!MyApi());
+<span class="d_comment">// サーバー起動
+</span><span class="d_keyword">immutable</span> serverAddr = listenHTTP(<span class="d_string">"localhost:"</span>.text(port), router).bindAddresses[0];
+
+Throwable thrown;
+runTask({
+    <span class="d_keyword">scope</span> (exit)
+        exitEventLoop();
+    <span class="d_keyword">try</span>
+    {
+        <span class="d_comment">// クライアント側の記述
+</span>        <span class="d_comment">// hogeはJSONを受信する
+</span>        <span class="d_keyword">auto</span> res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr) ~ <span class="d_string">"/hoge"</span>);
+        <span class="d_keyword">assert</span>(res.bodyReader.readAllUTF8() == <span class="d_string">`[1,2,3,4,5,6,7,8]`</span>);
+
+        <span class="d_comment">// hoge2はバイナリを受信する
+</span>        res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr) ~ <span class="d_string">"/hoge2"</span>);
+        <span class="d_keyword">assert</span>(res.bodyReader.readAll() == [1,2,3,4,5,6,7,8]);
+
+        <span class="d_comment">// hoge3はAcceptリクエストヘッダによってバイナリを受信するか
+</span>        <span class="d_comment">// Base64のテキストを受信するか選択できる
+</span>        res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr) ~ <span class="d_string">"/hoge3"</span>, (<span class="d_keyword">scope</span> req) {
+            req.method = HTTPMethod.GET;
+            req.headers[<span class="d_string">"Accept"</span>] = <span class="d_string">"application/octet-stream"</span>;
+        });
+        <span class="d_keyword">assert</span>(res.bodyReader.readAll() == [1,2,3,4,5,6,7,8]);
+        <span class="d_comment">// plain/textをAcceptで設定して受信する場合は以下
+</span>        res = requestHTTP(<span class="d_string">"http://"</span>.text(serverAddr) ~ <span class="d_string">"/hoge3"</span>, (<span class="d_keyword">scope</span> req) {
+            req.method = HTTPMethod.GET;
+            req.headers[<span class="d_string">"Accept"</span>] = <span class="d_string">"plain/text"</span>;
+        });
+        <span class="d_keyword">auto</span> hoge3b64res = res.bodyReader.readAllUTF8();
+        <span class="d_keyword">assert</span>(hoge3b64res == <span class="d_string">"AQIDBAUGBwg="</span>);
+        <span class="d_keyword">import</span> std.base64: Base64;
+        <span class="d_keyword">assert</span>(Base64.decode(hoge3b64res) == [1,2,3,4,5,6,7,8]);
+    }
+    <span class="d_keyword">catch</span> (Throwable e)
+        thrown = e;
+});
+
+<span class="d_keyword">auto</span> exitCode = runApplication();
+<span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
+<span class="d_keyword">assert</span>(!thrown, thrown.toString());
+</pre>
+</div>
 
                 
             </div>

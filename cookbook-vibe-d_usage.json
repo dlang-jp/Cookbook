@@ -154,7 +154,17 @@
     "comment" : "REST APIに対応する\n\nD言語のメタプログラミングを使って、リクエストのJSONからオブジェクトへシリアライズしてマッピングしたり、戻り値からレスポンスのJSONへのデシリアライズしたり、URLへのルーティングなどを自動化します。\n\n主に以下を行います。\n- interfaceでREST APIを定義します。\n- classで上記interfaceを実装します。\n- registerRestInterfaceで、interfaceを実装したclassを使って、URLRouterへの設定を自動的に行います。\n  - パスの設定が自動的に行われます。\n  - 受信したJSONをHTTPサーバーリクエストから分析してパラメータに割り振る、\n    returnした構造体をJSONにシリアライズしてHTTPサーバーレスポンスに設定するなどのふるまいが自動的に生成され、\n    ハンドラとして登録されます。\n- 必須ではありませんが、 serveRestJSClient でクライアント側のJavascriptで実行できるスクリプトを自動生成でき、それをURLRouterに設定できます。\n\nvibe.dではクライアント側についても楽できる機能 RestInterfaceClient を持っています。\nRestInterfaceClient を使うと、サーバー側のinterfaceで定義したREST APIを使って、以下のようなことができます。\n- interfaceの各仮想関数に対して、HTTPリクエストを行ってデータをもらってくる実装を自動的に生成します。\n- リクエスト先のパスの設定も自動的に行われます。\n- 引数のオブジェクトをJSONにシリアライズし、リクエストのボディに設定します。\n- レスポンスのJSONをデシリアライズし、戻り値のオブジェクトにマッピングします。\n\nSee_Also:\n- https://vibed.org/docs#rest-interface-generator\n- https://vibed.org/api/vibe.web.rest/\n- https://vibed.org/api/vibe.web.rest/registerRestInterface\n- https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)\n- https://vibed.org/api/vibe.web.rest/RestInterfaceClient\n- https://vibed.org/api/vibe.web.rest/serveRestJSClient\n\n$(WORKAROUND_ISSUE22230)\n",
     "line" : 42,
     "char" : 1,
-    "endline" : 145,
+    "endline" : 156,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L156_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "REST APIのレスポンス形式を変更する\n\nvibe.dでは、レスポンスのデータはJSONにシリアライズされて送信されます。JSON以外のデータを応答したい場合には、 `resultSerializer` UDAを使用して変更が可能です。\n\nSee_Also: https://vibed.org/api/vibe.web.common/resultSerializer\n\n",
+    "line" : 156,
+    "char" : 1,
+    "endline" : 272,
     "endchar" : 1
    }
   ]
