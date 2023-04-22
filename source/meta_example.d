@@ -182,6 +182,8 @@ ElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱い�
 See_Also:
     - https://dlang.org/phobos/std_range_primitives.html#ElementType
     - https://dlang.org/phobos/std_traits.html#ForeachType
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {

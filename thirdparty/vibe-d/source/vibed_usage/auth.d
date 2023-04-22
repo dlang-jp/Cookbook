@@ -19,6 +19,8 @@ See_Also:
 - https://vibed.org/docs#http-authentication
 - https://vibed.org/api/vibe.http.auth.basic_auth/performBasicAuth
 - https://github.com/vibe-d/vibe.d/blob/master/examples/auth_basic/source/app.d
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -95,6 +97,8 @@ vibe.dでのダイジェスト認証で利用されるMD5はセキュリティ�
 See_Also:
 - https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth
 - https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -199,6 +203,7 @@ See_Also:
 - https://vibed.org/api/vibe.web.web/SessionVar
 - https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d
 
+$(WORKAROUND_ISSUE22230)
 +/
 // TODO: Redisを使った分散ストアなど専用ページを設けて認証と分ける
 unittest
@@ -319,6 +324,7 @@ See_Also:
 - https://vibed.org/api/vibe.web.auth/
 - https://github.com/vibe-d/vibe.d/blob/master/examples/web-auth/source/app.d
 
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {

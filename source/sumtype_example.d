@@ -22,6 +22,8 @@ See_Also:
     - https://dlang.org/phobos/std_sumtype.html#.match
     - https://dlang.org/phobos/std_sumtype.html#.SumType.this
     - https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {

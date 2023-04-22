@@ -229,6 +229,30 @@ unittest
 }
 
 /++
+文字列の連結③
+
+数値などの様々な値を文字列化したうえで連結した結果を得るには、`std.conv` の `text` 関数を利用します。
+
+`text` : https://dlang.org/phobos/std_conv.html#text
++/
+unittest
+{
+    import std.conv : text, wtext, dtext;
+
+    // 引数に渡した内容をテキスト化して連結したものが得られます
+    assert(text("out/", 10, ".json") == "out/10.json");
+
+    // string, wstring, dstringの型に対し、対応する text, wtext, dtext関数があります
+    string s1 = text("data/", 0, ".json");
+    wstring s2 = wtext("data/", 1, ".json");
+    dstring s3 = dtext("data/", 2, ".json");
+
+    assert(s1 == "data/0.json");
+    assert(s2 == "data/1.json"w);
+    assert(s3 == "data/2.json"d);
+}
+
+/++
 書式化文字列
 
 `std.format` の `format` を使います。
@@ -487,6 +511,8 @@ See_Also:
     - https://dlang.org/phobos/std_array.html#.array
     - https://dlang.org/phobos/std_format.html#.format
     - https://dlang.org/phobos/std_digest.html#.toHexString
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {
