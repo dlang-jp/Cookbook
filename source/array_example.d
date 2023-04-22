@@ -103,9 +103,12 @@ unittest
 /++
 配列の一部の要素を置換します
 
+See_Also:
 - `replace` : $(LINK https://dlang.org/phobos/std_array.html#replace)
 - `replaceInPlace` : $(LINK https://dlang.org/phobos/std_array.html#replaceInPlace)
 - `replaceInto` : $(LINK https://dlang.org/phobos/std_array.html#replaceInto)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -143,9 +146,12 @@ unittest
 /++
 配列の要素をシャッフルします
 
+See_Also:
 - `randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)
 - `Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)
 - `unpredictableSeed` : $(LINK https://dlang.org/phobos/std_random.html#unpredictableSeed)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -193,10 +199,13 @@ unittest
 
 ※シャッフルの応用です
 
+See_Also:
 - `randomShuffle` : $(LINK https://dlang.org/phobos/std_random.html#randomShuffle)
 - `uniform` : $(LINK https://dlang.org/phobos/std_random.html#uniform)
 - `Random` : $(LINK https://dlang.org/phobos/std_random.html#Random)
 - `unpredictableSeed` : $(LINK https://dlang.org/phobos/std_random.html#unpredictableSeed)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -247,8 +256,11 @@ unittest
 
 `std.algorithm` の `uniq` を使います。ただし、 `uniq` を使うにはその前にソートが必要です。
 
+See_Also:
 - `sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.sort)
 - `uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -272,8 +284,11 @@ unittest
 ソートしたくない場合にはuniqは使用できません。
 そのため、makeIndexでインデックスを一旦経由して重複削除し、mapでインデックスから要素を取り出します
 
+See_Also:
 - `sort` : $(LINK https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex)
 - `uniq` : $(LINK https://dlang.org/phobos/std_algorithm_iteration.html#.uniq)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -304,6 +319,11 @@ unittest
 ソートしたくない場合、ということはきっとGCとか使いたくないしなるべく効率的なものが望ましいのでしょう。 `@nogc` で成り立つ例を紹介します。
 以下のアルゴリズムは `[a,b,c,d]` の配列では、 `a == b, a == c, b == c, a == d, b == d, c == d` の順番で比較し、一致したら都度その要素を末尾に持っていってはじく処理を行っています。
 removeでなくbringToFrontを使用する理由は、無駄な要素削除を行わないようにするためです。(内部でswapが行われるので、要素の上書き更新が発生しない)
+
+See_Also:
+- `bringToFront`: $(LINK https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
