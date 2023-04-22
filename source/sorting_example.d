@@ -91,16 +91,18 @@ partialSort を使って効率よく中央値を求める方法
         return result;
     }
 
+    import std.math : isClose;
+
     // データが偶数個の場合
     float[] data = [8.0f, 3, 6, 9, 1, 5];
 
     float calculatedMedian = calculateMedianWithSideEffects(data);
-    assert(calculatedMedian == 5.5); // 中央2個の平均
+    assert(calculatedMedian.isClose(5.5)); // 中央2個の平均
 
     // データが奇数個の場合
     data ~= 7;
     float calculatedMedian2 = calculateMedianWithSideEffects(data);
-    assert(calculatedMedian2 == 6); // 丁度中央に位置する要素の値
+    assert(calculatedMedian2.isClose(6)); // 丁度中央に位置する要素の値
 }
 
 /++
