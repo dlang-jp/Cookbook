@@ -130,41 +130,41 @@
   "comment" : "コンテナ\n\nスタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。\n\nSource: $(LINK_TO_SRC source/_container_example.d)\nMacros:\n    TITLE=コンテナ（データ構造）の例\n",
   "members" : [
    {
-    "name" : "__unittest_L19_C1",
+    "name" : "__unittest_L24_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "スタックを構成する例です。\n\n汎用データ構造である `std.container` の `SList` （単方向リンクリスト）を利用して実現します。\n\nSee_Also: https://dlang.org/phobos/std_container_slist.html\n",
-    "line" : 19,
+    "comment" : "スタックを構成する例です。\n\nスタックは、後入れ先出し（LIFO: Last In, First Out）のデータ構造です。\n要素の追加順に対し、後から追加した最も新しい要素が取り出されます。\n\n汎用データ構造である `std.container` の `SList` を利用して実現します。\nSListは「単方向リンクリスト（Single Linked List）」であり、先頭要素の追加や削除が高速（定数時間）です。\nこれはスタックの動作に沿っており、パフォーマンスの面からも優れています。\n\nSee_Also: https://dlang.org/phobos/std_container_slist.html\n",
+    "line" : 24,
     "char" : 1,
-    "endline" : 58,
+    "endline" : 65,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L58_C1",
+    "name" : "__unittest_L65_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 58,
+    "line" : 65,
     "char" : 1,
-    "endline" : 82,
+    "endline" : 94,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L82_C1",
+    "name" : "__unittest_L94_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "Queueを構成する例です\n\n汎用データ構造である `std.container` の `DList` (双方向リンクリスト)を利用します。\n\nSee_Also: https://dlang.org/phobos/std_container_dlist.html\n",
-    "line" : 82,
+    "comment" : "キューを構成する例です\n\nキューは、先入れ先出し（FIFO: First In, First Out）のデータ構造です。\n要素の追加順に対し、最初に追加した最も古い要素が取り出されます。\n\n汎用データ構造である `std.container` の `DList` を利用して実現します。\nDListは「双方向リンクリスト（Double Linked List）」であり、先頭と末尾に対する追加や削除が高速（定数時間）です。\nこれはキューの動作に沿っており、パフォーマンスの面からも優れています。\n\nSee_Also: https://dlang.org/phobos/std_container_dlist.html\n",
+    "line" : 94,
     "char" : 1,
-    "endline" : 133,
+    "endline" : 147,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L133_C1",
+    "name" : "__unittest_L147_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 133,
+    "line" : 147,
     "char" : 1,
-    "endline" : 149,
+    "endline" : 163,
     "endchar" : 1
    }
   ]
