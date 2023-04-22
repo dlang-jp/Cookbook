@@ -917,8 +917,10 @@ assertThrown!Error(bar());
 <div class="ddoc_blankline"></div>
 
 See_Also:
-<ul><li><a href="https://dlang.org/phobos/std_exception.html#basicExceptionCtors">https://dlang.org/phobos/std_exception.html#basicExceptionCtors</a></li>
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#basicExceptionCtors">https://dlang.org/phobos/std_exception.html#basicExceptionCtors</a>
+</li>
 </ul>
+
 <pre class="d_code notranslate"><span class="d_comment">// Exceptionを継承したTestExceptionを定義
 </span><span class="d_keyword">class</span> TestException: Exception
 {
@@ -979,8 +981,10 @@ See_Also:
 <div class="ddoc_blankline"></div>
 
 See_Also:
-<ul><li><a href="https://dlang.org/phobos/std_exception.html#enforce">https://dlang.org/phobos/std_exception.html#enforce</a></li>
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#enforce">https://dlang.org/phobos/std_exception.html#enforce</a>
+</li>
 </ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception: enforce;
 <span class="d_keyword">import</span> core.stdc.stdlib: malloc, free;
 <span class="d_comment">// mallocはnullチェックしないといけない。
@@ -1034,6 +1038,7 @@ See_Also:
 <ul><li><a href="https://dlang.org/phobos/std_exception.html#collectException">https://dlang.org/phobos/std_exception.html#collectException</a>
 </li>
 </ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.file;
 <span class="d_keyword">import</span> std.exception: collectException, enforce;
 <span class="d_comment">// std.file.removeはダメだったら例外投げる。投げたら、存在チェックする。
@@ -1106,8 +1111,10 @@ handle関数では要素の操作中に例外が発生した場合に、その�
 <div class="ddoc_blankline"></div>
 
 See_Also:
-<ul><li><a href="https://dlang.org/phobos/std_exception.html#handle">https://dlang.org/phobos/std_exception.html#handle</a></li>
+<ul><li><a href="https://dlang.org/phobos/std_exception.html#handle">https://dlang.org/phobos/std_exception.html#handle</a>
+</li>
 </ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: equal, map, splitter;
 <span class="d_keyword">import</span> std.conv: to, ConvException;
 <span class="d_keyword">import</span> std.exception: handle, RangePrimitive;

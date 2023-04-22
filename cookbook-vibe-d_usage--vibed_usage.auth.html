@@ -305,6 +305,9 @@ See_Also:
 <ul><li><a href="https://vibed.org/docs#http-authentication">https://vibed.org/docs#http-authentication</a></li>
 <li><a href="https://vibed.org/api/vibe.http.auth.basic_auth/performBasicAuth">https://vibed.org/api/vibe.http.auth.basic_auth/performBasicAuth</a></li>
 <li><a href="https://github.com/vibe-d/vibe.d/blob/master/examples/auth_basic/source/app.d">https://github.com/vibe-d/vibe.d/blob/master/examples/auth_basic/source/app.d</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> std.conv: text;
 
@@ -362,8 +365,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  ダイジェスト認証
@@ -381,6 +383,9 @@ vibe.dでのダイジェスト認証で利用されるMD5はセキュリティ�
 See_Also:
 <ul><li><a href="https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth">https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth</a></li>
 <li><a href="https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d">https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> std.conv: text;
 
@@ -465,8 +470,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  セッション
@@ -484,7 +488,8 @@ See_Also:
 <li><a href="https://vibed.org/api/vibe.http.session/Session">https://vibed.org/api/vibe.http.session/Session</a></li>
 <li><a href="https://vibed.org/api/vibe.web.web/SessionVar">https://vibed.org/api/vibe.web.web/SessionVar</a></li>
 <li><a href="https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d">https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d</a>
-<div class="ddoc_blankline"></div>
+</li>
+</ul>
 
 <pre class="d_code notranslate"><span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> std.conv: text;
@@ -590,8 +595,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  権限
@@ -603,7 +607,8 @@ runTask({
 See_Also:
 <ul><li><a href="https://vibed.org/api/vibe.web.auth/">https://vibed.org/api/vibe.web.auth/</a></li>
 <li><a href="https://github.com/vibe-d/vibe.d/blob/master/examples/web-auth/source/app.d">https://github.com/vibe-d/vibe.d/blob/master/examples/web-auth/source/app.d</a>
-<div class="ddoc_blankline"></div>
+</li>
+</ul>
 
 <pre class="d_code notranslate"><span class="d_keyword">import</span> vibe.vibe, vibe.web.<span class="d_psymbol">auth</span>;
 <span class="d_keyword">import</span> std.conv: text;
@@ -799,8 +804,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  RESTで認証

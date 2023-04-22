@@ -311,6 +311,9 @@
 See_Also:
 <ul><li><a href="https://vibed.org/docs#http-https">https://vibed.org/docs#http-https</a></li>
 <li><a href="https://vibed.org/api/vibe.stream.tls/TLSContext">https://vibed.org/api/vibe.stream.tls/TLSContext</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv;
 <span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> vibe.stream.tls;
@@ -369,8 +372,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  クライアント認証を要求するHTTPSサーバー
@@ -397,6 +399,9 @@ See_Also:
 <ul><li><a href="https://vibed.org/api/vibe.stream.tls/">https://vibed.org/api/vibe.stream.tls/</a></li>
 <li><a href="https://vibed.org/api/vibe.stream.tls/TLSPeerValidationMode">https://vibed.org/api/vibe.stream.tls/TLSPeerValidationMode</a></li>
 <li><a href="https://github.com/vibe-d/vibe.d/blob/master/tests/tls/source/app.d">https://github.com/vibe-d/vibe.d/blob/master/tests/tls/source/app.d</a> (vibe.dのTLSのテスト)
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv;
 <span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> vibe.stream.tls;
@@ -470,8 +475,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 
                 

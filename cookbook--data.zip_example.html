@@ -376,6 +376,9 @@ std.file.write(<span class="d_string">"std_zip_example.zip"</span>, zippedData);
 See_Also:
 <ul><li><a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT">https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT</a></li>
 <li>(和訳) <a href="http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt">http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.zip;
 <span class="d_keyword">import</span> std.string: representation;
 <span class="d_comment">// ZIPファイルは、ZIPアーカイブに、アーカイブメンバー(ファイル)
@@ -466,8 +469,7 @@ std.file.write(<span class="d_string">"std_zip_example_jp.zip"</span>, zippedDat
     <span class="d_keyword">assert</span>(std.file.exists(<span class="d_string">"std_zip_example_jp.zip"</span>));
     std.file.remove(<span class="d_string">"std_zip_example_jp.zip"</span>);
 }
-</pre></li>
-</ul>
+</pre>
 </div>
 
                 

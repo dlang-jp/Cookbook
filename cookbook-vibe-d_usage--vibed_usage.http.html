@@ -321,6 +321,9 @@ See_Also:
 <li><a href="https://vibed.org/api/vibe.core.core/runEventLoop">https://vibed.org/api/vibe.core.core/runEventLoop</a></li>
 <li><a href="https://vibed.org/api/vibe.core.core/runApplication">https://vibed.org/api/vibe.core.core/runApplication</a></li>
 <li><a href="https://vibed.org/api/vibe.core.core/exitEventLoop">https://vibed.org/api/vibe.core.core/exitEventLoop</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv: text;
 <span class="d_keyword">import</span> vibe.vibe;
 
@@ -365,8 +368,7 @@ Throwable thrown;
 </span><span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 <div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
  dietテンプレートを使用する例
@@ -381,6 +383,9 @@ See_Also:
 <li><a href="https://vibed.org/api/vibe.http.server/render">https://vibed.org/api/vibe.http.server/render</a> : dietテンプレートファイルをコンパイルしてレスポンスヘッダに設定する</li>
 <li><a href="https://vibed.org/api/diet.html/compileHTMLDietFileString">https://vibed.org/api/diet.html/compileHTMLDietFileString</a> : dietテンプレートファイルをコンパイルしてOutputRangeに入れる</li>
 <li><a href="https://vibed.org/api/diet.html/compileHTMLDietString">https://vibed.org/api/diet.html/compileHTMLDietString</a> : 文字列をコンパイルしてOutputRangeに入れる
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv: text;
 <span class="d_keyword">import</span> vibe.vibe;
 <span class="d_keyword">import</span> diet.html;
@@ -444,8 +449,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 
                 

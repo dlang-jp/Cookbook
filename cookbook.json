@@ -398,20 +398,20 @@
     "storageClass" : [
      "@system"
     ],
-    "endline" : 93,
+    "endline" : 95,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L93_C9",
+    "name" : "__unittest_L95_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "日本語ファイル名の保存方法\n\n日本語のファイル名を保存し、かつプラットフォーム依存をなくすには、工夫が必要です。\n\n具体的には、各`ArchiveMemver`の`extra`に、Info-ZIP Unicode Path Extra Field、というものを使用します。このExtra Fieldが設定されている場合、`ArchiveMemver`の`name`より優先してこのパス名が使用されます。\n\nただし、Unicode Path Extra Field非対応のツールでは`name`に指定したパスが利用されてしまうので、その対応のため、`ArchiveMemver`の`name`にはShift_JISのファイル名を指定します。\n\nSee_Also:\n- https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT\n- (和訳) http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt\n",
-    "line" : 93,
+    "comment" : "日本語ファイル名の保存方法\n\n日本語のファイル名を保存し、かつプラットフォーム依存をなくすには、工夫が必要です。\n\n具体的には、各`ArchiveMemver`の`extra`に、Info-ZIP Unicode Path Extra Field、というものを使用します。このExtra Fieldが設定されている場合、`ArchiveMemver`の`name`より優先してこのパス名が使用されます。\n\nただし、Unicode Path Extra Field非対応のツールでは`name`に指定したパスが利用されてしまうので、その対応のため、`ArchiveMemver`の`name`にはShift_JISのファイル名を指定します。\n\nSee_Also:\n- https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT\n- (和訳) http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 95,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 186,
+    "endline" : 188,
     "endchar" : 1
    }
   ]
@@ -739,85 +739,85 @@
     "storageClass" : [
      "@system"
     ],
-    "endline" : 654,
+    "endline" : 656,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L654_C7",
+    "name" : "__unittest_L656_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# 例外の自作\n例外クラスはExceptionを継承したクラスを自分で定義することができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#basicExceptionCtors\n",
-    "line" : 654,
+    "comment" : "# 例外の自作\n例外クラスはExceptionを継承したクラスを自分で定義することができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#basicExceptionCtors\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 656,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 714,
+    "endline" : 718,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L714_C9",
+    "name" : "__unittest_L718_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# エラー時に例外を投げる便利関数 [std.exception.enforce]\nもしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。\n\n```d\nauto res = foo();\nif (!res)\n    throw new Exception(\"hogehoge\");\n```\nを、\n```d\nauto res = enforce(foo(), \"hogehoge\");\n```\nと書くことのできる関数です。さらに、UFCSを使うと `auto res = foo().enforce(\"hogehoge\");` と書くこともできます。\n\nエラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために\n`if (!res) throw new Exception(....)`\n等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。\n\n特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。\n\n使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。\nおおむね `assert()` と同じです。\n\n`assert()` は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、\n`enforce()` は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#enforce\n",
-    "line" : 714,
+    "comment" : "# エラー時に例外を投げる便利関数 [std.exception.enforce]\nもしエラーだったら例外を投げる…というユースケースを簡単にしたい場合は、enforceが便利です。\n\n```d\nauto res = foo();\nif (!res)\n    throw new Exception(\"hogehoge\");\n```\nを、\n```d\nauto res = enforce(foo(), \"hogehoge\");\n```\nと書くことのできる関数です。さらに、UFCSを使うと `auto res = foo().enforce(\"hogehoge\");` と書くこともできます。\n\nエラーかどうかを関数の戻り値などで判定するケースは多いですが、いちいちめったに起こらない例外のために\n`if (!res) throw new Exception(....)`\n等と書くと本流のロジックが分断され読みづらいからあんまり書きたくないし、もし例外が起こったら呼び出し側の関数に対処してほしい…という場合に使います。\n\n特に例外を使わずに戻り値でエラーコードの通知を行うC言語のプログラムや、Nullが帰る可能性のある関数、ダイナミックキャストの結果などで使用します。\n\n使い方は、1個目の引数にtrueに判定されることを期待しているもの、2個目の引数にfalseに判定された時の例外メッセージを指定します。メッセージは省略可能です。\nおおむね `assert()` と同じです。\n\n`assert()` は、「絶対こうなるはず。こうならなきゃおかしい。」という場合に使って、\n`enforce()` は、「うまくいけばこうなるはず。こうならなきゃ私の手に負えない何らかの例外が起こっている。」という場合に使います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#enforce\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 718,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 768,
+    "endline" : 773,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L768_C9",
+    "name" : "__unittest_L773_C9",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# 発生した例外を取得する便利関数 [std.exception.collectException]\n\nもし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。\n\n```d\ntry\n{\n    foo();\n}\ncatch (Exception e)\n{\n    // エラー処理\n}\n```\nを、\n```d\nif (auto e = collectException(foo()))\n{\n    // エラー処理\n}\n```\nと書くことのできる関数です。\n\n1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、\n例外に対して何もしなくてよい時に握りつぶしたい場合、\n例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#collectException\n\n",
-    "line" : 768,
+    "comment" : "# 発生した例外を取得する便利関数 [std.exception.collectException]\n\nもし呼び出した関数で例外が発生する可能性がある場合で、その場で例外に対処できる場合、collectExceptionが便利です。\n\n```d\ntry\n{\n    foo();\n}\ncatch (Exception e)\n{\n    // エラー処理\n}\n```\nを、\n```d\nif (auto e = collectException(foo()))\n{\n    // エラー処理\n}\n```\nと書くことのできる関数です。\n\n1つの関数呼び出しのためにtry-catch構文を使うと読みづらくなりそうな場合や、\n例外に対して何もしなくてよい時に握りつぶしたい場合、\n例外が発生する可能性が高く、例外に対処するためのプログラムを書く場合などに、ロジックを整理しやすくすることができます。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#collectException\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 773,
     "char" : 9,
     "storageClass" : [
      "@system"
     ],
-    "endline" : 785,
+    "endline" : 790,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L785_C7",
+    "name" : "__unittest_L790_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外発生時にデフォルト値を返すようにする便利関数 [std.exception.ifThrown]\n\nもしかしたら例外が発生するかもしれない場合に、例外が発生した際の代替値を指定するために使用します。\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#ifThrown\n",
-    "line" : 785,
+    "line" : 790,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 827,
+    "endline" : 832,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L827_C7",
+    "name" : "__unittest_L832_C7",
     "kind" : "function",
     "protection" : "public",
     "comment" : "# 例外が起きることをテストする便利関数 [std.exception.assertThrown / std.exception.assertNotThrown]\nこの関数をこの条件で呼び出すと必ず例外を発生させるはずだ、という状況をテストで検証する場合、通常ならば以下のようにcatchしてassert文で検証します。\n\n```d\nbool exthrown;\ntry\n{\n    auto num = \"hogehoge\".to!int();\n}\ncatch (ConvException e)\n{\n    exthrown = true;\n}\nassert(exthrown, \"hogehoge is not a number, but exception is not caught.\");\n```\n\n毎回これをやるのは手間なので、 assertThrown や assertNotThrown を使って楽をすることができます。\nassertThrown や assertNotThrownは、例外の型をテンプレート引数で指定することもできます。\n(指定しなければExceptionがキャッチされるかどうかを確認します)\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#assertThrown\n    - https://dlang.org/phobos/std_exception.html#assertNotThrown\n\n",
-    "line" : 827,
+    "line" : 832,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 846,
+    "endline" : 853,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L846_C7",
+    "name" : "__unittest_L853_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "# Range操作中の例外発生要素のハンドリングをする便利関数 [std.exception.handle]\n\nRangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。\nhandle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#handle\n",
-    "line" : 846,
+    "comment" : "# Range操作中の例外発生要素のハンドリングをする便利関数 [std.exception.handle]\n\nRangeを使用した処理では、mapなど要素一つ一つに対して処理を行うような操作が多いですが、要素に対する操作中例外が発生することも少なくありません。\nhandle関数では要素の操作中に例外が発生した場合に、その例外への対処を行うことができます。ifThrownのRange版のような関数です。\n\nSee_Also:\n    - https://dlang.org/phobos/std_exception.html#handle\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 853,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 866,
+    "endline" : 873,
     "endchar" : 1
    }
   ]
@@ -1145,17 +1145,17 @@
     "comment" : "関数が右辺値/左辺値で呼ぶことができるか確認する方法\n",
     "line" : 163,
     "char" : 1,
-    "endline" : 186,
+    "endline" : 188,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L186_C1",
+    "name" : "__unittest_L188_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "要素の型を得る\n\nElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。\nSee_Also:\n    - https://dlang.org/phobos/std_range_primitives.html#ElementType\n    - https://dlang.org/phobos/std_traits.html#ForeachType\n",
-    "line" : 186,
+    "comment" : "要素の型を得る\n\nElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。\nSee_Also:\n    - https://dlang.org/phobos/std_range_primitives.html#ElementType\n    - https://dlang.org/phobos/std_traits.html#ForeachType\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 188,
     "char" : 1,
-    "endline" : 242,
+    "endline" : 244,
     "endchar" : 1
    }
   ]
@@ -1323,33 +1323,33 @@
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 48,
+    "endline" : 50,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L48_C7",
+    "name" : "__unittest_L50_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "opBinary: 二項演算子のオーバーロード\n\n先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。\nここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。\nopBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。\n\nopBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や & 等の演算子でも利用できます。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#binary\n",
-    "line" : 48,
+    "comment" : "opBinary: 二項演算子のオーバーロード\n\n先述のBigIntに代表されるように、組み込み型以外のユーザー定義型であっても、組み込み型と似た特徴を持つ(同じように演算子が使える)ようにすることができるのが、演算子オーバーロードです。\nここでは代表例として、opBinaryという、二項演算子全般をオーバーロードする方法を使って、四則演算できるようにします。\nopBinaryはテンプレートのメンバー関数として定義します。これを定義すると、足し算や引き算等二項演算子を使用した際、テンプレート引数に使用された二項演算子の演算子が渡されます。\n\nopBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 ~ や & 等の演算子でも利用できます。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#binary\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 50,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 98,
+    "endline" : 102,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L98_C7",
+    "name" : "__unittest_L102_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "opUnary: 単項演算子のオーバーロード\n\n` auto b = -a; ` の `-a` (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。\nたとえば、`-`に加えて'+'、`*`(ポインタ外し), `~`(ビット反転), `!`(否定), `++`(インクリメント), `--`(デクリメント)が相当します。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#unary\n",
-    "line" : 98,
+    "comment" : "opUnary: 単項演算子のオーバーロード\n\n` auto b = -a; ` の `-a` (プラスマイナスの符号を逆転する)のように、単項に対する演算子があります。\nたとえば、`-`に加えて'+'、`*`(ポインタ外し), `~`(ビット反転), `!`(否定), `++`(インクリメント), `--`(デクリメント)が相当します。\n\nSee_Also:\n    - https://dlang.org/spec/operatoroverloading.html#unary\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 102,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 113,
+    "endline" : 117,
     "endchar" : 1
    }
   ]
@@ -1892,20 +1892,20 @@
     "comment" : "プログラムの整形文字列表現\n\nchompPrefixやstrip、outdent、などを使うことで、プログラム言語などの文字列表現をいい感じに記載することができます。\n\nポイントはoutdentでインデントを解除することで、その前後にoutdentの入力にマッチするようにいい感じにchompPrefixで先頭の改行を削除したり、outdent結果を欲しい形に合うようにstripで先頭・末尾の改行を含む空白文字を削除するなどの前処理・後処理をします。\n\nパーサーを扱うようなプログラムなどで活躍します。\n\n`outdent`: https://dlang.org/phobos/std_string.html#.outdent$(BR)\n`chompPrefix`: https://dlang.org/phobos/std_string.html#.chompPrefix$(BR)\n`strip`: https://dlang.org/phobos/std_string.html#.strip\n",
     "line" : 436,
     "char" : 1,
-    "endline" : 515,
+    "endline" : 517,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L515_C7",
+    "name" : "__unittest_L517_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n",
-    "line" : 515,
+    "comment" : "16進数文字列の変換\n\nバイト列を16進数の文字列で表現したものをバイト列に変換するのと、その逆を行います。\n\nSee_Also:\n    - https://dlang.org/phobos/std_conv.html#hexString\n    - https://dlang.org/phobos/std_conv.html#to\n    - https://dlang.org/phobos/std_range.html#chunks\n    - https://dlang.org/phobos/std_algorithm_iteration.html#.map\n    - https://dlang.org/phobos/std_array.html#.array\n    - https://dlang.org/phobos/std_format.html#.format\n    - https://dlang.org/phobos/std_digest.html#.toHexString\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 517,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 549,
+    "endline" : 551,
     "endchar" : 1
    }
   ]
@@ -1917,16 +1917,16 @@
   "comment" : "SumTypeの例\n\nSumTypeを使用すると、複数の型を複合した型を形成することができます。\nタグ付き共用体の1形態です。\n\nSee_Also:\n    - https://dlang.org/phobos/std_sumtype.html\nMacros:\n    TITLE=SumType（タグ付き共用体）の例\n",
   "members" : [
    {
-    "name" : "__unittest_L26_C7",
+    "name" : "__unittest_L28_C7",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "SumTypeの初期化と値の取り出し方\n\n値の設定はコンストラクタか、代入によって行います。\n値の取り出しは、matchテンプレートを使用します。\n\nSee_Also:\n    - https://dlang.org/phobos/std_sumtype.html#.match\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.this\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign\n",
-    "line" : 26,
+    "comment" : "SumTypeの初期化と値の取り出し方\n\n値の設定はコンストラクタか、代入によって行います。\n値の取り出しは、matchテンプレートを使用します。\n\nSee_Also:\n    - https://dlang.org/phobos/std_sumtype.html#.match\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.this\n    - https://dlang.org/phobos/std_sumtype.html#.SumType.opAssign\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 28,
     "char" : 7,
     "storageClass" : [
      "@safe"
     ],
-    "endline" : 48,
+    "endline" : 50,
     "endchar" : 1
    }
   ]
@@ -1964,56 +1964,56 @@
     "comment" : "`ReadWriteMutex` クラスを使い、書き込みと読み取りの排他を分けることで効率化する例です。\n\n読み取り同士では排他せず、読み取りと書き込み、書き込み同士のときに排他することで、\n単純な `Mutex` による排他よりもスループットが向上することが期待できます。\n\n|          | 読み取り | 書き込み |\n|:---------|:--------:|:--------:|\n| 読み取り | 排他なし | 排他あり |\n| 書き込み | 排他あり | 排他あり |\n\nSee_Also: $(LINK https://dlang.org/phobos/core_sync_rwmutex.html)\n",
     "line" : 95,
     "char" : 1,
-    "endline" : 142,
+    "endline" : 144,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L142_C1",
+    "name" : "__unittest_L144_C1",
     "kind" : "function",
     "protection" : "public",
-    "line" : 142,
+    "line" : 144,
     "char" : 1,
-    "endline" : 161,
+    "endline" : 165,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L161_C1",
+    "name" : "__unittest_L165_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_barrier.html\n",
-    "line" : 161,
+    "comment" : "Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_barrier.html\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 165,
     "char" : 1,
-    "endline" : 200,
+    "endline" : 206,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L200_C1",
+    "name" : "__unittest_L206_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "Conditionで、通知による同期を行う例です。\n\nConditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。\nその後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。\n\n逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。\n\n使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。\n- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_condition.html\n",
-    "line" : 200,
+    "comment" : "Conditionで、通知による同期を行う例です。\n\nConditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。\nその後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。\n\n逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。\n\n使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。\n- [解説サイト](https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer)\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_condition.html\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 206,
     "char" : 1,
-    "endline" : 264,
+    "endline" : 272,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L264_C1",
+    "name" : "__unittest_L272_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "Semaphoreで、通知による同期を行う例です。\n\nConditionよりも単純で、Mutexとの関係を気にする必要はありません。\nSemaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。\nwaitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。\n\n共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nSemaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_semaphore.html\n",
-    "line" : 264,
+    "comment" : "Semaphoreで、通知による同期を行う例です。\n\nConditionよりも単純で、Mutexとの関係を気にする必要はありません。\nSemaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。\nwaitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。\n\n共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nSemaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_semaphore.html\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 272,
     "char" : 1,
-    "endline" : 303,
+    "endline" : 313,
     "endchar" : 1
    },
    {
-    "name" : "__unittest_L303_C1",
+    "name" : "__unittest_L313_C1",
     "kind" : "function",
     "protection" : "public",
-    "comment" : "Eventで、通知による同期を行う例です。\n\nConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。\nEventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。\nwaitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する `manualReset` がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。\nEventのコンストラクタの `initialState` は、このフラグの初期状態を表します。\n\n共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nEventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_event.html\n",
-    "line" : 303,
+    "comment" : "Eventで、通知による同期を行う例です。\n\nConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。\nEventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。\nwaitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する `manualReset` がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。\nEventのコンストラクタの `initialState` は、このフラグの初期状態を表します。\n\n共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。\nEventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。\n\nSee_Also:\n    - https://dlang.org/phobos/core_sync_event.html\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 313,
     "char" : 1,
-    "endline" : 343,
+    "endline" : 353,
     "endchar" : 1
    }
   ]

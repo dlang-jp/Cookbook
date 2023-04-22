@@ -303,6 +303,9 @@ See_Also:
 <li><a href="https://vibed.org/api/vibe.web.web/">https://vibed.org/api/vibe.web.web/</a></li>
 <li><a href="https://vibed.org/api/vibe.web.common/">https://vibed.org/api/vibe.web.common/</a> (利用できるUDAが記載されている)</li>
 <li><a href="https://vibed.org/api/vibe.web.web/registerWebInterface">https://vibed.org/api/vibe.web.web/registerWebInterface</a>
+</li>
+</ul>
+
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.string: outdent, strip;
 <span class="d_keyword">import</span> std.conv;
 <span class="d_keyword">import</span> vibe.vibe;
@@ -361,8 +364,7 @@ runTask({
 <span class="d_keyword">auto</span> exitCode = runEventLoop();
 <span class="d_keyword">assert</span>(exitCode == 0, <span class="d_string">"exit code: "</span>.text(exitCode));
 <span class="d_keyword">assert</span>(!thrown, thrown.toString());
-</pre></li>
-</ul>
+</pre>
 </div>
 
                 
