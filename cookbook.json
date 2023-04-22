@@ -1820,6 +1820,118 @@
   ]
  },
  {
+  "name" : "sorting_example",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/source/sorting_example.d",
+  "comment" : "データの並び替え・応用\n\n各種ソートアルゴリズムやその応用例をまとめます。\n主に std.algoritm (std.algorithm.sorting) を取り扱います。\n\nSource: $(LINK_TO_SRC source/_sorting_example.d)\nMacros:\n    TITLE=データの並び替え・応用\n",
+  "members" : [
+   {
+    "name" : "__unittest_L19_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "順序比較が可能なデータの配列を並び替える方法\n\nここではint型の配列を例にしていますが、他の比較可能な型の配列でも同様に使用できます。\n",
+    "line" : 19,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 56,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L56_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "上位N個だけソートし、処理を高速化する方法 (topN)\n\n`topN` 関数は、配列の上位N個の要素を効率的にソートする関数です。他の要素の並び順は保証されません。\n",
+    "line" : 56,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 72,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L72_C9",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "partialSort を使って効率よく中央値を求める方法\n",
+    "line" : 72,
+    "char" : 9,
+    "storageClass" : [
+     "@system"
+    ],
+    "endline" : 113,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L113_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "重い評価/比較関数を使ったソートを高速化する方法 (schwartzSort)\n\n`schwartzSort` は、「シュワルツ変換」と呼ばれるアルゴリズムを使い、処理に時間のかかる比較をキャッシュして処理負荷を軽減するソートアルゴリズムです。\n",
+    "line" : 113,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 141,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L141_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "複数の配列を1つとみなしてソートする方法 (chain)\n",
+    "line" : 141,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 161,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L161_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ソート済みの配列と未ソートの配列をまとめてソートすることで高速化する方法 (completeSort)\n",
+    "line" : 161,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 184,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L184_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "複数のキーを条件にソートする方法 (multiSort)\n",
+    "line" : 184,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 229,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L229_C7",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "const や immutable の配列を疑似的に並び替える方法\n\n直接 sort 関数で並び替えられないデータに対して、\nmakeIndex 関数を使って並び替え後のインデックス情報を構築することにより間接的に並び替えを実現します。\n\nこの構築されたインデックス情報は、順位をインデックスとして、元の配列の位置を得るために使用することができます。\n",
+    "line" : 229,
+    "char" : 7,
+    "storageClass" : [
+     "@safe"
+    ],
+    "endline" : 256,
+    "endchar" : 2
+   }
+  ]
+ },
+ {
   "name" : "string_example",
   "kind" : "module",
   "file" : "/home/runner/work/Cookbook/Cookbook/source/string_example.d",
