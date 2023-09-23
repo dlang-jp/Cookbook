@@ -23,6 +23,7 @@ static:
         PackageInfo("libdparse_usage"),
         // workaround https://github.com/dlang-jp/Cookbook/issues/198
         PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-", "osx-x86_64-"]),
+        PackageInfo("botan_usage", ["linux-x86-"]),
         PackageInfo("windows"),
     ];
 }

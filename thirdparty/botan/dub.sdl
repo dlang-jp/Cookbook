@@ -1,0 +1,9 @@
+name "botan_usage"
+description "A usage of Botan"
+authors "SHOO"
+copyright "Copyright © 2020, SHOO"
+license "public domain"
+# ldcのためのバグ修正を行ったbotan-mathを使用するよう強制する
+# enforceExのためのバグ修正を行ったmemutlsを使用するよう強制する
+# また、この修正を取り込んだバージョンが確認されるまでbotanのバージョンも固定する
+dependency "botan"      version="1.13.5"
