@@ -21,7 +21,8 @@ static:
     immutable subPkgs = [
         PackageInfo("asdf_usage"),
         PackageInfo("libdparse_usage"),
-        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+        // workaround https://github.com/dlang-jp/Cookbook/issues/198
+        PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-", "osx-x86_64-"]),
         PackageInfo("windows"),
     ];
 }
