@@ -19,12 +19,13 @@ static:
     /// テスト対象にするサブパッケージを指定します。
     /// サブパッケージが追加されたらここにも追加してください。
     immutable subPkgs = [
-        PackageInfo("windows"),
+        PackageInfo("asdf_usage"),
         PackageInfo("libdparse_usage"),
         PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
         // ldc2は以下Issueが原因でx86では動作しないため除外
         // https://github.com/libmir/mir-algorithm/issues/461
         PackageInfo("mir_usage", ["linux-x86-ldc"])
+        PackageInfo("windows"),
     ];
 }
 
@@ -141,8 +142,8 @@ void unitTest(string[] exDubOpts = null)
 {
     if (!".cov".exists)
         mkdir(".cov");
-    auto opt = ["-v", "-a", config.arch, "--compiler", config.compiler, "--coverage", "--main-file", ".github/ut.d"]
-        ~ exDubOpts;
+    auto opt = ["-v", "-a", config.arch, "--compiler", config.compiler, "--coverage"]
+        ~ exDubOpts ~ "--" ~ getCovOpt();
     string[string] env;
     env.addCurlPath();
     exec(["dub", "test"] ~ opt, null, env);
@@ -456,4 +457,15 @@ bool matchArch(in string[] exceptArchs)
         }
     }
     return false;
+}
+
+string[] getCovOpt()
+{
+    enum rootDir = __FILE__.dirName.dirName.buildNormalizedPath();
+    enum covDir  = rootDir.buildNormalizedPath(".cov");
+    if (!covDir.exists)
+        mkdirRecurse(covDir);
+    return ["--DRT-covopt=dstpath:" ~ covDir,
+        "--DRT-covopt=srcpath:" ~ rootDir,
+        "--DRT-covopt=merge:1"];
 }
