@@ -36,6 +36,8 @@ See_Also:
 - https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)
 - https://vibed.org/api/vibe.web.rest/RestInterfaceClient
 - https://vibed.org/api/vibe.web.rest/serveRestJSClient
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -130,6 +132,133 @@ unittest
 
             // curlのコマンドラインだとこんな感じ
             // curl http://localhost:50004/fuga -X POST -H "Content-Type: application/json" -d "{\"dat\":{\"hoge\":\"xxx\",\"bar\":456}}"
+        }
+        catch (Throwable e)
+            thrown = e;
+    });
+
+    auto exitCode = runEventLoop();
+    assert(exitCode == 0, "exit code: ".text(exitCode));
+    assert(!thrown, thrown.toString());
+
+}
+
+
+
+/++
+REST APIのレスポンス形式を変更する
+
+vibe.dでは、レスポンスのデータはJSONにシリアライズされて送信されます。JSON以外のデータを応答したい場合には、 `resultSerializer` UDAを使用して変更が可能です。
+
+See_Also: https://vibed.org/api/vibe.web.common/resultSerializer
+
++/
+unittest
+{
+    import std.conv;
+    import vibe.vibe;
+
+    // 未使用ポート取得
+    auto port = getUnusedPort();
+
+    // API用のインターフェースを作る
+    interface MyApi
+    {
+        // GET "/hoge"
+        // レスポンスのボディは、数値の配列のJSON表現である以下のような形式になる。
+        // [1,2,3,4,5,6,7,8]
+        immutable(ubyte)[] getHoge() @safe;
+
+        private static void serialize(alias P, R)(ref R output, const ref immutable(ubyte)[] value)
+        {
+            import std.range: put;
+            put(output, value);
+        }
+        private static immutable(ubyte)[] deserialize(alias P, R)(R input)
+        {
+            import std.array: array;
+            return cast(immutable(ubyte)[])input.array;
+        }
+        // GET "/hoge2"
+        // JSONではなく、バイナリを応答したい場合は以下のように、resultSerializerを指定することができる。
+        @resultSerializer!(serialize, deserialize, "application/octet-stream")()
+        immutable(ubyte)[] getHoge2() @safe;
+
+        private static void serializeBase64(alias P, R)(ref R output, const ref immutable(ubyte)[] value)
+        {
+            import std.range: put;
+            import std.base64: Base64;
+            put(output, cast(ubyte[])Base64.encode(value));
+        }
+        private static immutable(ubyte)[] deserializeBase64(alias P, R)(R input)
+        {
+            import std.array: array;
+            import std.base64: Base64;
+            return Base64.decode(input.array).idup;
+        }
+        // GET "/hoge3"
+        // Acceptリクエストヘッダによって応答を出し分けたい場合は以下のようにできる
+        @resultSerializer!(serialize, deserialize, "application/octet-stream")()
+        @resultSerializer!(serializeBase64, deserializeBase64, "plain/text")()
+        immutable(ubyte)[] getHoge3() @safe;
+    }
+
+    // インターフェースを実装する
+    class MyApiImpliment: MyApi
+    {
+        immutable(ubyte)[] getHoge() @safe
+        {
+            return [1,2,3,4,5,6,7,8];
+        }
+        immutable(ubyte)[] getHoge2() @safe
+        {
+            return [1,2,3,4,5,6,7,8];
+        }
+        immutable(ubyte)[] getHoge3() @safe
+        {
+            return [1,2,3,4,5,6,7,8];
+        }
+    }
+
+    auto router = new URLRouter;
+    // 実装されたREST用のインターフェースを元に、URLRouterに自動的に登録してくれる
+    router.registerRestInterface(new MyApiImpliment);
+    // serveRestJSClientはJavascript用のAPIを自動生成してくれる
+    router.get("/myapi.js", serveRestJSClient!MyApi());
+    // サーバー起動
+    immutable serverAddr = listenHTTP("localhost:".text(port), router).bindAddresses[0];
+
+    Throwable thrown;
+    runTask({
+        scope (exit)
+            exitEventLoop();
+        try
+        {
+            // クライアント側の記述
+            // hogeはJSONを受信する
+            auto res = requestHTTP("http://".text(serverAddr) ~ "/hoge");
+            assert(res.bodyReader.readAllUTF8() == `[1,2,3,4,5,6,7,8]`);
+
+            // hoge2はバイナリを受信する
+            res = requestHTTP("http://".text(serverAddr) ~ "/hoge2");
+            assert(res.bodyReader.readAll() == [1,2,3,4,5,6,7,8]);
+
+            // hoge3はAcceptリクエストヘッダによってバイナリを受信するか
+            // Base64のテキストを受信するか選択できる
+            res = requestHTTP("http://".text(serverAddr) ~ "/hoge3", (scope req) {
+                req.method = HTTPMethod.GET;
+                req.headers["Accept"] = "application/octet-stream";
+            });
+            assert(res.bodyReader.readAll() == [1,2,3,4,5,6,7,8]);
+            // plain/textをAcceptで設定して受信する場合は以下
+            res = requestHTTP("http://".text(serverAddr) ~ "/hoge3", (scope req) {
+                req.method = HTTPMethod.GET;
+                req.headers["Accept"] = "plain/text";
+            });
+            auto hoge3b64res = res.bodyReader.readAllUTF8();
+            assert(hoge3b64res == "AQIDBAUGBwg=");
+            import std.base64: Base64;
+            assert(Base64.decode(hoge3b64res) == [1,2,3,4,5,6,7,8]);
         }
         catch (Throwable e)
             thrown = e;

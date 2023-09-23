@@ -89,6 +89,8 @@ See_Also: https://dlang.org/phobos/std_zip.html
 See_Also:
 - https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
 - (和訳) http://www.awm.jp/~yoya/cache/www.geocities.jp/awazou_the_8/pkzip-j.txt
+
+$(WORKAROUND_ISSUE22230)
 +/
 @system unittest
 {

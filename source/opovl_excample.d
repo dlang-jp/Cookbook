@@ -44,6 +44,8 @@ opBinaryは二項演算子であればよいので、+, -, *, / 以外にも、 
 
 See_Also:
     - https://dlang.org/spec/operatoroverloading.html#binary
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {
@@ -94,6 +96,8 @@ opUnary: 単項演算子のオーバーロード
 
 See_Also:
     - https://dlang.org/spec/operatoroverloading.html#unary
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {

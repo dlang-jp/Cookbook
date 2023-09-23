@@ -17,6 +17,8 @@ See_Also:
 - https://vibed.org/api/vibe.web.web/
 - https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)
 - https://vibed.org/api/vibe.web.web/registerWebInterface
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {

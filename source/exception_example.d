@@ -650,6 +650,8 @@ ExceptionもErrorもThrowableというインターフェースを継承してい
 
 See_Also:
     - https://dlang.org/phobos/std_exception.html#basicExceptionCtors
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {
@@ -710,6 +712,8 @@ auto res = enforce(foo(), "hogehoge");
 
 See_Also:
     - https://dlang.org/phobos/std_exception.html#enforce
+
+$(WORKAROUND_ISSUE22230)
 +/
 @system unittest
 {
@@ -764,6 +768,7 @@ if (auto e = collectException(foo()))
 See_Also:
     - https://dlang.org/phobos/std_exception.html#collectException
 
+$(WORKAROUND_ISSUE22230)
 +/
 @system unittest
 {
@@ -842,6 +847,8 @@ handle関数では要素の操作中に例外が発生した場合に、その�
 
 See_Also:
     - https://dlang.org/phobos/std_exception.html#handle
+
+$(WORKAROUND_ISSUE22230)
 +/
 @safe unittest
 {

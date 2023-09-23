@@ -22,6 +22,8 @@ HTTPSサーバー
 See_Also:
 - https://vibed.org/docs#http-https
 - https://vibed.org/api/vibe.stream.tls/TLSContext
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
@@ -106,6 +108,8 @@ See_Also:
 - https://vibed.org/api/vibe.stream.tls/
 - https://vibed.org/api/vibe.stream.tls/TLSPeerValidationMode
 - https://github.com/vibe-d/vibe.d/blob/master/tests/tls/source/app.d (vibe.dのTLSのテスト)
+
+$(WORKAROUND_ISSUE22230)
 +/
 unittest
 {
