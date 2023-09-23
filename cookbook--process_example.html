@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>プロセス操作の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">プロセス
+</div></h1><div class="ddoc_description">プロセス操作についてまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/process_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/process_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 基本的なプロセス起動を行う操作の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.string: chomp, splitLines;
+<span class="d_comment">// プロセス起動を行うもっとも簡潔な方法はexecute関数もしくは
+</span><span class="d_comment">// executeShell関数を用いることです。
+</span><span class="d_comment">//
+</span><span class="d_comment">// シェルを経由して文字列を出力するコマンドを実行します。
+</span><span class="d_comment">// シェルを経由したい場合はexecuteShell関数を使います。
+</span><span class="d_keyword">auto</span> result = executeShell(<span class="d_string">"echo hello"</span>);
+<span class="d_keyword">assert</span>(result.status == 0);
+<span class="d_comment">// echoをはじめ、多くの実行結果の文字列(result.output)には改行が含まれます。
+</span><span class="d_comment">// Linux環境なら\nが、Windows環境なら\r\nが行末に入ります。
+</span><span class="d_keyword">version</span> (Posix)   <span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\n"</span>);
+<span class="d_keyword">version</span> (Windows) <span class="d_keyword">assert</span>(result.output == <span class="d_string">"hello\r\n"</span>);
+
+<span class="d_comment">// 単行ならchompで、複数行ならsplitLinesで改行文字を消してしまうと
+</span><span class="d_comment">// 取り扱いが楽になります。
+</span><span class="d_keyword">assert</span>(result.output.chomp == <span class="d_string">"hello"</span>);
+<span class="d_keyword">assert</span>(result.output.splitLines == [<span class="d_string">"hello"</span>]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ パイプでコマンドをつなげる例です。
+<pre class="d_code notranslate"><span class="d_comment">// pipeProcessを使うとパイプでコマンドをつなげることができます
+</span><span class="d_comment">//
+</span><span class="d_keyword">import</span> std.array : array;
+<span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.path : buildPath;
+
+<span class="d_comment">// テスト用のディレクトリを作成します
+</span>string dirName = <span class="d_string">"std_process_testdir"</span>;
+<span class="d_keyword">assert</span>(!std.file.exists(dirName));
+std.file.mkdir(dirName);
+<span class="d_keyword">scope</span> (exit)
+{
+    <span class="d_keyword">assert</span>(std.file.exists(dirName));
+    std.file.rmdirRecurse(dirName);
+}
+
+<span class="d_comment">// ファイルをディレクトリ内に作成します。
+</span>std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
+
+<span class="d_comment">// コマンド体系がWindowsとPosixで違うため、分岐して説明しますが、
+</span><span class="d_comment">// やっていることは同じで、`dirName`内のファイル名一覧を逆順に並び替えます
+</span><span class="d_keyword">version</span> (Posix)
+{
+    <span class="d_comment">// `ls -1 | sort -r` 相当の処理を行います
+</span>    <span class="d_comment">//
+</span>    <span class="d_keyword">auto</span> ls = pipeProcess([<span class="d_string">"ls"</span>, <span class="d_string">"-1"</span>, dirName]);
+    <span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span>    <span class="d_keyword">scope</span> (exit)  wait(ls.pid);
+    <span class="d_keyword">auto</span> sort = pipeProcess([<span class="d_string">"sort"</span>, <span class="d_string">"-r"</span>]);
+    <span class="d_keyword">scope</span> (exit) wait(sort.pid);
+}
+<span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_comment">// `dir /B | sort /R` 相当の処理を行います
+</span>    <span class="d_comment">// dirはコマンドプロンプトのコマンドで、sortは実行ファイルによって
+</span>    <span class="d_comment">// 提供されているので、正確には `cmd.exe /C dir /B | sort.exe /R` です
+</span>    <span class="d_comment">//
+</span>    <span class="d_keyword">auto</span> ls = pipeProcess([<span class="d_string">"cmd.exe"</span>, <span class="d_string">"/C"</span>, <span class="d_string">"dir"</span>, <span class="d_string">"/B"</span>, dirName]);
+    <span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span>    <span class="d_keyword">scope</span> (exit)  wait(ls.pid);
+    <span class="d_keyword">auto</span> sort = pipeProcess([<span class="d_string">"sort.exe"</span>, <span class="d_string">"/r"</span>]);
+    <span class="d_keyword">scope</span> (exit) wait(sort.pid);
+}
+
+<span class="d_comment">// lsコマンドの標準出力をsortコマンドの標準入力に渡しています
+</span><span class="d_comment">// 移植性のため std.ascii.newline を使うと、OS間の違いを吸収できます。
+</span><span class="d_keyword">import</span> std.stdio: KeepTerminator;
+<span class="d_keyword">import</span> std.ascii: newline;
+<span class="d_keyword">foreach</span> (line; ls.stdout.byLine(KeepTerminator.no, newline))
+    sort.stdin.writeln(line);
+ls.stdout.close();
+<span class="d_comment">// stdioバッファに渡されたデータがファイルディスクリプタに書き込まれて
+</span><span class="d_comment">// いるか自明ではないので明示的にflushする必要があります
+</span>sort.stdin.flush();
+sort.stdin.close();
+
+<span class="d_keyword">auto</span> arr = sort.stdout.byLineCopy(KeepTerminator.no, newline).array;
+<span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"b.txt"</span>);
+<span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"a.txt"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ WindowsのGUIからのコンソールアプリケーション呼び出しのときにコンソール画面を出さないようにする。
+<div class="ddoc_blankline"></div>
+
+Windows特有の問題になりますが、GUIアプリケーションでビルドした場合、executeやspawnProcess等を実行してコンソールアプリケーションを起動すると、実行中のコンソール画面が表示されてしまうということがあります。
+これを抑止するため、実行時に <span class="d_inlinecode donthyphenate notranslate">Config.suppressConsole</span> を指定することで、コンソール画面の表示を行わないようにすることができます。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_process.html#.Config.suppressConsole">https://dlang.org/phobos/std_process.html#.Config.suppressConsole</a>
+<pre class="d_code notranslate"><span class="d_keyword">version</span> (Windows)
+{
+    <span class="d_comment">// ディレクトリを作ってファイルを置く
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+    <span class="d_keyword">import</span> std.path : buildPath;
+    string dirName = <span class="d_string">"std_process_testdirforWin"</span>;
+    <span class="d_keyword">assert</span>(!std.file.exists(dirName));
+    std.file.mkdir(dirName);
+    <span class="d_keyword">scope</span> (exit)
+    {
+        <span class="d_keyword">assert</span>(std.file.exists(dirName));
+        std.file.rmdirRecurse(dirName);
+    }
+    std.file.write(buildPath(dirName, <span class="d_string">"a.txt"</span>), <span class="d_string">"This is File A."</span>);
+    std.file.write(buildPath(dirName, <span class="d_string">"b.txt"</span>), <span class="d_string">"I am File B."</span>);
+
+    <span class="d_comment">// コンソールアプリケーションで標準出力の結果を得たい、かつ、
+</span>    <span class="d_comment">// GUIアプリ用途のためコンソールを表示したくない場合、`Config.suppressConsole`を使用します。
+</span>    <span class="d_keyword">auto</span> ls = execute([<span class="d_string">"cmd.exe"</span>, <span class="d_string">"/C"</span>, <span class="d_string">"dir"</span>, <span class="d_string">"/B"</span>, <span class="d_string">"/O:N"</span>, dirName],
+        <span class="d_keyword">null</span>, Config.suppressConsole);
+    <span class="d_keyword">import</span> std.string: splitLines;
+    <span class="d_keyword">auto</span> arr = ls.output.splitLines;
+    <span class="d_keyword">assert</span>(arr[0] == <span class="d_string">"a.txt"</span>);
+    <span class="d_keyword">assert</span>(arr[1] == <span class="d_string">"b.txt"</span>);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ たくさんパイプしながら、データを小分けにして渡していく場合
+<pre class="d_code notranslate"><span class="d_comment">// opensslが使えるか確認します
+</span><span class="d_keyword">bool</span> isOpenSSLAvailable;
+<span class="d_keyword">version</span> (Posix)
+    isOpenSSLAvailable = executeShell(<span class="d_string">`which openssl`</span>).status == 0;
+<span class="d_keyword">else</span> <span class="d_keyword">version</span> (Windows)
+    isOpenSSLAvailable = executeShell(<span class="d_string">`where openssl`</span>).status == 0;
+
+<span class="d_keyword">if</span> (isOpenSSLAvailable)
+{
+    <span class="d_keyword">import</span> std.range: chunks, repeat;
+    <span class="d_keyword">import</span> std.algorithm: copy;
+    <span class="d_keyword">import</span> std.parallelism: scopedTask;
+    <span class="d_keyword">import</span> std.array: appender, join;
+
+    <span class="d_comment">// このデータを…
+</span>    string data = <span class="d_string">"qawsedrftgyhujikolp"</span>.repeat(512).join();
+    <span class="d_comment">// 2回エンコードして2回デコードし…
+</span>    <span class="d_keyword">auto</span> key1 = <span class="d_string">"9F86D081884C7D659A2FEAA0C55AD015"</span>;
+    <span class="d_keyword">auto</span> iv1  = <span class="d_string">"A3BF4F1B2B0B822CD15D6C15B0F00A08"</span>;
+    <span class="d_keyword">auto</span> key2 = <span class="d_string">"9F86D081884C7D659A2FEAA0C55AD015"</span>
+              ~ <span class="d_string">"A3BF4F1B2B0B822CD15D6C15B0F00A08"</span>;
+    <span class="d_keyword">auto</span> iv2  = <span class="d_string">"206DFC4E0335FA0AD986B9C1942DD653"</span>;
+    <span class="d_keyword">auto</span> opt1 = [<span class="d_string">"-K"</span>, key1, <span class="d_string">"-iv"</span>, iv1, <span class="d_string">"-nosalt"</span>];
+    <span class="d_keyword">auto</span> opt2 = [<span class="d_string">"-K"</span>, key2, <span class="d_string">"-iv"</span>, iv2, <span class="d_string">"-nosalt"</span>, <span class="d_string">"-base64"</span>];
+    <span class="d_comment">// 結果をバッファに格納します。
+</span>    <span class="d_keyword">auto</span> resultBuf = appender!string;
+
+    <span class="d_comment">// プロセスを起動してパイプを作る
+</span>    <span class="d_keyword">auto</span> pE1 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-128-cbc"</span>, <span class="d_string">"-e"</span>] ~ opt1);
+    <span class="d_keyword">auto</span> pE2 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-256-cbc"</span>, <span class="d_string">"-e"</span>] ~ opt2);
+    <span class="d_keyword">auto</span> pD2 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-256-cbc"</span>, <span class="d_string">"-d"</span>] ~ opt2);
+    <span class="d_keyword">auto</span> pD1 = pipeProcess([<span class="d_string">"openssl"</span>, <span class="d_string">"aes-128-cbc"</span>, <span class="d_string">"-d"</span>] ~ opt1);
+
+    <span class="d_comment">// 1段目エンコード→2段目エンコード
+</span>    <span class="d_keyword">auto</span> tE1toE2 = scopedTask({
+        pE1.stdout.byChunk(4096).copy(pE2.stdin.lockingBinaryWriter);
+        pE2.stdin.flush();
+        pE2.stdin.close();
+    });
+    tE1toE2.executeInNewThread();
+
+    <span class="d_comment">// 2段目エンコード→2段目デコード
+</span>    <span class="d_keyword">auto</span> tE2toD2 = scopedTask({
+        pE2.stdout.byChunk(4096).copy(pD2.stdin.lockingBinaryWriter);
+        pD2.stdin.flush();
+        pD2.stdin.close();
+    });
+    tE2toD2.executeInNewThread();
+
+    <span class="d_comment">// 2段目デコード→1段目デコード
+</span>    <span class="d_keyword">auto</span> tD2toD1 = scopedTask({
+        pD2.stdout.byChunk(4096).copy(pD1.stdin.lockingBinaryWriter);
+        pD1.stdin.flush();
+        pD1.stdin.close();
+    });
+    tD2toD1.executeInNewThread();
+
+    <span class="d_comment">// 1段目デコード→(結果は文字列)→結果の格納
+</span>    <span class="d_keyword">auto</span> tD1toRes = scopedTask({
+        pD1.stdout.byChunk(4096).copy(resultBuf);
+    });
+    tD1toRes.executeInNewThread();
+
+    <span class="d_comment">// データ(文字列)→1段目エンコード
+</span>    data.chunks(2048).copy(pE1.stdin.lockingTextWriter);
+    pE1.stdin.flush();
+    pE1.stdin.close();
+
+    <span class="d_comment">// プロセスの終了を待ちます
+</span>    <span class="d_keyword">auto</span> sE1 = pE1.pid.wait();
+    <span class="d_keyword">auto</span> sE2 = pE2.pid.wait();
+    <span class="d_keyword">auto</span> sD2 = pD2.pid.wait();
+    <span class="d_keyword">auto</span> sD1 = pD1.pid.wait();
+
+    <span class="d_comment">// スレッドの終了を待ちます
+</span>    tE1toE2.yieldForce;
+    tE2toD2.yieldForce;
+    tD2toD1.yieldForce;
+    tD1toRes.yieldForce;
+
+    <span class="d_comment">// 結果確認
+</span>    <span class="d_keyword">assert</span>(sE1 == 0);
+    <span class="d_keyword">assert</span>(sE2 == 0);
+    <span class="d_keyword">assert</span>(sD2 == 0);
+    <span class="d_keyword">assert</span>(sD1 == 0);
+    <span class="d_keyword">assert</span>(data == resultBuf.data);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 標準出力をファイルにリダイレクトする例です
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">import</span> std.file;
+<span class="d_keyword">import</span> std.stdio;
+
+<span class="d_keyword">auto</span> deleteme = <span class="d_string">"dub_list.txt"</span>;
+<span class="d_keyword">assert</span>(!std.file.exists(deleteme));
+<span class="d_keyword">auto</span> dubList = File(deleteme, <span class="d_string">"w"</span>);
+<span class="d_keyword">scope</span> (exit)
+{
+    dubList.close();
+    <span class="d_keyword">assert</span>(std.file.exists(deleteme));
+    std.file.remove(deleteme);
+}
+<span class="d_comment">// ジェネリックなプリミティブであるspawnProcess関数を使っています
+</span><span class="d_keyword">auto</span> pid = spawnProcess([<span class="d_string">"dub"</span>, <span class="d_string">"list"</span>],
+                        std.stdio.stdin,
+                        dubList);
+<span class="d_comment">// コマンドの終了待ちをしないので明示的に待つ必要があります
+</span><span class="d_keyword">scope</span> (exit) wait(pid);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 環境変数を扱う例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception;
+
+<span class="d_keyword">auto</span> name = <span class="d_string">"TEST_NEW_ENV"</span>;
+
+<span class="d_comment">// 環境変数と値の組を追加します。
+</span>environment[name] = <span class="d_string">"123"</span>;
+<span class="d_keyword">assert</span>(environment[name] == <span class="d_string">"123"</span>);
+<span class="d_keyword">assert</span>(name <span class="d_keyword">in</span> environment);
+<span class="d_comment">// 環境変数から `name` を削除します。
+</span>environment.remove(name);
+<span class="d_keyword">assert</span>(name !<span class="d_keyword">in</span> environment);
+<span class="d_comment">// 環境変数がみつからない場合は例外を吐きます。
+</span>assertThrown(environment[name]);
+
+
+<span class="d_comment">// `get()` を使った場合、指定した環境変数の値を返します。
+</span><span class="d_comment">// 空だった場合は第二引数で指定しているデフォルトの値を返します。
+</span><span class="d_comment">//
+</span><span class="d_keyword">version</span> (DigitalMars) <span class="d_keyword">auto</span> dmd = <span class="d_string">"dmd"</span>;
+<span class="d_keyword">else</span> <span class="d_keyword">version</span> (LDC) <span class="d_keyword">auto</span> dmd = <span class="d_string">"ldmd2"</span>;
+<span class="d_keyword">else</span> <span class="d_keyword">version</span> (GNU) <span class="d_keyword">auto</span> dmd = <span class="d_string">"gdmd"</span>;
+<span class="d_keyword">else</span> <span class="d_keyword">auto</span> dmd = <span class="d_string">"dmd"</span>;  <span class="d_comment">// 他の環境では暫定的に値を埋めています。
+</span><span class="d_keyword">auto</span> command = environment.get(<span class="d_string">"DMD"</span>, dmd);
+<span class="d_keyword">assert</span>(command == dmd);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

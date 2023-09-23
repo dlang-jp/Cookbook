@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>gc_example - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">ガベージコレクション
+</div></h1><div class="ddoc_description">ガベージコレクション(GC)の制御についてまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/gc_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/gc_example.d</a></span></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ GCの有効化・無効化を行う例です。
+<div class="ddoc_blankline"></div>
+
+D言語のGCは、現状では保守的なマーク＆スイープ型GCとなっています。
+GCによるスキャンおよびメモリ回収は、動的メモリの要求が行われた時のみ実行されます。
+事前にGC.disableを呼び出しておくことで、自動的なGCの実行を抑制することができます。
+ただし、不要メモリの回収が行われなくなることで、メモリ不足のエラー(Out of memory)が発生する可能性も高くなります。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.memory : GC;
+
+<span class="d_comment">/// core.memory.GCにより、GCの有効化・無効化等の制御が行えます。
+</span><span class="d_comment">// GC.disableにより、ガベージコレクションの自動実行を停止することができます。
+</span><span class="d_comment">// ただし、実装によっては、メモリ不足時などで引き続きGCが実行される場合があります。
+</span>GC.disable();
+
+<span class="d_comment">// GC.enableにより、停止したガベージコレクションが再開されます。
+</span><span class="d_comment">// GC.enableは1回のGC.disableにつき必ず1回だけ呼び出す必要があります。
+</span><span class="d_keyword">scope</span>(exit) GC.enable();
+
+<span class="d_comment">// GC.disable中に動的メモリの確保が可能です。
+</span><span class="d_comment">// メモリ不足などでない限り、基本的にGCは発生しません。
+</span><span class="d_keyword">int</span>[] values = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[1000];
+<span class="d_keyword">assert</span>(values.length == 1000);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 明示的にGCを行う例です。
+<div class="ddoc_blankline"></div>
+
+大量のオブジェクトの利用が終了した後に呼び出す、
+GCを避けたい処理の前に呼び出しておく、等の用途が考えられます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.memory : GC;
+
+<span class="d_comment">// GC.profileStatsによりGC実行回数・GCにかかった時間を確認できます。
+</span><span class="d_keyword">auto</span> beforeProfile = GC.profileStats;
+
+<span class="d_comment">// Full collectを行います。
+</span><span class="d_comment">// GCの実装により実際の処理は異なります。
+</span><span class="d_comment">// 一般的には、レジスタやスタックやグローバル変数等のルート集合から
+</span><span class="d_comment">// 使用中のメモリブロックを辿り、未使用のメモリブロックを回収します。
+</span>GC.collect();
+
+<span class="d_comment">// GC.collectによりGCが行われ、実行回数・GC処理時間等が増加します。
+</span><span class="d_keyword">auto</span> afterProfile = GC.profileStats;
+<span class="d_keyword">assert</span>(beforeProfile.numCollections &lt;= afterProfile.numCollections);
+<span class="d_keyword">assert</span>(beforeProfile.totalCollectionTime &lt;= afterProfile.totalCollectionTime);
+<span class="d_keyword">assert</span>(beforeProfile.totalPauseTime &lt;= afterProfile.totalPauseTime);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ GCが確保しているメモリをOSに返却して最小化する例です。
+<div class="ddoc_blankline"></div>
+
+GC.minimizeにより、GCが確保している未使用の物理メモリをOSに返却することができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.memory : GC;
+
+<span class="d_comment">// GCが確保・利用しているメモリ量はGC.statsで取得可能です。
+</span><span class="d_keyword">auto</span> beforeStats = GC.stats;
+
+<span class="d_comment">// 一般的に、未使用メモリをGCにより回収しても、
+</span><span class="d_comment">// 物理メモリはGCの中でプールされたままになっています。
+</span>GC.collect();
+
+<span class="d_keyword">auto</span> afterStats = GC.stats;
+<span class="d_keyword">assert</span>(afterStats.usedSize &lt;= beforeStats.usedSize);
+<span class="d_keyword">assert</span>(afterStats.freeSize &gt;= beforeStats.freeSize);
+
+<span class="d_comment">// GC.minimizeにより、未使用の物理メモリがOSに返却されます。
+</span><span class="d_comment">// ただし、実際に返却されるかどうか・返却されるサイズはGCの実装に依存します。
+</span>GC.minimize();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Dの実行ファイルでは、 GC関連のパラメーターを
+コマンドラインオプション--DRT-gcoptまたは環境変数DRT_GCOPTにより設定できます。
+<div class="ddoc_blankline"></div>
+
+Examples:
+<pre class="d_code notranslate"># --DRT-gcoptパラメーターによる指定
+$ app <span class="d_string">"--DRT-gcopt=profile:1 minPoolSize:16"</span> arguments to app
+
+# 環境変数による指定
+$ DRT_GCOPT=<span class="d_string">"profile:1 minPoolSize:16"</span> app arguments to app
+</pre>
+<div class="ddoc_blankline"></div>
+
+GC関連パラメーターの一覧は以下で定義されています。
+<a href="https://dlang.org/spec/garbage.html#gc_config">https://dlang.org/spec/garbage.html#gc_config</a>
+<div class="ddoc_blankline"></div>
+
+また、実行ファイルで--DRT-gcopt=helpパラメーターを指定して起動すると、
+現在の設定内容とデフォルト値を確認できます。
+<div class="ddoc_blankline"></div>
+
+Examples:
+<pre class="d_code notranslate">$ app --DRT-gcopt=help arguments to app
+</pre>
+<div class="ddoc_blankline"></div>
+
+--DRT-gcoptパラメーターは、Dのmain関数の引数からは除外されます。
+元々のコマンドラインパラメーターは、 rt.configモジュールの
+rt_argsから参照することができます。
+<div class="ddoc_blankline"></div>
+
+--DRTのパラメーターは、ソースコード内でrt_optionsグローバル変数を定義する事によって
+デフォルト値を指定することが可能です。
+<pre class="d_code notranslate"><span class="d_comment">// GC関連のオプションを、rt_optionsにより定義します。
+</span><span class="d_comment">// (実際はグローバルスコープで定義を行う必要があります)
+</span><span class="d_keyword">extern</span>(C) <span class="d_keyword">__gshared</span> string[] rt_options = [
+    <span class="d_string">"gcopt="</span>
+        ~ <span class="d_string">"disable:0"</span> <span class="d_comment">// 起動時にGCを無効化するかどうかを指定します。
+</span>        ~ <span class="d_string">" profile:0"</span> <span class="d_comment">// GCのプロファイリングを有効にするかどうか指定します。
+</span>        ~ <span class="d_string">" gc:conservative"</span> <span class="d_comment">// 使用するGCの種類を指定します。
+</span>                            <span class="d_comment">// conservative = デフォルトで使用される保守的GCです。
+</span>                            <span class="d_comment">// precise = 型情報に従った正確なスキャンを行うGCです。
+</span>                            <span class="d_comment">//           誤ってポインタとみなす事によるメモリリークは防げますが
+</span>                            <span class="d_comment">//           逆に、ポインタとして認識されていない場合の誤回収のリスクがあります。
+</span>                            <span class="d_comment">// manual = 自動的なメモリ回収は行いません。
+</span>                            <span class="d_comment">//          未使用領域はGC.freeにより明示的に解放する必要があります。
+</span>        ~ <span class="d_string">" initReserve:0B"</span> <span class="d_comment">// 起動時に確保するメモリのサイズを指定します。
+</span>                            <span class="d_comment">// なお、メモリサイズの指定ではB,K,M,Gと単位を付けて指定できます。
+</span>        ~ <span class="d_string">" minPoolSize:1M"</span> <span class="d_comment">// 最小のプールサイズを指定します。
+</span>        ~ <span class="d_string">" maxPoolSize:64M"</span> <span class="d_comment">// 最大のプールサイズを指定します。
+</span>        ~ <span class="d_string">" incPoolSize:3M"</span> <span class="d_comment">// プールサイズの増加量を指定します。
+</span>        ~ <span class="d_string">" parallel:0"</span> <span class="d_comment">// GCのマーキングに使用する追加スレッド数です。
+</span>                        <span class="d_comment">// デフォルトでは、利用可能なCPUコアを全て利用して並列マーキングを行います。
+</span>                        <span class="d_comment">// parallel:0と指定する事で並列マーキングは行われなくなります。
+</span>        ~ <span class="d_string">" heapSizeFactor:2"</span> <span class="d_comment">// ヒープサイズ伸長時、使用済みメモリの何倍を確保していくか指定します。
+</span>        ~ <span class="d_string">" cleanup:collect"</span> <span class="d_comment">// 実行終了時、生存オブジェクトをどう扱うか指定します。
+</span>                             <span class="d_comment">// collect = 回収を行います。
+</span>                             <span class="d_comment">//           ルート領域(スタックを除く)から参照されているオブジェクトは
+</span>                             <span class="d_comment">//           デストラクタが呼ばれません。
+</span>                             <span class="d_comment">//           後方互換性のためデフォルトになっています。
+</span>                             <span class="d_comment">// none = 何もしません。
+</span>                             <span class="d_comment">// finalize = 無条件でデストラクタを呼び出します。
+</span>];
+
+<span class="d_comment">// --DRT-xxxも含むコマンドライン引数は、rt_args関数により取得できます。
+</span><span class="d_comment">// (実際はグローバルスコープでextern宣言が必要です)
+</span><span class="d_comment">// extern extern(C) string[] rt_args() @nogc nothrow @system;
+</span>
+<span class="d_comment">// コマンドライン引数・環境変数によるパラメーター指定は、
+</span><span class="d_comment">// 以下のグローバル変数を定義することで有効・無効を切り替えられます。
+</span><span class="d_comment">// (実際はグローバルスコープで定義を行う必要があります)
+</span>
+<span class="d_comment">// コマンドライン引数でのDRTオプション指定の有効/無効化
+</span><span class="d_keyword">extern</span>(C) <span class="d_keyword">__gshared</span> <span class="d_keyword">bool</span> rt_cmdline_enabled = <span class="d_keyword">false</span>;
+
+<span class="d_comment">// 環境でのDRTオプション指定の有効/無効化
+</span><span class="d_keyword">extern</span>(C) <span class="d_keyword">__gshared</span> <span class="d_keyword">bool</span> rt_envvars_enabled = <span class="d_keyword">false</span>;
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

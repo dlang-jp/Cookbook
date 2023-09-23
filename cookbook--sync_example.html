@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>同期処理と排他処理の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">同期機構/排他処理
+</div></h1><div class="ddoc_description">マルチスレッドで処理する場合、複数スレッドから同時に同じ変数を読み書きしないようにする必要があります。
+これを適切に管理・実現するため、様々な同期処理が必要になる場合があります。
+<div class="ddoc_blankline"></div>
+
+手法については様々な物がありますが、ここではランタイムが持つ同期機構として以下について整理していきます。
+
+<ul><li>単独の <span class="d_inlinecode donthyphenate notranslate">synchronized</span> 文</li>
+<li><span class="d_inlinecode donthyphenate notranslate">Mutex</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">ReadWriteMutex</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Barrier</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Condition</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Semaphore</span></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Event</span>
+</li>
+</ul>
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/sync_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/sync_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <span class="d_inlinecode donthyphenate notranslate">synchronized</span> 文を用いて単独のクリティカルセクションを構成する例です。
+<div class="ddoc_blankline"></div>
+
+主に <span class="d_inlinecode donthyphenate notranslate">std.parallelism</span> の <span class="d_inlinecode donthyphenate notranslate">parallel</span> など、複数スレッドから1つの処理が同時に呼び出されるときに利用します。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/spec/statement.html#synchronized-statement">https://dlang.org/spec/statement.html#synchronized-statement</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : parallel;
+<span class="d_keyword">import</span> std.range : iota;
+
+size_t points;
+<span class="d_keyword">foreach</span> (i; iota(10).parallel())
+{
+    <span class="d_comment">// synchronized文はそれだけでクリティカルセクションを構成します
+</span>    <span class="d_keyword">synchronized</span>
+    {
+        <span class="d_comment">// ここはsynchronized文の中なので、複数スレッドで同時に実行されることはありません
+</span>        points += 10;
+    }
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <span class="d_inlinecode donthyphenate notranslate">Mutex</span> クラスを用いて複数のクリティカルセクションをグループ化し、同期させる例です。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/core_sync_mutex.html">https://dlang.org/phobos/core_sync_mutex.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread : Thread;
+<span class="d_keyword">import</span> core.sync.mutex : Mutex;
+
+size_t points;
+<span class="d_keyword">auto</span> mutex = <span class="d_keyword">new</span> Mutex;
+
+<span class="d_comment">// 複数のスレッドから points 変数を操作するため、同時実行を防ぐ必要があります。
+</span><span class="d_comment">// synchronized 文に同じ Mutex オブジェクトを指定することで、排他される範囲をグループ化することができます。
+</span><span class="d_keyword">auto</span> t1 = <span class="d_keyword">new</span> Thread({
+    <span class="d_keyword">synchronized</span> (mutex)
+    {
+        points += 10;
+    }
+});
+<span class="d_keyword">auto</span> t2 = <span class="d_keyword">new</span> Thread({
+    <span class="d_keyword">synchronized</span> (mutex)
+    {
+        points += 20;
+    }
+});
+t1.start();
+t2.start();
+t1.join();
+t2.join();
+
+<span class="d_keyword">assert</span>(points == 30);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <span class="d_inlinecode donthyphenate notranslate">ReadWriteMutex</span> クラスを使い、書き込みと読み取りの排他を分けることで効率化する例です。
+<div class="ddoc_blankline"></div>
+
+読み取り同士では排他せず、読み取りと書き込み、書き込み同士のときに排他することで、
+単純な <span class="d_inlinecode donthyphenate notranslate">Mutex</span> による排他よりもスループットが向上することが期待できます。
+<div class="ddoc_blankline"></div>
+
+<table><tr><th><tr><th align="left"></th><th align="center">読み取り</th><th align="center">書き込み</th></tr></th></tr><tbody><tr><td align="left">読み取り</td><td align="center">排他なし</td><td align="center">排他あり</td></tr>
+<tr><td align="left">書き込み</td><td align="center">排他あり</td><td align="center">排他あり</td></tr>
+</tbody></table>
+See_Also: <a href="https://dlang.org/phobos/core_sync_rwmutex.html">https://dlang.org/phobos/core_sync_rwmutex.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread : ThreadGroup;
+<span class="d_keyword">import</span> core.sync.rwmutex : ReadWriteMutex;
+
+size_t points;
+<span class="d_keyword">auto</span> rwMutex = <span class="d_keyword">new</span> ReadWriteMutex;
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+tg.create({
+    <span class="d_keyword">synchronized</span> (rwMutex.reader) <span class="d_comment">// 排他時に読み取り処理であることを明示します
+</span>    {
+        <span class="d_keyword">auto</span> temp = points; <span class="d_comment">// 値を読み取るのみです
+</span>    }
+});
+tg.create({
+    <span class="d_keyword">synchronized</span> (rwMutex.reader) <span class="d_comment">// 排他時に読み取り処理であることを明示します
+</span>    {
+        <span class="d_keyword">auto</span> temp = points; <span class="d_comment">// 値を読み取るのみです
+</span>    }
+});
+tg.create({
+    <span class="d_keyword">synchronized</span> (rwMutex.writer) <span class="d_comment">// 排他時に書き込み処理であることを明示します
+</span>    {
+        points += 10; <span class="d_comment">// 値を読み書きします
+</span>    }
+});
+tg.create({
+    <span class="d_keyword">synchronized</span> (rwMutex.writer) <span class="d_comment">// 排他時に書き込み処理であることを明示します
+</span>    {
+        points += 20; <span class="d_comment">// 値を読み書きします
+</span>    }
+});
+tg.joinAll();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Barrierで、指定した数のスレッドが所定のポイントに達するまで待機する例です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_barrier.html">https://dlang.org/phobos/core_sync_barrier.html</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.barrier: Barrier;
+
+<span class="d_keyword">int</span> test;
+
+<span class="d_comment">// 2つのスレッドを同期
+</span><span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> Barrier(2);
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    test = 1;
+    b.wait();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1がtest変数を1にするまで待つ
+</span>    b.wait();
+    <span class="d_keyword">assert</span>(test == 1);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Conditionで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+Conditionのコンストラクタに渡したMutexをロックしているときにwaitすると、そのMutexのロックを解除して待機状態に入ります。
+その後別スレッドがMutexをロックすると、notifyされても、Mutexがロック解除されるまでは待機を維持します。
+<div class="ddoc_blankline"></div>
+
+逆に、Conditionのコンストラクタに渡したMutexのロック解除中にwaitした場合、単にほかのスレッドからnotifyされるまで待機します。
+<div class="ddoc_blankline"></div>
+
+使用例として、Producer Consumerパターン内で、Guarded Suspensionパターンでの同期処理を行う場合に利用できます。
+<ul><li><a href="https://www.hyuki.com/dp/dpinfo.html#ProducerConsumer">解説サイト</a>
+</li>
+</ul>
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_condition.html">https://dlang.org/phobos/core_sync_condition.html</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.mutex: Mutex;
+<span class="d_keyword">import</span> core.sync.condition: Condition;
+<span class="d_keyword">import</span> core.sync.barrier: Barrier;
+
+<span class="d_keyword">auto</span> m = <span class="d_keyword">new</span> Mutex;
+<span class="d_keyword">auto</span> c = <span class="d_keyword">new</span> Condition(m);
+<span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> Barrier(2);
+
+<span class="d_keyword">int</span> test;
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// ➀mをロック
+</span>    <span class="d_keyword">synchronized</span> (m)
+    {
+        <span class="d_comment">// スレッド2が開始されるまで待つ
+</span>        b.wait();
+        <span class="d_comment">// ➂cをwaitと同時にmをロック解除
+</span>        c.wait();
+        <span class="d_comment">// mをロックしたことをスレッド2に知らせる
+</span>        b.wait();
+
+        <span class="d_keyword">assert</span>(test == 1);
+        test = 2;
+    }
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// mがロックされるまで待つ
+</span>    b.wait();
+    <span class="d_comment">// ➁cがwaitしてロック解除するまで待機
+</span>    <span class="d_keyword">synchronized</span> (m)
+    {
+        <span class="d_comment">// ➃注意：ここで即時➂でのwaitが解除されるわけではありません
+</span>        c.notify();
+        <span class="d_keyword">assert</span>(test == 0);
+        test = 1;
+    }
+    <span class="d_comment">// synchronized を抜けた(mのロック解除した)ここで➂のwaitが解除されます
+</span>    <span class="d_comment">// mがロックされるまで待つ
+</span>    b.wait();
+    <span class="d_keyword">synchronized</span> (m)
+        <span class="d_keyword">assert</span>(test == 2);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Semaphoreで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+Conditionよりも単純で、Mutexとの関係を気にする必要はありません。
+Semaphoreは内部にカウント値を持っており、notifyでカウント値は+1されます。
+waitではカウント値が0より大きくなるまで制御をブロックし、カウント値が0より大きくなったら制御を戻しつつカウント値を-1します。
+<div class="ddoc_blankline"></div>
+
+共有資源がある場合、通知する側はnotify以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Semaphoreでは通知する側はnotifyより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_semaphore.html">https://dlang.org/phobos/core_sync_semaphore.html</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.semaphore: Semaphore;
+
+<span class="d_keyword">auto</span> s = <span class="d_keyword">new</span> Semaphore(0);
+<span class="d_keyword">int</span> test;
+
+<span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// 長い処理のあと終わったことを通知
+</span>    test = 1;
+    s.notify();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    s.wait();
+    <span class="d_keyword">assert</span>(test == 1);
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Eventで、通知による同期を行う例です。
+<div class="ddoc_blankline"></div>
+
+ConditionやSemaphoreよりも単純です。ただのフラグと考えればよいです。
+Eventは内部にフラグを持っており、setでtrue(シグナル状態)に、resetでfalse(非シグナル状態)になります。
+waitでは、フラグを見てfalseならtrueになるまで制御をブロックします。ここでEventのコンストラクタで指定する <span class="d_inlinecode donthyphenate notranslate">manualReset</span> がfalseの場合、waitで制御を返した後、フラグをfalseに自動的に戻します。
+Eventのコンストラクタの <span class="d_inlinecode donthyphenate notranslate">initialState</span> は、このフラグの初期状態を表します。
+<div class="ddoc_blankline"></div>
+
+共有資源がある場合、通知する側はset以降の共有資源へのアクセス、通知される側はwait以前の共通資源へのアクセスについて、互いに競合しないよう排他する必要があります。
+Eventでは通知する側はsetより前に共有資源の編集を終え、通知される側はwait以降に共有資源を使うようにすればよいでしょう。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/core_sync_event.html">https://dlang.org/phobos/core_sync_event.html</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.thread: ThreadGroup;
+<span class="d_keyword">import</span> core.sync.event: Event;
+<span class="d_keyword">import</span> std.random: uniform;
+
+<span class="d_comment">// マニュアルリセットなので、勝手に非シグナル状態に戻らない。
+</span><span class="d_comment">// 初期状態は非シグナル状態なので、setするまでwaitは制御をブロックする。
+</span><span class="d_keyword">auto</span> ev = Event(<span class="d_keyword">true</span>, <span class="d_keyword">false</span>);
+<span class="d_keyword">int</span> testA;
+<span class="d_keyword">int</span> testB;
+<span class="d_keyword">int</span> testC;
+
+<span class="d_comment">// ここではスレッドを3つ立ち上げる
+</span><span class="d_comment">// Semaphoreだとスレッド1で2回notifyが必要だが、Eventなら1回でOK
+</span><span class="d_keyword">auto</span> tg = <span class="d_keyword">new</span> ThreadGroup;
+<span class="d_comment">// スレッド1
+</span>tg.create({
+    <span class="d_comment">// 長い処理のあと終わったことを通知
+</span>    testA = uniform(1, 10);
+    ev.set();
+});
+<span class="d_comment">// スレッド2
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    ev.wait();
+    <span class="d_keyword">assert</span>(testA &gt; 0);
+    testB = testA + 1;
+});
+<span class="d_comment">// スレッド3
+</span>tg.create({
+    <span class="d_comment">// スレッド1の処理が終わるまで待つ
+</span>    ev.wait();
+    <span class="d_keyword">assert</span>(testA &gt; 0);
+    testC = testA + 2;
+});
+tg.joinAll(<span class="d_keyword">true</span>);
+<span class="d_keyword">assert</span>(testA + 1 == testB);
+<span class="d_keyword">assert</span>(testA + 2 == testC);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

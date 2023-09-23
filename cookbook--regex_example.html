@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>正規表現の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">正規表現
+</div></h1><div class="ddoc_description">正規表現の操作についてまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/regex_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/regex_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>正規表現オブジェクトの生成</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : regex, ctRegex;
+
+<span class="d_comment">// 実行時に正規表現オブジェクトを作成するには`regex`関数を用います。
+</span><span class="d_keyword">auto</span> r0 = regex(<span class="d_string">`(d|D)(lang|language)`</span>);
+
+<span class="d_comment">// コンパイル時に正規表現オブジェクトを作成するには`ctRegex`関数を用います。
+</span><span class="d_keyword">enum</span> r1 = ctRegex!(<span class="d_string">`(d|D)(lang|language)`</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>正規表現用の文字列</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : equal;
+<span class="d_keyword">import</span> std.regex : escaper;
+
+<span class="d_comment">// 正規表現では`\\.`や`\\d`など通常のエスケープ文字と異なる表記をするため、通常の文字列は使えないことがあります。
+</span><span class="d_comment">/*
+auto s0 = "\."; // undefined escape sequence \.
+*/</span>
+
+<span class="d_comment">// `\\`を二重にすれば問題ありませんが、冗長になってしまいます。
+</span><span class="d_keyword">auto</span> s0 = <span class="d_string">"\\."</span>;
+
+<span class="d_comment">// このような場合、Wysiwyg(what you see is what you get)文字列が有効です。
+</span><span class="d_comment">// Wysiwyg文字列は`\``で囲うことで表記できます。
+</span><span class="d_keyword">auto</span> s1 = <span class="d_string">`\.`</span>;
+<span class="d_keyword">assert</span>(s0 == s1);
+
+<span class="d_comment">// 通常の文字列の前に`r`を置くことでも表記できます。
+</span><span class="d_keyword">auto</span> s2 = <span class="d_string">r"\."</span>;
+<span class="d_keyword">assert</span>(s0 == s2);
+
+<span class="d_comment">// また、全体をエスケープする場合なら`escaper`も有効です。
+</span><span class="d_keyword">auto</span> s3 = escaper(<span class="d_string">"."</span>);
+<span class="d_keyword">assert</span>(s0.equal(s3));
+
+<span class="d_comment">// `escaper`の戻り値は、`Escaper`という遅延評価を行うレンジになります。
+</span><span class="d_comment">// 実行時にstringと連結して新たなパターン文字列を作るような場合、`std.conv.to`や`std.conv.text`を使うと効率的です。
+</span><span class="d_keyword">import</span> std.conv : to, text;
+
+string s4 = <span class="d_string">"^"</span> ~ escaper(<span class="d_string">"https://dlang.org"</span>).to!string() ~ <span class="d_string">"$"</span>;
+string s5 = text(<span class="d_string">"^"</span>, escaper(<span class="d_string">"https://dlang.org"</span>), <span class="d_string">"$"</span>);
+<span class="d_keyword">assert</span>(s4 == <span class="d_string">`^https\:\/\/dlang\.org$`</span>);
+<span class="d_keyword">assert</span>(s5 == <span class="d_string">`^https\:\/\/dlang\.org$`</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>部分文字列の検索</h1>
+<pre class="d_code notranslate"><span class="d_comment">// 正規表現を用いた部分文字列の検索には以下の関数を用います。
+</span><span class="d_keyword">import</span> std.regex : matchFirst, matchAll;
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>部分文字列の検索 (matchFirst)</h2>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : regex, matchFirst;
+
+<span class="d_comment">// 最初にマッチした場所を検索するには`matchFirst`を用います。
+</span><span class="d_keyword">auto</span> matchFirstResult = matchFirst(<span class="d_string">"My IP is 192.168.1.255 !!!"</span>, regex(<span class="d_string">`(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`</span>));
+
+<span class="d_comment">// `.pre`でマッチ箇所より前の部分文字列を取得できます。
+</span><span class="d_keyword">assert</span>(matchFirstResult.pre == <span class="d_string">"My IP is "</span>);
+
+<span class="d_comment">// `.post`でマッチ箇所より後ろの部分文字列を取得できます。
+</span><span class="d_keyword">assert</span>(matchFirstResult.post == <span class="d_string">" !!!"</span>);
+
+<span class="d_comment">// `.hit`でマッチ箇所を取得できます。
+</span><span class="d_keyword">assert</span>(matchFirstResult.hit == <span class="d_string">"192.168.1.255"</span>);
+
+<span class="d_comment">// `.hit`は`[0]`の糖衣構文です。
+</span><span class="d_keyword">assert</span>(matchFirstResult.hit == matchFirstResult[0]);
+
+<span class="d_comment">// `[1]`以降にキャプチャ(カッコでくくったパターンの部分マッチ)結果が格納されています。
+</span><span class="d_keyword">assert</span>(matchFirstResult[1] == <span class="d_string">"192"</span>);
+<span class="d_keyword">assert</span>(matchFirstResult[2] == <span class="d_string">"168"</span>);
+<span class="d_keyword">assert</span>(matchFirstResult[3] == <span class="d_string">"1"</span>);
+<span class="d_keyword">assert</span>(matchFirstResult[4] == <span class="d_string">"255"</span>);
+
+<span class="d_comment">// `?P&lt;name&gt;`でキャプチャに対して名前を付けられます。
+</span><span class="d_comment">// また、キャプチャ不要の場合は (?:xxx)としてグルーピングが可能です。
+</span><span class="d_keyword">auto</span> namedMatchResult = matchFirst(<span class="d_string">"My IP is 192.168.1.255 !!!"</span>,
+        regex(<span class="d_string">`(?P&lt;first&gt;\d{1,3})\.(?:\d{1,3})\.(\d{1,3})\.(?P&lt;last&gt;\d{1,3})`</span>));
+<span class="d_keyword">assert</span>(namedMatchResult[<span class="d_string">"first"</span>] == <span class="d_string">"192"</span>);
+<span class="d_keyword">assert</span>(namedMatchResult[<span class="d_string">"last"</span>] == <span class="d_string">"255"</span>);
+<span class="d_comment">// 数字でもキャプチャした部分にアクセスできます。
+</span><span class="d_keyword">assert</span>(namedMatchResult[1] == <span class="d_string">"192"</span>);
+<span class="d_comment">// 168の部分はキャプチャしていないので、[2]は"1"になります。
+</span><span class="d_keyword">assert</span>(namedMatchResult[2] == <span class="d_string">"1"</span>);
+
+<span class="d_comment">// if文と組み合わせると便利です。
+</span><span class="d_keyword">if</span> (<span class="d_keyword">auto</span> capt = matchFirst(<span class="d_string">"My IP is 192.168.1.255 !!!"</span>, regex(<span class="d_string">`(\d\d\d)\.(\d\d\d)\.(\d\d\d)\.(\d\d\d)`</span>)))
+{
+    <span class="d_comment">// マッチしなかった場合にこの添え字アクセスはよくありませんね。
+</span>    <span class="d_keyword">assert</span>(capt[1] == <span class="d_string">"192"</span>);
+    <span class="d_keyword">assert</span>(capt[2] == <span class="d_string">"168"</span>);
+    <span class="d_keyword">assert</span>(capt[3] == <span class="d_string">"1"</span>);
+    <span class="d_keyword">assert</span>(capt[4] == <span class="d_string">"255"</span>);
+    <span class="d_comment">// 安心してください。
+</span>    <span class="d_comment">// ifで囲うことでマッチした場合にのみここが実行されます。
+</span>    <span class="d_comment">// ですので安心して添え字を使えます。
+</span>    <span class="d_keyword">assert</span>(0);
+}
+
+<span class="d_comment">// matchFirstにはregexオブジェクトか、もしくは、ただの文字列でパターンを指定しても大丈夫です。
+</span><span class="d_comment">// 2回以上同じパターンを使う場合ではregexオブジェクトにすると効率がよさそうです。
+</span><span class="d_keyword">if</span> (<span class="d_keyword">auto</span> capt = matchFirst(<span class="d_string">"My IP is 192.168.1.255 !!!"</span>, <span class="d_string">`(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`</span>))
+{
+    <span class="d_keyword">assert</span>(capt[1] == <span class="d_string">"192"</span>);
+    <span class="d_keyword">assert</span>(capt[2] == <span class="d_string">"168"</span>);
+    <span class="d_keyword">assert</span>(capt[3] == <span class="d_string">"1"</span>);
+    <span class="d_keyword">assert</span>(capt[4] == <span class="d_string">"255"</span>);
+}
+
+<span class="d_comment">// 繰り返しの最小量指定子もサポートしています。
+</span><span class="d_keyword">auto</span> s = <span class="d_string">"Ubuntu(Linux)/Debian(Linux)/FreeBSD(BSD)"</span>;
+<span class="d_keyword">assert</span>(s.matchFirst(regex(<span class="d_string">`\w+\(.*\)`</span>)).hit == s);
+<span class="d_keyword">assert</span>(s.matchFirst(regex(<span class="d_string">`\w+\(.*?\)`</span>)).hit == <span class="d_string">"Ubuntu(Linux)"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h2>部分文字列の検索 (matchAll)</h2>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : regex, matchAll;
+
+<span class="d_comment">// マッチ箇所を全検索するには`matchAll`を用います。
+</span><span class="d_keyword">auto</span> matchAllResult = matchAll(<span class="d_string">"import std.regex, std.stdio, core.stdio"</span>, regex(<span class="d_string">`std\.(\w+)`</span>));
+
+<span class="d_comment">// `matchAll`の返り値は`matchFirst`の返り値がRangeになったものです。
+</span><span class="d_comment">// `.pre`, `.post`, `.hit`は`front.*`の糖衣構文です。
+</span><span class="d_keyword">assert</span>(matchAllResult.pre == matchAllResult.front.pre);
+<span class="d_keyword">assert</span>(matchAllResult.post == matchAllResult.front.post);
+<span class="d_keyword">assert</span>(matchAllResult.hit == matchAllResult.front.hit);
+
+<span class="d_comment">// `.pre`, `.post`, `.hit`, `[*]`は`matchFirst`のものと同様です。
+</span><span class="d_keyword">assert</span>(matchAllResult.pre == <span class="d_string">"import "</span>);
+<span class="d_keyword">assert</span>(matchAllResult.post == <span class="d_string">", std.stdio, core.stdio"</span>);
+<span class="d_keyword">assert</span>(matchAllResult.hit == <span class="d_string">"std.regex"</span>);
+<span class="d_keyword">assert</span>(matchAllResult.front[1] == <span class="d_string">"regex"</span>);
+
+<span class="d_comment">// `.popFront`で次のマッチ結果に移動します。
+</span>matchAllResult.popFront();
+<span class="d_keyword">assert</span>(matchAllResult.pre == <span class="d_string">"import std.regex, "</span>);
+<span class="d_keyword">assert</span>(matchAllResult.post == <span class="d_string">", core.stdio"</span>);
+<span class="d_keyword">assert</span>(matchAllResult.hit == <span class="d_string">"std.stdio"</span>);
+<span class="d_keyword">assert</span>(matchAllResult.front[1] == <span class="d_string">"stdio"</span>);
+
+<span class="d_comment">// 空になったら`.empty`がtrueになります。
+</span>matchAllResult.popFront();
+<span class="d_keyword">assert</span>(matchAllResult.empty);
+
+<span class="d_comment">// foreach文と組み合わせると便利です。
+</span><span class="d_comment">// また、matchAllも２つ目の引数にはregexオブジェクトのほかに、文字列でパターンを渡せます。
+</span>size_t count;
+<span class="d_keyword">foreach</span> (capt; matchAll(<span class="d_string">"import core.thread, std.regex, std.stdio, core.stdio"</span>, <span class="d_string">`std\.(\w+)`</span>))
+{
+    <span class="d_comment">// マッチしなかった場合にはここは実行されないので、
+</span>    <span class="d_comment">// emptyのチェックや添え字の範囲チェックを省くことができて便利です。
+</span>    <span class="d_keyword">if</span> (capt[1] == <span class="d_string">"stdio"</span>)
+        <span class="d_keyword">break</span>;
+    count++;
+}
+<span class="d_keyword">assert</span>(count == 1);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>文字列の置換</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : regex, replaceFirst, replaceAll;
+<span class="d_keyword">import</span> std.conv : to;
+
+<span class="d_comment">// 最初のマッチ結果のみを置換するときは`replaceFirst`を用います。
+</span><span class="d_comment">// $nでn番目のマッチ結果を表します。
+</span><span class="d_keyword">assert</span>(replaceFirst(<span class="d_string">"4 x 3 = 6 x 2"</span>, regex(<span class="d_string">`(\d) x (\d)`</span>), <span class="d_string">"$2 x $1"</span>) == <span class="d_string">"3 x 4 = 6 x 2"</span>);
+
+<span class="d_comment">// $&amp;でマッチ結果全体を表します。
+</span><span class="d_keyword">assert</span>(replaceFirst(<span class="d_string">"4 x 3 = 6 x 2"</span>, regex(<span class="d_string">`(\d) x (\d)`</span>), <span class="d_string">"($&amp;)"</span>) == <span class="d_string">"(4 x 3) = 6 x 2"</span>);
+
+<span class="d_comment">// ラムダ式を用いたより柔軟な置換も可能です。
+</span><span class="d_keyword">alias</span> replacer = c =&gt; to!string(c[1].to!<span class="d_keyword">int</span> * c[2].to!<span class="d_keyword">int</span>) ~ <span class="d_string">" x 1"</span>;
+<span class="d_keyword">assert</span>(replaceFirst!(replacer)(<span class="d_string">"4 x 3 = 6 x 2"</span>, regex(<span class="d_string">`(\d) x (\d)`</span>)) == <span class="d_string">"12 x 1 = 6 x 2"</span>);
+
+<span class="d_comment">// `replaceAll`を用いることで全マッチ結果を置換できます。
+</span><span class="d_keyword">assert</span>(replaceAll!(replacer)(<span class="d_string">"4 x 3 = 6 x 2"</span>, regex(<span class="d_string">`(\d) x (\d)`</span>)) == <span class="d_string">"12 x 1 = 12 x 1"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>文字列の分割</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : equal;
+<span class="d_keyword">import</span> std.regex : regex, split, splitter;
+<span class="d_keyword">import</span> std.typecons : Yes;
+
+<span class="d_comment">// 最もシンプルな分割は、`split`関数を用いることです。
+</span><span class="d_keyword">assert</span>(split(<span class="d_string">"C/C++, Python or D"</span>, regex(<span class="d_string">`, | or `</span>)) == [<span class="d_string">"C/C++"</span>, <span class="d_string">"Python"</span>, <span class="d_string">"D"</span>]);
+
+<span class="d_comment">// Separatorも残したい場合は、`splitter`関数を用います。
+</span><span class="d_keyword">assert</span>(splitter!(Yes.keepSeparators)(<span class="d_string">"C/C++, Python or D"</span>, regex(<span class="d_string">`, | or `</span>))
+        .equal([<span class="d_string">"C/C++"</span>, <span class="d_string">", "</span>, <span class="d_string">"Python"</span>, <span class="d_string">" or "</span>, <span class="d_string">"D"</span>]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>Unicodeプロパティ</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex : matchFirst, regex;
+
+<span class="d_comment">// ひらがなのみにマッチする例です。
+</span><span class="d_keyword">auto</span> matchFirstResult = matchFirst(<span class="d_string">"abcあいう"</span>, regex(<span class="d_string">`[\pN\p{Hiragana}]+`</span>));
+<span class="d_keyword">assert</span>(matchFirstResult.hit == <span class="d_string">"あいう"</span>);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <h1>先読み・後読み</h1>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : map;
+<span class="d_keyword">import</span> std.array : join;
+<span class="d_keyword">import</span> std.regex : regex, matchAll, matchFirst;
+
+<span class="d_comment">// 肯定的先読みで、'H'から始まる連続した大文字を抽出します
+</span><span class="d_keyword">auto</span> matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`(?=H)[A-Z]+`</span>));
+<span class="d_keyword">auto</span> joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"HAHI"</span>);
+
+<span class="d_comment">// 肯定的先読みで、次の文字が'A'になる大文字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`[A-Z](?=A)`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"HR"</span>);
+
+<span class="d_comment">// 否定的先読みで、"HI"から始まらない大文字2字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`(?!HI)[A-Z]{2}`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"HARARE"</span>);
+
+<span class="d_comment">// 否定的先読みで、次が"HI"にならない小文字2字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`[a-z]{2}(?!HI)`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"rehaho"</span>);
+
+<span class="d_comment">// 肯定的後読みで、前が'H'の3字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`(?&lt;=H)...`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"AraIre"</span>);
+
+<span class="d_comment">// 肯定的後読みで、末尾が'a'の2字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`..(?&lt;=a)`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"raha"</span>);
+
+<span class="d_comment">// 否定的後読みで、前が'H'じゃない大文字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`(?&lt;!H)[A-Z]`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"HHRARE"</span>);
+
+<span class="d_comment">// 否定的後読みで、末尾が'a'じゃない小文字2字を抽出します
+</span>matchResults = matchAll(<span class="d_string">"HAraHIrehaRAhoRE"</span>, regex(<span class="d_string">`[a-z]{2}(?&lt;!a)`</span>));
+joined = matchResults.map!(a =&gt; a.hit).join();
+<span class="d_keyword">assert</span>(joined == <span class="d_string">"reho"</span>);
+
+<span class="d_comment">// 肯定的後ろ読みと、肯定的先読みの組み合わせ
+</span><span class="d_comment">// "否定"または"肯定"、次に"的"があってもなくてもよい語句から始まって、
+</span><span class="d_comment">// 後ろには"読み"が続く、"先"または"後"の文字
+</span><span class="d_keyword">auto</span> reLookAheadAndBhind = regex(<span class="d_string">"(?&lt;=(?:否定|肯定)的?)(?:先|後)(?=読み)"</span>);
+string[] matchFirstResults;
+<span class="d_keyword">foreach</span> (str; [
+    <span class="d_string">"肯定的先読み"</span>, <span class="d_string">"否定的先読み"</span>, <span class="d_string">"肯定的後読み"</span>, <span class="d_string">"否定的後読み"</span>,
+    <span class="d_string">"肯定先読み"</span>,   <span class="d_string">"否定先読み"</span>,   <span class="d_string">"肯定後読み"</span>,   <span class="d_string">"否定後読み"</span>,
+    <span class="d_string">"肯定的裏読み"</span>, <span class="d_string">"忌避的先読み"</span>, <span class="d_string">"肯定後ろ読み"</span>, <span class="d_string">"否定読み"</span>
+])
+{
+    <span class="d_comment">// マッチしなければ "x"、マッチしたらヒットした部分の文字
+</span>    <span class="d_keyword">if</span> (<span class="d_keyword">auto</span> capt = matchFirst(str, reLookAheadAndBhind))
+    {
+        matchFirstResults ~= capt.hit;
+        <span class="d_comment">// ちなみに、カッコは使ってるけどキャプチャはしていない
+</span>        <span class="d_comment">// capt.lengthはヒットした文字列だけ、という意味の 1 になる
+</span>        <span class="d_keyword">assert</span>(capt.length == 1);
+    }
+    <span class="d_keyword">else</span>
+    {
+        matchFirstResults ~= <span class="d_string">"x"</span>;
+    }
+}
+<span class="d_keyword">assert</span>(matchFirstResults == [
+    <span class="d_string">"先"</span>, <span class="d_string">"先"</span>, <span class="d_string">"後"</span>, <span class="d_string">"後"</span>,
+    <span class="d_string">"先"</span>, <span class="d_string">"先"</span>, <span class="d_string">"後"</span>, <span class="d_string">"後"</span>,
+    <span class="d_string">"x"</span>,  <span class="d_string">"x"</span>,  <span class="d_string">"x"</span>,  <span class="d_string">"x"</span>
+]);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

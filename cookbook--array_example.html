@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>配列を扱う例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">配列
+</div></h1><div class="ddoc_description">動的配列と静的配列の操作についてまとめます。
+<div class="ddoc_blankline"></div>
+
+要素の初期化、要素の追加、要素の削除、ソート(WIP)、ループ操作(WIP)
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/array_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/array_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 初期化の例です
+<pre class="d_code notranslate"><span class="d_comment">// 簡単な配列は new T[N] という形式で初期化できます
+</span><span class="d_keyword">int</span>[] data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[100];
+<span class="d_keyword">assert</span>(data.length == 100);
+
+<span class="d_comment">// 型に対しコンストラクタを呼ぶような記法でも初期化できます
+</span>data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[](100);
+<span class="d_keyword">assert</span>(data.length == 100);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 二次元以上の多次元配列を一括で確保する例です
+<pre class="d_code notranslate"><span class="d_comment">// 4要素の配列を要素に持つ2要素の配列を初期化します
+</span><span class="d_comment">// 型に対してコンストラクタのように初期化でき、引数の順序は外側から（使うときにアクセスする順）指定するイメージになります
+</span><span class="d_keyword">int</span>[][] data = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][](2, 4);
+
+<span class="d_keyword">assert</span>(data.length == 2);
+<span class="d_keyword">assert</span>(data[0].length == 4);
+
+<span class="d_keyword">int</span>[][][] data2 = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][](2, 3, 4);
+<span class="d_keyword">assert</span>(data2.length == 2);
+<span class="d_keyword">assert</span>(data2[1].length == 3);
+<span class="d_keyword">assert</span>(data2[1][2].length == 4);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 要素のインデックス、または条件式を指定した値の削除
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> の <span class="d_inlinecode donthyphenate notranslate">remove</span> を使います
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">remove</span> : <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.remove">https://dlang.org/phobos/std_algorithm_mutation.html#.remove</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : remove;
+
+<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// removeは配列を破壊的に編集して結果を返すため、再度使うときは結果を元の変数に代入しなおします
+</span>data = data.remove(1); <span class="d_comment">// インデックス指定（20を削除）
+</span>data = data.remove!(a =&gt; a &gt; 50); <span class="d_comment">// 条件式指定（50より大きいものを削除）
+</span>
+<span class="d_keyword">assert</span>(data == [10, 30, 40, 50]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 要素の追加の例です。
+<div class="ddoc_blankline"></div>
+
+動的配列に対しては <span class="d_inlinecode donthyphenate notranslate">~=</span> 演算子で要素を追加することができます。
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] data;
+
+data ~= 10;
+data ~= 20;
+
+<span class="d_keyword">assert</span>(data == [10, 20]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 事前にサイズがわからない配列を構築する場合は <span class="d_inlinecode donthyphenate notranslate">std.array</span> の <span class="d_inlinecode donthyphenate notranslate">appender</span> を使用すると効率的です。
+<div class="ddoc_blankline"></div>
+
+要素の追加は <span class="d_inlinecode donthyphenate notranslate">~=</span> または <span class="d_inlinecode donthyphenate notranslate">put</span> で行います。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">appender</span> : <a href="https://dlang.org/phobos/std_array.html#appender">https://dlang.org/phobos/std_array.html#appender</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.array : appender;
+
+<span class="d_keyword">auto</span> buffer = appender!(<span class="d_keyword">int</span>[]);
+
+buffer ~= 10;
+buffer.put(20);
+
+<span class="d_keyword">int</span>[] data = buffer.data;
+
+<span class="d_keyword">assert</span>(data == [10, 20]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の一部の要素を置換します
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">replace</span> : <a href="https://dlang.org/phobos/std_array.html#replace">https://dlang.org/phobos/std_array.html#replace</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">replaceInPlace</span> : <a href="https://dlang.org/phobos/std_array.html#replaceInPlace">https://dlang.org/phobos/std_array.html#replaceInPlace</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">replaceInto</span> : <a href="https://dlang.org/phobos/std_array.html#replaceInto">https://dlang.org/phobos/std_array.html#replaceInto</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.array: replace, replaceInPlace, replaceInto;
+
+<span class="d_keyword">int</span>[] data1 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// replaceの場合：元データは書き変わらず、新しい配列が確保されます
+</span><span class="d_keyword">auto</span> data2 = data1.replace(40, 42);
+<span class="d_keyword">assert</span>(data1 == [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_comment">// 添え字で始まりから終わりの指定方法もあります。
+</span>data2 = data1.replace(3, 4, [42]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_comment">// replaceInPlaceの場合：元データも書き換えられます
+</span><span class="d_comment">// ※InPlace版は値を探して置換する指定方法はありません。
+</span>data2.replaceInPlace(9, 10, [123]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 90, 123]);
+<span class="d_comment">// 値を探してInPlaceで置換する場合は以下のようにします。
+</span><span class="d_keyword">import</span> std.range: iota;
+<span class="d_keyword">import</span> std.algorithm: filter;
+<span class="d_keyword">foreach</span> (i; iota(0, data2.length).filter!(i =&gt; data2[i] == 90))
+    data2.replaceInPlace(i, i + 1, [95]);
+<span class="d_keyword">assert</span>(data2 == [10, 20, 30, 42, 50, 60, 70, 80, 95, 123]);
+
+<span class="d_comment">// replaceIntoだとは、置換結果をレンジに格納できます。
+</span><span class="d_comment">// ※Into版は添え字で始まりから終わりを指定する方法はありません。
+</span><span class="d_keyword">int</span>[10] buffer;
+buffer[].replaceInto(data1, 40, 42);
+<span class="d_keyword">assert</span>(buffer[] == [10, 20, 30, 42, 50, 60, 70, 80, 90, 100]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素をシャッフルします
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">randomShuffle</span> : <a href="https://dlang.org/phobos/std_random.html#randomShuffle">https://dlang.org/phobos/std_random.html#randomShuffle</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Random</span> : <a href="https://dlang.org/phobos/std_random.html#Random">https://dlang.org/phobos/std_random.html#Random</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">unpredictableSeed</span> : <a href="https://dlang.org/phobos/std_random.html#unpredictableSeed">https://dlang.org/phobos/std_random.html#unpredictableSeed</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random: randomShuffle, Random, Mt19937, unpredictableSeed;
+<span class="d_keyword">version</span> (<span class="d_keyword">unittest</span>)
+{
+    <span class="d_comment">// このサンプルでは結果を一定にするためシードを0に固定し、
+</span>    <span class="d_comment">// メルセンヌツイスターを使用した乱数を使う
+</span>    <span class="d_keyword">auto</span> rnd = Mt19937(0);
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_comment">// 実際にはお勧め乱数生成器のRandomを使用して、
+</span>    <span class="d_comment">// シードを unpredictableSeed で指定するなどすると良い
+</span>    <span class="d_keyword">auto</span> rnd = Random(unpredictableSeed);
+}
+
+<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// シャッフルしたデータにインプレースで更新される。
+</span>data.randomShuffle(rnd);
+
+<span class="d_comment">// 中身はランダムに変化している
+</span><span class="d_keyword">assert</span>(data != [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+
+<span class="d_keyword">version</span> (X86)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 32bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 32);
+    <span class="d_keyword">assert</span>(data == [50, 20, 80, 60, 40, 100, 10, 90, 70, 30]);
+}
+<span class="d_keyword">version</span> (X86_64)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 64bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 64);
+    <span class="d_keyword">assert</span>(data == [40, 70, 60, 100, 30, 80, 10, 50, 90, 20]);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかからランダムにピックアップします
+<div class="ddoc_blankline"></div>
+
+※シャッフルの応用です
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">randomShuffle</span> : <a href="https://dlang.org/phobos/std_random.html#randomShuffle">https://dlang.org/phobos/std_random.html#randomShuffle</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniform</span> : <a href="https://dlang.org/phobos/std_random.html#uniform">https://dlang.org/phobos/std_random.html#uniform</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">Random</span> : <a href="https://dlang.org/phobos/std_random.html#Random">https://dlang.org/phobos/std_random.html#Random</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">unpredictableSeed</span> : <a href="https://dlang.org/phobos/std_random.html#unpredictableSeed">https://dlang.org/phobos/std_random.html#unpredictableSeed</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.random: randomShuffle, Random, Mt19937, unpredictableSeed, uniform;
+<span class="d_keyword">version</span> (<span class="d_keyword">unittest</span>)
+{
+    <span class="d_comment">// このサンプルでは結果を一定にするためシードを0に固定し、
+</span>    <span class="d_comment">// メルセンヌツイスターを使用した乱数を使う
+</span>    <span class="d_keyword">auto</span> rnd = Mt19937(0);
+}
+<span class="d_keyword">else</span>
+{
+    <span class="d_comment">// 実際にはお勧め乱数生成器のRandomを使用して、
+</span>    <span class="d_comment">// シードを unpredictableSeed で指定するなどすると良い
+</span>    <span class="d_keyword">auto</span> rnd = Random(unpredictableSeed);
+}
+
+<span class="d_keyword">int</span>[] data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+<span class="d_comment">// シャッフルしたデータにインプレースで更新される。
+</span><span class="d_comment">// その中から0～(配列長)個取り出す。
+</span>data = data.randomShuffle(rnd)[0..uniform(0, data.length, rnd)];
+
+<span class="d_comment">// 中身はランダムに変化しているし、長さも変わる
+</span><span class="d_keyword">assert</span>(data.length != 10);
+<span class="d_keyword">assert</span>(data != [10, 20, 30, 40, 50, 60, 70, 80, 90, 100][0..data.length]);
+
+<span class="d_keyword">version</span> (X86)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 32bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 32);
+    <span class="d_keyword">assert</span>(data == [50]);
+}
+<span class="d_keyword">version</span> (X86_64)
+{
+    <span class="d_comment">// randomShuffleの結果は配列のlengthのbit数=ターゲットアーキテクチャのビット数で変わる
+</span>    <span class="d_comment">// 64bitだと以下。
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(data.length.sizeof*8 == 64);
+    <span class="d_keyword">assert</span>(data == [40, 70, 60, 100, 30]);
+}
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します①
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">std.algorithm</span> の <span class="d_inlinecode donthyphenate notranslate">uniq</span> を使います。ただし、 <span class="d_inlinecode donthyphenate notranslate">uniq</span> を使うにはその前にソートが必要です。
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">sort</span> : <a href="https://dlang.org/phobos/std_algorithm_sorting.html#.sort">https://dlang.org/phobos/std_algorithm_sorting.html#.sort</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniq</span> : <a href="https://dlang.org/phobos/std_algorithm_iteration.html#.uniq">https://dlang.org/phobos/std_algorithm_iteration.html#.uniq</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: sort, uniq;
+<span class="d_keyword">import</span> std.array: array;
+
+<span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_comment">// まずソートして
+</span>data.sort();
+<span class="d_comment">// 重複を削除する
+</span>data = data.uniq().array;
+
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 4, 5, 7, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します②
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合にはuniqは使用できません。
+そのため、makeIndexでインデックスを一旦経由して重複削除し、mapでインデックスから要素を取り出します
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">sort</span> : <a href="https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex">https://dlang.org/phobos/std_algorithm_sorting.html#.makeIndex</a></li>
+<li><span class="d_inlinecode donthyphenate notranslate">uniq</span> : <a href="https://dlang.org/phobos/std_algorithm_iteration.html#.uniq">https://dlang.org/phobos/std_algorithm_iteration.html#.uniq</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm: makeIndex, sort, uniq, map;
+<span class="d_keyword">import</span> std.array: array;
+
+<span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_comment">// まずソートされたインデックス(ポインタ)の配列を作成し、
+</span><span class="d_comment">// そのインデックス(ポインタ)の配列を uniq で重複した要素を削除し、
+</span><span class="d_comment">// インデックス(ポインタ)で sort します
+</span><span class="d_comment">// そしてインデックス(ポインタ)から元の配列の要素を取り出します
+</span>data = data.makeIndex(<span class="d_keyword">new</span> <span class="d_keyword">int</span>*[data.length])
+    .uniq!((a, b) =&gt; *a == *b).array
+    .sort()
+    .map!(p =&gt; *p).array;
+
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列の要素のなかから重複している要素を削除します③
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合にはuniqは使用できません。
+先述のアルゴリズムの欠点は、ヒープを使ったり2回ソートしているあたりでしょうか。
+<div class="ddoc_blankline"></div>
+
+ソートしたくない場合、ということはきっとGCとか使いたくないしなるべく効率的なものが望ましいのでしょう。 <span class="d_inlinecode donthyphenate notranslate">@nogc</span> で成り立つ例を紹介します。
+以下のアルゴリズムは <span class="d_inlinecode donthyphenate notranslate">[a,b,c,d]</span> の配列では、 <span class="d_inlinecode donthyphenate notranslate">a == b, a == c, b == c, a == d, b == d, c == d</span> の順番で比較し、一致したら都度その要素を末尾に持っていってはじく処理を行っています。
+removeでなくbringToFrontを使用する理由は、無駄な要素削除を行わないようにするためです。(内部でswapが行われるので、要素の上書き更新が発生しない)
+<div class="ddoc_blankline"></div>
+
+See_Also:
+<ul><li><span class="d_inlinecode donthyphenate notranslate">bringToFront</span>: <a href="https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront">https://dlang.org/phobos/std_algorithm_mutation.html#.bringToFront</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] data = [1, 2, 3, 7, 4, 5, 4, 5, 2, 8, 9, 1];
+<span class="d_comment">//    重複 -&gt;                   ^  ^  ^        ^
+</span>
+<span class="d_keyword">void</span> uniqWithoutSortInPlace(T)(<span class="d_keyword">ref</span> T[] ary) @nogc
+{
+    <span class="d_keyword">import</span> std.traits: hasElaborateDestructor;
+    <span class="d_keyword">import</span> std.algorithm: bringToFront, move;
+    <span class="d_keyword">import</span> std.array: back, popBack;
+    <span class="d_comment">//
+</span>    <span class="d_keyword">if</span> (ary.length == 0)
+        <span class="d_keyword">return</span>;
+    size_t i = 1;
+L_loop_i:
+    <span class="d_keyword">while</span> (i &lt; ary.length)
+    {
+        <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> e; ary[0..i])
+        {
+            <span class="d_keyword">if</span> (e == ary[i])
+            {
+                bringToFront(ary[i..i+1], ary[i+1..$]);
+                <span class="d_keyword">if</span> (hasElaborateDestructor!T)
+                    ary.back.move();
+                ary.popBack();
+                <span class="d_keyword">continue</span> L_loop_i;
+            }
+        }
+        ++i;
+    }
+}
+uniqWithoutSortInPlace(data);
+<span class="d_keyword">assert</span>(data == [1, 2, 3, 7, 4, 5, 8, 9]);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

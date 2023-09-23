@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>並列処理の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">並列処理
+</div></h1><div class="ddoc_description"><span class="d_inlinecode donthyphenate notranslate">std.parallelism</span> を使った並列処理の例をまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/parallelism_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/parallelism_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 配列データなどを元に、値毎の処理を並列で行い高速化する例です。
+<div class="ddoc_blankline"></div>
+
+これは「データ並列」と呼ばれ、 <span class="d_inlinecode donthyphenate notranslate">parallel</span> 関数を使うことで簡単に行えます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : parallel;
+
+<span class="d_keyword">auto</span> data = [50, 100, 150];
+
+<span class="d_comment">// 配列データを元に既定の TaskPool を使って並列処理を行います
+</span><span class="d_keyword">foreach</span> (time; parallel(data))
+{
+    <span class="d_keyword">import</span> core.thread : Thread;
+    <span class="d_keyword">import</span> core.time : msecs;
+
+    Thread.sleep(time.msecs); <span class="d_comment">// 重い処理を想定
+</span>}
+<span class="d_comment">// すべての処理が完了すると foreach を抜けます
+</span><span class="d_comment">// この例では、並列化によって最も長い 150msec の待機時間で終わることが期待できます
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ <span class="d_inlinecode donthyphenate notranslate">parallel</span> で実行する処理で一部同期が必要となる場合の例です。
+<div class="ddoc_blankline"></div>
+
+いくつか実現方法はありますが、ここでは組み込みの <span class="d_inlinecode donthyphenate notranslate">synchronized</span> 文を使い、複数のスレッドが同時に処理できない区間（クリティカルセクション）を定義します。
+これは排他処理とも呼ばれます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : parallel;
+<span class="d_keyword">import</span> std.range : iota;
+
+<span class="d_comment">// 更新に同期が必要なオブジェクトを用意します
+</span>size_t count;
+<span class="d_comment">// 更新の処理を100回分、並列に実行します
+</span><span class="d_keyword">foreach</span> (i; parallel(iota(100)))
+{
+    <span class="d_comment">// ここで synchronized を使い同期を取ります
+</span>    <span class="d_keyword">synchronized</span>
+    {
+        <span class="d_comment">// ここは synchronized の中なので処理が排他され、複数スレッドから実行されません
+</span>        count++;
+    }
+}
+
+<span class="d_comment">// 更新が排他されるため、100回適切に更新されます
+</span><span class="d_keyword">assert</span>(count == 100);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 並列処理の基本となる <span class="d_inlinecode donthyphenate notranslate">task</span> の使い方をまとめます。
+<div class="ddoc_blankline"></div>
+
+これは何らかの「処理」を抽象化したオブジェクトであり、指定した処理を別スレッドで処理させることができます。
+
+<ul><li>新しくスレッドを起動して実行する</li>
+<li>TaskPoolとして用意しておいたスレッドで実行する
+</li>
+</ul>
+以下は、処理を定義して新しいスレッドで実行、完了を待機する例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : task;
+
+<span class="d_comment">// delegate をその場で指定してタスクオブジェクトを作成
+</span><span class="d_keyword">auto</span> t = task({
+    <span class="d_keyword">import</span> core.thread : Thread;
+    <span class="d_keyword">import</span> core.time : msecs;
+
+    Thread.sleep(10.msecs); <span class="d_comment">// 重い処理を想定
+</span>});
+
+<span class="d_comment">// 新しくスレッドを起動して実行します
+</span>t.executeInNewThread();
+
+<span class="d_comment">// 処理が終わるのを待機します
+</span>t.yieldForce();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ランタイムが用意したスレッドを使って <span class="d_inlinecode donthyphenate notranslate">task</span> を実行する例です。
+<div class="ddoc_blankline"></div>
+
+実行の際に <span class="d_inlinecode donthyphenate notranslate">taskPool</span> を使うことでスレッドを使いまわし、実行の度に新しくスレッドを起動するコストが削減できます。
+<div class="ddoc_blankline"></div>
+
+処理の実行は、<span class="d_inlinecode donthyphenate notranslate">taskPool</span> に <span class="d_inlinecode donthyphenate notranslate">task</span> を <span class="d_inlinecode donthyphenate notranslate">put</span> することにより行えます。
+<div class="ddoc_blankline"></div>
+
+なお、<span class="d_inlinecode donthyphenate notranslate">taskPool</span> が起動するスレッド数は環境によって異なり、<span class="d_inlinecode donthyphenate notranslate">CPU数 - 1</span> として計算されます。
+この <span class="d_inlinecode donthyphenate notranslate">CPU数</span> は <span class="d_inlinecode donthyphenate notranslate">totalCPUs</span> という定数によって得ることができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : task, taskPool;
+
+<span class="d_comment">// delegate をその場で指定してタスクオブジェクトを作成
+</span><span class="d_keyword">auto</span> t = task({
+    <span class="d_keyword">import</span> core.thread : Thread;
+    <span class="d_keyword">import</span> core.time : msecs;
+
+    Thread.sleep(10.msecs);
+});
+
+<span class="d_comment">// 用意しておいたスレッドプールで実行します
+</span>taskPool.put(t);
+
+<span class="d_comment">// 処理が終わるのを待機します
+</span>t.yieldForce();
+
+<span class="d_comment">// 環境毎のCPU数を確認します
+</span><span class="d_keyword">import</span> std.parallelism : totalCPUs;
+
+<span class="d_keyword">assert</span>(totalCPUs() &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 戻り値を持つ <span class="d_inlinecode donthyphenate notranslate">task</span> の使用例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">task</span> で実行する処理は戻り値を持つことができ、処理の結果は <span class="d_inlinecode donthyphenate notranslate">yieldForce</span> の戻り値として得られます。
+<div class="ddoc_blankline"></div>
+
+これを <span class="d_inlinecode donthyphenate notranslate">executeInNewThread</span> と組み合わせると、簡便な「戻り値を持つスレッド」として使うことができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : task;
+
+<span class="d_keyword">auto</span> t = task({
+    <span class="d_keyword">import</span> std.file : readText;
+
+    <span class="d_comment">// 戻り値を返す
+</span>    <span class="d_keyword">return</span> readText(<span class="d_string">"dub.sdl"</span>);
+});
+
+<span class="d_comment">// 新しくスレッドを起動して実行します
+</span>t.executeInNewThread();
+
+<span class="d_comment">// yieldForce の戻り値として結果が返ってくる
+</span><span class="d_keyword">const</span> text = t.yieldForce();
+
+<span class="d_keyword">assert</span>(text.length &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ スレッド数を指定した独自の TaskPool を作る例です。
+<div class="ddoc_blankline"></div>
+
+処理が通信などCPUを使わない処理を含む場合、CPUより多くのスレッドを起動しておくことで処理の高速化が期待できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.parallelism : TaskPool, task;
+<span class="d_keyword">import</span> std : iota, map;
+
+<span class="d_comment">// 16スレッドで処理するプールを作成します
+</span><span class="d_keyword">auto</span> customPool = <span class="d_keyword">new</span> TaskPool(16);
+
+<span class="d_comment">// 利用が済んだら finish を呼んでワーカースレッドを解放します。
+</span><span class="d_comment">// これを行わないとワーカースレッドの待機によりプログラムが終了しない場合があります。
+</span><span class="d_comment">// また、引数に true を指定するとワーカースレッドの解放が終わるまで待機するようになります。
+</span><span class="d_comment">// この例のように指定しない場合は、解放を指示するだけですぐに処理は完了します。
+</span><span class="d_keyword">scope</span> (exit) customPool.finish();
+
+<span class="d_comment">// 50-150msの待機時間を20個用意します。
+</span><span class="d_keyword">auto</span> times = iota(20).map!<span class="d_string">"a + 50"</span>();
+
+<span class="d_comment">// parallel による並列でプールを指定することができます
+</span><span class="d_keyword">foreach</span> (time; customPool.parallel(times))
+{
+    <span class="d_keyword">import</span> core.thread : Thread;
+    <span class="d_keyword">import</span> core.time : msecs;
+
+    Thread.sleep(time.msecs);
+}
+<span class="d_comment">// すべての処理が終わったら foreach を抜けます
+</span>
+<span class="d_comment">// task を作って処理させることもできます
+</span><span class="d_keyword">auto</span> t = task({
+    <span class="d_keyword">import</span> core.thread : Thread;
+    <span class="d_keyword">import</span> core.time : msecs;
+
+    Thread.sleep(50.msecs);
+});
+customPool.put(t);
+
+t.yieldForce();
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

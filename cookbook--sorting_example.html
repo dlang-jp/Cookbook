@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>データの並び替え・応用 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">データの並び替え・応用
+</div></h1><div class="ddoc_description">各種ソートアルゴリズムやその応用例をまとめます。
+主に std.algoritm (std.algorithm.sorting) を取り扱います。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/sorting_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/sorting_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 順序比較が可能なデータの配列を並び替える方法
+<div class="ddoc_blankline"></div>
+
+ここではint型の配列を例にしていますが、他の比較可能な型の配列でも同様に使用できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : sort; <span class="d_comment">// sort関数をインポート
+</span>
+<span class="d_comment">// 値の書き換えが可能な配列
+</span><span class="d_keyword">int</span>[] data = [8, 3, 6, 9, 1, 5];
+
+<span class="d_comment">// 昇順
+</span>sort!<span class="d_string">"a &lt; b"</span>(data);
+<span class="d_keyword">assert</span>(data == [1, 3, 5, 6, 8, 9]);
+
+<span class="d_comment">// 降順
+</span>sort!<span class="d_string">"a &gt; b"</span>(data);
+<span class="d_keyword">assert</span>(data == [9, 8, 6, 5, 3, 1]);
+
+<span class="d_comment">// 比較はラムダ式を使って同じ処理を記述することができます。
+</span><span class="d_comment">// 文字列指定のほうが比較的短く済みますが、複雑になる場合は関数に抜き出すなどを検討してください。
+</span>sort!((a, b) =&gt; a &lt; b)(data);
+
+<span class="d_comment">// UFCS (Unified Function Call Syntax) を使って以下のように記述できます。
+</span><span class="d_comment">// これにより、関数呼び出しをメソッド呼び出しのように記述できます。
+</span>data.sort!<span class="d_string">"a &lt; b"</span>();
+
+<span class="d_comment">// カスタム比較関数の例: 偶数が先、奇数が後ろに来るようなソート
+</span><span class="d_keyword">auto</span> evenFirst(<span class="d_keyword">int</span> a, <span class="d_keyword">int</span> b)
+{
+    <span class="d_keyword">return</span> (a % 2 == 0) == (b % 2 == 0) ? a &lt; b : a % 2 == 0;
+}
+sort!evenFirst(data);
+<span class="d_keyword">assert</span>(data == [6, 8, 1, 3, 5, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 上位N個だけソートし、処理を高速化する方法 (topN)
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">topN</span> 関数は、配列の上位N個の要素を効率的にソートする関数です。他の要素の並び順は保証されません。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : topN;
+
+<span class="d_keyword">int</span>[] data = [8, 3, 6, 9, 1, 5];
+<span class="d_keyword">int</span> N = 3;
+
+<span class="d_comment">// 上位からN位まで正確に降順にソートします
+</span>data.topN!((a, b) =&gt; a &gt; b)(N);
+
+<span class="d_keyword">assert</span>(data[0 .. N] == [9, 8, 6]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ partialSort を使って効率よく中央値を求める方法
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : partialSort;
+
+<span class="d_comment">// この関数は、引数として与えられた配列の中央値を計算し返します。
+</span><span class="d_comment">// ただし、partialSortを使用して配列を部分的に並び替えるため、配列が変更されることに注意してください。
+</span><span class="d_keyword">float</span> calculateMedianWithSideEffects(<span class="d_keyword">float</span>[] arr)
+{
+    <span class="d_keyword">float</span> result;
+    <span class="d_keyword">if</span> (arr.length % 2 == 0)
+    {
+        arr.partialSort(arr.length / 2 + 1);
+        result = (arr[arr.length / 2 - 1] + arr[arr.length / 2]) / 2;
+    }
+    <span class="d_keyword">else</span>
+    {
+        arr.partialSort(arr.length / 2);
+        result = arr[arr.length / 2];
+    }
+    <span class="d_keyword">return</span> result;
+}
+
+<span class="d_keyword">import</span> std.math : isClose;
+
+<span class="d_comment">// データが偶数個の場合
+</span><span class="d_keyword">float</span>[] data = [8.0f, 3, 6, 9, 1, 5];
+
+<span class="d_keyword">float</span> calculatedMedian = calculateMedianWithSideEffects(data);
+<span class="d_keyword">assert</span>(calculatedMedian.isClose(5.5)); <span class="d_comment">// 中央2個の平均
+</span>
+<span class="d_comment">// データが奇数個の場合
+</span>data ~= 7;
+<span class="d_keyword">float</span> calculatedMedian2 = calculateMedianWithSideEffects(data);
+<span class="d_keyword">assert</span>(calculatedMedian2.isClose(6)); <span class="d_comment">// 丁度中央に位置する要素の値
+</span></pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 重い評価/比較関数を使ったソートを高速化する方法 (schwartzSort)
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">schwartzSort</span> は、「シュワルツ変換」と呼ばれるアルゴリズムを使い、処理に時間のかかる比較をキャッシュして処理負荷を軽減するソートアルゴリズムです。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : schwartzSort;
+
+<span class="d_keyword">struct</span> Heavy
+{
+    <span class="d_keyword">int</span> value;
+    <span class="d_keyword">int</span> heavyFunction() <span class="d_keyword">const</span>
+    {
+        <span class="d_keyword">return</span> value * value;
+    }
+}
+
+Heavy[] data = [Heavy(8), Heavy(3), Heavy(6), Heavy(9), Heavy(1), Heavy(5)];
+
+<span class="d_comment">// schwartzSort関数を使ってHeavy構造体の配列をソート
+</span><span class="d_comment">// テンプレート引数として比較する値を得るラムダ関数 (a) =&gt; a.heavyFunction を渡す
+</span>data.schwartzSort!((a) =&gt; a.heavyFunction);
+
+<span class="d_comment">// map関数を使ってdata配列の各要素のvalueプロパティを取り出し、
+</span><span class="d_comment">// 新しい配列を作成し、それが正しくソートされていることを確認する
+</span><span class="d_keyword">import</span> std : map, equal;
+<span class="d_keyword">assert</span>(equal(data.map!(a =&gt; a.value), [1, 3, 5, 6, 8, 9]));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 複数の配列を1つとみなしてソートする方法 (chain)
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : sort;
+<span class="d_keyword">import</span> std.range : chain;
+
+<span class="d_keyword">int</span>[] data1 = [8, 3, 6];
+<span class="d_keyword">int</span>[] data2 = [9, 1, 5];
+
+<span class="d_comment">// chain関数を使って複数の配列を連結し、1つの範囲として扱えるようにします。
+</span><span class="d_keyword">auto</span> combined = chain(data1, data2);
+<span class="d_comment">// sort関数を使って、連結された範囲内の要素を昇順に並び替えます。
+</span>sort(combined);
+
+<span class="d_keyword">assert</span>(data1 == [1, 3, 5]);
+<span class="d_keyword">assert</span>(data2 == [6, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ソート済みの配列と未ソートの配列をまとめてソートすることで高速化する方法 (completeSort)
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : completeSort;
+<span class="d_keyword">import</span> std.range : SortedRange, assumeSorted;
+
+<span class="d_comment">// 既にソートされたデータ
+</span><span class="d_keyword">int</span>[] sortedData = [1, 3, 5, 7, 9];
+
+<span class="d_comment">// 新しい未ソートのデータ
+</span><span class="d_keyword">int</span>[] newData = [8, 6, 4, 2, 0];
+
+<span class="d_comment">// completeSortを使用して、既存のソートされたデータと新しいデータを組み合わせて全体をソートします
+</span><span class="d_comment">// 1つ目はソート済みを示すため、assumeSortedを噛ませるのがポイントです
+</span>completeSort(assumeSorted(sortedData), newData);
+
+<span class="d_comment">// 結果の確認
+</span><span class="d_keyword">assert</span>(sortedData == [0, 1, 2, 3, 4]);
+<span class="d_keyword">assert</span>(newData == [5, 6, 7, 8, 9]);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 複数のキーを条件にソートする方法 (multiSort)
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : multiSort;
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Point
+{
+    <span class="d_keyword">int</span> x, y;
+}
+
+<span class="d_comment">// ソートする Point の配列
+</span>Point[] points = [
+    Point(0, 0),
+    Point(5, 5),
+    Point(0, 1),
+    Point(0, 2),
+    Point(2, 3),
+    Point(2, 1)
+];
+
+<span class="d_comment">// multiSortは、複数のキーで要素をソートするための関数です。
+</span><span class="d_comment">// 引数には、比較条件を表す文字列を与えることでソート条件を指定できます。
+</span><span class="d_comment">// ここでは、まず x の昇順で並び替え、もし x が同じ場合は y の昇順、で並び替えています
+</span>multiSort!(<span class="d_string">"a.x &lt; b.x"</span>, <span class="d_string">"a.y &lt; b.y"</span>)(points);
+
+<span class="d_comment">// ソート後に期待される配列
+</span>Point[] expectedPoints = [
+    Point(0, 0),
+    Point(0, 1),
+    Point(0, 2),
+    Point(2, 1),
+    Point(2, 3),
+    Point(5, 5)
+];
+
+<span class="d_keyword">assert</span>(points == expectedPoints);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ const や immutable の配列を疑似的に並び替える方法
+<div class="ddoc_blankline"></div>
+
+直接 sort 関数で並び替えられないデータに対して、
+makeIndex 関数を使って並び替え後のインデックス情報を構築することにより間接的に並び替えを実現します。
+<div class="ddoc_blankline"></div>
+
+この構築されたインデックス情報は、順位をインデックスとして、元の配列の位置を得るために使用することができます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm : isSorted, makeIndex;
+<span class="d_keyword">import</span> std.range : SortedRange;
+
+<span class="d_comment">// 書き換え不可能な整数配列を定義します。
+</span><span class="d_keyword">const</span> <span class="d_keyword">int</span>[] data = [5, 3, 8, 1, 7, 2, 4, 6];
+
+<span class="d_comment">// 配列を直接ソートするのではなく、ソート後のインデックス情報を作成します。
+</span>
+<span class="d_comment">// 昇順のインデックス情報を生成します。
+</span><span class="d_comment">// 引数 "a &lt; b" は昇順にソートするための比較条件を示します。
+</span>size_t[] ascendingIndices = <span class="d_keyword">new</span> size_t[data.length];
+makeIndex!(<span class="d_string">"a &lt; b"</span>)(data, ascendingIndices);
+<span class="d_comment">// ascendingIndices[0] は、昇順で最上位(最小値となる要素)のインデックスを示します。
+</span><span class="d_keyword">assert</span>(data[ascendingIndices[0]] == 1);
+<span class="d_comment">// isSorted 関数でインデックス情報が正しくソートされていることを確認します。
+</span><span class="d_keyword">assert</span>(isSorted!((size_t a, size_t b) =&gt; data[a] &lt; data[b])(ascendingIndices));
+
+<span class="d_comment">// 降順のインデックス情報を生成します。
+</span><span class="d_comment">// 引数 "a &gt; b" は降順にソートするための比較条件を示します。
+</span>size_t[] descendingIndices = <span class="d_keyword">new</span> size_t[data.length];
+makeIndex!(<span class="d_string">"a &gt; b"</span>)(data, descendingIndices);
+<span class="d_comment">// descendingIndices[0] は、降順で最上位(最大値となる要素)のインデックスを示します。
+</span><span class="d_keyword">assert</span>(data[descendingIndices[0]] == 8);
+<span class="d_comment">// isSorted 関数でインデックス情報が正しくソートされていることを確認します。
+</span><span class="d_keyword">assert</span>(isSorted!((size_t a, size_t b) =&gt; data[a] &gt; data[b])(descendingIndices));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

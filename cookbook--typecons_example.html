@@ -1,0 +1,647 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>型を作るユーティリティ群の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">型を作るユーティリティ
+</div></h1><div class="ddoc_description">様々な型を作れるtemplateを提供する<span class="d_inlinecode donthyphenate notranslate">std.typecons</span>パッケージについて解説します。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/typecons_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/typecons_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ nullになる可能性のある値を表現するNullableの例です
+<div class="ddoc_blankline"></div>
+
+Nullableを利用することで、値が存在しない可能性のある型を表現できます。
+int等の組み込み型やstructについても、nullとなることを明確に示せます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.exception : assertThrown;
+<span class="d_keyword">import</span> std.typecons : Nullable, nullable;
+
+<span class="d_comment">// Nullableは格納値の型を指定して利用するテンプレート構造体です。
+</span><span class="d_comment">// デフォルトコンストラクタでは、空の状態のNullableが生成されます。
+</span>Nullable!<span class="d_keyword">int</span> emptyValue;
+
+<span class="d_comment">// 値が空かどうかはisNullで確認できます。
+</span><span class="d_keyword">assert</span>(emptyValue.isNull);
+
+<span class="d_comment">// 値を格納したNullableは、Nullableのコンストラクタに値を与えることや、nullable関数で生成できます。
+</span>Nullable!<span class="d_keyword">int</span> value1 = nullable(1);
+Nullable!<span class="d_keyword">int</span> value2 = Nullable!<span class="d_keyword">int</span>(2);
+
+<span class="d_comment">// 格納されている値はgetで取得できます。
+</span><span class="d_keyword">assert</span>(!value1.isNull);
+<span class="d_keyword">assert</span>(value1.get == 1);
+<span class="d_keyword">assert</span>(!value2.isNull);
+<span class="d_keyword">assert</span>(value2.get == 2);
+
+<span class="d_comment">// Nullableのまま値の比較を行えます。
+</span><span class="d_keyword">assert</span>(value1 != value2);
+<span class="d_keyword">assert</span>(value1 == value1);
+<span class="d_keyword">assert</span>(emptyValue == emptyValue);
+<span class="d_keyword">assert</span>(emptyValue != value1);
+<span class="d_keyword">assert</span>(emptyValue != value2);
+
+<span class="d_comment">// 代入により値を書き換えることが可能です。
+</span>value1 = 100;
+<span class="d_keyword">assert</span>(!value1.isNull &amp;&amp; value1.get == 100);
+
+<span class="d_comment">// nullifyにより値をnullにすることが可能です。
+</span>value1.nullify();
+<span class="d_keyword">assert</span>(value1.isNull &amp;&amp; emptyValue == value1);
+
+<span class="d_comment">// 空のNullableへのgetは例外になります。
+</span>assertThrown!Throwable(emptyValue.get);
+
+<span class="d_comment">// getにデフォルト値を指定することが可能です。
+</span><span class="d_keyword">assert</span>(emptyValue.get(999) == 999);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ポインタを格納するためのNullableであるNullableRefの例です
+<div class="ddoc_blankline"></div>
+
+ポインタ型の場合はポインタだけでnullの状態を表現できるため、NullableRefを利用することでサイズを節約できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : NullableRef, nullableRef;
+
+<span class="d_comment">// デフォルトコンストラクタでは空の状態のNullableRefが生成されます。
+</span>NullableRef!<span class="d_keyword">int</span> emptyRef;
+<span class="d_keyword">assert</span>(emptyRef.isNull);
+
+<span class="d_comment">// コンストラクタやnullableRef関数で値を参照するNullableRefを生成できます。
+</span><span class="d_keyword">int</span> value = 100;
+NullableRef!<span class="d_keyword">int</span> valueRef1 = NullableRef!<span class="d_keyword">int</span>(&amp;value);
+NullableRef!<span class="d_keyword">int</span> valueRef2 = nullableRef(&amp;value);
+
+<span class="d_comment">// getでは、ポインタの参照先の値そのものが取得されます。
+</span><span class="d_keyword">assert</span>(!valueRef1.isNull);
+<span class="d_keyword">assert</span>(valueRef1.get == 100);
+<span class="d_keyword">assert</span>(!valueRef2.isNull);
+<span class="d_keyword">assert</span>(valueRef2.get == 100);
+
+<span class="d_comment">// Nullableと同様にnullify等が使用可能です。
+</span>valueRef1.nullify();
+<span class="d_keyword">assert</span>(valueRef1.isNull);
+
+<span class="d_comment">// bindにより別の値を参照させることが可能です。
+</span><span class="d_keyword">int</span> value2 = 10000;
+valueRef1.bind(&amp;value2);
+<span class="d_keyword">assert</span>(valueRef1.get == value2);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ constやimmutableの参照型の変数でも再代入可能とするRebindableの例です
+<div class="ddoc_blankline"></div>
+
+constやimmutableの参照型の変数はそのままでは再代入できませんが、Rebindableでラップした変数は再代入可能になります。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : Rebindable, rebindable;
+
+<span class="d_comment">// 不変のオブジェクト生成
+</span><span class="d_keyword">immutable</span> <span class="d_keyword">class</span> Example
+{
+    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> v) { <span class="d_keyword">this</span>.value = v; }
+    <span class="d_keyword">int</span> value;
+}
+
+<span class="d_keyword">immutable</span> Example value1 = <span class="d_keyword">new</span> <span class="d_keyword">immutable</span> Example(100);
+<span class="d_keyword">immutable</span> Example value2 = <span class="d_keyword">new</span> <span class="d_keyword">immutable</span> Example(200);
+
+<span class="d_comment">// 上記の変数はそのままでは再代入不能です。
+</span><span class="d_comment">// value2 = value1; // compile error
+</span>
+<span class="d_comment">// Rebindableでラップすることで、通常の変数と同じように再代入可能になります。
+</span><span class="d_comment">// Rebindableはrebindable関数で生成可能です。
+</span>Rebindable!(<span class="d_keyword">immutable</span> Example) rebindableValue1 = rebindable(value1);
+Rebindable!(<span class="d_keyword">immutable</span> Example) rebindableValue2 = rebindable(value2);
+<span class="d_keyword">assert</span>(rebindableValue1.value == value1.value);
+<span class="d_keyword">assert</span>(rebindableValue2.value == value2.value);
+
+<span class="d_comment">// 再代入実行
+</span>rebindableValue2 = rebindableValue1;
+<span class="d_keyword">assert</span>(rebindableValue2.value == value1.value);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ コピー不能であったり、デストラクタを持っていたりする構造体を複数の変数で共有、参照する例です。
+<div class="ddoc_blankline"></div>
+
+ポインタでも参照させることは可能ですが、デストラクタの呼び出しを自動で安全に行うために <span class="d_inlinecode donthyphenate notranslate">RefCounted</span> を使う方法があります。
+内部的には参照カウンタで管理されます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> core.memory : pureMalloc, pureFree;
+<span class="d_keyword">import</span> std.typecons : refCounted;
+
+<span class="d_comment">// コピー不能でデストラクタを持つデータ
+</span><span class="d_keyword">struct</span> Payload
+{
+    <span class="d_comment">// 最後に破棄された値(デストラクタ呼び出し確認用)
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">int</span> lastDestructedValue;
+
+    @disable <span class="d_keyword">this</span>(<span class="d_keyword">this</span>);
+
+    <span class="d_comment">// 管理対象のリソース確保
+</span>    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> value) @nogc <span class="d_keyword">nothrow</span> @safe <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">this</span>.pointer = (() @trusted =&gt; <span class="d_keyword">cast</span>(<span class="d_keyword">int</span>*) pureMalloc(<span class="d_keyword">int</span>.sizeof))();
+        *<span class="d_keyword">this</span>.pointer = value;
+    }
+
+    <span class="d_comment">// Payload解放処理
+</span>    <span class="d_comment">// RefCounted初期化直後などでPayload.initに対しても呼び出される点に注意が必要です。
+</span>    <span class="d_comment">// 空のポインタやリソースハンドル等の破棄が安全に行われるようにする必要があります。
+</span>    <span class="d_comment">// このため、初期値だったら解放しない、というロジックが必要です。
+</span>    ~<span class="d_keyword">this</span>() @nogc <span class="d_keyword">nothrow</span> @safe <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">if</span> (pointer)
+        {
+            lastDestructedValue = *pointer;
+            (() @trusted =&gt; pureFree(pointer))();
+            pointer = <span class="d_keyword">null</span>;
+        }
+    }
+
+    <span class="d_keyword">int</span>* pointer;
+}
+
+<span class="d_comment">// 新しいリソースを保持するRefCounted!Payloadを、refCounted関数で生成します。
+</span><span class="d_keyword">auto</span> rc1 = refCounted(Payload(1234));
+
+<span class="d_comment">// 現在の参照カウントは1です。
+</span><span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 1);
+
+<span class="d_comment">// 確保したリソースを共有する別のRefCounted!Payloadを生成します。
+</span><span class="d_keyword">auto</span> rc2 = rc1;
+
+<span class="d_comment">// 参照カウントは2になります。
+</span><span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc1.pointer <span class="d_keyword">is</span> rc2.pointer);
+
+<span class="d_comment">// rc1を別のRefCounted!Paylodで更新します。
+</span>rc1 = refCounted(Payload(5678));
+
+<span class="d_comment">// rc2で参照が続いているため、以前のリソースはまだ解放されません。
+</span><span class="d_keyword">assert</span>(Payload.lastDestructedValue == Payload.lastDestructedValue.init);
+<span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 1);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 1);
+<span class="d_keyword">assert</span>(rc1.pointer !<span class="d_keyword">is</span> rc2.pointer);
+
+<span class="d_comment">// rc2も更新することで、最初のリソースの参照カウントが0になり、解放されます。
+</span>rc2 = rc1;
+<span class="d_keyword">assert</span>(rc1.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc2.refCountedStore.refCount == 2);
+<span class="d_keyword">assert</span>(rc1.pointer <span class="d_keyword">is</span> rc2.pointer);
+<span class="d_keyword">assert</span>(*rc1.pointer == 5678);
+
+<span class="d_comment">// 最初のリソースが解放されていることを確認
+</span><span class="d_keyword">assert</span>(Payload.lastDestructedValue == 1234);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ classのインスタンスをスタック上に確保するscopedの例です
+<div class="ddoc_blankline"></div>
+
+scopedによりclassのインスタンスを生成した場合、ヒープを使用するnewのオーバーヘッドを回避することができます。
+その代わり、インスタンスをスコープの外に移動させることはできません。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : scoped;
+
+<span class="d_keyword">class</span> A
+{
+@nogc <span class="d_keyword">nothrow</span> <span class="d_keyword">pure</span> @safe:
+
+    <span class="d_keyword">this</span>() <span class="d_keyword">scope</span> { <span class="d_keyword">this</span>.value = -1; }
+    <span class="d_keyword">this</span>(<span class="d_keyword">int</span> value) <span class="d_keyword">scope</span> { <span class="d_keyword">this</span>.value = value; }
+    <span class="d_keyword">int</span> value;
+}
+
+<span class="d_comment">// scopedによるインスタンス生成
+</span><span class="d_comment">// インスタンスはスタック上に確保されます。
+</span><span class="d_comment">// スコープ終了時はデストラクタが呼び出されます。
+</span><span class="d_comment">// scopedで生成したインスタンスは元の型の変数で直接参照できません。
+</span><span class="d_comment">// autoを経由する必要があります。
+</span><span class="d_keyword">auto</span> a1 = scoped!A();
+<span class="d_keyword">assert</span>(a1.value == -1);
+
+<span class="d_comment">// 引数ありコンストラクタも使用可能です。
+</span><span class="d_keyword">auto</span> a2 = scoped!A(1234);
+<span class="d_keyword">assert</span>(a2.value == 1234);
+
+<span class="d_comment">// scopedで生成したインスタンスを別の変数で参照することが可能です。
+</span><span class="d_comment">// ただし、スコープの外では参照は無効になります。
+</span>A aRef = a2;
+<span class="d_keyword">assert</span>(aRef.value == 1234);
+
+{
+    <span class="d_comment">// スコープ内で新しいインスタンスを生成
+</span>    <span class="d_keyword">auto</span> a3 = scoped!A(4567);
+    aRef = a3;
+
+    <span class="d_comment">// a3はここでデストラクタが呼ばれ、破棄されます。
+</span>}
+<span class="d_comment">// a3を指していたaRefは無効な参照になっています。
+</span>
+<span class="d_comment">// なお、scope記憶クラスを利用しても
+</span><span class="d_comment">// scopedと同様にGC無しでのインスタンス生成・スコープ終了時の破棄が実現できます。
+</span>(() @nogc <span class="d_keyword">nothrow</span> <span class="d_keyword">pure</span> <span class="d_keyword">scope</span> @safe {
+   <span class="d_keyword">scope</span> a4 = <span class="d_keyword">new</span> A(9012);
+   <span class="d_keyword">assert</span>(a4.value == 9012);
+
+   <span class="d_comment">// a4はここでデストラクタが呼ばれ、破棄されます。
+</span>})();
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 複数の値の組を作れる<span class="d_inlinecode donthyphenate notranslate">Tuple</span>の例です。
+<div class="ddoc_blankline"></div>
+
+複数の異なる型の値をまとめて扱いたい時や、関数から複数の値を返したい場合などに利用できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : Tuple, tuple;
+<span class="d_keyword">import</span> std.math : isClose;
+
+<span class="d_comment">// stringとintの2つのフィールドを持つTupleを生成します。
+</span>Tuple!(string, <span class="d_keyword">int</span>) t1;
+
+<span class="d_comment">// 各フィールドには配列のようなインデックス指定でアクセスできます。
+</span>t1[0] = <span class="d_string">"test"</span>;
+t1[1] = 123;
+<span class="d_keyword">assert</span>(t1[0] == <span class="d_string">"test"</span>);
+<span class="d_keyword">assert</span>(t1[1] == 123);
+
+<span class="d_comment">// ただし、指定するインデックスはコンパイル時に解決できる必要があります。
+</span><span class="d_comment">// 実行時に値が決まる変数などはインデックスに使用できません。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, { size_t i = 1; t1[i] = 456; }));
+
+<span class="d_comment">// Tupleはtuple関数を利用して簡潔に生成することもできます。
+</span><span class="d_keyword">auto</span> t2 = tuple(123, <span class="d_string">"456"</span>, 789.012);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(t2) == Tuple!(<span class="d_keyword">int</span>, string, <span class="d_keyword">double</span>)));
+<span class="d_keyword">assert</span>(t2[0] == 123);
+<span class="d_keyword">assert</span>(t2[1] == <span class="d_string">"456"</span>);
+<span class="d_keyword">assert</span>(t2[2].isClose(789.012));
+
+<span class="d_comment">// Tupleはコンパイル時にも利用可能です。
+</span><span class="d_keyword">enum</span> staticTuple = tuple(<span class="d_string">"test"</span>, 123);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(staticTuple[0] == <span class="d_string">"test"</span>);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(staticTuple[1] == 123);
+
+<span class="d_comment">// フィールドに名前の付いているTupleも作ることができます。
+</span><span class="d_comment">// テンプレート引数に型・フィールド名のペアを指定すると、名前付きメンバーになります。
+</span>Tuple!(<span class="d_keyword">int</span>, <span class="d_string">"intValue"</span>, string, <span class="d_string">"stringValue"</span>) t3;
+
+<span class="d_comment">// 名前付きフィールドについては、通常のメンバー変数のように名前を指定してアクセスできます。
+</span>t3.intValue = 123;
+t3.stringValue = <span class="d_string">"abc"</span>;
+<span class="d_keyword">assert</span>(t3.intValue == 123);
+<span class="d_keyword">assert</span>(t3.stringValue == <span class="d_string">"abc"</span>);
+
+<span class="d_comment">// 名前付きフィールドでもインデックスによるアクセスが可能です。
+</span><span class="d_keyword">assert</span>(t3[0] == 123);
+<span class="d_keyword">assert</span>(t3[1] == <span class="d_string">"abc"</span>);
+
+<span class="d_comment">// 互換性のある型のTupleは比較が行えます。
+</span><span class="d_comment">// フィールドの順に行っていく比較(辞書式順序)になります。
+</span><span class="d_keyword">assert</span>(tuple(1, 2, 3) == tuple(1, 2, 3));
+<span class="d_keyword">assert</span>(tuple(1, 2, 3, 4) != tuple(1, 2, 3, 5));
+<span class="d_keyword">assert</span>(tuple(1, 2, 3) &lt; tuple(3, 2, 1));
+<span class="d_keyword">assert</span>(tuple(123456L, 2, 0) &gt; tuple(3, 2, 1));
+
+<span class="d_comment">// Tuple同士の結合が行えます。
+</span><span class="d_keyword">assert</span>(tuple(1, 2, 3) ~ tuple(<span class="d_string">"abc"</span>, <span class="d_string">"def"</span>) == tuple(1, 2, 3, <span class="d_string">"abc"</span>, <span class="d_string">"def"</span>));
+
+<span class="d_comment">// スライスで指定範囲のフィールドだけを取り出せます。
+</span><span class="d_keyword">assert</span>(tuple(<span class="d_string">"test"</span>, 2, 3, 5, <span class="d_string">"abc"</span>)[1..4] == tuple(2, 3, 5));
+
+<span class="d_comment">// 参照により取り出すため、値のコピー等は発生しません。値の変更も可能です。
+</span><span class="d_keyword">auto</span> t4 = tuple(1, 2, <span class="d_string">"foo"</span>);
+t4[0..2] = tuple(100, 200);
+<span class="d_keyword">assert</span>(t4 == tuple(100, 200, <span class="d_string">"foo"</span>));
+
+<span class="d_comment">// expandにより関数の引数として展開することが可能です。
+</span><span class="d_keyword">void</span> f(<span class="d_keyword">int</span> x, string y, <span class="d_keyword">double</span> z)
+{
+}
+
+f(tuple(1, <span class="d_string">"bar"</span>, 0.1).expand);
+
+<span class="d_comment">// fieldNamesによりフィールド名を取得することが可能です。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(Tuple!(<span class="d_keyword">int</span>, <span class="d_string">"first"</span>, <span class="d_keyword">double</span>, <span class="d_string">"second"</span>, string, <span class="d_string">"third"</span>)
+        .fieldNames == tuple(<span class="d_string">"first"</span>, <span class="d_string">"second"</span>, <span class="d_string">"third"</span>));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

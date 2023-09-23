@@ -1,0 +1,20 @@
+[
+ {
+  "name" : "subpkg.test",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/subpkg/source/subpkg/test.d",
+  "comment" : "サブパッケージの作り方\n\nSource: $(LINK_TO_SRC subpkg/source/subpkg/_test.d)\n",
+  "members" : [
+   {
+    "name" : "__unittest_L14_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : " DubのsubPackageの確認\n\n\n\n unittestの例\n",
+    "line" : 14,
+    "char" : 1,
+    "endline" : 19,
+    "endchar" : 1
+   }
+  ]
+ }
+]

@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>asdf_usage.example - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">Asdfの使用例
+</div></h1><div class="ddoc_description">JSON形式のデータを取り扱う Asdf の使い方についてまとめます。
+<div class="ddoc_blankline"></div>
+
+Asdf の特徴として、PhobosのJSONではできない、構造体やクラスの直接シリアライズ/デシリアライズや、UDAによる細かな挙動の調整が可能な点があります。
+<div class="ddoc_blankline"></div>
+
+また、 <span class="d_inlinecode donthyphenate notranslate">Asdf</span> オブジェクトがPhobosの <span class="d_inlinecode donthyphenate notranslate">JSONValue</span> とおおむね同じ役割を持っているオブジェクトですが、<span class="d_inlinecode donthyphenate notranslate">Asdf</span>はJSON以外のフォーマットにも対応できるような設計になっている(ような気がします)。<br>
+今は <span class="d_inlinecode donthyphenate notranslate">parseJson</span> しかありませんが、 <span class="d_inlinecode donthyphenate notranslate">parseYaml</span> とか <span class="d_inlinecode donthyphenate notranslate">parseSdl</span> とかができる日が来るかもしれません。
+
+<h2>ドキュメント</h2>
+<a href="http://docs.asdf.dlang.io/index.html">http://docs.asdf.dlang.io/index.html</a>
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/thirdparty/json/source/asdf_usage/example.d">https://github.com/dlang-jp/Cookbook/tree/master/thirdparty/json/source/asdf_usage/example.d</a></span></div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ JSON文字列の解析例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">parseJson</span> 関数を使って解析し、汎用的な <span class="d_inlinecode donthyphenate notranslate">Asdf</span> オブジェクトに変換します。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> asdf;
+
+<span class="d_keyword">auto</span> source = <span class="d_string">`{ "type": "VALUES", "obj": null, "flag": true, "count": 3 }`</span>;
+Asdf json = source.parseJson();
+
+<span class="d_comment">// 文字と真偽値、nullは直接比較が可能です
+</span><span class="d_comment">// ただし、注意点としてnullはisでの比較はできません
+</span><span class="d_comment">// (演算子オーバーロードを用いてnullと比較を行っているため)
+</span><span class="d_keyword">assert</span>(json[<span class="d_string">"type"</span>] == <span class="d_string">"VALUES"</span>);
+<span class="d_keyword">assert</span>(json[<span class="d_string">"obj"</span>] == <span class="d_keyword">null</span>);
+<span class="d_keyword">assert</span>(json[<span class="d_string">"flag"</span>]);
+
+<span class="d_comment">// 数値は既定値を指定して取得後に比較します
+</span><span class="d_keyword">assert</span>(json[<span class="d_string">"count"</span>].get(0) == 3);
+
+<span class="d_comment">// 単純に値を取り出す場合はキャストするのが簡単です
+</span>string type = <span class="d_keyword">cast</span>(string) json[<span class="d_string">"type"</span>];
+<span class="d_keyword">bool</span> flag = <span class="d_keyword">cast</span>(<span class="d_keyword">bool</span>) json[<span class="d_string">"flag"</span>];
+size_t count = <span class="d_keyword">cast</span>(size_t) json[<span class="d_string">"count"</span>];
+<span class="d_comment">// 数値から文字列への変換なんかもキャストで出来てしまいます。
+</span>string countStr = <span class="d_keyword">cast</span>(string) json[<span class="d_string">"count"</span>];
+<span class="d_keyword">assert</span>(countStr == <span class="d_string">"3"</span>);
+
+<span class="d_comment">// どうしてもキャスト(変換)できい場合は例外を投げるので、
+</span><span class="d_comment">// 例外処理する必要があります。ifThrownなんかが便利です。
+</span><span class="d_keyword">import</span> std.exception : ifThrown;
+
+<span class="d_keyword">auto</span> typeVal = ifThrown(<span class="d_keyword">cast</span>(<span class="d_keyword">int</span>) json[<span class="d_string">"type"</span>], 255);
+<span class="d_keyword">assert</span>(typeVal == 255);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ JSON文字列を独自の構造体にデシリアライズする例です。
+<div class="ddoc_blankline"></div>
+
+1度 Asdf オブジェクトに変換した後か、文字列に <span class="d_inlinecode donthyphenate notranslate">deserialize</span> 関数を使うことで独自構造体に変換できます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> asdf;
+<span class="d_keyword">import</span> std.math : isClose;
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Constant
+{
+    string name;
+    <span class="d_keyword">double</span> value;
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">immutable</span> source = <span class="d_string">`{ "name": "PI", "value": 3.1415 }`</span>;
+
+Constant c = source.deserialize!Constant();
+<span class="d_keyword">assert</span>(c.name == <span class="d_string">"PI"</span>);
+<span class="d_keyword">assert</span>(isClose(c.value, 3.1415));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ オブジェクトのJSON文字列化（シリアライズ）の例です。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> asdf;
+<span class="d_keyword">import</span> std.string : outdent, chompPrefix;
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Data
+{
+    string name;
+    <span class="d_keyword">int</span> value;
+}
+
+<span class="d_keyword">auto</span> data = Data(<span class="d_string">"count"</span>, 10);
+<span class="d_keyword">auto</span> text = data.serializeToJson();
+
+<span class="d_keyword">assert</span>(text == <span class="d_string">`{"name":"count","value":10}`</span>);
+
+<span class="d_comment">// インデントを含む人が読みやすい形式にするには `serializeToJsonPretty` を使います
+</span><span class="d_keyword">auto</span> pretty = data.serializeToJsonPretty();
+
+<span class="d_keyword">assert</span>(pretty == <span class="d_string">`
+{
+	"name": "count",
+	"value": 10
+}`</span>.chompPrefix(<span class="d_string">"\n"</span>).outdent());
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ Unix timestampである数値をSysTimeとして扱う場合の変換方法です。
+<div class="ddoc_blankline"></div>
+
+データ型に合わせたProxyを定義して変換ロジックを書き、 <span class="d_inlinecode donthyphenate notranslate">serializedAs</span> を対象フィールドに属性として付与します。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="http://docs.asdf.dlang.io/asdf_serialization.html">http://docs.asdf.dlang.io/asdf_serialization.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.datetime;
+<span class="d_keyword">import</span> asdf;
+
+<span class="d_comment">// 変換ロジックを持ったProxyを定義します
+</span><span class="d_keyword">static</span> <span class="d_keyword">struct</span> SysTimeProxy
+{
+    SysTime systime;
+    <span class="d_keyword">alias</span> systime <span class="d_keyword">this</span>;
+
+    <span class="d_keyword">static</span> SysTimeProxy deserialize(Asdf data) <span class="d_keyword">pure</span>
+    {
+        <span class="d_keyword">ulong</span> unixtime;
+        deserializeValue(data, unixtime);
+        <span class="d_keyword">return</span> SysTimeProxy(SysTime.fromUnixTime(unixtime, UTC()));
+    }
+
+    <span class="d_keyword">void</span> serialize(S)(<span class="d_keyword">ref</span> S serializer) <span class="d_keyword">pure</span>
+    {
+        serializer.putValue(systime.toUnixTime());
+    }
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Data
+{
+    <span class="d_comment">// 必要なフィールドに属性として付与します
+</span>    @serializedAs!SysTimeProxy SysTime date;
+}
+
+<span class="d_comment">// 2020-01-01T00:00:00+00:00
+</span><span class="d_keyword">auto</span> source = <span class="d_string">`{ "date": 1577836800 }`</span>;
+<span class="d_keyword">auto</span> json = source.parseJson();
+<span class="d_keyword">auto</span> data = json.deserialize!Data();
+
+<span class="d_keyword">assert</span>(data.date == SysTime(Date(2020, 1, 1), UTC()));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 特定のキーが複数の形式を取り得る場合の解析例です。
+<div class="ddoc_blankline"></div>
+
+データ型を <span class="d_inlinecode donthyphenate notranslate">SumType</span> で定義することで安全に取り扱います。
+解析ではAsdfの <span class="d_inlinecode donthyphenate notranslate">kind</span> を用いて分岐します。
+<div class="ddoc_blankline"></div>
+
+sumtype : <a href="http://code.dlang.org/packages/sumtype">http://code.dlang.org/packages/sumtype</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> asdf;
+<span class="d_keyword">import</span> sumtype;
+
+<span class="d_keyword">alias</span> StringOrInt = SumType!(string, <span class="d_keyword">int</span>);
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> StringOrIntProxy
+{
+    StringOrInt value;
+    <span class="d_keyword">alias</span> value <span class="d_keyword">this</span>;
+
+    <span class="d_keyword">static</span> StringOrIntProxy deserialize(Asdf asdf) <span class="d_keyword">pure</span>
+    {
+        <span class="d_keyword">switch</span> (asdf.kind)
+        {
+        <span class="d_keyword">case</span> Asdf.Kind.number:
+            <span class="d_keyword">return</span> StringOrIntProxy(StringOrInt(<span class="d_keyword">cast</span>(<span class="d_keyword">int</span>) asdf));
+        <span class="d_keyword">case</span> Asdf.Kind.string:
+            <span class="d_keyword">return</span> StringOrIntProxy(StringOrInt(<span class="d_keyword">cast</span>(string) asdf));
+        <span class="d_keyword">default</span>:
+            <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+        }
+    }
+
+    <span class="d_keyword">void</span> serialize(S)(<span class="d_keyword">ref</span> S serializer) <span class="d_keyword">pure</span>
+    {
+        <span class="d_comment">// dfmt off
+</span>        value.match!(
+            (string value) { serializer.putValue(value); },
+            (<span class="d_keyword">int</span> value) { serializer.putValue(value); },
+        );
+        <span class="d_comment">// dfmt on
+</span>    }
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Data
+{
+    @serializedAs!StringOrIntProxy StringOrInt value;
+}
+
+<span class="d_keyword">auto</span> s1 = <span class="d_string">`{ "value": "TEST" }`</span>;
+<span class="d_keyword">assert</span>(s1.parseJson().deserialize!Data().value == StringOrInt(<span class="d_string">"TEST"</span>));
+
+<span class="d_keyword">auto</span> s2 = <span class="d_string">`{ "value": 1000 }`</span>;
+<span class="d_keyword">assert</span>(s2.parseJson().deserialize!Data().value == StringOrInt(1000));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 特定のキーが複数のオブジェクト形式を取り得る場合の解析例です。
+<div class="ddoc_blankline"></div>
+
+データ型を <span class="d_inlinecode donthyphenate notranslate">SumType</span> で定義することで安全に取り扱います。
+解析ではオブジェクトがtypeキーを持つと想定し、キーを確認して形式を切り替えます。
+<div class="ddoc_blankline"></div>
+
+sumtype : <a href="http://code.dlang.org/packages/sumtype">http://code.dlang.org/packages/sumtype</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> asdf;
+<span class="d_keyword">import</span> sumtype;
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> MyNumber
+{
+    <span class="d_keyword">double</span> foo;
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> MyString
+{
+    string foo;
+}
+
+<span class="d_keyword">alias</span> MyData = SumType!(MyNumber, MyString);
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> MyDataProxy
+{
+    MyData value;
+    <span class="d_keyword">alias</span> value <span class="d_keyword">this</span>;
+
+    <span class="d_keyword">static</span> MyDataProxy deserialize(Asdf asdf) <span class="d_keyword">pure</span>
+    {
+        <span class="d_comment">// 特定のキーで分岐する
+</span>        <span class="d_keyword">if</span> (asdf.kind == Asdf.Kind.object)
+        {
+            <span class="d_keyword">auto</span> type = <span class="d_keyword">cast</span>(string) asdf[<span class="d_string">"type"</span>];
+            <span class="d_keyword">if</span> (type == <span class="d_string">"number"</span>)
+                <span class="d_keyword">return</span> MyDataProxy(MyData(MyNumber(<span class="d_keyword">cast</span>(<span class="d_keyword">double</span>) asdf[<span class="d_string">"value"</span>])));
+            <span class="d_keyword">if</span> (type == <span class="d_string">"string"</span>)
+                <span class="d_keyword">return</span> MyDataProxy(MyData(MyString(<span class="d_keyword">cast</span>(string) asdf[<span class="d_string">"value"</span>])));
+        }
+        <span class="d_keyword">assert</span>(<span class="d_keyword">false</span>);
+    }
+
+    <span class="d_keyword">void</span> serialize(S)(<span class="d_keyword">ref</span> S serializer) <span class="d_keyword">pure</span>
+    {
+        <span class="d_comment">// dfmt off
+</span>        <span class="d_keyword">alias</span> s = serializer;
+        <span class="d_keyword">auto</span> state = s.objectBegin();
+        s.putKey(<span class="d_string">"type"</span>);
+        value.match!(
+            (MyNumber value) { s.putValue(<span class="d_string">"number"</span>); s.putKey(<span class="d_string">"value"</span>); s.putValue(value.foo); },
+            (MyString value) { s.putValue(<span class="d_string">"string"</span>); s.putKey(<span class="d_string">"value"</span>); s.putValue(value.foo); },
+        );
+        s.objectEnd(state);
+        <span class="d_comment">// dfmt on
+</span>    }
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">struct</span> Data
+{
+    @serializedAs!MyDataProxy MyData data;
+}
+
+<span class="d_keyword">auto</span> s1 = <span class="d_string">`{"data":{"type":"number","value":10.5}}`</span>;
+<span class="d_keyword">auto</span> dat1 = Data(MyData(MyNumber(10.5)));
+<span class="d_keyword">assert</span>(dat1.serializeToJson == s1);
+<span class="d_keyword">assert</span>(s1.parseJson().deserialize!Data().data == MyData(MyNumber(10.5)));
+
+<span class="d_keyword">auto</span> s2 = <span class="d_string">`{"data":{"type":"string","value":"TEST"}}`</span>;
+<span class="d_keyword">auto</span> dat2 = Data(MyData(MyString(<span class="d_string">"TEST"</span>)));
+<span class="d_keyword">assert</span>(dat2.serializeToJson == s2);
+<span class="d_keyword">assert</span>(s2.parseJson().deserialize!Data().data == MyData(MyString(<span class="d_string">"TEST"</span>)));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

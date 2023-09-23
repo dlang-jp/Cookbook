@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>コンテナ（データ構造）の例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">コンテナ
+</div></h1><div class="ddoc_description">スタックやキューなど、いくつかのデータ構造を実現する方法についてまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/container_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/container_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ スタックを構成する例です。
+<div class="ddoc_blankline"></div>
+
+スタックは、後入れ先出し（LIFO: Last In, First Out）のデータ構造です。
+要素の追加順に対し、後から追加した最も新しい要素が取り出されます。
+<div class="ddoc_blankline"></div>
+
+汎用データ構造である <span class="d_inlinecode donthyphenate notranslate">std.container</span> の <span class="d_inlinecode donthyphenate notranslate">SList</span> を利用して実現します。
+SListは「単方向リンクリスト（Single Linked List）」であり、先頭要素の追加や削除が高速（定数時間）です。
+これはスタックの動作に沿っており、パフォーマンスの面からも優れています。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_container_slist.html">https://dlang.org/phobos/std_container_slist.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.container : SList;
+
+SList!<span class="d_keyword">int</span> stack;
+
+<span class="d_comment">// insertで要素を追加します。これは一般にpushとも呼ばれます。
+</span><span class="d_comment">// これらのメソッドはコンテナ共通インターフェースの一部で、SListではすべて先頭に要素を追加する操作になります
+</span>stack.insert(1);               <span class="d_comment">// 1
+</span>stack.insertFront(2);          <span class="d_comment">// 2 -&gt; 1
+</span>stack.stableInsert(3);         <span class="d_comment">// 3 -&gt; 2 -&gt; 1
+</span>stack.stableInsertFront(4);    <span class="d_comment">// 4 -&gt; 3 -&gt; 2 -&gt; 1
+</span>
+<span class="d_comment">// スライス演算で全体をレンジとして取得し、中身を確認します。
+</span><span class="d_comment">// レンジは要素のシーケンスを表し、equal関数で比較できます。
+</span><span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_keyword">assert</span>(equal(stack[], [4, 3, 2, 1]));
+
+<span class="d_comment">// 先頭要素を取り除かずに確認します
+</span><span class="d_keyword">assert</span>(stack.front == 4);
+
+<span class="d_comment">// removeAnyで要素を取り除きます。これは一般にpopとも呼ばれ、先頭要素を取り除く操作になります。
+</span><span class="d_comment">// これらのメソッドもコンテナ共通インターフェースの一部で、SListではすべて先頭要素を取り除く操作になります
+</span><span class="d_keyword">auto</span> elem_4 = stack.removeAny();        <span class="d_comment">// 4が取り除かれる: 3 -&gt; 2 -&gt; 1
+</span><span class="d_keyword">auto</span> elem_3 = stack.stableRemoveAny();  <span class="d_comment">// 3が取り除かれる: 2 -&gt; 1
+</span><span class="d_keyword">assert</span>(elem_4 == 4);
+<span class="d_keyword">assert</span>(elem_3 == 3);
+
+<span class="d_comment">// 要素をクリアします
+</span>stack.clear();
+<span class="d_keyword">assert</span>(stack.empty);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ キューを構成する例です
+<div class="ddoc_blankline"></div>
+
+キューは、先入れ先出し（FIFO: First In, First Out）のデータ構造です。
+要素の追加順に対し、最初に追加した最も古い要素が取り出されます。
+<div class="ddoc_blankline"></div>
+
+汎用データ構造である <span class="d_inlinecode donthyphenate notranslate">std.container</span> の <span class="d_inlinecode donthyphenate notranslate">DList</span> を利用して実現します。
+DListは「双方向リンクリスト（Double Linked List）」であり、先頭と末尾に対する追加や削除が高速（定数時間）です。
+これはキューの動作に沿っており、パフォーマンスの面からも優れています。
+<div class="ddoc_blankline"></div>
+
+See_Also: <a href="https://dlang.org/phobos/std_container_dlist.html">https://dlang.org/phobos/std_container_dlist.html</a>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.container : DList;
+
+DList!<span class="d_keyword">int</span> queue;
+
+<span class="d_comment">// insertで要素を追加します。これは一般にenqueueとも呼ばれます。
+</span><span class="d_comment">// これらのメソッドはコンテナ共通インターフェースの一部で、DListではすべて先頭に要素を追加する操作になります
+</span>queue.insertFront(1);          <span class="d_comment">// 1
+</span>queue.stableInsertFront(2);    <span class="d_comment">// 2 -&gt; 1
+</span>
+<span class="d_comment">// removeAnyで要素を取得します。これは一般にdequeueとも呼ばれ、後ろの要素を取り出す操作になります
+</span><span class="d_comment">// コンテナ共通インターフェースが利用でき、DListではすべて同じ意味になります
+</span><span class="d_keyword">int</span> elem_1 = queue.removeAny();          <span class="d_comment">// 2
+</span><span class="d_keyword">int</span> elem_2 = queue.stableRemoveAny();    <span class="d_comment">// empty
+</span><span class="d_keyword">assert</span>(elem_1 == 1);
+<span class="d_keyword">assert</span>(elem_2 == 2);
+
+<span class="d_comment">// スライス演算で全体をレンジとして取得し、中身を確認します。
+</span>queue.insertFront(10);    <span class="d_comment">// 10
+</span>queue.insertFront(20);    <span class="d_comment">// 20 -&gt; 10
+</span>queue.insertFront(30);    <span class="d_comment">// 30 -&gt; 20 -&gt; 10
+</span>queue.insertFront(40);    <span class="d_comment">// 40 -&gt; 30 -&gt; 20 -&gt; 10
+</span>
+<span class="d_comment">// レンジは要素のシーケンスを表し、equal関数で比較できます。
+</span><span class="d_keyword">import</span> std.algorithm : equal;
+
+<span class="d_keyword">assert</span>(equal(queue[], [40, 30, 20, 10]));
+
+<span class="d_comment">// 先頭要素を取り除かずに確認します
+</span><span class="d_keyword">assert</span>(queue.back == 10);
+<span class="d_comment">// 最後に追加した要素を確認します
+</span><span class="d_keyword">assert</span>(queue.front == 40);
+
+<span class="d_comment">// removeAnyで要素を取り除きます。末尾要素を取り除く操作になります。
+</span><span class="d_comment">// これらのメソッドもコンテナ共通インターフェースの一部で、DListではすべて先頭要素を取り除く操作になります
+</span><span class="d_keyword">auto</span> elem_10 = queue.removeAny();          <span class="d_comment">// 10が取り除かれる: 40 -&gt; 30 -&gt; 20
+</span><span class="d_keyword">auto</span> elem_20 = queue.stableRemoveAny();    <span class="d_comment">// 20が取り除かれる: 40 -&gt; 30
+</span><span class="d_keyword">assert</span>(elem_10 == 10);
+<span class="d_keyword">assert</span>(elem_20 == 20);
+
+<span class="d_comment">// 要素をクリアします
+</span>queue.clear();
+<span class="d_keyword">assert</span>(queue.empty);
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

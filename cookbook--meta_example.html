@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html>    <head>        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="css/proj_docs.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        <script type="text/javascript" src="js/listanchors.js"></script>
+        <title>メタプログラミングおよび頻出イディオムの例 - D言語クックブック</title>
+        
+        
+    </head>
+    <body>        
+        <div class="container">            
+<div class="sidebar-underbar"></div>
+<div class="sidebar">    <div class="head">        <a class='githublinkimg' href="https://github.com/dlang-jp/Cookbook"><img src="img/GitHub-Mark-32px.png" width="32" height="32" /></a>
+        <h2>D言語クックブック</h2>
+        <p><span class="smallprint"><b>version:</b> ~master <span class="separator"><br></span>
+            </span>
+        </p>
+        <p><a href="index.html">overview</a></p>
+    </div>
+    
+    <ul>
+
+	
+
+	<li><a href="cookbook--array_example.html"><span >配列</span></a></li>
+
+
+
+	<li><a href="cookbook--assoc_array_example.html"><span >連想配列</span></a></li>
+
+
+
+	<li><a href="cookbook--concurrency_example.html"><span >並行処理</span></a></li>
+
+
+
+	<li><a href="cookbook--container_example.html"><span >コンテナ</span></a></li>
+
+
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >データ形式
+		</span></a><ul><li><a href="
+			cookbook--data.html"><span >overview</span></a></li>
+			
+
+	<li><a href="cookbook--data.base64_example.html"><span >Base64エンコード/デコード</span></a></li>
+
+
+
+	<li><a href="cookbook--data.csv_example.html"><span >CSV操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.json_example.html"><span >JSON操作</span></a></li>
+
+
+
+	<li><a href="cookbook--data.zip_example.html"><span >ZIP操作</span></a></li>
+
+</ul></li>
+	
+	
+
+
+
+
+
+	<li><a href="cookbook--datetime_example.html"><span >時刻・日付</span></a></li>
+
+
+
+	<li><a href="cookbook--exception_example.html"><span >例外</span></a></li>
+
+
+
+	<li><a href="cookbook--file_example.html"><span >ファイルシステム</span></a></li>
+
+
+
+	<li><a href="cookbook--gc_example.html"><span >ガベージコレクション</span></a></li>
+
+
+
+	<li><a href="cookbook--getopt_example.html"><span >コマンドライン解析</span></a></li>
+
+
+
+	<li><a href="cookbook--hash_example.html"><span >ハッシュ値の計算</span></a></li>
+
+
+
+	<li><a href="cookbook--is_example.html"><span >is式</span></a></li>
+
+
+
+	<li><a href="cookbook--meta_example.html"><span >メタプログラミング</span></a></li>
+
+
+
+	<li><a href="cookbook--network_example.html"><span >ネットワーク(cURL)</span></a></li>
+
+
+
+	<li><a href="cookbook--numeric_example.html"><span >数値計算</span></a></li>
+
+
+
+	<li><a href="cookbook--opovl_excample.html"><span >演算子オーバーロード</span></a></li>
+
+
+
+	<li><a href="cookbook--parallelism_example.html"><span >並列処理</span></a></li>
+
+
+
+	<li><a href="cookbook--process_example.html"><span >プロセス</span></a></li>
+
+
+
+	<li><a href="cookbook--random_example.html"><span >乱数</span></a></li>
+
+
+
+	<li><a href="cookbook--range_example.html"><span >レンジ</span></a></li>
+
+
+
+	<li><a href="cookbook--regex_example.html"><span >正規表現</span></a></li>
+
+
+
+	<li><a href="cookbook--sorting_example.html"><span >データの並び替え・応用</span></a></li>
+
+
+
+	<li><a href="cookbook--string_example.html"><span >文字列</span></a></li>
+
+
+
+	<li><a href="cookbook--sumtype_example.html"><span >SumTypeの例</span></a></li>
+
+
+
+	<li><a href="cookbook--sync_example.html"><span >同期機構/排他処理</span></a></li>
+
+
+
+	<li><a href="cookbook--template_example.html"><span >テンプレート</span></a></li>
+
+
+
+	<li><a href="cookbook--typecons_example.html"><span >型を作るユーティリティ</span></a></li>
+
+
+
+	<li><a href="cookbook--uda_example.html"><span >UDA(User Defined Attribute)</span></a></li>
+
+
+
+	<li><a href="cookbook--unittests_example.html"><span >単体テスト</span></a></li>
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >subpkg</span></a><ul>
+			
+
+	<li><a href="cookbook-subpkg--subpkg.test.html"><span >サブパッケージの作り方</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >windows</span></a><ul>
+			
+
+	<li><a href="cookbook-windows--windows.basic.html"><span >Win32API</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >posix</span></a><ul>
+			
+
+	<li><a href="cookbook-posix--posix.basic.html"><span >POSIX</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >linux</span></a><ul>
+			
+
+	<li><a href="cookbook-linux--linux.basic.html"><span >Linux</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >libdparse_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-libdparse_usage--libdparse_usage.example.html"><span >libdparse</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >asdf_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-asdf_usage--asdf_usage.example.html"><span >Asdfの使用例</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+
+
+
+	
+	
+	
+		<li class="expand-container open"><a class='expand-toggle' href="#"><span >vibed_usage</span></a><ul>
+			
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.auth.html"><span >認証・権限</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.http.html"><span >HTTPサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.https.html"><span >HTTPSサーバー</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.rest.html"><span >RESTインターフェースの利用</span></a></li>
+
+
+
+	<li><a href="cookbook-vibe-d_usage--vibed_usage.web.html"><span >Webインターフェースの利用</span></a></li>
+
+
+		</ul></li>
+	
+
+
+
+
+</ul>
+</div>
+            <div class="content">                
+                <div class="quickindex" id="quickindex"></div>
+                
+                <h1><div class="ddoc_summary">メタプログラミング
+</div></h1><div class="ddoc_description">メタプログラミングに出てくるイディオム等についてまとめます。
+
+</div>
+<div class="ddoc_section_nonstandard"><span class="ddoc_section_nonstandard_header">Source:</span>
+<span class="link_to_source"><a href="https://github.com/dlang-jp/Cookbook/tree/master/source/meta_example.d">https://github.com/dlang-jp/Cookbook/tree/master/source/meta_example.d</a></span>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ モジュールの定義一覧を取得する例です。
+<div class="ddoc_blankline"></div>
+
+<span class="d_inlinecode donthyphenate notranslate">__traits(allMembers, モジュール名)</span>と書きます。
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
+
+<span class="d_keyword">alias</span> StdMembers = <span class="d_keyword">__traits</span>(allMembers, std.stdio);
+
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(StdMembers.length &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 任意のモジュール名から定義一覧を取得するイディオムです。
+<div class="ddoc_blankline"></div>
+
+モジュールの参照を<span class="d_inlinecode donthyphenate notranslate">mixin</span>と<span class="d_inlinecode donthyphenate notranslate">std.meta.Alias</span>を使って取得します。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> Module(string moduleName)
+{
+    <span class="d_keyword">mixin</span>(<span class="d_string">"private import "</span> ~ moduleName ~ <span class="d_string">";"</span>);
+    <span class="d_keyword">import</span> std.meta : Alias;
+
+    <span class="d_keyword">private</span> <span class="d_keyword">alias</span> mod = Alias!(<span class="d_keyword">mixin</span>(moduleName));
+
+    <span class="d_keyword">alias</span> ModuleMembers = <span class="d_keyword">__traits</span>(allMembers, mod);
+}
+
+<span class="d_keyword">alias</span> MetaMembers = Module!(<span class="d_keyword">__MODULE__</span>).ModuleMembers;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(MetaMembers.length &gt; 0);
+
+<span class="d_keyword">alias</span> ArrayMembers = Module!<span class="d_string">"array_example"</span>.ModuleMembers;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(ArrayMembers.length &gt; 0);
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 実際にコンパイルできるかどうか確認するイディオムです。
+<div class="ddoc_blankline"></div>
+
+D言語のコード片が実際にコンパイルできる場合にはtrueに、そうでない場合はfalseに評価されます。
+この強力なイディオムのやり方は2種類あって、<span class="d_inlinecode donthyphenate notranslate">is(typeof(...))</span>を使用する方法と、<span class="d_inlinecode donthyphenate notranslate">__traits(compiles, ...)</span>を使用する方法があります。
+どちらでも効果はほぼ同じですが、やや<span class="d_inlinecode donthyphenate notranslate">is(typeof(...))</span>のほうがチェックが緩いです。過去dmdへ多大な貢献をされた<a href="https://qiita.com/9rnsr/items/5e3e434ea8719fbeea82">9rnsrさんの記事</a>で解説されています。
+<div class="ddoc_blankline"></div>
+
+なお、このイディオムはきわめて強力な一方、実際にコンパイルできるかどうか、コンパイラが実際にコンパイルを試行して確かめる必要があるため、コンパイル速度的にはやや不利です。
+そのためかどうなのか、std.rangeのisInputRangeなどは、<a href="https://github.com/dlang/phobos/blob/c4f1c43366c79f4ff9ddfadbc0a8c943e0cb5c94/std/range.d#L528">過去この方法で実装されていた</a>こともありますが、<a href="https://github.com/dlang/phobos/blob/d29ebfe6ec0fd3879513e0f8a533b234f3d101e1/std/range/primitives.d#L171">今は違います</a>。
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S1
+{
+    <span class="d_keyword">void</span> foo(){ }
+}
+<span class="d_keyword">struct</span> S2
+{
+    <span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> x){ }
+    <span class="d_keyword">void</span> bar(<span class="d_keyword">int</span> x){ }
+}
+
+<span class="d_comment">// 引数のないfooメソッドのある型Tを判定する
+</span><span class="d_comment">// こっちは is(typeof(...)) の方法で判定する
+</span><span class="d_keyword">enum</span> hasFoo(T) = <span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>({
+    <span class="d_comment">// 変数が定義可能
+</span>    T val;
+    <span class="d_comment">// fooメソッドの呼び出しができる
+</span>    val.foo();
+}));
+
+<span class="d_comment">// int型の引数を指定するbarメソッドのある型Tを判定する
+</span><span class="d_comment">// こっちは __traits(compiles, ...) の方法で判定する
+</span><span class="d_keyword">enum</span> hasBar(T) = <span class="d_keyword">__traits</span>(compiles, {
+    <span class="d_comment">// 変数が定義可能
+</span>    T val;
+    <span class="d_comment">// int型の引数でbarメソッドの呼び出しができる
+</span>    val.bar(1);
+});
+
+<span class="d_comment">// S1にはfooメソッドがある
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(hasFoo!S1);
+<span class="d_comment">// S1にはbarメソッドがない
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!hasBar!S1);
+<span class="d_comment">// S2にはfooメソッドはあるが、int型の引数が必要
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!hasFoo!S2);
+<span class="d_comment">// S2にはint型の引数が必要なbarメソッドがある
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(hasBar!S2);
+
+<span class="d_comment">// もちろん、直接 static if や、 static assert で使うこともできます
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, {
+    S1 s1;
+    S2 s2;
+    <span class="d_comment">// S1とS2の足し算はできるか？
+</span>    <span class="d_keyword">auto</span> s3 = s1 + s2; <span class="d_comment">// →できないのでfalse
+</span>}));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 一度特殊化されたテンプレートの型から、特殊化前のテンプレートと引数を取得する例です。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> MyTemplate(T, U)
+{
+    <span class="d_keyword">alias</span> Key = T;
+    <span class="d_keyword">alias</span> Value = U;
+}
+
+<span class="d_keyword">alias</span> MyT = MyTemplate!(<span class="d_keyword">int</span>, string);
+
+<span class="d_comment">// 特殊化に使ったパラメーターを得るには TemplateArgsOf を利用します
+</span><span class="d_keyword">import</span> std.traits : TemplateArgsOf;
+
+<span class="d_keyword">alias</span> Args = TemplateArgsOf!MyT;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[0] == <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[1] == string));
+
+<span class="d_comment">// 特殊化前のテンプレートそのものを取り出すには TemplateOf を利用します
+</span><span class="d_keyword">import</span> std.traits : TemplateOf;
+
+<span class="d_keyword">alias</span> Temp = TemplateOf!MyT;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(isSame, Temp, MyTemplate));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ ある型が、特定のテンプレートを特殊化したものかどうかを判定する例です。
+<pre class="d_code notranslate"><span class="d_keyword">template</span> MyTemplate(T, U)
+{
+    <span class="d_keyword">alias</span> Key = T;
+    <span class="d_keyword">alias</span> Value = U;
+}
+
+<span class="d_keyword">alias</span> MyT1 = MyTemplate!(<span class="d_keyword">int</span>, string);
+<span class="d_keyword">alias</span> MyT2 = MyTemplate!(string, string);
+
+<span class="d_comment">// 判定するには isInstanceOf を利用します
+</span><span class="d_keyword">import</span> std.traits : isInstanceOf;
+
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInstanceOf!(MyTemplate, MyT1));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(isInstanceOf!(MyTemplate, MyT2));
+
+<span class="d_comment">// 関係ない型については false を返します
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!isInstanceOf!(MyTemplate, <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!isInstanceOf!(MyTemplate, string));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 関数が右辺値/左辺値で呼ぶことができるか確認する方法
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.traits: rvalueOf, lvalueOf;
+<span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> a) {}
+<span class="d_keyword">void</span> bar(<span class="d_keyword">ref</span> <span class="d_keyword">int</span> a) {}
+
+<span class="d_comment">// fooは右辺値でも左辺値でも呼べるが
+</span><span class="d_comment">// barは右辺値では呼ぶことができない。
+</span><span class="d_comment">// このような引数の特徴を持つ関数を弁別する際に使う。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, foo(rvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, foo(lvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, bar(rvalueOf!<span class="d_keyword">int</span>)));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">__traits</span>(compiles, bar(lvalueOf!<span class="d_keyword">int</span>)));
+</pre>
+</div>
+<div class="ddoc_examples"><span class="ddoc_examples_header">Examples:</span>
+ 要素の型を得る
+<div class="ddoc_blankline"></div>
+
+ElementTypeがそれっぽく見えるが、実はForeachTypeのほうが扱いやすい。
+See_Also:
+<ul><li><a href="https://dlang.org/phobos/std_range_primitives.html#ElementType">https://dlang.org/phobos/std_range_primitives.html#ElementType</a></li>
+<li><a href="https://dlang.org/phobos/std_traits.html#ForeachType">https://dlang.org/phobos/std_traits.html#ForeachType</a>
+</li>
+</ul>
+
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range: ElementType;
+<span class="d_keyword">import</span> std.traits: ForeachType;
+
+<span class="d_comment">// 適当にレンジを作成
+</span><span class="d_keyword">struct</span> Range
+{
+    <span class="d_keyword">uint</span>[] ary;
+    <span class="d_keyword">uint</span> front() <span class="d_keyword">const</span> { <span class="d_keyword">return</span> ary[0]; }
+    <span class="d_keyword">void</span> popFront() { ary = ary[1..$]; }
+    <span class="d_keyword">bool</span> empty() <span class="d_keyword">const</span> { <span class="d_keyword">return</span> ary.length == 0; }
+}
+
+<span class="d_comment">// Rangeは同じように扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!Range == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!Range == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// 配列でも同じように扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!(<span class="d_keyword">uint</span>[]) == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!(<span class="d_keyword">uint</span>[]) == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// ElementTypeの場合はcharからdcharへの変換が行われてしまうが
+</span><span class="d_comment">// ForeachTypeの場合はcharのまま取り扱ってくれる
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ElementType!(<span class="d_keyword">char</span>[]) == <span class="d_keyword">dchar</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(ForeachType!(<span class="d_keyword">char</span>[]) == <span class="d_keyword">char</span>));
+
+<span class="d_comment">// Foreach over Delegates
+</span><span class="d_comment">// https://dlang.org/spec/statement.html#foreach_over_delegates
+</span><span class="d_comment">// デリゲートではElementTypeはうまく扱ってくれない(void判定されてしまう)
+</span><span class="d_keyword">alias</span> DgRange = <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">scope</span> <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">ref</span> <span class="d_keyword">uint</span>) dg);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(ElementType!DgRange == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(ForeachType!DgRange == <span class="d_keyword">uint</span>));
+
+<span class="d_comment">// opApplyでforeachできる構造体を作成
+</span><span class="d_keyword">struct</span> Iterable
+{
+    <span class="d_keyword">uint</span>[] ary;
+    <span class="d_keyword">int</span> opApply(<span class="d_keyword">scope</span> <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">ref</span> <span class="d_keyword">uint</span> a) dg)
+    {
+        <span class="d_keyword">int</span> result = 0;
+        <span class="d_keyword">foreach</span> (item; ary)
+        {
+            result = dg(item);
+            <span class="d_keyword">if</span> (result)
+                <span class="d_keyword">break</span>;
+        }
+        <span class="d_keyword">return</span> result;
+    }
+}
+<span class="d_comment">// ElementTypeではopApplyのある構造体は扱えない
+</span><span class="d_comment">// また、ForeachTypeでも複数opApplyがオーバーロードされている場合は
+</span><span class="d_comment">// コンパイルエラーが発生します。
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(ElementType!Iterable == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>( <span class="d_keyword">is</span>(ForeachType!Iterable == <span class="d_keyword">uint</span>));
+</pre>
+</div>
+
+                
+            </div>
+        </div>
+        
+        <script type="text/javascript">jQuery(document).ready(listanchors);</script>
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     </body>
+</html>

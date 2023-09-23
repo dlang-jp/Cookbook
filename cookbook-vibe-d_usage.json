@@ -1,0 +1,197 @@
+[
+ {
+  "name" : "vibed_usage.auth",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/auth.d",
+  "comment" : "認証・権限\n\n認証や権限といった、ユーザー情報を取り扱ったりアクセスを規制したりする方法について説明します。\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L25_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ベーシック認証\n\n平文でパスワードをやり取りする認証方式です。\n\nAttention:\nHTTP通信では使用すると重大なセキュリティリスクがあるので、必ずHTTPS通信と一緒に使いましょう。\n\nSee_Also:\n- https://vibed.org/docs#http-authentication\n- https://vibed.org/api/vibe.http.auth.basic_auth/performBasicAuth\n- https://github.com/vibe-d/vibe.d/blob/master/examples/auth_basic/source/app.d\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 25,
+    "char" : 1,
+    "endline" : 103,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L103_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ダイジェスト認証\n\nHTTPSが使えない場合や、パスワードをなんとしても通信に乗せたくないしサーバーに教えたくないって場合に有効な認証方式です。\n\nAttention:\nvibe.dでのダイジェスト認証で利用されるMD5はセキュリティリスクがある(頑張れば逆変換できる)ので、Basic認証と同程度か多少マシってくらいの方式です。\nまた、中間者攻撃に対しても脆弱です。この点から見てもBasic認証と同程度か多少マシってくらいの方式です。\nどちらにしろやはりHTTPS通信と一緒に使えという話になります。\n\nSee_Also:\n- https://vibed.org/api/vibe.http.auth.digest_auth/performDigestAuth\n- https://github.com/vibe-d/vibe.d/blob/master/examples/auth_digest/source/app.d\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 103,
+    "char" : 1,
+    "endline" : 209,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L209_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "セッション\n\nログインなど、セッション情報を残してデータを管理したい場合の説明です。\n\nSee_Also:\n- https://vibed.org/docs#http-sessions\n- https://vibed.org/api/vibe.http.server/HTTPServerRequest.session\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse.startSession\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse.terminateSession\n- https://vibed.org/api/vibe.http.session/\n- https://vibed.org/api/vibe.http.session/Session\n- https://vibed.org/api/vibe.web.web/SessionVar\n- https://github.com/vibe-d/vibe.d/blob/master/examples/web/source/app.d\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 209,
+    "char" : 1,
+    "endline" : 329,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L329_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "権限\n\nユーザーによってアクセスできるページの範囲を変えたい、という場合のやり方について説明します。\n\nSee_Also:\n- https://vibed.org/api/vibe.web.auth/\n- https://github.com/vibe-d/vibe.d/blob/master/examples/web-auth/source/app.d\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 329,
+    "char" : 1,
+    "endline" : 549,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L549_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "RESTで認証\n\nTwitter等のOAuthのような、トークンを用いた認証を行う例です。\n\nRESTでは、セッション情報が使用できません。(そもそも原則としてRESTにはステートレスであることが求められます)\nそのため、REST APIとともにアクセス制限やユーザー情報等を扱う場合は、\nここでのアクセストークンのような固有の情報と、\nそのトークンの所有者であることを証明する秘密情報を使った認証を行うのがよいでしょう。\n\n今回のアクセストークンを用いたリソースアクセスは以下の手順で行います。\n\n1. リクエストトークンを作成\n2. ログイン\n3. ログイン済みのユーザーでリクエストトークンからPINの作成\n4. リクエストトークンとPINからアクセストークンの作成\n5. アクセストークンを用いてリソースにアクセス\n\nAttention:\nサンプルコードは適当に作成したものですので、セキュリティ的に十分優れているとは言えません。\nトークンの生成方法を工夫したり、nonceを加えてリプレイ攻撃耐性を上げたりと、工夫が必要です。\n",
+    "line" : 549,
+    "char" : 1,
+    "endline" : 853,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "vibed_usage.http",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/http.d",
+  "comment" : "HTTPサーバー\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_http.d)\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L40_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "ふつうのHTTPサーバー\n\n基本的な流れは、以下。\n- URLRouterでパスとハンドラの割り付けを行う\n- HTTPServerSettingsで接続のための情報を設定する\n- listenHTTP でサーバーを起動する\n- runEventLoop または runApplication でイベントループを開始する\n\n加えて、今回はクライアント側からのアクセスでサーバーの動作を検証しています。$(BR)\nさらに、Cookbookのサンプルはテストケースとして動作するように作っているため、exitEventLoopでサーバーを終了しています。\n- runTask で非同期的な処理を実行する\n- requestHTTP でクライアントからのリクエストを行う\n- exitEventLoop でイベントループを終了する\n\nSee_Also:\n- https://vibed.org/docs#http\n- https://vibed.org/api/vibe.http.router/URLRouter\n- https://vibed.org/api/vibe.http.server/listenHTTP\n- https://vibed.org/api/vibe.http.server/HTTPServerSettings\n- https://vibed.org/api/vibe.http.server/HTTPServerRequest\n- https://vibed.org/api/vibe.http.server/HTTPServerResponse\n- https://vibed.org/api/vibe.core.core/runTask\n- https://vibed.org/api/vibe.http.client/requestHTTP\n- https://vibed.org/api/vibe.core.core/runEventLoop\n- https://vibed.org/api/vibe.core.core/runApplication\n- https://vibed.org/api/vibe.core.core/exitEventLoop\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 40,
+    "char" : 1,
+    "endline" : 103,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L103_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "dietテンプレートを使用する例\n\nvibe.dはHTML生成のためのテンプレートライブラリを使用しています。\ndietテンプレートは、PUGテンプレートと互換性の高いテンプレートライブラリです。\n\nSee_Also:\n- https://vibed.org/templates/diet\n- https://vibed.org/api/vibe.http.server/render : dietテンプレートファイルをコンパイルしてレスポンスヘッダに設定する\n- https://vibed.org/api/diet.html/compileHTMLDietFileString : dietテンプレートファイルをコンパイルしてOutputRangeに入れる\n- https://vibed.org/api/diet.html/compileHTMLDietString : 文字列をコンパイルしてOutputRangeに入れる\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 103,
+    "char" : 1,
+    "endline" : 169,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "vibed_usage.https",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/https.d",
+  "comment" : "HTTPSサーバー\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_https.d)\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L28_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "HTTPSサーバー\n\nサーバー設定時に、 HTTPServerSettings の tlsContext を設定します。\n\n準備するもの：\n- サーバー側\n  - サーバー証明書(チェーン)\n  - サーバー証明書発行時の秘密鍵\n- クライアント側\n  - サーバー証明書を発行したCAの証明書\n\nSee_Also:\n- https://vibed.org/docs#http-https\n- https://vibed.org/api/vibe.stream.tls/TLSContext\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 28,
+    "char" : 1,
+    "endline" : 114,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L114_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "クライアント認証を要求するHTTPSサーバー\n\nサーバー設定時に、 HTTPServerSettings の tlsContext を設定します。\n特に tlsContext.peerValidationMode で TLSPeerValidationMode.requireCert を指定することで、クライアントに対してクライアント証明書を要求するようになります。\n\n準備するもの：\n- サーバー側\n  - サーバー証明書(チェーン)\n  - サーバー証明書発行時の秘密鍵\n  - クライアント証明書を発行したCAの証明書\n- クライアント側\n  - クライアント証明書(チェーン)\n  - クライアント証明書発行時の秘密鍵\n  - サーバー証明書を発行したCAの証明書\n\nSee_Also:\n- https://vibed.org/api/vibe.stream.tls/\n- https://vibed.org/api/vibe.stream.tls/TLSPeerValidationMode\n- https://github.com/vibe-d/vibe.d/blob/master/tests/tls/source/app.d (vibe.dのTLSのテスト)\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 114,
+    "char" : 1,
+    "endline" : 190,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "vibed_usage.rest",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/rest.d",
+  "comment" : "RESTインターフェースの利用\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_rest.d)\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L42_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "REST APIに対応する\n\nD言語のメタプログラミングを使って、リクエストのJSONからオブジェクトへシリアライズしてマッピングしたり、戻り値からレスポンスのJSONへのデシリアライズしたり、URLへのルーティングなどを自動化します。\n\n主に以下を行います。\n- interfaceでREST APIを定義します。\n- classで上記interfaceを実装します。\n- registerRestInterfaceで、interfaceを実装したclassを使って、URLRouterへの設定を自動的に行います。\n  - パスの設定が自動的に行われます。\n  - 受信したJSONをHTTPサーバーリクエストから分析してパラメータに割り振る、\n    returnした構造体をJSONにシリアライズしてHTTPサーバーレスポンスに設定するなどのふるまいが自動的に生成され、\n    ハンドラとして登録されます。\n- 必須ではありませんが、 serveRestJSClient でクライアント側のJavascriptで実行できるスクリプトを自動生成でき、それをURLRouterに設定できます。\n\nvibe.dではクライアント側についても楽できる機能 RestInterfaceClient を持っています。\nRestInterfaceClient を使うと、サーバー側のinterfaceで定義したREST APIを使って、以下のようなことができます。\n- interfaceの各仮想関数に対して、HTTPリクエストを行ってデータをもらってくる実装を自動的に生成します。\n- リクエスト先のパスの設定も自動的に行われます。\n- 引数のオブジェクトをJSONにシリアライズし、リクエストのボディに設定します。\n- レスポンスのJSONをデシリアライズし、戻り値のオブジェクトにマッピングします。\n\nSee_Also:\n- https://vibed.org/docs#rest-interface-generator\n- https://vibed.org/api/vibe.web.rest/\n- https://vibed.org/api/vibe.web.rest/registerRestInterface\n- https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)\n- https://vibed.org/api/vibe.web.rest/RestInterfaceClient\n- https://vibed.org/api/vibe.web.rest/serveRestJSClient\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 42,
+    "char" : 1,
+    "endline" : 156,
+    "endchar" : 1
+   },
+   {
+    "name" : "__unittest_L156_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "REST APIのレスポンス形式を変更する\n\nvibe.dでは、レスポンスのデータはJSONにシリアライズされて送信されます。JSON以外のデータを応答したい場合には、 `resultSerializer` UDAを使用して変更が可能です。\n\nSee_Also: https://vibed.org/api/vibe.web.common/resultSerializer\n\n",
+    "line" : 156,
+    "char" : 1,
+    "endline" : 272,
+    "endchar" : 1
+   }
+  ]
+ },
+ {
+  "name" : "vibed_usage.web",
+  "kind" : "module",
+  "file" : "/home/runner/work/Cookbook/Cookbook/thirdparty/vibe-d/source/vibed_usage/web.d",
+  "comment" : "Webインターフェースの利用\n\nSource: $(LINK_TO_SRC thirdparty/vibe-d/source/vibed_usage/_web.d)\n",
+  "members" : [
+   {
+    "name" : "vibed_usage._common",
+    "kind" : "import",
+    "line" : 8,
+    "char" : 8,
+    "protection" : "private"
+   },
+   {
+    "name" : "__unittest_L23_C1",
+    "kind" : "function",
+    "protection" : "public",
+    "comment" : "Webインターフェースを利用する\n\nWebインターフェースを利用すると、D言語のメタプログラミングを使って、クラスのメソッド名からURLへのルーティングやPOSTパラメーターの自動生成などができます。\n\nSee_Also:\n- https://vibed.org/docs#web-interface-generator\n- https://vibed.org/api/vibe.web.web/\n- https://vibed.org/api/vibe.web.common/ (利用できるUDAが記載されている)\n- https://vibed.org/api/vibe.web.web/registerWebInterface\n\n$(WORKAROUND_ISSUE22230)\n",
+    "line" : 23,
+    "char" : 1,
+    "endline" : 84,
+    "endchar" : 1
+   }
+  ]
+ }
+]
