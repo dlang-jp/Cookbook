@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test
 
 jobs:
   # 各テストのジョブは以下の表に従って作成しています。
@@ -58,13 +59,13 @@ jobs:
   #      run: rdmd ./.github/runner.d -a=${ARCH} --mode=generate-document
   #    # ドキュメントを記録する場合は以下を実行(Artifactに6か月保管されます)
   #    - name: Upload generated pages
-  #      uses: actions/upload-artifact@v1
+  #      uses: actions/upload-artifact@v3
   #      with:
   #        name: docs
   #        path: docs
   #    # カバレッジを記録する場合は以下を実行(Artifactに6か月保管されます)
   #    - name: Upload coverage result
-  #      uses: actions/upload-artifact@v1
+  #      uses: actions/upload-artifact@v3
   #      with:
   #        name: coverage-${OS}
   #        path: .cov
@@ -112,7 +113,7 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload coverage result
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-windows
           path: .cov
@@ -226,12 +227,12 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload generated pages
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: docs
           path: docs
       - name: Upload coverage result
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-linux
           path: .cov
@@ -246,10 +247,7 @@ jobs:
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
-          # 現在dmd-masterは機能していない(2020-03-10以降更新が停止)
-          #compiler: dmd-master
-          # 暫定的に dmd-beta を使用する
-          compiler: dmd-beta
+          compiler: dmd-master
       - name: Run unit tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
 
@@ -304,7 +302,7 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload coverage result
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-osx
           path: .cov
@@ -336,17 +334,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download Windows coverage result
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: coverage-windows
           path: .cov-windows
       - name: Download Linux coverage result
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: coverage-linux
           path: .cov-linux
       - name: Download OSX coverage result
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: coverage-osx
           path: .cov-osx
@@ -360,7 +358,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download generated pages
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: docs
       - name: Deploy pages
