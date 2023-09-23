@@ -264,7 +264,7 @@ unittest
             thrown = e;
     });
 
-    auto exitCode = runApplication();
+    auto exitCode = runEventLoop();
     assert(exitCode == 0, "exit code: ".text(exitCode));
     assert(!thrown, thrown.toString());
 
