@@ -22,6 +22,9 @@ static:
         PackageInfo("asdf_usage"),
         PackageInfo("libdparse_usage"),
         PackageInfo("vibe-d_usage", ["windows-x86_omf-", "linux-x86-", "osx-x86-"]),
+        // ldc2は以下Issueが原因でx86では動作しないため除外
+        // https://github.com/libmir/mir-algorithm/issues/461
+        PackageInfo("mir_usage", ["linux-x86-ldc"])
         PackageInfo("windows"),
     ];
 }
