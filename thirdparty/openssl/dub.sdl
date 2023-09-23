@@ -1,0 +1,12 @@
+name "openssl_usage"
+description "A minimal D application."
+authors "SHOO"
+copyright "Copyright © 2021, SHOO"
+license "public domain"
+# WindowsでOpenSSLを使うにはコンパイル済みのバイナリ(DLL+lib)が必要。
+# 自前で用意するのは手間なので、openssl-staticで用意されているものを使用する。
+# openssl-staticは内部でDeimosのopensslに依存しているので、
+# 改めてDeimosのopensslをdubのプロジェクト設定に追加する必要はない。
+dependency "openssl-static" version="~>1.0.2+3.0.8"
+libs "Advapi32" platform="windows"
+libs "User32" platform="windows"
