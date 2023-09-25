@@ -548,3 +548,87 @@ $(WORKAROUND_ISSUE22230)
     assert(rtbindat.toHexString() == "010203A4B5C6");
     assert(rtbindat.toHexString!(LetterCase.lower) == "010203a4b5c6");
 }
+
+
+/++
+数値を書式指定して文字列に変換する
+
+`std.format` の `format` 関数を使用します。基本的にはC言語のprintfとほぼ同じ書式です。
+`format` の書式の指定方法は2パターンあり、テンプレートパラメータで指定する場合と、1個目の引数で指定する場合があります。
+テンプレートパラメータで指定すると、コンパイル時に書式と型がマッチしているか判定してくれるので便利です。
+
+この書式は `writefln` などでも使用可能。
+
+See_Also:
+    - https://dlang.org/phobos/std_format.html#format
++/
+@safe unittest
+{
+    import std.format;
+    string result;
+
+    // 整数を文字列に変換
+    result = format!"%d"(42);
+    assert(result == "42");
+
+    // 整数を桁数指定して文字列に変換。桁数に足りなければ先頭に0を追加
+    result = format!"%04d"(42);
+    assert(result == "0042");
+
+    // 符号が重要な場合は、+でも符号をつける例。
+    // 符号は桁数の一部にカウントされるので注意。
+    result = format!"%+d"(42);
+    assert(result == "+42");
+    result = format!"%+04d"(42);
+    assert(result == "+042");
+    result = format!"%+04d"(-42);
+    assert(result == "-042");
+
+    // 整数を桁数指定して16進数の文字列に変換。桁数に足りなければ先頭に0を追加
+    // この例では0xのプレフィックスをつけている
+    result = format!"0x%08x"(42);
+    assert(result == "0x0000002a");
+    // アルファベットは大文字にしたい場合
+    result = format!"0x%08X"(42);
+    assert(result == "0x0000002A");
+
+    // 実数(浮動小数点数)を小数点以下の有効桁数を指定して文字列に変換
+    // 小数点以下の有効桁数を省略すると6桁となる
+    result = format!"%.4f"(3.14159265);
+    assert(result == "3.1416");
+    result = format!"%.4f"(3.14159265 * 42);
+    assert(result == "131.9469");
+    result = format!"%f"(3.14159265);
+    assert(result == "3.141593");
+
+    // 実数を有効桁数を指定して変換するが
+    // 数値に応じて0を省略したり、指数表示したりする例
+    result = format!"%.3g"(0.12999998);
+    assert(result == "0.13");
+    result = format!"%.3g"(0.12345678);
+    assert(result == "0.123");
+    result = format!"%.3g"(0.000012345678);
+    assert(result == "1.23e-05");
+    result = format!"%.3g"(0.000012999998);
+    assert(result == "1.3e-05");
+
+    // 実数を指数表現で文字列に変換
+    result = format!"%.3e"(0.000123456);
+    assert(result == "1.235e-04");
+    result = format!"%.3e"(123.456);
+    assert(result == "1.235e+02");
+    result = format!"%+.3e"(123.456);
+    assert(result == "+1.235e+02");
+
+    // 文字列に変換
+    // 整数に対する %s は %d と同じ
+    // 実数に対する %s は %g と同じ
+    result = format!"%s"(42);
+    assert(result == "42");
+    result = format!"%s"(42.1234);
+    assert(result == "42.1234");
+    result = format!"%03s"(42);
+    assert(result == "042");
+    result = format!"%.3s"(42.1234);
+    assert(result == "42.1");
+}
