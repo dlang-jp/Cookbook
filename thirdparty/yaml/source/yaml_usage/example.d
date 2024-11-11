@@ -7,6 +7,9 @@ YAML形式のデータを取り扱う方法について、主に `mir-ion` と�
 ## mir-ion 公式リポジトリ
 https://github.com/libmir/mir-ion
 
+## mir-ion サンプルコード（主に属性の使用方法）
+https://github.com/libmir/mir-ion/blob/master/source/mir/ion/examples.d
+
 ## 主な内容
 - YAMLのデシリアライズ
     - 構造体への変換
@@ -28,6 +31,12 @@ https://github.com/libmir/mir-ion
 
 TODO:
 - バリデーション
+- アノテーション
+- カスタムシリアライズ/デシリアライズ(`@serdeProxy`)
+    - 簡便なフィールドの変換(`@serdeTransformIn`, `@serdeTransformOut`)
+- リストライク、マップライクなデータの取り扱い(`@serdeLikeList`, `@serdeLikeStruct`)
+- Algebraic型で型を区別するタグフィールドの取り扱い(`@serdeDiscriminatedField("tagKeyName", "value")`)
+- enumのフィールドで値の大文字小文字を区別しない方法(`@serdeIgnoreCase`)
 
 Source: $(LINK_TO_SRC thirdparty/yaml/source/yaml_usage/_example.d)
 +/
@@ -336,8 +345,8 @@ unittest
 各種日時型のデータは、YAML形式の文字列に変換される際に適切に処理されます。
 
 ポイント:
+- `DateTime` と `SysTime` は定義するだけで良く、自動的に処理される
 - 日時型には `!!timestamp` タグが付く
-- `DateTime` と `SysTime` の取り扱い方法（定義すれば自動的に処理される）
 +/
 unittest
 {
@@ -376,9 +385,9 @@ unittest
 日付や時刻のデータは、YAML形式の文字列に変換される際に適切に処理されます。
 
 ポイント:
-- 日付型には `!!date` タグが付かない
-- 時刻型には `!!timestamp` タグが付く
-- `Date` と `TimeOfDay` は定義すれば自動的に処理される
+- `Date` と `TimeOfDay` は定義するだけで良く、自動的に処理される
+- 日付型(Date)には `!!date` タグが付かない
+- 時刻型(TimeOfDay)には `!!timestamp` タグが付く
 +/
 unittest
 {
@@ -417,6 +426,7 @@ unittest
 時間間隔のデータは、YAML形式の文字列に変換される際に適切に処理されます。
 
 ポイント:
+- `Duration` 型は定義するだけで良く、自動的に処理される
 - `Duration` 型は `!!timestamp` タグが付与される
 +/
 unittest
@@ -455,7 +465,7 @@ enum型のフィールドは、YAML形式の文字列に変換される際に適
 
 ポイント:
 - enum型はそのまま文字列に変換される
-- enum型のフィールド名を変更する場合は `serdeKeys` 属性を使う（debugやversionなどの予約語で必要）
+- enum型のフィールド名を変更する場合は `@serdeKeys("<keyName>")` 属性を使う（debugやversionなどの予約語で必要）
 +/
 unittest
 {
@@ -935,7 +945,7 @@ unittest
 YAML出力時にフィールド名をカスタマイズし、外部仕様に合わせたデータ形式を実現します。
 
 ポイント:
-- フィールド名を変更する場合は、`@serdeKeys("keyName")` を指定する
+- フィールド名を変更する場合は、`@serdeKeys("<keyName>")` を指定する
 +/
 unittest
 {
