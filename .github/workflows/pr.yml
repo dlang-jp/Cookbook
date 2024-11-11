@@ -109,7 +109,7 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload coverage result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-windows
           path: .cov
@@ -206,12 +206,12 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload generated pages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: docs
       - name: Upload coverage result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-linux
           path: .cov
@@ -259,7 +259,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-latest
       - name: Run unit tests
@@ -273,7 +273,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Run unit tests
@@ -281,7 +281,7 @@ jobs:
       - name: Generate document tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=generate-document
       - name: Upload coverage result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-osx
           path: .cov
@@ -313,19 +313,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download Windows coverage result
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage-windows
-          path: .cov-windows
+          path: .cov
       - name: Download Linux coverage result
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage-linux
-          path: .cov-linux
+          path: .cov
       - name: Download OSX coverage result
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage-osx
-          path: .cov-osx
+          path: .cov
       - name: Upload OSX coverage to Codecov
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
