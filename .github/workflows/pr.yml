@@ -255,7 +255,7 @@ jobs:
   # 21. macOS   x86_64  dmd        o   x   x
   test-osx-x86_64-dmd-latest:
     name: test-osx-x86_64-dmd-latest
-    runs-on: macos-latest
+    runs-on: macos-13 # latest x86_64 image
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
