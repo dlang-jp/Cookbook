@@ -113,6 +113,7 @@ jobs:
         with:
           name: coverage-windows
           path: .cov
+
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  6. Windows x86_64  ldc        o   x   x
   test-windows-x86_64-ldc-latest:
@@ -145,11 +146,6 @@ jobs:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run unit tests
         run: rdmd ./.github/runner.d -a=x86_64 --mode=unit-test
-      - name: Upload coverage result
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-windows
-          path: .cov
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  9. Ubuntu  x86     dmd        x   x   x
