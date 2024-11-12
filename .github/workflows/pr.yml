@@ -321,16 +321,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: coverage-windows
-          path: .cov
+          path: .cov-windows
       - name: Download Linux coverage result
         uses: actions/download-artifact@v4
         with:
           name: coverage-linux
-          path: .cov
+          path: .cov-linux
       - name: Download OSX coverage result
         uses: actions/download-artifact@v4
         with:
           name: coverage-osx
-          path: .cov
+          path: .cov-osx
       - name: Upload OSX coverage to Codecov
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
