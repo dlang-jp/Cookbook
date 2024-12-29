@@ -287,7 +287,7 @@ unittest
     else version (LDC) auto dmd = "ldmd2";
     else version (GNU) auto dmd = "gdmd";
     else auto dmd = "dmd";  // 他の環境では暫定的に値を埋めています。
-    
+
     import std.path;
 
     auto command = environment.get("DMD", dmd).baseName.stripExtension;
