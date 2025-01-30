@@ -48,7 +48,7 @@ jobs:
   #  steps:
   #    - uses: actions/checkout@v3
   #    - name: Install D compiler
-  #      uses: dlang-community/setup-dlang@v1
+  #      uses: dlang-community/setup-dlang@v2
   #      with:
   #        compiler: ${COMPILER}
   #    # テストをする場合は以下を実行
@@ -79,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-latest
       - name: Run unit tests
@@ -105,7 +105,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-latest
       - name: Run unit tests
@@ -117,6 +117,7 @@ jobs:
         with:
           name: coverage-windows
           path: .cov
+          include-hidden-files: true
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   #  6. Windows x86_64  ldc        o   x   x
@@ -126,7 +127,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Run unit tests
@@ -144,7 +145,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-master
           gh_token: ${{ secrets.GITHUB_TOKEN }}
@@ -163,7 +164,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Install dependencies
@@ -189,7 +190,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-latest
       - name: Run unit tests
@@ -203,7 +204,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Run unit tests
@@ -220,6 +221,7 @@ jobs:
         with:
           name: coverage-linux
           path: .cov
+          include-hidden-files: true
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   # 15. Ubuntu  x86_64  dmd-master o   x   x
@@ -229,7 +231,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-master
       - name: Run unit tests
@@ -260,11 +262,11 @@ jobs:
   # 21. macOS   x86_64  dmd        o   x   x
   test-osx-x86_64-dmd-latest:
     name: test-osx-x86_64-dmd-latest
-    runs-on: macos-latest
+    runs-on: macos-13 # latest x86_64 image
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: dmd-latest
       - name: Run unit tests
@@ -278,7 +280,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Run unit tests
@@ -290,6 +292,7 @@ jobs:
         with:
           name: coverage-osx
           path: .cov
+          include-hidden-files: true
 
   # No. OS      ARCH    COMPILER   UT  DOC COV
   # 23. macOS   x86_64  dmd-master x   x   x
