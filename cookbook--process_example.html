@@ -570,12 +570,14 @@ See_Also: <a href="https://dlang.org/phobos/std_process.html#.Config.suppressCon
 
 <span class="d_comment">// `get()` を使った場合、指定した環境変数の値を返します。
 </span><span class="d_comment">// 空だった場合は第二引数で指定しているデフォルトの値を返します。
-</span><span class="d_comment">//
 </span><span class="d_keyword">version</span> (DigitalMars) <span class="d_keyword">auto</span> dmd = <span class="d_string">"dmd"</span>;
 <span class="d_keyword">else</span> <span class="d_keyword">version</span> (LDC) <span class="d_keyword">auto</span> dmd = <span class="d_string">"ldmd2"</span>;
 <span class="d_keyword">else</span> <span class="d_keyword">version</span> (GNU) <span class="d_keyword">auto</span> dmd = <span class="d_string">"gdmd"</span>;
 <span class="d_keyword">else</span> <span class="d_keyword">auto</span> dmd = <span class="d_string">"dmd"</span>;  <span class="d_comment">// 他の環境では暫定的に値を埋めています。
-</span><span class="d_keyword">auto</span> command = environment.get(<span class="d_string">"DMD"</span>, dmd);
+</span>
+<span class="d_keyword">import</span> std.path;
+
+<span class="d_keyword">auto</span> command = environment.get(<span class="d_string">"DMD"</span>, dmd).baseName.stripExtension;
 <span class="d_keyword">assert</span>(command == dmd);
 </pre>
 </div>
