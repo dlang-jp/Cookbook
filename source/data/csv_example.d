@@ -13,7 +13,7 @@ module data.csv_example;
 
 
 /++
-# CSVのパース
+ヘッダー無しCSVテキストを2次元配列(string[][])としてパースする方法
 +/
 @safe unittest
 {
@@ -37,7 +37,7 @@ module data.csv_example;
 }
 
 /++
-もう少し複雑な場合
+ヘッダー付きCSVテキストを2次元配列(string[][])としてパースする方法
 +/
 @safe unittest
 {
@@ -62,29 +62,53 @@ module data.csv_example;
     assert(mat[0][1] == "Height");
     assert(mat[1][0] == "Cocoa");
     assert(mat[1][2] == "B");
+}
 
+/++
+ヘッダー付きCSVテキストから特定の列だけ配列として読み込む方法
++/
+@safe unittest
+{
+    // importとデータの準備をします
+    import std.csv;
+    import std.algorithm, std.array, std.string, std.exception;
+
+    // 今回はヘッダ付きです。
+    enum string csv1 = `
+        Name,Height,BloodType
+        Cocoa,154,B
+        Chino,144,AB
+        Rize,160,A
+    `.outdent.strip;
+
+    // 配列に直す処理を簡略化
+    alias toMat = r => r.map!array.array;
 
     // 今回のCSVにはヘッダが付与されていますが、
-    // csvReaderの2つ目の引数にnullを指定するとその分を無視することができます
+    // csvReaderの2つ目の引数にnullを指定するとヘッダー行を無視することができます。
     // あるいは、取得するデータをピックアップすることもできます。
-    // ※右列のデータを左列に持ってくるような並べ替えはできません
+    // ※列はファイル上の順序に従う必要があります。
+    //   右列のデータを左列に持ってくるような並べ替え、入れ替えはできません。
     auto mat2 = toMat(csv1.csvReader(null));
     assert(mat2[0][0] == "Cocoa");
     assert(mat2[0][1] == "154");
     assert(mat2[1][0] == "Chino");
     assert(mat2[1][2] == "AB");
+
+    // 特定の列だけを抜き出します
     auto mat3 = toMat(csv1.csvReader(["Name", "BloodType"]));
     assert(mat3[0][0] == "Cocoa");
     assert(mat3[0][1] == "B");
     assert(mat3[1][0] == "Chino");
     assert(mat3[1][1] == "AB");
-    // こんな感じの並べ替えはHeaderMismatchExceptionでNG
+
+    // 注意: 並べ替えようとすると、HeaderMismatchException という例外が発生します。
     assertThrown!HeaderMismatchException(
         toMat(csv1.csvReader(["Name", "BloodType", "Height"])));
 }
 
 /++
-構造体でデータ構造をレイアウトする場合
+ヘッダー付きCSVテキストを構造体の配列としてパースする方法
 +/
 @safe unittest
 {
@@ -107,6 +131,7 @@ module data.csv_example;
         BloodType bloodType;
         int       height;
     }
+
     // csvReaderの1つ目のテンプレート引数に構造体を渡すと、
     // そのメンバー変数のレイアウトでCSVを解釈します。
     // 構造体のメンバー変数はそれぞれstd.conv.toによって文字列と相互に変換可能
@@ -121,7 +146,104 @@ module data.csv_example;
     assert(charactors[2].bloodType == CharactorData.BloodType.A);
 }
 
+/++
+ファイルパスを指定して、ヘッダー付きCSVファイルを構造体配列として読み込む方法
++/
+@safe unittest
+{
+    // テストデータの準備と破棄
+    import std.file : mkdir, rmdirRecurse, write;
 
+    mkdir("temp");
+    scope (exit) rmdirRecurse("temp");
+    write("temp/test.csv", "Name,Hoge,Value\nA,Fuga,10.0\nB,Foo,1.5\nC,Bar,-12.5");
+
+    // readTextでテキストデータを読み込み、csvReaderで処理します。
+    // 結果として欲しい構造体は事前に定義しておきます。
+    // 今回は、Name,Hoge,Valueの列を持つCSVからName,Valueのみロードします。
+    import std : readText, csvReader, array;
+
+    // 結果として欲しい構造体を定義します。staticはグローバル定義なら不要です。
+    static struct Record
+    {
+        string name;
+        double value;
+    }
+
+    // ワンライナーでロードできます。ヘッダー名の配列を null にすれば全ての列を読み込みます。
+    auto records = readText("temp/test.csv").csvReader!Record(["Name", "Value"]).array();
+
+    import std.math : isClose;
+
+    assert(records[0].name == "A");
+    assert(records[0].value.isClose(10.0));
+    assert(records[1].name == "B");
+    assert(records[1].value.isClose(1.5));
+    assert(records[2].name == "C");
+    assert(records[2].value.isClose(-12.5));
+}
+
+/++
+CSVのレコードを1行ずつ1列ずつ独自に処理しながら読み込む方法
+
+stringでロード後にmapで変換しても良いのですが、リソース効率などの観点から独自処理したい場合の方法をまとめます。
++/
+@safe unittest
+{
+    // テストデータの準備と破棄
+    import std.file : mkdir, rmdirRecurse, write;
+
+    mkdir("temp");
+    scope (exit) rmdirRecurse("temp");
+
+    // ここでは8桁数値を日付として読み込みたい場合の変換を考えます。
+    write("temp/test.csv", "Name,Date\nA,20200101\nB,20210101\nC,20220101");
+
+    // あらかじめDate型に変換する簡単な処理を用意します。異常値は考慮していません。
+    Date parseDate(string text8Digit)
+    {
+        import std.conv : to;
+        const year = to!ushort(text8Digit[0 .. 4]);
+        const month = to!ubyte(text8Digit[4 .. 6]);
+        const day = to!ubyte(text8Digit[6 .. 8]);
+        return Date(year, month, day);
+    }
+
+    // csvReaderで読み込み、1列ずつ処理します。
+    import std : readText, csvReader, Date;
+
+    struct Record
+    {
+        string name;
+        Date date;
+    }
+
+    // テキストの構造は既に知っているとして、ヘッダーを読み飛ばします。
+    // この時点では csvReader の戻り値が配列になっていないのでRangeの状態です。
+    auto records = readText("temp/test.csv").csvReader(null);
+
+    // バッファを用意して、1行ずつ処理します。
+    import std.array : appender;
+
+    auto results = appender!(Record[]);
+    foreach (record; records)
+    {
+        // record自体が列ごとのRangeになっているため、順次読んで処理します。
+        // frontの型はすべてstringです。
+        auto name = record.front; record.popFront(); // 最初の列を得て次に進める
+        auto date = parseDate(record.front); record.popFront(); // 日付列を処理して先に進める（最終列ならやらなくても良いが、増えたときに楽）
+
+        results.put(Record(name, date));
+    }
+
+    Record[] dataset = results.data;
+    assert(dataset[0].name == "A");
+    assert(dataset[0].date == Date(2020, 1, 1));
+    assert(dataset[1].name == "B");
+    assert(dataset[1].date == Date(2021, 1, 1));
+    assert(dataset[2].name == "C");
+    assert(dataset[2].date == Date(2022, 1, 1));
+}
 
 /++
 # CSVの書き出し
