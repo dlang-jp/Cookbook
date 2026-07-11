@@ -1,0 +1,6 @@
+name "yaml_usage"
+description "A usage of mir-ion for handling YAML"
+authors "lempiji"
+copyright "Copyright © 2020, lempiji"
+license "public domain"
+dependency "mir-ion" version="~>2.3.2"

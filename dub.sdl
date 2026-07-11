@@ -10,6 +10,7 @@ subPackage "linux"
 subPackage "thirdparty/libdparse"
 subPackage "thirdparty/json"
 subPackage "thirdparty/vibe-d"
+subPackage "thirdparty/yaml"
 
 dependency "dateparser" version="~>3.0.4"
 
