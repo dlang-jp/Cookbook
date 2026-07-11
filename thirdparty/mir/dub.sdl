@@ -1,0 +1,16 @@
+name "mir_usage"
+description "A minimal D application."
+authors "lempiji"
+copyright "Copyright © 2023, lempiji"
+license "public domain"
+dependency "mir-algorithm" version="~>3.19.1"
+
+configuration "library" {
+    targetType "library"
+}
+
+configuration "include-blas" {
+    targetType "library"
+    dependency "mir-blas" version="~>1.1.14"
+    versions "MIRUSAGE_INCLUDE_BLAS"
+}
